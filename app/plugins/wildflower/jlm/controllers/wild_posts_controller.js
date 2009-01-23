@@ -34,7 +34,7 @@ $.jlm.bind('wild_posts.wf_edit, wild_pages.wf_edit', function() {
         switchToSectionEl.animate({  
             height: switchToSelectionHeight
         }, 600, function() {
-            $('input[@type=text]:first:visible').focus();
+            $('input[type=text]:first:visible').focus();
             activeSectionEl = switchToSectionEl;
         });
     }
