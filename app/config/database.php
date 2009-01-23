@@ -114,13 +114,14 @@ class DATABASE_CONFIG {
 	 */
 	public $production_dev = array(
 		'driver' => 'mysqli',
+	    'encoding' => 'utf8',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => '',
+		'login' => 'root',
 		'password' => '',
-		'database' => '',
-		'port' => '/tmp/mysql50.sock',
-	    'domain' => 'dev.wf.klevo.sk'
+		'database' => 'wildflower_dev',
+	    'port' => 3306,
+	    'domain' => 'dev.wildflower.ss29'
 	);
 	
 	/**
@@ -136,7 +137,8 @@ class DATABASE_CONFIG {
         'login' => 'root',
         'password' => '',
         'database' => 'test_wildflower',
-	    'port' => 3306
+	    'port' => 3306,
+	    'domain' => 'tests.wildflower.ss29'
 	);
 	
     /**

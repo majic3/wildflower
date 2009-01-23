@@ -3,7 +3,7 @@
 <head>
     <?php echo $html->charset(); ?>
     
-    <title><?php echo $title_for_layout; ?></title>
+    <title>wf1.3b1(19.01.09) wf theme <?php echo $title_for_layout; ?></title>
     
     <meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
     
