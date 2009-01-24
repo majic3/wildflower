@@ -9,6 +9,7 @@ echo $navigation->create(array(
 <?php echo 
     $form->create('WildUser', array('url' => $html->url(array('action' => 'wf_update_password', 'base' => false)))),
     $form->input('password', array('between' => '<br />', 'label' => 'New password', 'tabindex' => '1')),
+	'<div id="passwordStrengthDiv" class="is0"></div>',
     $form->input('confirm_password', array('between' => '<br />', 'label' => 'New password again', 'type' => 'password', 'tabindex' => '2')),
     '<div class="hidden">',
     $form->hidden('name'),

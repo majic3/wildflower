@@ -35,6 +35,7 @@
             $form->input('email', array('between' => '<br />')),
             $form->input('login', array('between' => '<br />')),
             $form->input('password', array('between' => '<br />')),
+			'<div id="passwordStrengthDiv" class="is0"></div>',
             $form->input('confirm_password', array('between' => '<br />', 'type' => 'password')),
             $wild->submit('Create this user'),
             $form->end();

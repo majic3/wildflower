@@ -3274,3 +3274,968 @@ jQuery.extend({
 
 	// Last-Modified header cache for next request
 	lastModified: {},
+
+	ajax: function( s ) {
+		// Extend the settings, but re-extend 's' so that it can be
+		// checked again later (in the test suite, specifically)
+		s = jQuery.extend(true, s, jQuery.extend(true, {}, jQuery.ajaxSettings, s));
+
+		var jsonp, jsre = /=\?(&|$)/g, status, data,
+			type = s.type.toUpperCase();
+
+		// convert data if not already a string
+		if ( s.data && s.processData && typeof s.data !== "string" )
+			s.data = jQuery.param(s.data);
+
+		// Handle JSONP Parameter Callbacks
+		if ( s.dataType == "jsonp" ) {
+			if ( type == "GET" ) {
+				if ( !s.url.match(jsre) )
+					s.url += (s.url.match(/\?/) ? "&" : "?") + (s.jsonp || "callback") + "=?";
+			} else if ( !s.data || !s.data.match(jsre) )
+				s.data = (s.data ? s.data + "&" : "") + (s.jsonp || "callback") + "=?";
+			s.dataType = "json";
+		}
+
+		// Build temporary JSONP function
+		if ( s.dataType == "json" && (s.data && s.data.match(jsre) || s.url.match(jsre)) ) {
+			jsonp = "jsonp" + jsc++;
+
+			// Replace the =? sequence both in the query string and the data
+			if ( s.data )
+				s.data = (s.data + "").replace(jsre, "=" + jsonp + "$1");
+			s.url = s.url.replace(jsre, "=" + jsonp + "$1");
+
+			// We need to make sure
+			// that a JSONP style response is executed properly
+			s.dataType = "script";
+
+			// Handle JSONP-style loading
+			window[ jsonp ] = function(tmp){
+				data = tmp;
+				success();
+				complete();
+				// Garbage collect
+				window[ jsonp ] = undefined;
+				try{ delete window[ jsonp ]; } catch(e){}
+				if ( head )
+					head.removeChild( script );
+			};
+		}
+
+		if ( s.dataType == "script" && s.cache == null )
+			s.cache = false;
+
+		if ( s.cache === false && type == "GET" ) {
+			var ts = now();
+			// try replacing _= if it is there
+			var ret = s.url.replace(/(\?|&)_=.*?(&|$)/, "$1_=" + ts + "$2");
+			// if nothing was replaced, add timestamp to the end
+			s.url = ret + ((ret == s.url) ? (s.url.match(/\?/) ? "&" : "?") + "_=" + ts : "");
+		}
+
+		// If data is available, append data to url for get requests
+		if ( s.data && type == "GET" ) {
+			s.url += (s.url.match(/\?/) ? "&" : "?") + s.data;
+
+			// IE likes to send both get and post data, prevent this
+			s.data = null;
+		}
+
+		// Watch for a new set of requests
+		if ( s.global && ! jQuery.active++ )
+			jQuery.event.trigger( "ajaxStart" );
+
+		// Matches an absolute URL, and saves the domain
+		var parts = /^(\w+:)?\/\/([^\/?#]+)/.exec( s.url );
+
+		// If we're requesting a remote document
+		// and trying to load JSON or Script with a GET
+		if ( s.dataType == "script" && type == "GET" && parts
+			&& ( parts[1] && parts[1] != location.protocol || parts[2] != location.host )){
+
+			var head = document.getElementsByTagName("head")[0];
+			var script = document.createElement("script");
+			script.src = s.url;
+			if (s.scriptCharset)
+				script.charset = s.scriptCharset;
+
+			// Handle Script loading
+			if ( !jsonp ) {
+				var done = false;
+
+				// Attach handlers for all browsers
+				script.onload = script.onreadystatechange = function(){
+					if ( !done && (!this.readyState ||
+							this.readyState == "loaded" || this.readyState == "complete") ) {
+						done = true;
+						success();
+						complete();
+						head.removeChild( script );
+					}
+				};
+			}
+
+			head.appendChild(script);
+
+			// We handle everything using the script element injection
+			return undefined;
+		}
+
+		var requestDone = false;
+
+		// Create the request object
+		var xhr = s.xhr();
+
+		// Open the socket
+		// Passing null username, generates a login popup on Opera (#2865)
+		if( s.username )
+			xhr.open(type, s.url, s.async, s.username, s.password);
+		else
+			xhr.open(type, s.url, s.async);
+
+		// Need an extra try/catch for cross domain requests in Firefox 3
+		try {
+			// Set the correct header, if data is being sent
+			if ( s.data )
+				xhr.setRequestHeader("Content-Type", s.contentType);
+
+			// Set the If-Modified-Since header, if ifModified mode.
+			if ( s.ifModified )
+				xhr.setRequestHeader("If-Modified-Since",
+					jQuery.lastModified[s.url] || "Thu, 01 Jan 1970 00:00:00 GMT" );
+
+			// Set header so the called script knows that it's an XMLHttpRequest
+			xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+			// Set the Accepts header for the server, depending on the dataType
+			xhr.setRequestHeader("Accept", s.dataType && s.accepts[ s.dataType ] ?
+				s.accepts[ s.dataType ] + ", */*" :
+				s.accepts._default );
+		} catch(e){}
+
+		// Allow custom headers/mimetypes and early abort
+		if ( s.beforeSend && s.beforeSend(xhr, s) === false ) {
+			// Handle the global AJAX counter
+			if ( s.global && ! --jQuery.active )
+				jQuery.event.trigger( "ajaxStop" );
+			// close opended socket
+			xhr.abort();
+			return false;
+		}
+
+		if ( s.global )
+			jQuery.event.trigger("ajaxSend", [xhr, s]);
+
+		// Wait for a response to come back
+		var onreadystatechange = function(isTimeout){
+			// The request was aborted, clear the interval and decrement jQuery.active
+			if (xhr.readyState == 0) {
+				if (ival) {
+					// clear poll interval
+					clearInterval(ival);
+					ival = null;
+					// Handle the global AJAX counter
+					if ( s.global && ! --jQuery.active )
+						jQuery.event.trigger( "ajaxStop" );
+				}
+			// The transfer is complete and the data is available, or the request timed out
+			} else if ( !requestDone && xhr && (xhr.readyState == 4 || isTimeout == "timeout") ) {
+				requestDone = true;
+
+				// clear poll interval
+				if (ival) {
+					clearInterval(ival);
+					ival = null;
+				}
+
+				status = isTimeout == "timeout" ? "timeout" :
+					!jQuery.httpSuccess( xhr ) ? "error" :
+					s.ifModified && jQuery.httpNotModified( xhr, s.url ) ? "notmodified" :
+					"success";
+
+				if ( status == "success" ) {
+					// Watch for, and catch, XML document parse errors
+					try {
+						// process the data (runs the xml through httpData regardless of callback)
+						data = jQuery.httpData( xhr, s.dataType, s );
+					} catch(e) {
+						status = "parsererror";
+					}
+				}
+
+				// Make sure that the request was successful or notmodified
+				if ( status == "success" ) {
+					// Cache Last-Modified header, if ifModified mode.
+					var modRes;
+					try {
+						modRes = xhr.getResponseHeader("Last-Modified");
+					} catch(e) {} // swallow exception thrown by FF if header is not available
+
+					if ( s.ifModified && modRes )
+						jQuery.lastModified[s.url] = modRes;
+
+					// JSONP handles its own success callback
+					if ( !jsonp )
+						success();
+				} else
+					jQuery.handleError(s, xhr, status);
+
+				// Fire the complete handlers
+				complete();
+
+				if ( isTimeout )
+					xhr.abort();
+
+				// Stop memory leaks
+				if ( s.async )
+					xhr = null;
+			}
+		};
+
+		if ( s.async ) {
+			// don't attach the handler to the request, just poll it instead
+			var ival = setInterval(onreadystatechange, 13);
+
+			// Timeout checker
+			if ( s.timeout > 0 )
+				setTimeout(function(){
+					// Check to see if the request is still happening
+					if ( xhr && !requestDone )
+						onreadystatechange( "timeout" );
+				}, s.timeout);
+		}
+
+		// Send the data
+		try {
+			xhr.send(s.data);
+		} catch(e) {
+			jQuery.handleError(s, xhr, null, e);
+		}
+
+		// firefox 1.5 doesn't fire statechange for sync requests
+		if ( !s.async )
+			onreadystatechange();
+
+		function success(){
+			// If a local callback was specified, fire it and pass it the data
+			if ( s.success )
+				s.success( data, status );
+
+			// Fire the global callback
+			if ( s.global )
+				jQuery.event.trigger( "ajaxSuccess", [xhr, s] );
+		}
+
+		function complete(){
+			// Process result
+			if ( s.complete )
+				s.complete(xhr, status);
+
+			// The request was completed
+			if ( s.global )
+				jQuery.event.trigger( "ajaxComplete", [xhr, s] );
+
+			// Handle the global AJAX counter
+			if ( s.global && ! --jQuery.active )
+				jQuery.event.trigger( "ajaxStop" );
+		}
+
+		// return XMLHttpRequest to allow aborting the request etc.
+		return xhr;
+	},
+
+	handleError: function( s, xhr, status, e ) {
+		// If a local callback was specified, fire it
+		if ( s.error ) s.error( xhr, status, e );
+
+		// Fire the global callback
+		if ( s.global )
+			jQuery.event.trigger( "ajaxError", [xhr, s, e] );
+	},
+
+	// Counter for holding the number of active queries
+	active: 0,
+
+	// Determines if an XMLHttpRequest was successful or not
+	httpSuccess: function( xhr ) {
+		try {
+			// IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
+			return !xhr.status && location.protocol == "file:" ||
+				( xhr.status >= 200 && xhr.status < 300 ) || xhr.status == 304 || xhr.status == 1223;
+		} catch(e){}
+		return false;
+	},
+
+	// Determines if an XMLHttpRequest returns NotModified
+	httpNotModified: function( xhr, url ) {
+		try {
+			var xhrRes = xhr.getResponseHeader("Last-Modified");
+
+			// Firefox always returns 200. check Last-Modified date
+			return xhr.status == 304 || xhrRes == jQuery.lastModified[url];
+		} catch(e){}
+		return false;
+	},
+
+	httpData: function( xhr, type, s ) {
+		var ct = xhr.getResponseHeader("content-type"),
+			xml = type == "xml" || !type && ct && ct.indexOf("xml") >= 0,
+			data = xml ? xhr.responseXML : xhr.responseText;
+
+		if ( xml && data.documentElement.tagName == "parsererror" )
+			throw "parsererror";
+			
+		// Allow a pre-filtering function to sanitize the response
+		// s != null is checked to keep backwards compatibility
+		if( s && s.dataFilter )
+			data = s.dataFilter( data, type );
+
+		// The filter can actually parse the response
+		if( typeof data === "string" ){
+
+			// If the type is "script", eval it in global context
+			if ( type == "script" )
+				jQuery.globalEval( data );
+
+			// Get the JavaScript object, if JSON is used.
+			if ( type == "json" )
+				data = window["eval"]("(" + data + ")");
+		}
+		
+		return data;
+	},
+
+	// Serialize an array of form elements or a set of
+	// key/values into a query string
+	param: function( a ) {
+		var s = [ ];
+
+		function add( key, value ){
+			s[ s.length ] = encodeURIComponent(key) + '=' + encodeURIComponent(value);
+		};
+
+		// If an array was passed in, assume that it is an array
+		// of form elements
+		if ( jQuery.isArray(a) || a.jquery )
+			// Serialize the form elements
+			jQuery.each( a, function(){
+				add( this.name, this.value );
+			});
+
+		// Otherwise, assume that it's an object of key/value pairs
+		else
+			// Serialize the key/values
+			for ( var j in a )
+				// If the value is an array then the key names need to be repeated
+				if ( jQuery.isArray(a[j]) )
+					jQuery.each( a[j], function(){
+						add( j, this );
+					});
+				else
+					add( j, jQuery.isFunction(a[j]) ? a[j]() : a[j] );
+
+		// Return the resulting serialization
+		return s.join("&").replace(/%20/g, "+");
+	}
+
+});
+var elemdisplay = {},
+	timerId,
+	fxAttrs = [
+		// height animations
+		[ "height", "marginTop", "marginBottom", "paddingTop", "paddingBottom" ],
+		// width animations
+		[ "width", "marginLeft", "marginRight", "paddingLeft", "paddingRight" ],
+		// opacity animations
+		[ "opacity" ]
+	];
+
+function genFx( type, num ){
+	var obj = {};
+	jQuery.each( fxAttrs.concat.apply([], fxAttrs.slice(0,num)), function(){
+		obj[ this ] = type;
+	});
+	return obj;
+}
+
+jQuery.fn.extend({
+	show: function(speed,callback){
+		if ( speed ) {
+			return this.animate( genFx("show", 3), speed, callback);
+		} else {
+			for ( var i = 0, l = this.length; i < l; i++ ){
+				var old = jQuery.data(this[i], "olddisplay");
+				
+				this[i].style.display = old || "";
+				
+				if ( jQuery.css(this[i], "display") === "none" ) {
+					var tagName = this[i].tagName, display;
+					
+					if ( elemdisplay[ tagName ] ) {
+						display = elemdisplay[ tagName ];
+					} else {
+						var elem = jQuery("<" + tagName + " />").appendTo("body");
+						
+						display = elem.css("display");
+						if ( display === "none" )
+							display = "block";
+						
+						elem.remove();
+						
+						elemdisplay[ tagName ] = display;
+					}
+					
+					this[i].style.display = jQuery.data(this[i], "olddisplay", display);
+				}
+			}
+			
+			return this;
+		}
+	},
+
+	hide: function(speed,callback){
+		if ( speed ) {
+			return this.animate( genFx("hide", 3), speed, callback);
+		} else {
+			for ( var i = 0, l = this.length; i < l; i++ ){
+				var old = jQuery.data(this[i], "olddisplay");
+				if ( !old && old !== "none" )
+					jQuery.data(this[i], "olddisplay", jQuery.css(this[i], "display"));
+				this[i].style.display = "none";
+			}
+			return this;
+		}
+	},
+
+	// Save the old toggle function
+	_toggle: jQuery.fn.toggle,
+
+	toggle: function( fn, fn2 ){
+		var bool = typeof fn === "boolean";
+
+		return jQuery.isFunction(fn) && jQuery.isFunction(fn2) ?
+			this._toggle.apply( this, arguments ) :
+			fn == null || bool ?
+				this.each(function(){
+					var state = bool ? fn : jQuery(this).is(":hidden");
+					jQuery(this)[ state ? "show" : "hide" ]();
+				}) :
+				this.animate(genFx("toggle", 3), fn, fn2);
+	},
+
+	fadeTo: function(speed,to,callback){
+		return this.animate({opacity: to}, speed, callback);
+	},
+
+	animate: function( prop, speed, easing, callback ) {
+		var optall = jQuery.speed(speed, easing, callback);
+
+		return this[ optall.queue === false ? "each" : "queue" ](function(){
+		
+			var opt = jQuery.extend({}, optall), p,
+				hidden = this.nodeType == 1 && jQuery(this).is(":hidden"),
+				self = this;
+	
+			for ( p in prop ) {
+				if ( prop[p] == "hide" && hidden || prop[p] == "show" && !hidden )
+					return opt.complete.call(this);
+
+				if ( ( p == "height" || p == "width" ) && this.style ) {
+					// Store display property
+					opt.display = jQuery.css(this, "display");
+
+					// Make sure that nothing sneaks out
+					opt.overflow = this.style.overflow;
+				}
+			}
+
+			if ( opt.overflow != null )
+				this.style.overflow = "hidden";
+
+			opt.curAnim = jQuery.extend({}, prop);
+
+			jQuery.each( prop, function(name, val){
+				var e = new jQuery.fx( self, opt, name );
+
+				if ( /toggle|show|hide/.test(val) )
+					e[ val == "toggle" ? hidden ? "show" : "hide" : val ]( prop );
+				else {
+					var parts = val.toString().match(/^([+-]=)?([\d+-.]+)(.*)$/),
+						start = e.cur(true) || 0;
+
+					if ( parts ) {
+						var end = parseFloat(parts[2]),
+							unit = parts[3] || "px";
+
+						// We need to compute starting value
+						if ( unit != "px" ) {
+							self.style[ name ] = (end || 1) + unit;
+							start = ((end || 1) / e.cur(true)) * start;
+							self.style[ name ] = start + unit;
+						}
+
+						// If a +=/-= token was provided, we're doing a relative animation
+						if ( parts[1] )
+							end = ((parts[1] == "-=" ? -1 : 1) * end) + start;
+
+						e.custom( start, end, unit );
+					} else
+						e.custom( start, val, "" );
+				}
+			});
+
+			// For JS strict compliance
+			return true;
+		});
+	},
+
+	stop: function(clearQueue, gotoEnd){
+		var timers = jQuery.timers;
+
+		if (clearQueue)
+			this.queue([]);
+
+		this.each(function(){
+			// go in reverse order so anything added to the queue during the loop is ignored
+			for ( var i = timers.length - 1; i >= 0; i-- )
+				if ( timers[i].elem == this ) {
+					if (gotoEnd)
+						// force the next step to be the last
+						timers[i](true);
+					timers.splice(i, 1);
+				}
+		});
+
+		// start the next in the queue if the last step wasn't forced
+		if (!gotoEnd)
+			this.dequeue();
+
+		return this;
+	}
+
+});
+
+// Generate shortcuts for custom animations
+jQuery.each({
+	slideDown: genFx("show", 1),
+	slideUp: genFx("hide", 1),
+	slideToggle: genFx("toggle", 1),
+	fadeIn: { opacity: "show" },
+	fadeOut: { opacity: "hide" }
+}, function( name, props ){
+	jQuery.fn[ name ] = function( speed, callback ){
+		return this.animate( props, speed, callback );
+	};
+});
+
+jQuery.extend({
+
+	speed: function(speed, easing, fn) {
+		var opt = typeof speed === "object" ? speed : {
+			complete: fn || !fn && easing ||
+				jQuery.isFunction( speed ) && speed,
+			duration: speed,
+			easing: fn && easing || easing && !jQuery.isFunction(easing) && easing
+		};
+
+		opt.duration = jQuery.fx.off ? 0 : typeof opt.duration === "number" ? opt.duration :
+			jQuery.fx.speeds[opt.duration] || jQuery.fx.speeds._default;
+
+		// Queueing
+		opt.old = opt.complete;
+		opt.complete = function(){
+			if ( opt.queue !== false )
+				jQuery(this).dequeue();
+			if ( jQuery.isFunction( opt.old ) )
+				opt.old.call( this );
+		};
+
+		return opt;
+	},
+
+	easing: {
+		linear: function( p, n, firstNum, diff ) {
+			return firstNum + diff * p;
+		},
+		swing: function( p, n, firstNum, diff ) {
+			return ((-Math.cos(p*Math.PI)/2) + 0.5) * diff + firstNum;
+		}
+	},
+
+	timers: [],
+
+	fx: function( elem, options, prop ){
+		this.options = options;
+		this.elem = elem;
+		this.prop = prop;
+
+		if ( !options.orig )
+			options.orig = {};
+	}
+
+});
+
+jQuery.fx.prototype = {
+
+	// Simple function for setting a style value
+	update: function(){
+		if ( this.options.step )
+			this.options.step.call( this.elem, this.now, this );
+
+		(jQuery.fx.step[this.prop] || jQuery.fx.step._default)( this );
+
+		// Set display property to block for height/width animations
+		if ( ( this.prop == "height" || this.prop == "width" ) && this.elem.style )
+			this.elem.style.display = "block";
+	},
+
+	// Get the current size
+	cur: function(force){
+		if ( this.elem[this.prop] != null && (!this.elem.style || this.elem.style[this.prop] == null) )
+			return this.elem[ this.prop ];
+
+		var r = parseFloat(jQuery.css(this.elem, this.prop, force));
+		return r && r > -10000 ? r : parseFloat(jQuery.curCSS(this.elem, this.prop)) || 0;
+	},
+
+	// Start an animation from one number to another
+	custom: function(from, to, unit){
+		this.startTime = now();
+		this.start = from;
+		this.end = to;
+		this.unit = unit || this.unit || "px";
+		this.now = this.start;
+		this.pos = this.state = 0;
+
+		var self = this;
+		function t(gotoEnd){
+			return self.step(gotoEnd);
+		}
+
+		t.elem = this.elem;
+
+		if ( t() && jQuery.timers.push(t) == 1 ) {
+			timerId = setInterval(function(){
+				var timers = jQuery.timers;
+
+				for ( var i = 0; i < timers.length; i++ )
+					if ( !timers[i]() )
+						timers.splice(i--, 1);
+
+				if ( !timers.length ) {
+					clearInterval( timerId );
+				}
+			}, 13);
+		}
+	},
+
+	// Simple 'show' function
+	show: function(){
+		// Remember where we started, so that we can go back to it later
+		this.options.orig[this.prop] = jQuery.attr( this.elem.style, this.prop );
+		this.options.show = true;
+
+		// Begin the animation
+		// Make sure that we start at a small width/height to avoid any
+		// flash of content
+		this.custom(this.prop == "width" || this.prop == "height" ? 1 : 0, this.cur());
+
+		// Start by showing the element
+		jQuery(this.elem).show();
+	},
+
+	// Simple 'hide' function
+	hide: function(){
+		// Remember where we started, so that we can go back to it later
+		this.options.orig[this.prop] = jQuery.attr( this.elem.style, this.prop );
+		this.options.hide = true;
+
+		// Begin the animation
+		this.custom(this.cur(), 0);
+	},
+
+	// Each step of an animation
+	step: function(gotoEnd){
+		var t = now();
+
+		if ( gotoEnd || t >= this.options.duration + this.startTime ) {
+			this.now = this.end;
+			this.pos = this.state = 1;
+			this.update();
+
+			this.options.curAnim[ this.prop ] = true;
+
+			var done = true;
+			for ( var i in this.options.curAnim )
+				if ( this.options.curAnim[i] !== true )
+					done = false;
+
+			if ( done ) {
+				if ( this.options.display != null ) {
+					// Reset the overflow
+					this.elem.style.overflow = this.options.overflow;
+
+					// Reset the display
+					this.elem.style.display = this.options.display;
+					if ( jQuery.css(this.elem, "display") == "none" )
+						this.elem.style.display = "block";
+				}
+
+				// Hide the element if the "hide" operation was done
+				if ( this.options.hide )
+					jQuery(this.elem).hide();
+
+				// Reset the properties, if the item has been hidden or shown
+				if ( this.options.hide || this.options.show )
+					for ( var p in this.options.curAnim )
+						jQuery.attr(this.elem.style, p, this.options.orig[p]);
+					
+				// Execute the complete function
+				this.options.complete.call( this.elem );
+			}
+
+			return false;
+		} else {
+			var n = t - this.startTime;
+			this.state = n / this.options.duration;
+
+			// Perform the easing function, defaults to swing
+			this.pos = jQuery.easing[this.options.easing || (jQuery.easing.swing ? "swing" : "linear")](this.state, n, 0, 1, this.options.duration);
+			this.now = this.start + ((this.end - this.start) * this.pos);
+
+			// Perform the next step of the animation
+			this.update();
+		}
+
+		return true;
+	}
+
+};
+
+jQuery.extend( jQuery.fx, {
+	speeds:{
+		slow: 600,
+ 		fast: 200,
+ 		// Default speed
+ 		_default: 400
+	},
+	step: {
+
+		opacity: function(fx){
+			jQuery.attr(fx.elem.style, "opacity", fx.now);
+		},
+
+		_default: function(fx){
+			if ( fx.elem.style && fx.elem.style[ fx.prop ] != null )
+				fx.elem.style[ fx.prop ] = fx.now + fx.unit;
+			else
+				fx.elem[ fx.prop ] = fx.now;
+		}
+	}
+});
+if ( document.documentElement["getBoundingClientRect"] )
+	jQuery.fn.offset = function() {
+		if ( !this[0] ) return { top: 0, left: 0 };
+		if ( this[0] === this[0].ownerDocument.body ) return jQuery.offset.bodyOffset( this[0] );
+		var box  = this[0].getBoundingClientRect(), doc = this[0].ownerDocument, body = doc.body, docElem = doc.documentElement,
+			clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0,
+			top  = box.top  + (self.pageYOffset || jQuery.boxModel && docElem.scrollTop  || body.scrollTop ) - clientTop,
+			left = box.left + (self.pageXOffset || jQuery.boxModel && docElem.scrollLeft || body.scrollLeft) - clientLeft;
+		return { top: top, left: left };
+	};
+else 
+	jQuery.fn.offset = function() {
+		if ( !this[0] ) return { top: 0, left: 0 };
+		if ( this[0] === this[0].ownerDocument.body ) return jQuery.offset.bodyOffset( this[0] );
+		jQuery.offset.initialized || jQuery.offset.initialize();
+
+		var elem = this[0], offsetParent = elem.offsetParent, prevOffsetParent = elem,
+			doc = elem.ownerDocument, computedStyle, docElem = doc.documentElement,
+			body = doc.body, defaultView = doc.defaultView,
+			prevComputedStyle = defaultView.getComputedStyle(elem, null),
+			top = elem.offsetTop, left = elem.offsetLeft;
+
+		while ( (elem = elem.parentNode) && elem !== body && elem !== docElem ) {
+			computedStyle = defaultView.getComputedStyle(elem, null);
+			top -= elem.scrollTop, left -= elem.scrollLeft;
+			if ( elem === offsetParent ) {
+				top += elem.offsetTop, left += elem.offsetLeft;
+				if ( jQuery.offset.doesNotAddBorder && !(jQuery.offset.doesAddBorderForTableAndCells && /^t(able|d|h)$/i.test(elem.tagName)) )
+					top  += parseInt( computedStyle.borderTopWidth,  10) || 0,
+					left += parseInt( computedStyle.borderLeftWidth, 10) || 0;
+				prevOffsetParent = offsetParent, offsetParent = elem.offsetParent;
+			}
+			if ( jQuery.offset.subtractsBorderForOverflowNotVisible && computedStyle.overflow !== "visible" )
+				top  += parseInt( computedStyle.borderTopWidth,  10) || 0,
+				left += parseInt( computedStyle.borderLeftWidth, 10) || 0;
+			prevComputedStyle = computedStyle;
+		}
+
+		if ( prevComputedStyle.position === "relative" || prevComputedStyle.position === "static" )
+			top  += body.offsetTop,
+			left += body.offsetLeft;
+
+		if ( prevComputedStyle.position === "fixed" )
+			top  += Math.max(docElem.scrollTop, body.scrollTop),
+			left += Math.max(docElem.scrollLeft, body.scrollLeft);
+
+		return { top: top, left: left };
+	};
+
+jQuery.offset = {
+	initialize: function() {
+		if ( this.initialized ) return;
+		var body = document.body, container = document.createElement('div'), innerDiv, checkDiv, table, td, rules, prop, bodyMarginTop = body.style.marginTop,
+			html = '<div style="position:absolute;top:0;left:0;margin:0;border:5px solid #000;padding:0;width:1px;height:1px;"><div></div></div><table style="position:absolute;top:0;left:0;margin:0;border:5px solid #000;padding:0;width:1px;height:1px;" cellpadding="0" cellspacing="0"><tr><td></td></tr></table>';
+
+		rules = { position: 'absolute', top: 0, left: 0, margin: 0, border: 0, width: '1px', height: '1px', visibility: 'hidden' };
+		for ( prop in rules ) container.style[prop] = rules[prop];
+
+		container.innerHTML = html;
+		body.insertBefore(container, body.firstChild);
+		innerDiv = container.firstChild, checkDiv = innerDiv.firstChild, td = innerDiv.nextSibling.firstChild.firstChild;
+
+		this.doesNotAddBorder = (checkDiv.offsetTop !== 5);
+		this.doesAddBorderForTableAndCells = (td.offsetTop === 5);
+
+		innerDiv.style.overflow = 'hidden', innerDiv.style.position = 'relative';
+		this.subtractsBorderForOverflowNotVisible = (checkDiv.offsetTop === -5);
+
+		body.style.marginTop = '1px';
+		this.doesNotIncludeMarginInBodyOffset = (body.offsetTop === 0);
+		body.style.marginTop = bodyMarginTop;
+
+		body.removeChild(container);
+		this.initialized = true;
+	},
+
+	bodyOffset: function(body) {
+		jQuery.offset.initialized || jQuery.offset.initialize();
+		var top = body.offsetTop, left = body.offsetLeft;
+		if ( jQuery.offset.doesNotIncludeMarginInBodyOffset )
+			top  += parseInt( jQuery.curCSS(body, 'marginTop',  true), 10 ) || 0,
+			left += parseInt( jQuery.curCSS(body, 'marginLeft', true), 10 ) || 0;
+		return { top: top, left: left };
+	}
+};
+
+
+jQuery.fn.extend({
+	position: function() {
+		var left = 0, top = 0, results;
+
+		if ( this[0] ) {
+			// Get *real* offsetParent
+			var offsetParent = this.offsetParent(),
+
+			// Get correct offsets
+			offset       = this.offset(),
+			parentOffset = /^body|html$/i.test(offsetParent[0].tagName) ? { top: 0, left: 0 } : offsetParent.offset();
+
+			// Subtract element margins
+			// note: when an element has margin: auto the offsetLeft and marginLeft 
+			// are the same in Safari causing offset.left to incorrectly be 0
+			offset.top  -= num( this, 'marginTop'  );
+			offset.left -= num( this, 'marginLeft' );
+
+			// Add offsetParent borders
+			parentOffset.top  += num( offsetParent, 'borderTopWidth'  );
+			parentOffset.left += num( offsetParent, 'borderLeftWidth' );
+
+			// Subtract the two offsets
+			results = {
+				top:  offset.top  - parentOffset.top,
+				left: offset.left - parentOffset.left
+			};
+		}
+
+		return results;
+	},
+
+	offsetParent: function() {
+		var offsetParent = this[0].offsetParent || document.body;
+		while ( offsetParent && (!/^body|html$/i.test(offsetParent.tagName) && jQuery.css(offsetParent, 'position') == 'static') )
+			offsetParent = offsetParent.offsetParent;
+		return jQuery(offsetParent);
+	}
+});
+
+
+// Create scrollLeft and scrollTop methods
+jQuery.each( ['Left', 'Top'], function(i, name) {
+	var method = 'scroll' + name;
+	
+	jQuery.fn[ method ] = function(val) {
+		if (!this[0]) return null;
+
+		return val !== undefined ?
+
+			// Set the scroll offset
+			this.each(function() {
+				this == window || this == document ?
+					window.scrollTo(
+						!i ? val : jQuery(window).scrollLeft(),
+						 i ? val : jQuery(window).scrollTop()
+					) :
+					this[ method ] = val;
+			}) :
+
+			// Return the scroll offset
+			this[0] == window || this[0] == document ?
+				self[ i ? 'pageYOffset' : 'pageXOffset' ] ||
+					jQuery.boxModel && document.documentElement[ method ] ||
+					document.body[ method ] :
+				this[0][ method ];
+	};
+});
+// Create innerHeight, innerWidth, outerHeight and outerWidth methods
+jQuery.each([ "Height", "Width" ], function(i, name){
+
+	var tl = i ? "Left"  : "Top",  // top or left
+		br = i ? "Right" : "Bottom"; // bottom or right
+
+	// innerHeight and innerWidth
+	jQuery.fn["inner" + name] = function(){
+		return this[ name.toLowerCase() ]() +
+			num(this, "padding" + tl) +
+			num(this, "padding" + br);
+	};
+
+	// outerHeight and outerWidth
+	jQuery.fn["outer" + name] = function(margin) {
+		return this["inner" + name]() +
+			num(this, "border" + tl + "Width") +
+			num(this, "border" + br + "Width") +
+			(margin ?
+				num(this, "margin" + tl) + num(this, "margin" + br) : 0);
+	};
+	
+	var type = name.toLowerCase();
+
+	jQuery.fn[ type ] = function( size ) {
+		// Get window width or height
+		return this[0] == window ?
+			// Everyone else use document.documentElement or document.body depending on Quirks vs Standards mode
+			document.compatMode == "CSS1Compat" && document.documentElement[ "client" + name ] ||
+			document.body[ "client" + name ] :
+
+			// Get document width or height
+			this[0] == document ?
+				// Either scroll[Width/Height] or offset[Width/Height], whichever is greater
+				Math.max(
+					document.documentElement["client" + name],
+					document.body["scroll" + name], document.documentElement["scroll" + name],
+					document.body["offset" + name], document.documentElement["offset" + name]
+				) :
+
+				// Get or set width or height on the element
+				size === undefined ?
+					// Get width or height on the element
+					(this.length ? jQuery.css( this[0], type ) : null) :
+
+					// Set the width or height on the element (default to pixels if value is unitless)
+					this.css( type, typeof size === "string" ? size : size + "px" );
+	};
+
+});})();
