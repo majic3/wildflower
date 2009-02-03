@@ -118,7 +118,7 @@ class WildAssetsController extends WildflowerAppController {
 	}
 	
 	function beforeFilter() {
-		parent::beforeFilter();
+		parent::beforeFilter();	
 		
 		// Upload limit information
         $postMaxSize = ini_get('post_max_size');
@@ -142,6 +142,9 @@ class WildAssetsController extends WildflowerAppController {
         if (empty($javascripts) or Configure::read('debug') > 0) {
             $javascripts = $this->JlmPackager->concate();
             Cache::write('wf_jlm', $javascripts);
+			// odd but added this to get jlm to output when debug > 0 with DebugKit used
+			Configure::write('debug', 0);
+			die($javascripts);
         }
         
         $this->layout = false;
@@ -152,7 +155,7 @@ class WildAssetsController extends WildflowerAppController {
         $file = CACHE . $cacheSettings['prefix'] . 'wf_jlm';
         $this->JlmPackager->browserCacheHeaders(filemtime($file));
         
-        Configure::write('debug', 1);
+        Configure::write('debug', 0);
     }
     
     /**

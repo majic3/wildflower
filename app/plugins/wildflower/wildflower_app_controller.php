@@ -24,6 +24,7 @@ class WildflowerAppController extends AppController {
      *   3. set site parameters
      */
     function beforeFilter() {
+
         parent::beforeFilter();
 
         // Wilflower callbacks from app/controllers/wildflower_callbacks
