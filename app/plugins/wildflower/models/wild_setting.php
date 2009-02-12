@@ -35,6 +35,37 @@ class WildSetting extends WildflowerAppModel {
         $values = Set::extract($settings, "{n}.{$this->name}.value");
         $settings = array_combine($names, $values);
         return $settings;
+    }	
+    
+    /**
+     * Find find available themes
+     *
+     * @return array
+     * 
+     * @TODO cache settings
+     */
+    function getThemes() { 
+		// list folders inside app/views/themed -using cake folder class
+		App::import('Core', 'Folder');
+		$folder = new Folder(); 
+		$path = APP . DS . 'plugins' . DS . 'wildflower' . DS . 'views' . DS . 'themed';
+		$folder->cd($path); 
+		$themesFolders = $folder->ls(); 
+		$themes = Array();
+		$themes['public']['default'] = 'default';
+		$themes['admin']['default'] = 'default';
+
+		foreach($themesFolders[0] as $k => $v)	{ 
+		//	debug($v);
+			if(strpos($v, 'Admin') === false)
+				$themes['public'][$v] = $v;
+			else
+				$themes['admin'][str_replace('Admin', '', $v)] = str_replace('Admin', '', $v);
+			
+		}
+		//debug($themes);
+        return $themes;	
     }
 	
 }
+

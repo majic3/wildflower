@@ -87,7 +87,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'wildflower',
+		'database' => 'icing',
 	    'port' => 3306
 	);
 	
@@ -100,11 +100,40 @@ class DATABASE_CONFIG {
 		'driver' => 'mysqli',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => '',
-		'password' => '',
-		'database' => '',
-		'port' => '/tmp/mysql50.sock',
-	    'domain' => 'wf.klevo.sk'
+		'login' => 'ss29db',
+		'password' => 'five',
+		'database' => 'icing',
+	    'domain' => 'icing.ss29'
+	);
+	
+	/**
+	 * This is the configuration for tesla
+	 *
+	 * @var array
+	 */
+	public $tesla = array(
+		'driver' => 'mysqli',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'ss29db',
+		'password' => 'five',
+		'database' => 'icing_tesla',
+	    'domain' => 'tesla.icing.ss29'
+	);
+	
+	/**
+	 * This is the configuration for escher
+	 *
+	 * @var array
+	 */
+	public $escher = array(
+		'driver' => 'mysqli',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'ss29db',
+		'password' => 'five',
+		'database' => 'icing_escher',
+	    'domain' => 'escher.icing.ss29'
 	);
 	
 	/**
@@ -114,14 +143,12 @@ class DATABASE_CONFIG {
 	 */
 	public $production_dev = array(
 		'driver' => 'mysqli',
-	    'encoding' => 'utf8',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'wildflower_dev',
-	    'port' => 3306,
-	    'domain' => 'dev.wildflower.ss29'
+		'login' => 'ss29db',
+		'password' => 'five',
+		'database' => 'icing_dev',
+	    'domain' => 'dev.icing.ss29'
 	);
 	
 	/**
@@ -129,7 +156,7 @@ class DATABASE_CONFIG {
 	 *
 	 * @var array
 	 */
-	public $test = array(
+	public $test_suite = array(
 		'driver' => 'mysqli',
 	    'encoding' => 'utf8',
         'persistent' => false,
@@ -137,8 +164,7 @@ class DATABASE_CONFIG {
         'login' => 'root',
         'password' => '',
         'database' => 'test_wildflower',
-	    'port' => 3306,
-	    'domain' => 'tests.wildflower.ss29'
+	    'port' => 3306
 	);
 	
     /**

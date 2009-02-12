@@ -25,6 +25,8 @@ class WildflowerAppController extends AppController {
      */
     function beforeFilter() {
 
+		// dev.majic3 had some code here to check if the another theme is being used for the admin area
+
         parent::beforeFilter();
 
         // Wilflower callbacks from app/controllers/wildflower_callbacks

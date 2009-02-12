@@ -10,6 +10,7 @@ class WildDashboardsController extends WildflowerAppController {
         // $messages = $this->WildMessage->find('all', array('limit' => 5));
         $pages = $this->WildPage->find('all', array('limit' => 10, 'order' => 'WildPage.updated DESC'));
 		$this->set(compact('pages'));
+		//dev.majic3 $this->set(compact('comments', 'messages'));
 	}
 	
     /**
