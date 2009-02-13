@@ -241,4 +241,30 @@ class WildAssetsController extends WildflowerAppController {
         $this->set(compact('files'));
 	}
     
+    /**
+     * Creates a screen shot of one the webs bests most informative sites :) as a test
+	 *
+	  * Using alan blount (zeroasterisk) webthumb helper - you need a 
+     *
+     * @param $imageName File name from webroot/uploads/
+     */
+	function wf_saveScreen() {
+
+		if($this->data)	{
+			// later make this save the asset to the uploads directory
+
+			// the url of screen shot
+			$MyURL = 'http://bakery.cakephp.org/';
+
+			// the name of file to be saved based upon the url - so bakery.cakephp.org will be a different screen shot to 
+			// http://bakery.cakephp.org/articles/view/webthumb-helping-you-to-take-screenshots-on-the-easy
+			$SaveFileAs = WWW_ROOT.DS.'/screenshot.jpg';
+			if ($this->Webthumb->getAndSave($SaveFileAs,$MyURL)) {
+				$this->set('screenshot','screenshot.jpg');
+			}
+		}	else	{
+			// set the form that allows images to be saved
+		}
+    } 
+    
 }

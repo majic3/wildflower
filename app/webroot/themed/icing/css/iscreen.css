@@ -182,18 +182,22 @@ border:2px solid #DDDDDD;
 margin-bottom:1em;
 padding:0.8em;
 }
+.error	p, .notice	p, .success p	{
+	margin: 2px 3px;
+	padding: 3px 3px 3px 35px;
+}
 .error {
-background:#FBE3E4 none repeat scroll 0 0;
+background:#FBE3E4 url(/themed/icing/css/img/silk-icons/exclamation.png) no-repeat scroll 20px center;
 border-color:#FBC2C4;
 color:#8A1F11;
 }
 .notice {
-background:#FFF6BF none repeat scroll 0 0;
+background:#FFF6BF url(/themed/icing/css/img/silk-icons/information.png) no-repeat scroll 20px center;
 border-color:#FFD324;
 color:#514721;
 }
 .success {
-background:#E6EFC2 none repeat scroll 0 0;
+background:#E6EFC2 url(/themed/icing/css/img/silk-icons/accept.png) no-repeat scroll 20px center;
 border-color:#C6D880;
 color:#264409;
 }
