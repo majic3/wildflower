@@ -20,14 +20,14 @@
 <?php echo $form->end(); ?>
 
 <p class="link-info">
-    <?php echo $html->link(FULL_BASE_URL . $this->base . $this->data['WildLink']['name'], WildLink::getUrl($this->data['WildLink']['url'])); ?><?php endif; ?>
+    <?php echo $html->link(FULL_BASE_URL . $this->base . $this->data['WildLink']['name'], WildLink::getUrl($this->data['WildLink']['url'])); ?>
 </p>
 
 
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li class="sidebar-box">
         <h4><?php __('Categorizing link...'); ?></h4>
-        <?php echo $html->link($this->data['WildLink']['title'], array('action' => 'edit', $this->data['WildLink']['id']), array('class' => 'edited-item-link')); ?>
+        <?php echo $html->link($this->data['WildLink']['name'], array('action' => 'edit', $this->data['WildLink']['id']), array('class' => 'edited-item-link')); ?>
     </li>
     <li id="add-category-box" class="sidebar-box">
         <h4 class="add"><?php __('Add a new link category'); ?></h4>

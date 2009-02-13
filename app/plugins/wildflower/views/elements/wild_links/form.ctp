@@ -13,6 +13,6 @@
     '<div>',
     $form->hidden('id'),
     '</div>',
-    $form->submit('Publish'),
+    $form->submit('save'),
     $form->end();
 ?>

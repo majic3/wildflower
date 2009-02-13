@@ -32,8 +32,7 @@ class WildCategoriesController extends WildflowerAppController {
     		unset($this->data[$this->modelClass]['parent_id']);
     	}
     	
-    	$postId = intval($this->data[$this->modelClass]['wild_post_id']);
-    	unset($this->data[$this->modelClass]['wild_post_id']);
+		// need to optionally set link or post id here
     	
     	if ($this->WildCategory->save($this->data)) {
     	    // Category list
