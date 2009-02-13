@@ -23,7 +23,7 @@
     ?>
     
     <div id="edit-buttons">
-        <?php echo $this->element('wf_edit_buttons'); ?>
+        <?php // might make an active button element echo $this->element('wf_edit_buttons'); ?>
     </div>
 </div> 
 
