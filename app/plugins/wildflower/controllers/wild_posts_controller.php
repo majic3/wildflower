@@ -46,6 +46,15 @@ class WildPostsController extends WildflowerAppController {
      * 
      */
     function wf_comments($id = null) {
+
+		/*
+			icing::escher	- adding gravatar helper for people who post - also want the open id too options to choose between the two?? nice
+
+			gravatar needs some testing 2 options
+				*  bryce (bdude) - http://bakery.cakephp.org/articles/view/gravatar
+				*  Graham Weldon - http://bakery.cakephp.org/articles/view/gravatar-helper
+		*/
+
         $this->data = $this->{$this->modelClass}->find('first', array(
             'conditions' => array('WildPost.id' => $id),
             'contain' => array(
