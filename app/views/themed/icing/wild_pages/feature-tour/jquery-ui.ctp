@@ -8,10 +8,5 @@
  * @package wildflower
  */
 ?>
-<div class="page">
-    <div class="entry">
-       <?php echo $element->format($page['WildPage']['content']); ?> 
-    </div>
-    
+       <?php echo $page['WildPage']['content']; ?>
     <?php echo $this->element('edit_this', array('id' => $page['WildPage']['id'])) ?>
-</div>

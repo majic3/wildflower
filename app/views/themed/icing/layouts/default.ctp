@@ -54,8 +54,8 @@ echo $html->doctype('xhtml-strict') ?>
 
 <div id="page" class="wrapper">
 	<div id="header">
+		<p id="ident"><?php echo $html->link(Configure::read('AppSettings.site_name'), '/', null, null, false); ?></p>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
-		<p id="logo"><?php echo $html->link(Configure::read('AppSettings.site_name'), '/', null, null, false); ?></p>
 	</div>
 
 	<div id="navigation">
