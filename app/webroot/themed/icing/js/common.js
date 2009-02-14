@@ -43,6 +43,7 @@ function init()	{
 	$('.jScrollPane').jScrollPane();
 	///$('.accordion').accordion();
 	$('#body').unblock();
+	$('a.feed').gFeed( { target: '#feeds', tabs: true } );
 
 }
 
