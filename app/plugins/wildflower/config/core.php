@@ -35,7 +35,7 @@ Configure::write(array('Wildflower' => array(
 
 // icing config 0.6
 Configure::write(array('Icing' => array(
-	'version' => '0.6.5',
+	'version' => '0.6.6',
 	'prefix' => '',
 	'assets' => array(
 		'adminScripts' => array(
@@ -57,6 +57,7 @@ Configure::write(array('Icing' => array(
 			'jquery.tipsy', 
 			'jquery.blockui', 
 			'jquery.growl', 
+			'jquery.gfeeds', 
 			'jquery.easing',
 			'shadowbox', 
 			'common'
@@ -91,5 +92,25 @@ Configure::write(array('Icing' => array(
         'name' => 'jQuery',
         'url' => 'jquery.com/blog/feed/'
 		)
+	),
+    'open_id' => array(
+		'adminConfig' => array(
+			'email' => 'youropenid@network.com'
+		),
+		'pubSettings' => array(
+			'useOnComments' => false
+		)
+	),
+    'gravatar' => array(
+		'pubSettings' => array(
+			'useOnComments' => false
+		)
+	),
+    'webthumbs' => array(
+		'thumb_url' => 'http://webthumb.bluga.net/easythumb.php',
+		'user_id' => '1234',
+		'api_key' => 'replace0this0with0your0key000000', 
+		'default_size' => 'medium2', 
+		'default_cache' => '-1'
     )
 )));

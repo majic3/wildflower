@@ -33,6 +33,7 @@ Router::connect("/$prefix/dashboards/search", array('plugin' => 'wildflower', 'c
 
 // Login screen
 Router::connect("/$prefix/login", array('controller' => 'wild_users', 'action' => 'login', 'plugin' => 'wildflower'));
+Router::connect("/$prefix/resetpass/:useroremail", array('controller' => 'wild_users', 'action' => 'resetpass', 'plugin' => 'wildflower'));
 
 // Contact form
 Router::connect('/contact', array('controller' => 'wild_messages', 'action' => 'index', 'plugin' => 'wildflower'));

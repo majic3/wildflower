@@ -9,6 +9,7 @@ echo $form->input('password',  array('between' => '<br />'));
 <div id="remember"><?php echo $form->input('remember', array(
 	'type' => 'checkbox',
 	'label' => 'Remember me?')); ?></div>
+<div id="forgottenlogin"><?php echo $html->link('Password Reset', '/wf/resetpass'); ?></div>
 <?php
 
 // Auth error message

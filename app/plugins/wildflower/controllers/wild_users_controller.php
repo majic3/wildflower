@@ -77,6 +77,60 @@ class WildUsersController extends WildflowerAppController {
     }
 
     /**
+     * reset password
+     * 
+     * Three stage process to reset password first sent link then click link to reset the new pass is sent to address
+     */
+    function resetpass() {	
+        $this->layout = 'login';   
+        $this->pageTitle = 'Reseting password';
+        $useroremail = Sanitize::paranoid($this->params['useroremail']);
+		if(is_null($useroremail))	{
+			// first stage
+			$email = '';
+			$stage = 1;	   
+				$type = 'notice';
+				$message = 'We need to scope you out a bit please tell us your email / username and we will send you a link to reset your password';
+		}	elseif(is_string($useroremail) && (strlen($useroremail) !== 40))	{
+			// second stage - if param is a valid username or email address for a user then send new password to this user
+			$email = $useroremail;
+			$stage = 2;		
+			$user = $this->WildUser->find(array('email' => $email));
+			$type = 'notice';
+			$message = "a link has been sent to you address use that link to have another pass generated and sent to <strong>$email</strong>";
+
+			if (empty($user)) {
+				$type = 'alert';
+				$message = "It looks asif your up to things you should'nt be doing!! <strong>$email</strong>";
+			}	else {
+        		// @TODO: Akismet validation in model
+        		$this->Email->to = $user['User']['email'];
+        		$this->Email->from = Configure::read('AppSettings.contact_email');
+        		$this->Email->replyTo = Configure::read('AppSettings.contact_email');
+        		$this->Email->subject = Configure::read('AppSettings.site_name') . ' Password Reset';
+        		$this->Email->sendAs = 'text';
+        		$this->Email->template = 'password_reset';	
+				$resetlink = sha1(date('w') . Configure::read('Security.salt') . date('m') . $user['User']['password'] . date('Y'));
+        		$this->set('message', "If this is an error then ignore this email but you should perhaps change the password");
+			}
+
+		}	else	{
+			// check hash is a hash we want to know - it should be a sha1 of (day salt currentpass month)
+			if(1 ==5)	{
+				$email = '';
+				$type = 'success';
+				$message = 'You have been reapproved your new pass has been sent';
+			}	else	{
+				$email = '';
+				$type = 'alert';
+				$message = 'You not a real person according to us';
+			}
+			$stage = 3;
+		}
+			$this->set(compact('stage', 'email', 'message', 'type'));
+    }
+
+    /**
      * Logout
      * 
      * Delete User info from Session, Cookie and reset cookie token.
