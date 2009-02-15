@@ -51,7 +51,6 @@
 
 <div id="header">
     <div id="header-wrap">
-    <?php if (!isset($isFullEdit)): ?>
         <h1 id="site-title">
             <?php echo $html->link($siteName, '/', array('title' => __('View site home page', true))) ?>
         </h1>
@@ -72,9 +71,6 @@
                 __('Links', true) => array('controller' => 'wild_links'),
             ), array('id' => 'nav'));
         ?>
-    <?php else: ?>
-        <?php echo $html->link(__('← Go to all pages', true), array('action' => 'index'), array('id' => 'full-edit-back-link')); ?>
-    <?php endif; ?>
     </div>
 </div>
 
