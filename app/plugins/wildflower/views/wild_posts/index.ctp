@@ -29,6 +29,6 @@
     </div>
     <?php } ?>
     
-    <?php echo $this->element('wf_pagination') ?>
+    <?php echo $this->element('wf_ppagination') ?>
     
 </div>
