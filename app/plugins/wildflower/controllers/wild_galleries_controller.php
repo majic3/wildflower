@@ -1,7 +1,8 @@
 <?php
 class WildGalleriesController extends WildflowerAppController {
 
-	var $name = 'WildGalleries';
+	var $name = 'WildGalleries'; 
+	public $components = array('Flickr', 'Director');
 	public $helpers = array('Cache', 'Wildflower.List', 'Rss', 'Wildflower.Textile', 'Wildflower.Category', 'Wildflower.Tree', 'Time');
     public $paginate = array(
         'limit' => 10,
@@ -46,31 +47,78 @@ class WildGalleriesController extends WildflowerAppController {
     }
 
     /**
-     * View a gallery entry
+     * View a gallery item singular
      *
      */
-	function view() {
-        
+	function show() { 
 		if (Configure::read('AppSettings.cache') == 'on') {
             $this->cacheAction = 60 * 60 * 24 * 3; // Cache for 3 days
         }
 
         $slug = Sanitize::paranoid($this->params['slug']);
-        $gallery = $this->WildGallery->findBySlugAndDraft($slug, 0);
+        //$gallery = $this->WildGallery->findBySlugAndDraft($slug, 0);
+        $gallery = $this->WildGallery->findBySlug($slug);
 
-		#	if (empty($gallery)) {	return $this->do404();	}
+		//	if (empty($gallery)) {	return $this->do404();	}
         
         // Gallery title
         $this->pageTitle = $post[$this->modelClass]['name'];
-        
-        if (isset($this->params['requested'])) {
-            return $post;
-        }
         
         $this->set(array(
             'gallery' => $gallery,
             'descriptionMetaTag' => $gallery[$this->modelClass]['description_meta_tag']
         ));
+		
+		$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
+		$this->set('sets', $photosets);
+		$currset = $id == null ? $photosets['photoset'][0]['id'] : $id;
+		$this->set('currset', $this->flickr->photosets_getInfo($currset));
+		$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
+
+		$this->set('slug', $slug);
+		//$this->set('slug', $slug);
+
+        if (isset($this->params['requested'])) {
+            return $gallery;
+        }
+    }
+
+    /**
+     * View a gallery thumbs linking to singular
+     *
+     */
+	function view() {
+
+		if (Configure::read('AppSettings.cache') == 'on') {
+            $this->cacheAction = 60 * 60 * 24 * 3; // Cache for 3 days
+        }
+
+        $slug = Sanitize::paranoid($this->params['slug']);
+        //$gallery = $this->WildGallery->findBySlugAndDraft($slug, 0);
+        //$gallery = $this->WildGallery->findBySlug($slug);
+
+		if (empty($gallery)) {	return $this->do404();	}
+        
+        // Gallery title
+        $this->pageTitle = $post[$this->modelClass]['name'];
+        
+        $this->set(array(
+            'gallery' => $gallery,
+            'descriptionMetaTag' => $gallery[$this->modelClass]['description_meta_tag']
+        ));
+		
+		$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
+		$this->set('sets', $photosets);
+		$currset = $id == null ? $photosets['photoset'][0]['id'] : $id;
+		$this->set('currset', $this->flickr->photosets_getInfo($currset));
+		$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
+
+		$this->set('slug', $slug);
+		//$this->set('slug', $slug);
+
+        if (isset($this->params['requested'])) {
+            return $gallery;
+        }
     }
 
     /**

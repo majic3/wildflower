@@ -32,7 +32,8 @@ Configure::write(array('Wildflower' => array(
     'galleryDirectoryName' => 'img/gallery',
     'galleryDirectory' => APP . WEBROOT_DIR .  DS . 'img/gallery', // @TODO rename the key
     'galleryName' => 'media',
-    'galleryView' => 'media/s',
+    'galleryView' => 'media/view',
+    'galleryShow' => 'media/show',
     'galleryIndex' => 'media',
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
@@ -41,14 +42,17 @@ Configure::write(array('Wildflower' => array(
 
 // flickr - 0.1a
 Configure::write(array('Flickr' => array(
-	'api_key' => '',
+	'userID' => 'your uid',
+	'secret' => 'your-secret',
+	'api_key' => 'your-key',
 	'cache' => CACHE . 'flickr',
 )));
 
 // slideshowpro director - 0.1a
 Configure::write(array('Director' => array(
-	'api_key' => '',
-	'path' => ''
+	'api_key' => 'your-api-key',
+	'path' => 'your-api-path',
+	'cache' => CACHE . 'Director',
 )));
 
 // icing config 0.6

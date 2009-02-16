@@ -49,7 +49,8 @@ Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/*', array('con
 Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/rss', array('controller' => 'wild_posts', 'action' => 'rss', 'plugin' => 'wildflower'));
 
 // Ultra sexy short SEO friendly post URLs in form of http://my-domain/p/40-char-uuid
-Router::connect('/' . Configure::read('Wildflower.galleryView') . '/:slug/:itemName', array('controller' => 'wild_galleries', 'action' => 'view', 'plugin' => 'wildflower'));
+Router::connect('/' . Configure::read('Wildflower.galleryShow') . '/:slug/:itemName', array('controller' => 'wild_galleries', 'action' => 'view', 'plugin' => 'wildflower'));
+Router::connect('/' . Configure::read('Wildflower.galleryView') . '/:slug', array('controller' => 'wild_galleries', 'action' => 'view', 'plugin' => 'wildflower'));
 // post is going to need /* to catch pagination params
 Router::connect('/' . Configure::read('Wildflower.galleryIndex') . '/*', array('controller' => 'wild_galleries', 'action' => 'index', 'plugin' => 'wildflower'));
 //	later - Router::connect('/' . Configure::read('Wildflower.galleryIndex') . '/rss', array('controller' => 'wild_galleries', 'action' => 'rss', 'plugin' => 'wildflower'));

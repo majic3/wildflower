@@ -7,7 +7,7 @@
   * @edited by To Wonder
 */
 
-define("FLICKR_CACHE_DIR",CACHE . "flickr/");
+define("FLICKR_CACHE_DIR",Configure::read('Flickr.cache'));
 
 class FlickrComponent extends Component		{
 
@@ -27,7 +27,9 @@ class FlickrComponent extends Component		{
 
 
 
-		function startup($controller){         
+		function startup($controller){
+
+			$this->_api_key=Configure::read('Flickr.api_key');
 
 			app::import('Vendor','phpflickr',array('file'=>'phpFlickr'.DS.'phpFlickr.php'));
 		  //FlickrComponent instance of controller is replaced by a phpFlickr instance
