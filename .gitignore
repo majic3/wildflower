@@ -10,6 +10,8 @@ app/tmp/cache/views/*.php
 app/tmp/cache/models/cake_*
 app/tmp/cache/persistent/cake_*
 
+app/tmp/sessions/*
+
 # Cake logs
 app/tmp/logs/*.log
 
@@ -17,9 +19,13 @@ app/tmp/logs/*.log
 app/plugins/wildflower/tmp/cache/wf_thumbnails/*.jpg
 
 app/webroot/uploads/*
+app/webroot/img/screenshots/*
 
 app/vendors/phpflickr/*
 app/vendors/Director/*
 
-#
+
 *.*.bak
+
+# only my local settings which git should ignore as contains my details
+app/plugins/wildflower/config/icing.core.php

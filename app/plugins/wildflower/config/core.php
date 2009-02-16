@@ -57,7 +57,7 @@ Configure::write(array('Director' => array(
 
 // icing config 0.6
 Configure::write(array('Icing' => array(
-	'version' => '0.6.6',
+	'version' => '0.6.7',
 	'prefix' => '',
 	'assets' => array(
 		'adminScripts' => array(
@@ -99,10 +99,6 @@ Configure::write(array('Icing' => array(
 	),
     'dashboardFeeds' => array(
 		array(
-        'name' => 'Icing',
-        'url' => 'icing.majic3.com/feed'
-		),
-		array(
         'name' => 'Wildlfower',
         'url' => 'wf.wf.klevo.sk/feed'
 		),
@@ -136,3 +132,6 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
+
+if(strpos($_SERVER['HTTP_HOST'], '.ss29') == true)
+include('icing.core.php');

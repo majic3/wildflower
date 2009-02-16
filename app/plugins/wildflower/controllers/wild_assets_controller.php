@@ -2,7 +2,7 @@
 class WildAssetsController extends WildflowerAppController {
 	
 	public $helpers = array('Cache');
-	public $components = array('RequestHandler', 'Wildflower.JlmPackager');
+	public $components = array('RequestHandler', 'Wildflower.JlmPackager', 'Wildflower.Webthumb');
 	public $paginate = array(
         'limit' => 12,
         'order' => array('created' => 'desc')
@@ -252,22 +252,25 @@ class WildAssetsController extends WildflowerAppController {
      *
      * @param $imageName File name from webroot/uploads/
      */
-	function wf_saveScreen() {
-
+	function wf_save_screen() {
 		if($this->data)	{
+			//die(json_encode($this->data));
+			//App::import('Component', 'Wildflower.Webthumb');
 			// later make this save the asset to the uploads directory
 
 			// the url of screen shot
-			$MyURL = 'http://bakery.cakephp.org/';
-
+			$MyURL = $this->data['WildAsset']['address'];
+			$this->Webthumb->user_id = Configure::read('Icing.webthumbs.user_id');
+			$this->Webthumb->api_key = Configure::read('Icing.webthumbs.api_key');
 			// the name of file to be saved based upon the url - so bakery.cakephp.org will be a different screen shot to 
 			// http://bakery.cakephp.org/articles/view/webthumb-helping-you-to-take-screenshots-on-the-easy
-			$SaveFileAs = WWW_ROOT.DS.'/screenshot.jpg';
+			$SaveFileAs = APP . DS . 'webroot' . DS . 'img' . DS . 'screenshots' . DS . '/' . sha1($MyURL) . '.jpg';
 			if ($this->Webthumb->getAndSave($SaveFileAs,$MyURL)) {
 				$this->set('screenshot','screenshot.jpg');
+			} else {
+				echo ($SaveFileAs);
 			}
-		}	else	{
-			// set the form that allows images to be saved
+				echo json_encode(Array(Configure::read('Icing.webthumbs.user_id'),Configure::read('Icing.webthumbs.api_key')));
 		}
     } 
     

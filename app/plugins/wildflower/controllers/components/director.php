@@ -1,10 +1,10 @@
 <?php
 /**
-  * Flickr Component
-  * @author RosSoft
+  * Director Component
+  * @author Sam@Majic3
   * @license MIT
   * @version 0.1
-  * @edited by To Wonder
+  * @based on Flickr Comp by RosSoft & To Wonder
 */
 
 define("DIRECTOR_CACHE_DIR",Configure::read('Director.cache'));
@@ -29,9 +29,9 @@ class DirectorComponent extends Component		{
 			$this->_api_key=Configure::read('Director.api_key');
 			$this->_path=Configure::read('Director.path');
 
-			app::import('Vendor','Director',array('file'=>'director'.DS.'Director.php'));
+			app::import('Vendor','Director',array('file'=>'director'.DS.'DirectorPHP.php'));
 		  //FlickrComponent instance of controller is replaced by a phpFlickr instance
-			   $controller->director =& new phpFlickr($this->_api_key);
+			   $controller->director =& new Director($this->_api_key, $this->_path);
 				if (!is_dir(DIRECTOR_CACHE_DIR))	{
 				  mkdir(DIRECTOR_CACHE_DIR,0777);
 				}

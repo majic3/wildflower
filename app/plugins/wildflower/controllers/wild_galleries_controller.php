@@ -1,8 +1,8 @@
 <?php
 class WildGalleriesController extends WildflowerAppController {
 
-	var $name = 'WildGalleries'; 
-	public $components = array('Flickr', 'Director');
+	//public $name = 'WildGalleries'; 
+	public $components = array('Wildflower.Flickr', 'Wildflower.Director');
 	public $helpers = array('Cache', 'Wildflower.List', 'Rss', 'Wildflower.Textile', 'Wildflower.Category', 'Wildflower.Tree', 'Time');
     public $paginate = array(
         'limit' => 10,
@@ -23,7 +23,41 @@ class WildGalleriesController extends WildflowerAppController {
 	        'order' => array('WildGallery.created' => 'desc'),
 			'conditions' => 'WildGallery.draft = 0'
 	    );
-	    $galleries = $this->paginate($this->modelClass);
+	    $galleries = $this->paginate($this->modelClass);   	 
+
+		$director = $this->director;
+		$director->format->add(array(
+			'name' => 'thumb', 
+			'width' => '100', 
+			'height' => '100', 
+			'crop' => 1, 
+			'quality' => 75, 
+			'sharpening' => 1));
+		$director->format->add(array(
+			'name' => 'large', 
+			'width' => '800', 
+			'height' => '450', 
+			'crop' => 0, 
+			'quality' => 95, 
+			'sharpening' => 1));
+		$director->format->preview(array(
+			'width' => '100', 
+			'height' => '50', 
+			'crop' => 1, 
+			'quality' => 85, 
+			'sharpening' => 1));
+		$album = $director->album->get(1);
+		$contents = $album->contents[0];
+		$this->set('director', $director);	 
+		$this->set('album', $album);	 
+		$this->set('contents', $contents);	 
+		
+		$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
+		$this->set('sets', $photosets);
+		$currset = (empty($id)) ? $photosets['photoset'][0]['id'] : $id;
+		$this->set('currset', $this->flickr->photosets_getInfo($currset));
+		$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
+		$this->set('flickr', $this->flickr); 
 	    
         if (isset($this->params['requested'])) {
             return $galleries;
@@ -68,12 +102,6 @@ class WildGalleriesController extends WildflowerAppController {
             'gallery' => $gallery,
             'descriptionMetaTag' => $gallery[$this->modelClass]['description_meta_tag']
         ));
-		
-		$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
-		$this->set('sets', $photosets);
-		$currset = $id == null ? $photosets['photoset'][0]['id'] : $id;
-		$this->set('currset', $this->flickr->photosets_getInfo($currset));
-		$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
 
 		$this->set('slug', $slug);
 		//$this->set('slug', $slug);
