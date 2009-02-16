@@ -2,7 +2,7 @@
 class WildAssetsController extends WildflowerAppController {
 	
 	public $helpers = array('Cache');
-	public $components = array('RequestHandler', 'Wildflower.JlmPackager', 'Wildflower.Webthumb');
+	public $components = array('RequestHandler', 'Wildflower.JlmPackager');
 	public $paginate = array(
         'limit' => 12,
         'order' => array('created' => 'desc')
@@ -127,6 +127,11 @@ class WildAssetsController extends WildflowerAppController {
         if ($uploadMaxSize < $postMaxSize) {
             $size = $uploadMaxSize;
         }
+
+		if(isset($this->data) && ($this->action == 'wf_save_screen')) {
+			App::import('Component', 'Wildflower.Webthumb');
+			$this->Webthumb = new WebthumbComponent($this);
+		}
         $size = str_replace('M', 'MB', $size);
         $limits = "Maximum allowed file size: $size";
         $this->set('uploadLimits', $limits);
@@ -255,7 +260,6 @@ class WildAssetsController extends WildflowerAppController {
 	function wf_save_screen() {
 		if($this->data)	{
 			//die(json_encode($this->data));
-			//App::import('Component', 'Wildflower.Webthumb');
 			// later make this save the asset to the uploads directory
 
 			// the url of screen shot

@@ -26,7 +26,7 @@ class WebthumbComponent extends Object {
     */
     function startup(&$controller) {
         $this->controller = & $controller;
-        return true;
+        return $this;
     }
     /**
     * executes a request from webthumbs, and saves the resulting data as a file of some sort.
