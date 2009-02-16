@@ -26,11 +26,29 @@ Configure::write(array('Wildflower' => array(
     'rootPageCache' => CACHE . 'wf_root_pages',
     'previewCache' => CACHE . 'wf_previews' . DS,
     'thumbnailsCache' => WILDFLOWER_CACHE . DS . 'wf_thumbnails',
-    'postsParent' => 'p',
-    'blogIndex' => 'posts',
+    'postsParent' => 'post',
+    'blogName' => 'posts',	 
+    'blogIndex' => 'posts',	 
+    'galleryDirectoryName' => 'img/gallery',
+    'galleryDirectory' => APP . WEBROOT_DIR .  DS . 'img/gallery', // @TODO rename the key
+    'galleryName' => 'media',
+    'galleryView' => 'media/s',
+    'galleryIndex' => 'media',
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
     'disableRootPageCache' => false,
+)));
+
+// flickr - 0.1a
+Configure::write(array('Flickr' => array(
+	'api_key' => '',
+	'cache' => CACHE . 'flickr',
+)));
+
+// slideshowpro director - 0.1a
+Configure::write(array('Director' => array(
+	'api_key' => '',
+	'path' => ''
 )));
 
 // icing config 0.6

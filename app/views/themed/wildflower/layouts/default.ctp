@@ -53,8 +53,9 @@
             echo $navigation->create(array(
                 'Home' => '/',
                 'Feature tour' => '/feature-tour',
-                'Blog' => '/blog',
+                Configure::read('Wildflower.blogName') => '/' . Configure::read('Wildflower.blogIndex'),
                 'Documentation' => '/documentation',
+                Configure::read('Wildflower.galleryName') => '/' . Configure::read('Wildflower.galleryIndex'),
                 'Contact' => '/contact'
             ), array('id' => 'navigation'));
         ?>

@@ -14,7 +14,7 @@ $admin = Configure::read('Routing.admin');
  * Changing Wildflower.prefix in app/plugins/wildflower/config/core.php allows you
  * to change the WF admin url. After this access the admin under /your-prefix.
  */
-$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'links');
+$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'links', 'galleries');
 foreach ($wfControllers as $shortcut) {
 	Router::connect(
 		"/$prefix/$shortcut", 
@@ -47,6 +47,12 @@ Router::connect('/' . Configure::read('Wildflower.postsParent') . '/:uuid', arra
 // post is going to need /* to catch pagination params
 Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/*', array('controller' => 'wild_posts', 'action' => 'index', 'plugin' => 'wildflower'));
 Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/rss', array('controller' => 'wild_posts', 'action' => 'rss', 'plugin' => 'wildflower'));
+
+// Ultra sexy short SEO friendly post URLs in form of http://my-domain/p/40-char-uuid
+Router::connect('/' . Configure::read('Wildflower.galleryView') . '/:slug/:itemName', array('controller' => 'wild_galleries', 'action' => 'view', 'plugin' => 'wildflower'));
+// post is going to need /* to catch pagination params
+Router::connect('/' . Configure::read('Wildflower.galleryIndex') . '/*', array('controller' => 'wild_galleries', 'action' => 'index', 'plugin' => 'wildflower'));
+//	later - Router::connect('/' . Configure::read('Wildflower.galleryIndex') . '/rss', array('controller' => 'wild_galleries', 'action' => 'rss', 'plugin' => 'wildflower'));
 
 // Image thumbnails
 Router::connect('/wildflower/thumbnail/*', array('plugin' => 'wildflower', 'controller' => 'wild_assets', 'action' => 'thumbnail'));
