@@ -1,5 +1,5 @@
 <?php
-class WildLink extends AppModel {
+class WildLink extends WildflowerAppModel {
 
 	var $name = 'WildLink';
 	var $validate = array(

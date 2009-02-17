@@ -14,7 +14,7 @@ $admin = Configure::read('Routing.admin');
  * Changing Wildflower.prefix in app/plugins/wildflower/config/core.php allows you
  * to change the WF admin url. After this access the admin under /your-prefix.
  */
-$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'links', 'galleries');
+$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'links', 'galleries', 'stats');
 foreach ($wfControllers as $shortcut) {
 	Router::connect(
 		"/$prefix/$shortcut", 
