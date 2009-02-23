@@ -321,6 +321,7 @@ jQuery.fn = jQuery.prototype = {
 			} else
 				return this.cloneNode(true);
 		});
+
 		// Copy the events from the original to the clone
 		if ( events === true ) {
 			var orig = this.find("*").andSelf(), i = 0;
@@ -1950,23 +1951,6 @@ var Expr = Sizzle.selectors = {
 						return false;
 					}
 				}
-			} else {
-				for ( var i = 0, l = checkSet.length; i < l; i++ ) {
-					var elem = checkSet[i];
-					if ( elem ) {
-						checkSet[i] = typeof part === "string" ?
-							elem.parentNode :
-							elem.parentNode === part;
-					}
-				}
-
-				if ( typeof part === "string" ) {
-					Sizzle.filter( part, checkSet, true );
-				}
-			}
-		},
-		"": function(checkSet, part, isXML){
-			var doneName = "done" + (done++), checkFn = dirCheck;
 
 				return true;
 			}
@@ -1988,6 +1972,7 @@ var Expr = Sizzle.selectors = {
 					return true;
 				case 'nth':
 					var first = match[2], last = match[3];
+
 					if ( first == 1 && last == 0 ) {
 						return true;
 					}
@@ -2060,9 +2045,6 @@ var Expr = Sizzle.selectors = {
 			if ( filter ) {
 				return filter( elem, i, match, array );
 			}
-		},
-		TAG: function(match, context){
-			return context.getElementsByTagName(match[1]);
 		}
 	}
 };
@@ -2201,40 +2183,7 @@ if ( document.documentElement.compareDocumentPosition ) {
 
 				results = tmp;
 			}
-		},
-		ID: function(elem, match){
-			return elem.nodeType === 1 && elem.getAttribute("id") === match;
-		},
-		TAG: function(elem, match){
-			return (match === "*" && elem.nodeType === 1) || elem.nodeName === match;
-		},
-		CLASS: function(elem, match){
-			return match.test( elem.className );
-		},
-		ATTR: function(elem, match){
-			var result = Expr.attrHandle[ match[1] ] ? Expr.attrHandle[ match[1] ]( elem ) : elem[ match[1] ] || elem.getAttribute( match[1] ), value = result + "", type = match[2], check = match[4];
-			return result == null ?
-				type === "!=" :
-				type === "=" ?
-				value === check :
-				type === "*=" ?
-				value.indexOf(check) >= 0 :
-				type === "~=" ?
-				(" " + value + " ").indexOf(check) >= 0 :
-				!match[4] ?
-				result :
-				type === "!=" ?
-				value != check :
-				type === "^=" ?
-				value.indexOf(check) === 0 :
-				type === "$=" ?
-				value.substr(value.length - check.length) === check :
-				type === "|=" ?
-				value === check || value.substr(0, check.length + 1) === check + "-" :
-				false;
-		},
-		POS: function(elem, match, i, array){
-			var name = match[2], filter = Expr.setFilters[ name ];
+
 			return results;
 		};
 	}
@@ -2328,6 +2277,7 @@ function dirNodeCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
 					match = elem;
 					break;
 				}
+
 				elem = elem[dir];
 			}
 
@@ -2406,6 +2356,7 @@ var posProcess = function(selector, context){
 	for ( var i = 0, l = root.length; i < l; i++ ) {
 		Sizzle( selector, root[i], tmpSet );
 	}
+
 	return Sizzle.filter( later, tmpSet );
 };
 
@@ -3017,13 +2968,6 @@ jQuery.fn.extend({
 			// Add the function to the wait list
 			jQuery.readyList.push( fn );
 
-		jQuery(document).bind( liveConvert(type, this.selector), this.selector, proxy );
-
-		return this;
-	},
-	
-	die: function( type, fn ){
-		jQuery(document).unbind( liveConvert(type, this.selector), fn ? { guid: fn.guid + this.selector + type } : null );
 		return this;
 	},
 	
@@ -3055,11 +2999,6 @@ function liveHandler( event ){
 		}
 	});
 
-<<<<<<< HEAD:app/plugins/wildflower/jlm/lib/jquery.js
-	jQuery.each(elems, function(){
-		if ( this.fn.call(this.elem, event, this.fn.data) === false )
-			stop = false;
-=======
 	elems.sort(function(a,b) {
 		return jQuery.data(a.elem, "closest") - jQuery.data(b.elem, "closest");
 	});
@@ -3067,7 +3006,6 @@ function liveHandler( event ){
 	jQuery.each(elems, function(){
 		if ( this.fn.call(this.elem, event, this.fn.data) === false )
 			return (stop = false);
->>>>>>> 663854e0da4c97237b3a43fa55f1df5f2a5b9f7a:app/plugins/wildflower/jlm/lib/jquery.js
 	});
 
 	return stop;
@@ -3869,6 +3807,7 @@ jQuery.fn.extend({
 						
 						elemdisplay[ tagName ] = display;
 					}
+					
 					jQuery.data(this[i], "olddisplay", display);
 				}
 			}
@@ -4109,6 +4048,7 @@ jQuery.fx.prototype = {
 		}
 
 		t.elem = this.elem;
+
 		if ( t() && jQuery.timers.push(t) && !timerId ) {
 			timerId = setInterval(function(){
 				var timers = jQuery.timers;
@@ -4403,33 +4343,6 @@ jQuery.each([ "Height", "Width" ], function(i, name){
 		return this[0] ?
 			jQuery.css( this[0], lower, false, margin ? "margin" : "border" ) :
 			null;
-	};
-	
-	var type = name.toLowerCase();
-
-	jQuery.fn[ type ] = function( size ) {
-		// Get window width or height
-		return this[0] == window ?
-			// Everyone else use document.documentElement or document.body depending on Quirks vs Standards mode
-			document.compatMode == "CSS1Compat" && document.documentElement[ "client" + name ] ||
-			document.body[ "client" + name ] :
-
-			// Get document width or height
-			this[0] == document ?
-				// Either scroll[Width/Height] or offset[Width/Height], whichever is greater
-				Math.max(
-					document.documentElement["client" + name],
-					document.body["scroll" + name], document.documentElement["scroll" + name],
-					document.body["offset" + name], document.documentElement["offset" + name]
-				) :
-
-				// Get or set width or height on the element
-				size === undefined ?
-					// Get width or height on the element
-					(this.length ? jQuery.css( this[0], type ) : null) :
-
-					// Set the width or height on the element (default to pixels if value is unitless)
-					this.css( type, typeof size === "string" ? size : size + "px" );
 	};
 	
 	var type = name.toLowerCase();
