@@ -64,7 +64,7 @@ class WildflowerAppController extends AppController {
         
 		// Admin area requires authentification
 		if ($this->isAdminAction()) {
-			// Set admin layout and admin specific view vars
+			// Set admin layout and admin specific view vars - check if admin theme is set or default
 			$this->layout = 'admin_default';
 		} else {
 			$this->layout = 'default';
@@ -85,7 +85,19 @@ class WildflowerAppController extends AppController {
 		// Set cookie defaults
 		$this->cookieName = Configure::read('Wildflower.cookie.name');
 		$this->cookieTime = Configure::read('Wildflower.cookie.expire');
-		$this->cookieDomain = '.' . getenv('SERVER_NAME');
+		$this->cookieDomain = '.' . getenv('SERVER_NAME');	
+
+		
+		if ($this->isAdminAction()) {
+			// Set admin layout and admin specific view vars - check if admin theme is set or default
+
+
+		if(Configure::read('AppSettings.admin_theme') !== 'default')
+			$this->theme = Configure::read('AppSettings.admin_theme');
+		} else { 
+			if(Configure::read('AppSettings.public_theme') !== 'default')
+			$this->theme = Configure::read('AppSettings.public_theme');
+		}
 
 		// Compress output to save bandwith / speed site up
 		if (!isset($this->params['requested']) && Configure::read('Wildflower.gzipOutput')) {

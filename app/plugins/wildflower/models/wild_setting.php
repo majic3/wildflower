@@ -48,7 +48,7 @@ class WildSetting extends WildflowerAppModel {
 		// list folders inside app/views/themed -using cake folder class
 		App::import('Core', 'Folder');
 		$folder = new Folder(); 
-		$path = APP . DS . 'plugins' . DS . 'wildflower' . DS . 'views' . DS . 'themed';
+		$path = APP . DS . 'webroot' . DS . 'themed';
 		$folder->cd($path); 
 		$themesFolders = $folder->ls(); 
 		$themes = Array();

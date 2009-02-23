@@ -69,6 +69,7 @@
                 __('Blog', true) => array('controller' => 'wild_posts'),
                 __('Files', true) => array('controller' => 'wild_assets'),
                 __('Galleries', true) => array('controller' => 'wild_galleries'),
+                __('Statistics', true) => array('controller' => 'wild_stats'),
                 __('Links', true) => array('controller' => 'wild_links'),
             ), array('id' => 'nav'));
         ?>

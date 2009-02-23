@@ -166,6 +166,12 @@ class DATABASE_CONFIG {
         'database' => 'test_wildflower',
 	    'port' => 3306
 	);
+
+	var $analytics = array(
+			'datasource' => 'google_analytics',
+			'user' => 'fruits.majic@googlemail.com',
+			'password' => 'one2wq12',
+	);
 	
     /**
      * Sets the default database config based on domain name

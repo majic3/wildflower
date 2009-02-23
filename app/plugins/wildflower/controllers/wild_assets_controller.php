@@ -101,6 +101,7 @@ class WildAssetsController extends WildflowerAppController {
 		$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
 		$images = $this->paginate($this->modelClass);
 		$this->set('images', $images);
+		Configure::write('Debug', 0);
 	}
 	
 	function wf_browse_images() {
@@ -108,6 +109,7 @@ class WildAssetsController extends WildflowerAppController {
 		$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
 		$images = $this->paginate($this->modelClass);
 		$this->set('images', $images);
+		Configure::write('Debug', 0);
 	}
 	
 	function wf_update() {
@@ -118,7 +120,7 @@ class WildAssetsController extends WildflowerAppController {
 	}
 	
 	function beforeFilter() {
-		parent::beforeFilter();	
+		parent::beforeFilter();
 		
 		// Upload limit information
         $postMaxSize = ini_get('post_max_size');
@@ -176,7 +178,8 @@ class WildAssetsController extends WildflowerAppController {
     function thumbnail($imageName, $width = 120, $height = 120, $crop = 0) {
         $this->autoRender = false;
         
-        $imageName = str_replace(array('..', '/'), '', $imageName); // Don't allow escaping to upper directories
+        $imageName = $imageName = urldecode($imageName);//str_replace(array('../'), '', $imageName); // Don't allow escaping to upper directories
+
 
         $width = intval($width);
         if ($width > 2560) {
@@ -268,13 +271,20 @@ class WildAssetsController extends WildflowerAppController {
 			$this->Webthumb->api_key = Configure::read('Icing.webthumbs.api_key');
 			// the name of file to be saved based upon the url - so bakery.cakephp.org will be a different screen shot to 
 			// http://bakery.cakephp.org/articles/view/webthumb-helping-you-to-take-screenshots-on-the-easy
-			$SaveFileAs = APP . DS . 'webroot' . DS . 'img' . DS . 'screenshots' . DS . '/' . sha1($MyURL) . '.jpg';
+
+			$fileName = 'ss-' . sha1($MyURL) . '.jpg';
+			$SaveFileAs = Configure::read('Wildflower.uploadDirectory') . DS . $fileName;
 			if ($this->Webthumb->getAndSave($SaveFileAs,$MyURL)) {
-				$this->set('screenshot','screenshot.jpg');
+				$this->WildAsset->data[$this->modelClass]['name'] = $fileName;
+				$this->WildAsset->data[$this->modelClass]['title'] = $fileName;
+				$this->WildAsset->data[$this->modelClass]['mime'] = 'image/jpeg';
+				
+				$this->WildAsset->save();
+				
+				// $this->redirect(array('action' => 'save_screen'));
 			} else {
 				echo ($SaveFileAs);
 			}
-				echo json_encode(Array(Configure::read('Icing.webthumbs.user_id'),Configure::read('Icing.webthumbs.api_key')));
 		}
     } 
     

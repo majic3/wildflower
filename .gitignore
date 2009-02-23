@@ -20,9 +20,13 @@ app/plugins/wildflower/tmp/cache/wf_thumbnails/*.jpg
 
 app/webroot/uploads/*
 app/webroot/img/screenshots/*
+app/webroot/img/xml/*
 
 app/vendors/phpflickr/*
 app/vendors/Director/*
+
+app/webroot/amcharts/amcharts_key.txt
+app/webroot/amcharts/fonts/*.fla
 
 
 *.*.bak

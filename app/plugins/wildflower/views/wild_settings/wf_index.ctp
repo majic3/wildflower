@@ -26,8 +26,11 @@
             }
         } else if ($setting['WildSetting']['name'] == 'cache') {
             $options['options'] = array('on' => 'On', 'off' => 'Off');
+        } else if ($setting['WildSetting']['name'] == 'public_theme') {
+            $options['options'] = $wfThemes['public'];
+        } else if ($setting['WildSetting']['name'] == 'admin_theme') {
+            $options['options'] = $wfThemes['admin'];
         }
-        
         if (empty($setting['WildSetting']['label'])) {
             $options['label'] = Inflector::humanize($setting['WildSetting']['name']);
         } else {

@@ -50,6 +50,14 @@ class WildflowerAppHelper extends Helper {
         return false;
     }
     
+    /**
+     * sets theme for packager
+     *
+     */
+    function getTheme($admin = false) {
+		return Configure::read($admin ? 'AppSettings.public_theme' : 'AppSettings.admin_theme');
+    }
+    
 	/**
 	 * Returns a string with all spaces converted to $replacement and non word characters removed.
 	 *

@@ -29,10 +29,11 @@ class WildSettingsController extends WildflowerAppController {
 	    $this->pageTitle = 'Site settings';
 	    
 	    $homePageIdOptions = $this->WildPage->getListThreaded();
+	    $wfThemes = $this->WildSetting->getThemes();
 	    
 	    $settings = $this->WildSetting->find('all', array('order' => 'order ASC'));
 	    
-	    $this->set(compact('settings', 'homePageIdOptions'));
+	    $this->set(compact('settings', 'homePageIdOptions', 'wfThemes'));
 	}
 
 	/**
