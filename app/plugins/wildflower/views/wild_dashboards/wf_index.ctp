@@ -39,6 +39,10 @@
 </div></div>
 	<div id="dashMsg"><p>messages in the inbox</p></div>
 </div>
+<div id="dashFeeds" class="wrapper"> 
+    <a class="feed" href="http://jquery.com/blog/feed/">jQuery Blog</a> 
+    <a class="feed" href="http://www.learningjquery.com/feed/">Learning jQuery</a>
+</div>
 <div id="dashStats" class="wrapper">
 	<div id="hitsThisWeek"></div>
 	<div id="searchAndRefers"></div>

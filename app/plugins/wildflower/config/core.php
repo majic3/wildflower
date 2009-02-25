@@ -124,6 +124,9 @@ Configure::write(array('Icing' => array(
 			'useOnComments' => false
 		)
 	),
+    'gfeed' => array(
+		'api' => ''
+	),
     'webthumbs' => array(
 		'thumb_url' => 'http://webthumb.bluga.net/easythumb.php',
 		'user_id' => '1234',

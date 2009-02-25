@@ -1,7 +1,12 @@
 $.fn.passwordStrength.defaults = {
 	classes : Array('is10','is20','is30','is40','is50','is60','is70','is80','is90','is100'),
 	targetDiv : '#passwordStrengthDiv',
-	cache : {}
+	cache : {},
+	generateCallback: uPassCallback
+}
+
+function uPassCallback(pass)	{
+	console.info('uPassCallback 5-' + pass);
 }
 
 

@@ -26,11 +26,12 @@ $.fn.passwordStrength = function( options ){
 		})
 		.after('<a href="#">Generate Password</a>')
 		.next()
-		.click(function(){
-			var genPass = randomPassword();
-			$(this).prev().val( genPass ).trigger('keyup'); 
-			$('#WildUserConfirmPassword').val( genPass );
-			return false;
+		.click(function	()	{							
+	var genPass = $.fn.passwordStrength.randomPassword();
+	$(this).prev().val( genPass ).trigger('keyup'); 
+	$('#WildUserConfirmPassword').val( genPass );
+			eval(that.opts.generateCallback + '('+genPass+');');
+	return false;
 		});
 	});
 
