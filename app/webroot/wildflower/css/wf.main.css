@@ -63,10 +63,22 @@ img {
         text-decoration: none;
     }
 
-#header {
-    background: #274f79;
+#header,
+#editor_mode_header {
+    background: #1b3b53;
     overflow: hidden;
-    color: #eee;
+    color: #feffc2;
+}
+
+#editor_mode_header {
+    padding: 0 40px;
+}
+
+#editor_mode_header a {
+    display: block;
+    float: left;
+    padding: 6px;
+    color: #fff;
 }
 
     #header a {
@@ -74,9 +86,9 @@ img {
     }
     
     #header a:hover,
-    #footer a:hover {
-        background-color: transparent;
-        color: #feffc2;
+    #editor_mode_header a:hover {
+        background-color: #d0e4f8;
+        color: #000;
     }
 
 #header-wrap {
@@ -111,7 +123,7 @@ img {
         height: 12px;
         margin: 0 2px 0 0;
         padding: 4px 9px 9px 9px;
-        background-color: #3b3b3b;
+        background-color: #446076;
         color: #fff;
         text-decoration: none;
         -moz-border-radius: 4px 4px 0 0;
@@ -128,22 +140,27 @@ img {
         }
         
     #nav a:hover {
-        color: #1d1d1d;
-        background-color: #e2e2e2;
+        color: #fff;
+        background-color: #777777;
     }
 
 #login-info {
-    float: right;
-    position: relative;
-    top: -30px;
+    position: absolute;
+    top: 0px;
+    right: 32px;
 }
+
+    #login-info a {
+        display: inline-block;
+        padding: 6px;
+    }
 
 #content {
     float: left;
     width: 70%;
     position: relative;
     left: 10px;
-    margin: 12px 0 8px 0;
+    margin: 0;
     background: #fff;
 }
 
@@ -155,6 +172,15 @@ img {
     background: url(img/wrap_bottom_shadow.png) left bottom repeat-x;
 }
 
+#co_top_shadow {
+    background: url(img/wrap_top_shadow.png) left top repeat-x;
+}
+
+#co_top_right_corner {
+    background: url(img/wrap_top_right_corner.png) right top no-repeat;
+    padding-top: 13px;
+}
+
 #co_right_bottom_corner {
     padding-bottom: 10px;
     padding-right: 16px;
@@ -162,8 +188,7 @@ img {
 }
 
 #content-pad {
-    padding: 20px 25px 35px;
-    min-height: 300px;
+    padding: 20px 25px 20px;
 }
 
 .cleaner {
@@ -218,8 +243,8 @@ h2 {
 .section {
     margin: -20px -25px 14px;
     padding: 15px 25px;
-    font-size: 16px;
-    font-weight: normal;
+    font-size: 14px;
+    font-weight: bold;
     line-height: 17px;
     background: #eef5fb url(img/page_top.png) left bottom repeat-x;
 }
@@ -272,8 +297,32 @@ select {
     padding: 14px 0 0 90px;
 }
 
-    .editor-form label {
-        font-size: 12px;
+    .editor_form * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .editor_form label {
+        font-size: 11px;
+        height: 15px;
+        text-transform: uppercase !important;
+        color: #777777;
+        display: block;
+    }
+    
+    .editor_form .input input {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 2px;
+        margin: 0 0 10px 0;
+        width: 98.5%;
+    }
+    
+    .editor_form textarea {
+        font: 14px/18px Monaco, "Lucida Console", "Consolas", courier;
+        padding: 5px;
+        width: 98%;
+        margin-bottom: 10px;
     }
     
 .mceEditor {
@@ -336,10 +385,6 @@ select {
     font-size: 12px;
     padding: 20px 20px 0;
     display: block;
-}
-
-.editor {
-    margin-top: -10px !important;
 }
 
     
@@ -993,8 +1038,6 @@ select {
 
 
 
-
-
 /**	users password strength meter made by Tane Piper	**/
 .is0{background:url(/wildflower/css/img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
 .is10{background-position:0 -7px;}
@@ -1007,3 +1050,24 @@ select {
 .is80{background-position:0 -56px;}
 .is90{background-position:0 -63px;}
 .is100{background-position:0 -70px;}
+
+#admin_bar {
+    background: #000;
+    color: #c3c3c3;
+    font-size: 10px;
+    overflow: hidden;
+    padding: 0 32px;
+}
+
+    #admin_bar a {
+        color: #999999;
+        display: block;
+        float: left;
+        padding: 3px 6px;
+        text-decoration: none;
+    }
+    
+    #admin_bar a:hover {
+        color: #fff;
+        background-color: transparent;
+    }

@@ -42,7 +42,7 @@
             }
         });
         
-        tinyMCE.init($.jlm.components.tinyMce.getConfig());
+        //tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
            $.jlm.dispatch(); 
@@ -53,12 +53,15 @@
 </head>
 <body>
 
+<?php if (!isset($editorMode)): ?>    
+<div id="admin_bar">
+    <?php echo $html->link('View homepage', '/'); ?>
+</div>
+
 <div id="header">
     <div id="header-wrap">
-        <h1 id="site-title">
-            <?php echo $html->link($siteName, '/', array('title' => __('View site home page', true))) ?>
-        </h1>
-
+        <h1 id="site-title"><?php echo hsc($siteName); ?></h1>
+        
         <div id="login-info">
             <?php echo $htmla->link(__('Settings', true), array('controller' => 'wild_settings')); ?> | 
             <?php echo $htmla->link(__('Users', true), array('controller' => 'wild_users')); ?> | 
@@ -79,14 +82,24 @@
         ?>
     </div>
 </div>
+<?php else: ?>
+<div id="editor_mode_header">
+    <?php echo $html->link('Go back', array('action' => 'index')); ?>
+    <?php if (isset($publishedLink)) echo $publishedLink; ?>
+</div>
+<?php endif; ?>
 
 <div id="wrap">
     <div id="content">
+        <div id="co_top_shadow">
+        <div id="co_top_right_corner">
         <div id="co_bottom_shadow">
         <div id="co_right_shadow">
         <div id="co_right_bottom_corner">
         <div id="content-pad">
             <?php echo $content_for_layout; ?>
+        </div>
+        </div>
         </div>
         </div>
         </div>
