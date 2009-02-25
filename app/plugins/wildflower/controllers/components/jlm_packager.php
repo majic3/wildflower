@@ -57,10 +57,6 @@ class JlmPackagerComponent {
         $output .= $this->readFile($libDir . 'jquery.js');
         $output .= $this->readFile($libDir . 'functions.js');
         $output .= $this->readFile($libDir . 'trimpath-template.js');
-        $output .= $this->readFile($libDir . 'jquery.gfeed.js');
-        $output .= $this->readFile($libDir . 'jquery.growl.js');
-        $output .= $this->readFile($libDir . 'jquery.jScrollPane.js');
-        $output .= $this->readFile($libDir . 'jquery.tipsy.js');
         $output .= $this->readFile($libDir . 'jquery.jlm.js');
         
         // First load Wildflower templates

@@ -236,9 +236,9 @@ class WildPostsController extends WildflowerAppController {
      */
     function index() {
     	$this->cacheAction = true;
-
-		$this->pageTitle = 'Blog'; 
-
+    	
+    	$this->pageTitle = 'Blog';
+    	
         $this->paginate = array(
 	        'limit' => 5,
 	        'order' => array('WildPost.created' => 'desc'),

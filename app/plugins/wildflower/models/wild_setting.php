@@ -64,4 +64,3 @@ class WildSetting extends WildflowerAppModel {
     }
 	
 }
-
