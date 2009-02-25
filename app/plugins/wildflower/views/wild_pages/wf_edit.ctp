@@ -6,60 +6,38 @@
     $form->create('WildPage', array('url' => $html->url(array('action' => 'wf_update', 'base' => false)), 'class' => 'editor-form'));
 ?>
 
-<div id="title-content">
-    <?php
-        echo
-        $form->input('title', array(
-            'between' => '<br />',
-            'tabindex' => '1',
-            'label' => __('Page title', true),
-            'div' => array('class' => 'input title-input'))),
-        $form->input('content', array(
-            'type' => 'textarea',
-            'tabindex' => '2',
-            'class' => 'tinymce',
-            'rows' => '25',
-            'label' => __('Body', true),
-            'div' => array('class' => 'input editor'))),
-        '<div>',
-        $form->hidden('id'),
-        $form->hidden('draft'),
-        '</div>';
+<h2 class="section title_as_heading">
+    <?php echo hsc($this->data['WildPage']['title']); ?> <?php echo $html->link('Rename', '#Rename', array('class' => 'rename_title')); ?>
+</h2>
+
+<div class="section rename_title_section">
+    <?php echo 
+        $form->input('title', array('between' => '<br />', 'label' => 'Page title', 'div' => array('class' => 'title_input'))), 
+        $form->submit('Rename'),
+        '<span class="rename_cancel">',
+        ' or ',
+        $html->link('Keep current title', '#CacelRename', array('class' => 'cancel')),
+        '</span>';
     ?>
-    
-    <div id="edit-buttons">
-        <?php echo $this->element('wf_edit_buttons'); ?>
-    </div>
 </div>
 
-<div id="post-revisions">
-    <h2 class="section">Older versions of this page</h2>
-    <?php 
-        if (!empty($revisions)) {
-            echo 
-            '<ul id="revisions" class="list revision-list">';
+<?php
+    echo
+    $form->input('content', array(
+        'type' => 'textarea',
+        'tabindex' => '2',
+        'class' => 'tinymce',
+        'rows' => '25',
+        'label' => 'Page content',
+        'div' => array('class' => 'input editor'))),
+    '<div>',
+    $form->hidden('id'),
+    $form->hidden('draft'),
+    '</div>';
+?>
 
-            $first = '<span class="current-revision">&mdash;current version</span>';
-            foreach ($revisions as $version) {
-                $attr = '';
-                if (ListHelper::isOdd()) {
-                    $attr = ' class="odd"';
-                }
-                echo 
-                "<li$attr>",
-                '<div class="list-item">',
-                $html->link("Revision {$version['WildRevision']['revision_number']}",
-                    array('action' => 'wf_edit', $version['WildRevision']['node_id'], $first ? null : $version['WildRevision']['revision_number']), null, null, false),
-                "<small>$first, saved {$time->niceShort($version['WildRevision']['created'])} by {$version['WildUser']['name']}</small>",
-                '</div>',
-                '</li>';
-                $first = '';
-            }
-            echo '</ul>';
-        } else {
-            echo "<p id=\"revisions\">No revisions yet.</p>";
-        }
-    ?>        
+<div id="edit-buttons">
+    <?php echo $this->element('wf_edit_buttons'); ?>
 </div>
 
 <?php 
@@ -73,11 +51,8 @@
 
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li class="main_sidebar">
-        <?php echo $this->element('../wild_pages/_sidebar_search'); ?>
-    </li>
-    <li class="main_sidebar">
         <?php echo $html->link(
-            '<span>Write a new page</span>', 
+            '<span>Create a new page</span>', 
             array('action' => 'wf_create'),
             array('class' => 'add', 'escape' => false)); ?>
     </li>
@@ -90,4 +65,5 @@
     <li class="sidebar-box post-info main_sidebar">
         <?php echo $this->element('../wild_pages/_page_info'); ?>
     </li>
+    <li><?php echo $html->link('Go to all pages', array('action' => 'index')); ?></li>
 <?php $partialLayout->blockEnd(); ?>
