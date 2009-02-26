@@ -57,46 +57,7 @@ Configure::write(array('Director' => array(
 
 // icing config 0.6
 Configure::write(array('Icing' => array(
-	'version' => '0.6.7',
-	'prefix' => '',
-	'assets' => array(
-		'adminScripts' => array(
-			'jquery-ui',
-			'common'
-		),
-		'adminStyles' => array(
-			'boilerplate',
-			'plugins',
-			'admin',
-			'glass/ui.all.css'
-		), 
-		'scripts' => array(
-			'jquery', 
-			'swfobject', 
-			'jquery-ui', 
-			'jquery.jScrollPane',
-			'jquery.form', 
-			'jquery.tipsy', 
-			'jquery.blockui', 
-			'jquery.growl', 
-			'jquery.gfeeds', 
-			'jquery.easing',
-			'shadowbox', 
-			'common'
-		),
-		'styles' => array(
-			'boilerplate.css', 
-			'plugins.css', 
-			'tipsy.css', 
-			'jscrollpane.css', 
-			'growl.css', 
-			'iscreen.css'
-		),
-	),
-	'compress' => array(
-		'js' => 'force',
-		'css' => 'force'
-	),
+	'version' => '0.6.9',
     'dashboardFeeds' => array(
 		array(
         'name' => 'Wildlfower',

@@ -15,24 +15,24 @@
 </head>
 <body>
 
-<div id="wrap">
+	<div id="floater"></div>
+	<div id="centered">
 
-    <div id="header">
-        <h1 id="site-title">
-            <?php echo $html->link($siteName, '/', array('title' => 'View site home page')) ?>
-        </h1>
-    </div>
-    
-    <div id="login">
-        <?php echo $content_for_layout; ?>
-    </div>
-    
-    <div id="push"></div>
+
+<div id="floater"></div>
+
+<div id="header">
+	<h1 id="site-title">
+		<?php echo $html->link($siteName, '/', array('title' => 'View site home page')) ?>
+	</h1>
 </div>
-    
+<div id="content">
+	<?php echo $content_for_layout; ?>
+</div>
+</div>
+
 <p id="footer">
-    <?php echo $html->link('Powered by Wildflower', array('controller' => 'pages', 'action' => 'about')) ?> &bull; 
-    <?php echo $html->link('Icons by DryIcons', 'http://dryicons.com') ?>
+    <?php echo $html->link('Powered by Wildflower', 'http://wf.klevo.sk/') ?>
 </p>
 
 </body>

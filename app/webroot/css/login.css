@@ -1,16 +1,10 @@
 html, body {
-    margin: 0; padding: 0;
-	/* Footer stick */
-    height: 100%;
-    overflow-x: hidden;
-}
-
-html {
-    background: #eee;
+	margin:0; padding:0;
+	height:100%;
+    background: #fff;
     font: 13px/18px "Lucida Grande", Verdana, Geneva, Arial, Helvetica, sans-serif;
     color: #000;
-}
-
+}  
 a {
     color: #02396d;
     text-decoration: underline;
@@ -75,7 +69,7 @@ textarea {
 /* Login box */
 
 #login {
-    background: #e9f3f6;
+    background: green;
     width: 20em;
     padding: 1.5em;
     margin: 100px auto 0;
@@ -187,3 +181,35 @@ button {
         display: block;
         white-space: nowrap;
     }
+ 
+#floater {
+	position:relative; float:left;
+	height:50%;	margin-bottom:-200px;
+	width:1px;
+}
+ 
+#centered {
+	position:relative; clear:left;
+	height:275px; width:80%; max-width:320px; min-width:320px;
+	margin:0 auto;
+	background:#fff;
+	border:4px solid #666;
+}
+ 
+#footer {
+	position:absolute;
+	bottom:0; right:0;
+}
+ 
+#nav {
+	position:absolute; left:0; top:0; bottom:0; right:70%;
+	padding:20px; margin:10px;
+}
+ 
+#content {
+	position:absolute; left:30%; right:0; top:0; bottom:0;
+	overflow:auto; height:340px;
+	padding:20px; margin:10px;
+}
+
+

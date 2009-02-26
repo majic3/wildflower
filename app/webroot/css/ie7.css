@@ -1,0 +1,14 @@
+/* IE7 & 6 Fixes  */
+
+.submit input {
+	margin-left: .7em;
+}
+
+#content {
+}
+
+.sidebar-list li a {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+

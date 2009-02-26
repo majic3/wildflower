@@ -1,16 +1,17 @@
 <div class="paginator">
 	<?php
+		$options = array(
+			'tag' => 'li'
+		);
+
 	    echo
-	    '<div class="paginate-counter">', 
-	    $paginator->counter(array(
+	    '<div class="paginate-counter"><p class="quiet"><small>', 
+	    $paginator->counter(am(array(
     		'format' => '%start% to %end% of %count%'
-    	)),
-    	'</div>',
-    	$paginator->prev('« Newer ', array('class' => 'paginate-prev'), null, array('class' => 'paginate-prev disabled')),
-    	'<div class="paginate-numbers">',
-    	$paginator->numbers(),
-    	'</div>',
-        $paginator->next(' Older »', array('class' => 'paginate-next'), null, array('class' => 'paginate-next disabled'));
+    	), $options)),
+    	'</small></p></div>', '<ul class="paging">',
+    	$paginator->prev('« newer ', am(array('tag' => 'li','class' => 'previous'), $options), null, am(array('tag' => 'li', 'class' => 'paginate-prev disabled') , $options)),
+    	$paginator->numbers(am(array('separator' => ''), $options)),'<li>',
+        $paginator->next('older »', am(array('tag' => 'li','class' => 'next'), $options), null, am(array('tag' => 'li','class' => 'paginate-next disabled') , $options)), '</li></ul>';
     ?>
-	<span class="cleaner"></span>
 </div>
