@@ -1,7 +1,7 @@
 <?php
 class WildCommentsController extends WildflowerAppController {
-    public $helpers = array('Time', 'Wildflower.List');
-    public $paginate = array(
+	public $helpers = array('Time', 'Wildflower.Textile', 'Wildflower.List');
+	public $paginate = array(
         'limit' => 8,
         'order' => array(
             'WildComment.created' => 'desc'

@@ -12,6 +12,7 @@
     $form->input('title', array('between' => '', 'label' => 'Page title')), 
     $form->input('content', array(
         'type' => 'textarea',
+		'class' => 'tinymce',
         'rows' => 25,
         'cols' => 60,
         'label' => 'Body',
@@ -38,20 +39,4 @@
 <span class="cleaner"></span>
 
 <?php $partialLayout->blockStart('sidebar'); ?>
-    <li>
-        <h4>Text formatting</h4>
-        <p>Use simple words or codes to format the text.</p>
-        <p>You can insert HTML code (like a YouTube video) right into the editor.</p>
-        <table>
-            <thead>
-                <tr><th><code>You type</code></th><th>Result</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><code>*A big cat*</code></td><td><?php echo $textile->format('*A big cat*'); ?></td></tr>
-                <tr><td><code>_really_</code></td><td><?php echo $textile->format('_really_'); ?></td></tr>
-            </tbody>
-        </table>
-        
-        <a href="#MoreFormating">More formatting options</a>
-    </li>
 <?php $partialLayout->blockEnd(); ?>
