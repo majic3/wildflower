@@ -75,6 +75,7 @@
                 __('Pages', true) => array('controller' => 'wild_pages'),
                 __('Blog', true) => array('controller' => 'wild_posts'),
                 __('Files', true) => array('controller' => 'wild_assets'),
+                __('Messages', true) => array('controller' => 'wild_messages'),
                 __('Galleries', true) => array('controller' => 'wild_galleries'),
                 __('Statistics', true) => array('controller' => 'wild_stats'),
                 __('Links', true) => array('controller' => 'wild_links'),
