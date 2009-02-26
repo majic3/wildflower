@@ -2,6 +2,7 @@
 
 $.jlm.bind('app_controller.beforeFilter', function () {
     
-    //$.jlm.components.tinyMce.startup();
+    //	the majic branch of wf will retain tiny mce
+	$.jlm.components.tinyMce.startup();
     
 });

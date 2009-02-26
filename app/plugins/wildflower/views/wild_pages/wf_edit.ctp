@@ -12,6 +12,7 @@
     $form->input('title', array('between' => '', 'label' => 'Page title')), 
     $form->input('content', array(
         'type' => 'textarea',
+		'class' => 'tinymce',
         'rows' => 25,
         'cols' => 60,
         'label' => 'Body',
@@ -38,7 +39,4 @@
 <span class="cleaner"></span>
 
 <?php $partialLayout->blockStart('sidebar'); ?>
-    <li>
-        <h4>Text formating</h4>
-    </li>
 <?php $partialLayout->blockEnd(); ?>

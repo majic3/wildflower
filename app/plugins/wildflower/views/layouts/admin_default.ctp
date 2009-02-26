@@ -42,7 +42,7 @@
             }
         });
         
-        //tinyMCE.init($.jlm.components.tinyMce.getConfig());
+        tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
            $.jlm.dispatch(); 
