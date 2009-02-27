@@ -104,6 +104,15 @@ class WildAssetsController extends WildflowerAppController {
 		Configure::write('Debug', 0);
 	}
 	
+
+	/* allow easy insetion of links posts, pages, stored links*/
+	function wf_browse_links() {
+	}
+
+	/* allow easy insetion of static blocks */
+	function wf_browse_blocks() {
+	}
+	
 	function wf_browse_images() {
 		$this->paginate['limit'] = 6;
 		$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";

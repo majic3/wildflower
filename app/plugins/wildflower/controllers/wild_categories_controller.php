@@ -18,7 +18,7 @@ class WildCategoriesController extends WildflowerAppController {
     function wf_index() {
 		$categoriesForTree = $this->WildCategory->find('all', array('order' => 'lft ASC', 'recursive' => -1));
         $this->set(compact('categoriesForTree'));
-        $this->pageTitle = 'Blog Categories';
+        $this->pageTitle = ucfirst(Configure::read('Wildflower.blogName')) . ' Categories';
     }
     
     /**

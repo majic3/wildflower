@@ -60,8 +60,8 @@ Configure::write(array('Icing' => array(
 	'version' => '0.6.9',
     'dashboardFeeds' => array(
 		array(
-        'name' => 'Wildlfower',
-        'url' => 'wf.wf.klevo.sk/feed'
+        'url' => 'wf.klevo.sk/posts/feed',
+        'name' => 'Wildflower',
 		),
 		array(
         'name' => 'CakePHP',
@@ -70,7 +70,7 @@ Configure::write(array('Icing' => array(
 		array(
         'name' => 'jQuery',
         'url' => 'jquery.com/blog/feed/'
-		)
+		),
 	),
     'open_id' => array(
 		'adminConfig' => array(

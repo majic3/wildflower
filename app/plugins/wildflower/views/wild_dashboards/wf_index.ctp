@@ -19,18 +19,18 @@
 ?>
 <?php	echo ($html->link('write new', '/wf/pages/create/'));	?>
 </div>
-	<div id="dashPosts">
-<h3>Posts</h3>
-<ul class="tabs">
+	<div id="dashPosts" class="tabs">
+<h3><?php	echo ucfirst(Configure::read('Wildflower.blogName')); ?></h3>
+<ul>
 	<li><a href="#recent">recent</a></li>
 	<li><a href="#quickpost">quick post</a></li>
 </ul>
 	<div id="recent"><p>recent</p></div>
 	<div id="quickpost"><p>quick post</p></div>
 </div>
-	<div id="dashCmnts">
+	<div id="dashCmnts" class="tabs">
 <h3>Comments</h3>
-<ul class="tabs">
+<ul>
 	<li><a href="#new">new</a></li>
 	<li><a href="#spam">spam?</a></li>
 </ul>
@@ -40,8 +40,7 @@
 	<div id="dashMsg"><p>messages in the inbox</p></div>
 </div>
 <div id="dashFeeds" class="wrapper"> 
-    <a class="feed" href="http://jquery.com/blog/feed/">jQuery Blog</a> 
-    <a class="feed" href="http://www.learningjquery.com/feed/">Learning jQuery</a>
+    <?php	foreach(Configure::read('Icing.dashboardFeeds') as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?>
 </div>
 <div id="dashStats" class="wrapper">
 	<div id="hitsThisWeek"></div>

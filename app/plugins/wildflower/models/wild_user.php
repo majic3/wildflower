@@ -12,7 +12,18 @@ class WildUser extends WildflowerAppModel {
 	public $hasMany = array(
 	    'Wildflower.WildPage',
 	    'Wildflower.WildPost',
+	);	
+
+	var $hasOne = array(
+			'WildProfile' => array('className' => 'Wildflower.WildProfile',
+								'foreignKey' => 'user_id',
+								'dependent' => false,
+								'conditions' => '',
+								'fields' => '',
+								'order' => ''
+			)
 	);
+
 
     public $validate = array(
         'name' => array(

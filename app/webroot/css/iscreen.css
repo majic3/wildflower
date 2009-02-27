@@ -32,6 +32,16 @@ body	{	font-size: 62.5%; max-width: 100%; padding: 0; margin: 0;	}
 /* BODY */
 #body { width: 960px; margin: 0 auto; padding: 20px; }
 
+/*	main & aside	*/
+
+#main	{
+
+}
+
+#aside	{
+
+}
+
 /* HOME */
 body.home	#main { float: left; width: 580px; margin-right: 90px; }
 		
@@ -47,27 +57,29 @@ body.home		#main .jScrollPane
 			overflow: auto;
 		}
 
-body.home	#sidebar { float: left; margin-top: 10px; width: 230px; }
-body.home	#sidebar h3 { color: #888; }
-body.home	#sidebar ul, #sidebar ol { color: #888; }
-body.home	#sidebar ul a { color: #555; }
+body.home	#aside { float: left; margin-top: 10px; width: 230px; }
+body.home	#aside h3 { color: #888; }
+body.home	#aside ul, 
+body.home	#aside ol { color: #888; }
+body.home	#aside ul a { color: #555; }
 
 /* /HOME */
 
 /* ABOUT */
 
-body.about	#about	{
+body.about	#main	{
 	float: left;
 	width: 460px;
 }
 
-body.about	#resources	{
+body.about	#aside	{
 	float: left;
 	width: 400px;
 	margin: 5px 10px; 
 	
 }
-		#about .jScrollPane
+
+	body.about	#main .jScrollPane
 		{
 			width: 400px;
 			height: 340px;
@@ -77,6 +89,18 @@ body.about	#resources	{
 /* /ABOUT */
 
 /* POSTS */
+body.blog #main,
+body.posts #main	{ 
+	float: left;
+	width: 460px;
+}
+body.blog #aside,
+body.posts #aside	{
+	float: left;
+	width: 400px;
+	margin: 5px 10px; 
+}
+
 #primary-content	{
 }
 
@@ -92,6 +116,8 @@ body.about	#resources	{
 /* /POSTS */
 
 /* GALLERY */
+body.gallery #main,
+body.gallery #aside	{	width: 100%;	}
 body.gallery #main li {
 	background:#FFFFFF none repeat scroll 0 0;
 	border-color:#CCCCCC;
@@ -163,7 +189,15 @@ body.gallery img {
 /* /GALLERY */
 
 /* CONTACT */
-
+body.contact #main,
+body.messages #main {
+	float: left; width: 630px;
+}
+body.contact #aside	,
+body.messages #aside{
+	margin: 0 0 640px;
+	width: 340px; margin-left: 640px;
+}
 /* /CONTACT */
 
 /* FOOTER */

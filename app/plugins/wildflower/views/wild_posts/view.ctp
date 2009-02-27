@@ -12,7 +12,7 @@
 		<?php echo $this->element('edit_this', array('id' => $post['WildPost']['id'])) ?>
 	</div>
 
-	<p><?php echo $html->link('Back to all posts', '/blog') ?></p>
+	<p><?php echo $html->link('Back to all posts', '/' . Configure::read('Wildflower.blogIndex')) ?></p>
 </div>
 
 <div class="wrapper">
@@ -38,4 +38,5 @@
 ?>
 		<?php } ?>
 	</div>
+</div>
 

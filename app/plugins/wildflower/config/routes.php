@@ -14,7 +14,7 @@ $admin = Configure::read('Routing.admin');
  * Changing Wildflower.prefix in app/plugins/wildflower/config/core.php allows you
  * to change the WF admin url. After this access the admin under /your-prefix.
  */
-$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'links', 'galleries', 'stats');
+$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'links', 'galleries', 'stats', 'profiles');
 foreach ($wfControllers as $shortcut) {
 	Router::connect(
 		"/$prefix/$shortcut", 
@@ -40,7 +40,7 @@ Router::connect('/contact', array('controller' => 'wild_messages', 'action' => '
 Router::connect('/contact/create', array('controller' => 'wild_messages', 'action' => 'create', 'plugin' => 'wildflower'));
 
 // RSS
-Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/feed', array('controller' => 'wild_posts', 'action' => 'feed', 'plugin' => 'wildflower'));
+Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/feed', array('controller' => 'wild_posts', 'action' => 'rss', 'plugin' => 'wildflower'));
 
 // Ultra sexy short SEO friendly post URLs in form of http://my-domain/p/40-char-uuid
 Router::connect('/' . Configure::read('Wildflower.postsParent') . '/:uuid', array('controller' => 'wild_posts', 'action' => 'view', 'plugin' => 'wildflower'));

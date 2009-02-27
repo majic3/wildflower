@@ -71,7 +71,7 @@ class WildGalleriesController extends WildflowerAppController {
     	$this->pageTitle = 'Gallery';
     	
     	$this->params['current']['type'] = 'gallery';
-    	$this->params['current']['slug'] = Configure::read('Gallery.blogIndex');
+    	$this->params['current']['slug'] = Configure::read('Wildflower.galleryIndex');
     }
     
     function beforeRender() {

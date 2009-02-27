@@ -119,7 +119,6 @@ class WildLinksController extends WildflowerAppController {
     	$this->pageTitle = 'Links';
     	
     	$this->params['current']['type'] = 'links';
-    	//$this->params['current']['slug'] = Configure::read('Wildflower.blogIndex');
     }
     
     function beforeRender() {

@@ -2,14 +2,14 @@
 echo $html->doctype('xhtml-strict') ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <?php echo $html->charset(); ?>
-    
-    <title><?php echo $title_for_layout; ?></title>
-    
-    <meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
-    
-    <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
+	<?php echo $html->charset(); ?>
+
+	<title><?php echo $title_for_layout; ?></title>
+
+	<meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
+
+	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
 
 	<?php
 		// echo $packager->css('admin/screen'); 
@@ -31,9 +31,9 @@ echo $html->doctype('xhtml-strict') ?>
 	<?php echo $html->css(Array('ie7'), 'stylesheet', Array('media' => 'screen')); ?>
 	<![endif]-->
 	<!--[if IE 6]>
-	<script src="/themed/icing/js/dd-pngfix.js"></script>
+	<script src="/js/dd-pngfix.js"></script>
 	<script>
-	  /* EXAMPLE */
+	  /* fixing pngs with style Drew Diller Style */
 	DD_belatedPNG.fix('#navWrap, #page, #navigation'); // argument is a CSS selector
 	  
 	  /* string argument can be any CSS selector */
@@ -50,7 +50,9 @@ echo $html->doctype('xhtml-strict') ?>
 			model: "<?php echo ucwords(Inflector::singularize($this->params['controller'])) ?>",
 			action: "<?php echo $this->params['action'] ?>"
 		}
-		<?php echo $this->element('google_analytics') ?>
+		<?php
+			// ga tracker using jquery
+			echo $this->element('google_analytics') ?>
 	</script>
 	<?php 
 		e($javascript->link(array(
@@ -63,6 +65,7 @@ echo $html->doctype('xhtml-strict') ?>
 			'jquery.blockui', 
 			'jquery.growl', 
 			'jquery.gfeed', 
+			'jquery.gatracker', 
 			'jquery.easing',
 			'shadowbox', 
 			'common'
@@ -107,7 +110,7 @@ echo $html->doctype('xhtml-strict') ?>
 
 
 	<div id="body" class="wrapper">
-            <?php echo $content_for_layout; ?>
+		<?php echo $content_for_layout; ?>
 	</div>
 
 	<div id="footer">

@@ -181,7 +181,7 @@ class WildPostsController extends WildflowerAppController {
     function beforeFilter() {
     	parent::beforeFilter();
     	
-    	$this->pageTitle = 'Blog';
+    	$this->pageTitle = ucfirst(Configure::read('Wildflower.blogName'));
     	
     	$this->params['current']['type'] = 'post';
     	$this->params['current']['slug'] = Configure::read('Wildflower.blogIndex');
@@ -237,7 +237,7 @@ class WildPostsController extends WildflowerAppController {
     function index() {
     	$this->cacheAction = true;
     	
-    	$this->pageTitle = 'Blog';
+    	$this->pageTitle = ucfirst(Configure::read('Wildflower.blogName'));
     	
         $this->paginate = array(
 	        'limit' => 5,

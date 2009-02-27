@@ -14,6 +14,7 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
+            '/css/ui/ui.all',
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?
@@ -78,7 +79,7 @@
                 __('Messages', true) => array('controller' => 'wild_messages'),
                 __('Galleries', true) => array('controller' => 'wild_galleries'),
                 __('Statistics', true) => array('controller' => 'wild_stats'),
-                __('Links', true) => array('controller' => 'wild_links'),
+                __('Links & Feeds', true) => array('controller' => 'wild_links'),
             ), array('id' => 'nav'));
         ?>
     </div>

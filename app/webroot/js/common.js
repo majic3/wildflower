@@ -1,5 +1,9 @@
+//	var baseRoots a better way to get controller section of jlinks
+
 function jLinkCall(e, a, o)	{
 	var jUrl = null, jArgs = null, obTitle = '', rel;
+		
+
 		var regex = '\/(home|about|posts|gallery|contact)(.*)';
 
 		if($(o).attr('title'))
