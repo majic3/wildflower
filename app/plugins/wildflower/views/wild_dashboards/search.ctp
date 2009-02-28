@@ -3,7 +3,7 @@
 	<h2>Search</h2>
 	
 	<?php 
-	    echo $form->create('Dashboard', array('action' => 'search'));
+		echo $form->create('Dashboard', array('url' => '/search', 'class' => 'search'));
 	    echo "<fieldset>\n";
 	    echo $form->input('query');
 	    echo $form->submit('Search');
@@ -16,12 +16,14 @@
 	
 	<ul>
 	<?php
+		$pparent = Configure::read('Wildflower.postsParent');
 		foreach ($results as $item) {
 			$row = '';
-	        if (isset($item['Page'])) {
-	            $row = $html->link($item['Page']['title'], $item['Page']['url']); 
-	        } else if (isset($item['Post'])) {
-	            $row = $html->link($item['Post']['title'], "/p/{$item['Post']['slug']}");
+	        if (isset($item['WildPage'])) {
+	            $row = $html->link($item['WildPage']['title'], $item['WildPage']['url']); 
+	        } else if (isset($item['WildPost'])) {
+				debug($item);
+	            $row = $html->link($item['WildPost']['title'], "/$pparent/{$item['WildPost']['slug']}");
 	        } else {
 	            continue;
 	        }
@@ -33,5 +35,3 @@
 	<?php } ?>
 	
 </div>
-
-<?php echo $this->renderElement('sidebar') ?>

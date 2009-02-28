@@ -95,6 +95,7 @@ echo $html->doctype('xhtml-strict') ?>
 	<div id="header">
 		<p id="ident"><?php echo $html->link(Configure::read('AppSettings.site_name'), '/', null, null, false); ?></p>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
+		<div class="searchBox"><?php	echo ($this->element('sidebar_search'));	?></div>
 	</div>
 
 	<div id="navigation">

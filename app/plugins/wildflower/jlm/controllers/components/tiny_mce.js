@@ -23,6 +23,8 @@ $.jlm.addComponent('tinyMce', {
  getConfig: function() {
      var stylesheetUrl = $.jlm.base + '/css/tiny_mce.css';
         var fullBaseUrl = window.location.protocol + "//" + window.location.host + '/';
+
+		// this should accept passed settings
      return {
             mode: "none",
             theme: "advanced",

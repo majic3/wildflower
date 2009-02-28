@@ -17,26 +17,33 @@
 
 <div class="wrapper">
 	<div id="comments">
-		<?php if (!empty($post['WildComment'])) { ?><h3>Post a comment</h3>
-<?php
-    if ($session->check('Message.flash')) {
-        $session->flash();
-    }
-    
-    $postUrl = WildPost::getUrl($post['WildPost']['uuid']);
-    echo $form->create('WildComment', array('class' => 'vform', 'url' => $here, 'id' => 'PostAComment')),
-        $form->input('name'),
-        $form->input('email'),
-        $form->input('url', array('label' => 'Website URL (optional)')),
-        $form->input('content', array('label' => 'Message', 'type' => 'textbox')),
-        '<div>',
-        $form->hidden('wild_post_id', array('value' => $post['WildPost']['id'])),
-        '</div>',
-        $form->hidden('WildPost.permalink', array('value' => $html->url($postUrl, true))),
-        $form->submit('Post comment'),
-        $form->end();
-?>
-		<?php } ?>
+		<?php if (!empty($post['WildComment'])) { ?>
+			<h3>Comments</h3>
+		<?php
+		} ?>
+
+		<?php if (!$post['WildPost']['cmtsClosed']) { ?>
+			<div id="commentFrm">
+			<h3>Post a comment</h3>
+		<?php
+		if ($session->check('Message.flash')) {
+			$session->flash();
+		}
+
+		$postUrl = WildPost::getUrl($post['WildPost']['uuid']);
+		echo $form->create('WildComment', array('class' => 'vform', 'url' => $here, 'id' => 'PostAComment')),
+		$form->input('name'),
+		$form->input('email'),
+		$form->input('url', array('label' => 'Website URL (optional)')),
+		$form->input('content', array('label' => 'Message', 'type' => 'textbox')),
+		'<div>',
+		$form->hidden('wild_post_id', array('value' => $post['WildPost']['id'])),
+		'</div>',
+		$form->hidden('WildPost.permalink', array('value' => $html->url($postUrl, true))),
+		$form->submit('Post comment'),
+		$form->end(); ?>
+			</div>
+		<?php	} ?>
 	</div>
 </div>
 

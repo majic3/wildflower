@@ -29,5 +29,11 @@
 
 require_once(WILDFLOWER_PLUGIN . DS . 'config' . DS . 'routes.php');
 
+$prefix = Configure::read('Wildflower.prefix');
+$admin = Configure::read('Routing.admin');
+
+
 // Continue with your app routes here
 // ...
+Router::connect('/photos/', array('controller' => 'photos', 'action' => 'index'));
+Router::connect('/photos/:slug', array('controller' => 'photos', 'action' => 'view'));

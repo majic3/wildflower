@@ -11,7 +11,7 @@
 <div class="page"> 
     <div class="main">
     <h2><?php echo $page['WildPage']['title']; ?></h2>
-       <?php echo $htmla->->formatCode($page['WildPage']['content']); ?>
+       <?php echo $htmla->formatCode($page['WildPage']['content']); ?>
     </div>
     <div class="sidebar">
        <?php echo $page['WildPage']['sidebar_content']; ?>

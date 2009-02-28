@@ -1,5 +1,7 @@
 
-<?php if (isset($results) && !empty($results)) { ?>
+<?php 
+	debug($results);
+	if (isset($results) && !empty($results)) { ?>
 <?php $model = ucwords(Inflector::singularize($this->params['controller'])) ?>
 <ul class="search-results">
     <?php 
