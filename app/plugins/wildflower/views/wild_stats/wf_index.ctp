@@ -2,9 +2,9 @@
 
 <h2 class="section"><?php __('Statistics'); ?></h2>
 
-<?php echo $this->element('wf_select_actions'); ?>
+<?php echo $this->element('wf_uselect_actions'); ?>
 
-<ul class="list-of-links list">
+<ul class="list-of-stats list">
     <?php foreach ($WildStats as $WildStat): ?>
         <li class="link-row actions-handle">
             <span class="row-check"><?php echo $form->checkbox('id.' . $WildStat['WildStat']['id']) ?></span>
@@ -18,7 +18,7 @@
 
 <?php
     echo
-    $this->element('wf_select_actions'), 
+    $this->element('wf_uselect_actions'), 
 	$this->element('wf_pagination'),
     $form->end();
 ?>

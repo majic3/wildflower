@@ -97,6 +97,15 @@ $.jlm.bind('wild_posts.wf_edit, wild_pages.wf_edit', function() {
 });
 
 $.jlm.bind('wild_posts.wf_index, wild_pages.wf_index', function() {
+	// should this be chained? perhaps
+    $('.list-of-posts li').click(function() {
+		var $chk = $('input:checkbox', $(this));
+		if($chk.attr('checked'))	{
+			$chk.removeAttr('checked').parent().parent('li').removeClass('selected');
+		} else {
+			$chk.attr('checked', 'true').parent().parent('li').addClass('selected');
+		}
+    });
     
     // Double click on a post item takes you to the edit screen
     $('.list-of-posts li').dblclick(function() {
@@ -128,6 +137,7 @@ $.jlm.bind('wild_posts.wf_categorize', function() {
     };
     
     var errorCallback = function(data) {
+		// sometimes this is reported but is not an issue
         alert('Error while saving. Check FireBug console for debug data.');
         if (typeof(console) == 'object') {
             console.debug(data);

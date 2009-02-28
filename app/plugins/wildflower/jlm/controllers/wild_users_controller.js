@@ -25,3 +25,9 @@ $.jlm.bind('wild_users.wf_index', function() {
         return true;
     });
 });
+
+$.jlm.bind('wild_users.wf_change_password', function() {
+
+    $('form').clearForm();
+	
+});

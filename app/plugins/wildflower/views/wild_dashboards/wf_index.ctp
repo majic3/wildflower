@@ -89,14 +89,13 @@
 		</ul>
 
 		<div id="new"><?php
-			debug($comments);
 			if (empty($comments)) {
 				echo '<p>No Comments Since Last Login.</p>';
 			} else {
 				echo '<ul class="comments-list list">';
 				foreach($comments as $cmt)	{
 					echo "<li><div class=\"list-item\">",
-						$html->link($cmt['WildPost']['title'] . '/' . $cmt['WildComment']['email'] . ' - ' . $cmt['WildComment']['created'], array('controller' => 'wild_comments', 'action' => 'view', $cmt['WildComment']['id'])), 
+						$html->link($cmt['WildPost']['title'] . '/' . $cmt['WildComment']['email'] . ' - ' . $time->format('j M y', $link['WildComment']['created']), array('controller' => 'wild_comments', 'action' => 'view', $cmt['WildComment']['id'])), 
 						'</div></li>';
 				}
 				echo '</ul>';
@@ -107,14 +106,14 @@
 
 <div id="dashMsg">
 	<h3>messages in the inbox</h3>
-	<?php	debug($messages);
+	<?php	
 			if (empty($messages)) {
 				echo '<p>No Messages Since Last Login.</p>';
 			} else {
 				echo '<ul class="msgs-list list">';
 				foreach($messages as $msg)	{
 					echo "<li><div class=\"list-item\">",
-						$html->link($msg['WildMessage']['subject'] . ' - ' . $msg['WildMessage']['created'], array('controller' => 'wild_messages', 'action' => 'view', $msg['WildMessage']['id'])), 
+						$html->link($msg['WildMessage']['subject'] . ' - ' . $time->format('j M y', $msg['WildMessage']['created']), array('controller' => 'wild_messages', 'action' => 'view', $msg['WildMessage']['id'])), 
 						'</div></li>';
 				}
 				echo '</ul>';

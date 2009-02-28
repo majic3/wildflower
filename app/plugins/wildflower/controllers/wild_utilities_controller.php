@@ -58,6 +58,7 @@ class WildUtilitiesController extends WildflowerAppController {
                 'content' => $randomizer->text(),
                 'user_id' => $this->getLoggedInUserId(),
                 'parent_id' => $randomizer->parentId($this->WildPost->id),
+                'cmtsClosed' => rand(0,1),
             );
             $this->WildPost->create($post);
             $this->WildPost->save();

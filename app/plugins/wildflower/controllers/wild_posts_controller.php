@@ -34,6 +34,7 @@ class WildPostsController extends WildflowerAppController {
             'draft' => 1,
             'uuid' => $uuid,
             'slug' => $uuid,
+            'cmtsClosed' => 0,
         );
         $this->data[$this->modelClass] = am($this->data[$this->modelClass], $defaultParams);
         $this->{$this->modelClass}->create($this->data);

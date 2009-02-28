@@ -13,7 +13,7 @@
 
 <h2 class="section"><?php __('Links'); ?></h2>
 
-<?php echo $this->element('wf_select_actions'); ?>
+<?php /*uses the user select actions element */ echo $this->element('wf_uselect_actions'); ?>
 
 <ul class="list-of-links list">
     <?php foreach ($links as $link): ?>
@@ -41,7 +41,7 @@
 
 <?php
     echo
-    $this->element('wf_select_actions'), 
+    $this->element('wf_uselect_actions'), 
 	$this->element('wf_pagination'),
     $form->end();
 ?>

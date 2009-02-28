@@ -14,7 +14,7 @@ class WildLink extends WildflowerAppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasAndBelongsToMany = array(
 			'WildCategory' => array('className' => 'Wildflower.WildCategory',
-						'joinTable' => 'categories_links',
+						'joinTable' => 'wild_categories_wild_links',
 						'foreignKey' => 'link_id',
 						'associationForeignKey' => 'category_id',
 						'unique' => true,
