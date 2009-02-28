@@ -19,6 +19,7 @@
             'div' => array('class' => 'input'))),
         '<div>',
         $form->hidden('id'),
+        $form->submit('save'),
         '</div>';
     ?>
     
