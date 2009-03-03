@@ -27,6 +27,7 @@
         'div' => array('class' => 'input editor'))),
     $form->input('sidebar_content', array(
         'type' => 'textarea',
+		'class' => 'tinymce',
         'rows' => 25,
         'cols' => 60,
         'label' => 'Sidebar',
@@ -36,8 +37,6 @@
     $form->hidden('draft'),
     '</div>';
 ?>
-
-<p><a href="#ShowSidebarEditor">Show sidebar editor</a></p>
 
 <div id="edit-buttons">
     <?php echo $this->element('wf_edit_buttons'); ?>
@@ -64,7 +63,7 @@
     <li class="main_sidebar">
         <ul class="sidebar-menu-alt edit-sections-menu">
             <li><?php echo $html->link('Options <small>like status, publish date, etc.</small>', array('action' => 'options', $this->data['WildPage']['id']), array('escape' => false)); ?></li>
-            <li><a href="">sidebar</a></li>
+            <li><a href="#ShowSidebarEditor">Show sidebar editor</a></li>
             <li><?php echo $html->link('Browse older versions', array('action' => 'versions', $this->data['WildPage']['id'])); ?></li>
         </ul>
     </li>

@@ -2,7 +2,7 @@
     $session->flash();
     
     echo 
-    $form->create('WildPost', array('url' => $html->url(array('action' => 'wf_update', 'base' => false)), 'class' => 'editor-form'));
+    $form->create('WildPost', array('url' => $html->url(array('action' => 'wf_update', 'base' => false)), 'class' => 'editor_form'));
 ?>
 
 <div id="title-content">
