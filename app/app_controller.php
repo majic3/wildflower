@@ -1,6 +1,6 @@
 <?php
 class AppController extends Controller {
-	//public $components = array('DebugKit.Toolbar');
+	public $components = array('DebugKit.Toolbar');
     //public $view = 'Theme';
     //public $theme = 'wildflower'; 
 
