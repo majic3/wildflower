@@ -72,14 +72,24 @@ img {
 
 #editor_mode_header {
     padding: 0 40px;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
 }
 
-#editor_mode_header a {
-    display: block;
-    float: left;
-    padding: 6px;
-    color: #fff;
-}
+    #editor_mode_header li {
+        float: left;
+        padding: 6px;
+        margin: 0;
+    }
+    
+    #editor_mode_header small {
+        font-size: 11px;
+    }
+
+    #editor_mode_header a {
+        color: #fff;
+    }
 
     #header a {
         color: #feffc2;
@@ -198,7 +208,8 @@ img {
     display: block;
 }
     
-    #wrap a.add {
+    #wrap a.add,
+    .button {
         background: url(img/sidebar-button.png) 0 0 no-repeat;
         height: 33px;
         padding: 0 0 0 14px;
@@ -210,14 +221,16 @@ img {
         font-weight: bold;
     }
     
-        #wrap a.add span {
+        #wrap a.add span,
+        .button span {
             padding: 8px 20px 12px 0;
             margin: 0 0 0 20px;
             display: block;
             background: url(img/sidebar-button.png) top right no-repeat;
         }
         
-        #wrap a.add:hover {
+        #wrap a.add:hover,
+        .button:hover {
             color: #2c4d66;
         }
         
@@ -230,7 +243,18 @@ img {
     #sidebar a.add + a.add {
         margin-top: 7px;
     }
-    
+
+
+.button {
+    color: red !important;
+    background-image: url(img/button_on_white.png);
+    padding: 0;
+    height: 35px;
+}
+
+    .button span {
+        background-image: url(img/button_on_white.png);
+    }
         
 /* Headings */
 
@@ -1071,3 +1095,81 @@ select {
         color: #fff;
         background-color: transparent;
     }
+    
+#page_preview {
+    width: 100%;
+    min-height: 500px;
+}
+
+.entry {
+    font-size: 13px;
+    line-height: 18px;
+    float: left;
+    width: 65%;
+}
+
+    .entry h2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+#page_inserts {
+    margin: -20px -25px 16px; 
+    padding: 0 20px; 
+    list-style: none;
+    overflow: hidden;
+    background: #eef5fb url(img/page_top.png) left bottom repeat-x;
+}
+
+#page_inserts li {
+    float: left;
+    display: block;
+}
+
+#page_inserts a,
+#page_inserts span {
+    display: block;
+    padding: 8px 5px;
+}
+
+    #page_inserts a {
+        font-weight: bold;
+    }
+    
+    .versions h4,
+    .texy_syntax h4 {
+        font-size: 12px;
+        margin: 0 0 10px 0;
+        border-bottom: 1px solid #7a7a7a;
+    }
+    
+    .versions a {
+        padding: 2px 4px;
+        font-size: 11px;
+        display: block;
+        width: 120px;
+    }
+    
+    .versions .current {
+        color: #000;
+        text-decoration: none;
+        background: #f0f0d2;
+    }
+    
+#edit-buttons {
+    overflow: hidden;
+    margin-top: 1em;
+    background: #eee;
+    padding: 4px;
+}
+
+.sidebar_editor {
+    display: none;
+}
+
+#sidebar_content {
+    background: #eee;
+    padding: 10px;
+    float: right;
+    width: 30%;
+}
