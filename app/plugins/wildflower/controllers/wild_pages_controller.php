@@ -13,6 +13,7 @@ class WildPagesController extends WildflowerAppController {
         'limit' => 25,
         'order' => array('WildPage.lft' => 'asc')
     );
+    public $pageTitle = 'Pages';
     
     /**
      * A static about Wildflower page
@@ -27,6 +28,7 @@ class WildPagesController extends WildflowerAppController {
      */
     function wf_create() {
         $this->data[$this->modelClass]['draft'] = 1;
+        $this->data[$this->modelClass]['content'] = '';
         $this->WildPage->create($this->data);
         $this->WildPage->save();
         $this->redirect(array('action' => 'edit', $this->WildPage->id));
@@ -69,31 +71,30 @@ class WildPagesController extends WildflowerAppController {
      * 
      * @param int $id Page ID
      */
-    function wf_edit($id = null, $revisionNumber = null) {
-        $this->WildPage->contain('WildUser');
-        $page = $this->WildPage->findById($id);
-        
-        if (empty($page)) return $this->cakeError('object_not_found');
-        
-        $this->data = $page;
-        
-        // If viewing a revision, merge with revision content
-        if ($revisionNumber) {
-            $this->data = $this->WildPage->getRevision($id, $revisionNumber);
-            
-            $this->set(array('revisionId' => $revisionNumber, 'revisionCreated' => $this->data['WildRevision']['created']));
+    function wf_edit($id = null) {
+        if ($isRevision = isset($this->params['named']['rev'])) {
+            $page = $this->WildPage->getRevision($id, $this->params['named']['rev']);
+        } else {
+            $page = $this->WildPage->findById($id);
         }
         
-        // View
+        $this->data = $page;
         $this->pageTitle = $page[$this->modelClass]['title'];
-        
-        $hasUser = $page['WildUser']['id'] ? true : false;
-        $isDraft = ($page[$this->modelClass]['draft'] == 1) ? true : false;
-        $isRevision = !is_null($revisionNumber);
-        $revisions = $this->WildPage->getRevisions($id);
+
         $newParentPageOptions = $this->WildPage->getListThreaded();
-        $this->set(compact('isRevision', 'hasUser', 'isDraft', 'revisions', 'newParentPageOptions'));
-        $this->_setParentSelectBox($page[$this->modelClass]['id']);
+        $this->set(compact('isRevision', 'newParentPageOptions'));
+        
+        //$this->_setParentSelectBox($page[$this->modelClass]['id']);
+    }
+    
+    function wf_view($id = null) {
+        if (isset($this->params['named']['rev'])) {
+            $page = $this->WildPage->getRevision($id, $this->params['named']['rev']);
+        } else {
+            $page = $this->WildPage->findById($id);
+        }
+        $revisions = $this->WildPage->getRevisions($id, 10);
+        $this->set(compact('page', 'revisions'));
     }
     
     function wf_options($id = null) {
@@ -137,7 +138,7 @@ class WildPagesController extends WildflowerAppController {
             return $this->render('wf_update');
         }
         
-        $this->redirect(array('action' => 'wf_edit', $this->data[$this->modelClass]['id']));
+        $this->redirect(array('action' => 'view', $this->data[$this->modelClass]['id']));
     }
     
     /**
