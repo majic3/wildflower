@@ -199,7 +199,23 @@ img {
 
 #content-pad {
     padding: 20px 25px 20px;
+	background-position: top right;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	min-height: 300px;
 }
+
+body.dashboards	#content-pad {	background-image: url(/wildflower/css/img/bright/dashboards.png);	}
+body.pages		#content-pad {	background-image: url(/wildflower/css/img/bright/pages.png);	}
+body.posts		#content-pad {	background-image: url(/wildflower/css/img/bright/posts.png);	}
+body.assets		#content-pad {	background-image: url(/wildflower/css/img/bright/assets.png);	}
+body.messages	#content-pad {	background-image: url(/wildflower/css/img/bright/messages.png);	}
+body.galleries	#content-pad {	background-image: url(/wildflower/css/img/bright/galleries.png);	}
+body.stats		#content-pad {	background-image: url(/wildflower/css/img/bright/stats.png);	}
+body.links		#content-pad {	background-image: url(/wildflower/css/img/bright/links.png);	}
+body.settings	#content-pad {	background-image: url(/wildflower/css/img/bright/settings.png);	}
+body.users		#content-pad {	background-image: url(/wildflower/css/img/bright/users.png);	}
+body.utilities	#content-pad {	background-image: url(/wildflower/css/img/bright/utilities.png);	}
 
 .cleaner {
     clear: both;
@@ -975,6 +991,9 @@ select {
 .sidebar-box button {
     font-size: 12px;
 }
+	
+/* gallery */
+#show-galleries	{	float: right; margin-top: 7px;	}
     
     
 /* Reorder list */
@@ -1173,3 +1192,10 @@ select {
     float: right;
     width: 30%;
 }
+
+
+/*	jquery ui overrides	*/
+
+.tabs	{	background: transparent !important;	margin-bottom: 30px;}
+body.dashboards	#content-pad	.tabs,
+body	#content-pad	.list	{	margin-right: 155px;	}

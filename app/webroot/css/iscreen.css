@@ -20,13 +20,29 @@ body	{	font-size: 62.5%; max-width: 100%; padding: 0; margin: 0;	}
 #header a:active,
 #header a:visited	{	color: #000;	}
 #header a:hover		{	color: #000;	}
-#header h1 { position: absolute; top: 0; left: 0; margin-top: -40px; margin:0; font-size: 15px; line-height: 17px; color: #fff; }
-#header p#ident { position: absolute; top: 0; left: 0; padding: 0; margin-top: 2px; margin-bottom: 5px; background: transparent; }
+#header h1 { position: absolute; top: 0; left: 0; margin: 2px 0 0 15px; font-size: 15px; line-height: 17px; color: #fff; }
+#header p#ident { position: absolute; top: 0; left: 0; padding: 0; margin: 2px 0 5px 15px; background: transparent; }
 #header p#ident a	{ display: block; padding-top: 20px; width: 100%; height: 100%;  }
-#header .searchBox 	{	position: absolute; width: 300px; top: 0; right: 0;	}
-#header .searchBox input	{ }
-#header .searchBox input:focus	{	background: #ddd;	}
-#header .searchBox input:hover	{	background: #eee;	}
+#header .searchBox 	{	position: absolute; width: 214px; height: 22px; top: 14px; right: 0;	}
+#header input.text,
+#header .input.text	{	float: left; width: 162px;	}
+#header .submit	{	float: left; width: 35px;	}
+#header .searchBox input[type=submit] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent url(/css/img/go.png) no-repeat center top;
+  text-indent: -1000em;
+  cursor: pointer; /* hand-shaped cursor */
+  cursor: hand; /* for IE 5.x */
+}
+
+#header .searchBox input.text:focus	{	background: #ddd;	}
+#header .searchBox input.text:hover	{	background: #eee;	}
+#header #rss	{	float: right; margin: 10px 0 0 0;	}
+#header #rss img	{	border: 0;	}
 
 /* NAVIGATION */
 #navigation { padding: 0 10px; background: #ddd; border-bottom: 2px solid #bbb; }
@@ -210,6 +226,7 @@ body.messages #aside{
 #footer .tabs li { margin-right: 20px; }
 #footer .tabs a { color: #999; text-decoration: none; }
 #footer p.quiet { color: #ccc; }
+#footer img { border: 0; vertical-align: bottom; }
 
 
 

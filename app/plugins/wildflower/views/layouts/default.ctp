@@ -96,6 +96,7 @@ echo $html->doctype('xhtml-strict') ?>
 		<p id="ident"><?php echo $html->link(Configure::read('AppSettings.site_name'), '/', null, null, false); ?></p>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
 		<div class="searchBox"><?php	echo ($this->element('sidebar_search'));	?></div>
+		<?php	echo $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false)	?>
 	</div>
 
 	<div id="navigation">
@@ -127,7 +128,7 @@ echo $html->doctype('xhtml-strict') ?>
 		<p class="quiet"><small>Powered by <?php 
 	           echo $html->link('Wildflower', 'http://wf.klevo.sk/'),
 	           '. ',
-	           $this->element('admin_link') ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/">CakePHP</a> &#124; <a href="http://jquery.com/">jQuery</a> &#124; <a href="http://code.google.com/p/css-boilerplate/">boilerplate</a></small></p>
+	           $this->element('admin_link') ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/"><img src="/img/cake.power.gif" /></a> &#124; <a href="http://jquery.com/"><img src="/img/jquery-icon.png" /></a> &#124; <a href="http://code.google.com/p/css-boilerplate/">boilerplate</a></small></p>
 	</div>
 </div>
 </body>

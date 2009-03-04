@@ -52,7 +52,7 @@
     </script>
     
 </head>
-<body>
+<body class="<?php echo str_replace('wild_', '', $this->params['controller']); ?>">
 
 <?php if (!isset($editorMode)): ?>    
 <div id="admin_bar">
@@ -76,7 +76,7 @@
                 __('Dashboard', true) => '/' . Configure::read('Wildflower.prefix'),
                 __('Pages', true) => array('controller' => 'wild_pages'),
                 __('Posts', true) => array('controller' => 'wild_posts'),
-                __('Files', true) => array('controller' => 'wild_assets'),
+                __('Assets', true) => array('controller' => 'wild_assets'),
                 __('Messages', true) => array('controller' => 'wild_messages'),
                 __('Galleries', true) => array('controller' => 'wild_galleries'),
                 __('Statistics &amp; Data', true) => array('controller' => 'wild_stats'),
