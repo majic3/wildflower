@@ -1,6 +1,6 @@
 <?php 
     $partialLayout->switchToEditorMode();
-    $partialLayout->setLayoutVar('publishedLink', $html->link(FULL_BASE_URL . $this->base . $this->data['WildPage']['url'], $this->data['WildPage']['url']));
+    $partialLayout->setLayoutVar('publishedLink', $html->link(FULL_BASE_URL . $this->base . $page['WildPage']['url'], $page['WildPage']['url']));
     
     $editUrl = Router::url(array('action' => 'edit', $page['WildPage']['id']));
     if (isset($this->params['named']['rev'])) {
@@ -14,7 +14,7 @@
 
 <div class="entry">
     <h1><?php echo hsc($page['WildPage']['title']); ?></h1>
-    <?php echo $texy->process($page['WildPage']['content']); ?>
+    <?php echo $page['WildPage']['content']; ?>
 </div>
 
 <?php if (!empty($page['WildPage']['sidebar_content'])): ?>

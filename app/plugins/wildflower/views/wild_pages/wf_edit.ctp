@@ -37,8 +37,6 @@
     '</div>';
 ?>
 
-<p><a href="#ShowSidebarEditor">Show sidebar editor</a></p>
-
 <div id="edit-buttons">
     <?php echo $this->element('wf_edit_buttons'); ?>
 </div>
@@ -55,4 +53,25 @@
 <span class="cleaner"></span>
 
 <?php $partialLayout->blockStart('sidebar'); ?>
+    <li class="versions main_sidebar">
+        <h4>Versions</h4>
+        <ul>
+        <?php
+            $attr = array();
+            foreach ($revisions as $version) {
+                if (isset($this->params['named']['rev']) and $this->params['named']['rev'] == $version['WildRevision']['revision_number']) {
+                    $attr['class'] = 'current';
+                }
+                echo '<li>', $html->link($time->niceShort($version['WildRevision']['created']), "/{$this->params['prefix']}/pages/edit/{$this->data['WildPage']['id']}/rev:{$version['WildRevision']['revision_number']}", $attr), '</li>';
+                $attr['class'] = '';
+            }
+        ?>
+        </ul>
+    </li>
+    
+    <li class="main_sidebar">
+        <ul class="sidebar-menu-alt edit-sections-menu">
+            <li><?php echo $html->link('Options <small>like status, publish date, etc.</small>', array('action' => 'options', $this->data['WildPage']['id']), array('escape' => false)); ?></li>
+        </ul>
+    </li>
 <?php $partialLayout->blockEnd(); ?>
