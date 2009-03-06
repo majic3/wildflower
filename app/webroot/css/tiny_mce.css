@@ -1,4 +1,14 @@
 body {
-	font: 13px/16px "Lucida Grande", Verdana, Geneva, Arial, Helvetica, sans-serif;
-	padding: 0 15px;
+	font: 14px/18px "Lucida Grande", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	padding: 0 6px;
 }
+
+
+/* Widgets */
+
+.wf_widget {
+    background: #eee;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
