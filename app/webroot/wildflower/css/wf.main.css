@@ -938,8 +938,15 @@ select {
             margin: 16px 0 0 10px;
             font-size: 13px;
         }
-        
-        
+
+/*	links & feeds	*/
+
+#show-links	{float: right; width: 150px; margin-top: 5px;}
+
+.list-of-links	li.link-row	{
+	display: inline; float: left; width: 40%; margin-left: 3%; margin-right: 5%;
+}
+
 /* Image browser (image insert) */
 
 #image-browser {
@@ -1156,7 +1163,7 @@ select {
     }
     
     .versions h4,
-    .texy_syntax h4 {
+    .insert_widget_sidebar h4 {
         font-size: 12px;
         margin: 0 0 10px 0;
         border-bottom: 1px solid #7a7a7a;

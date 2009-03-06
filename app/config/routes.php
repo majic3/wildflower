@@ -34,6 +34,3 @@ $admin = Configure::read('Routing.admin');
 
 
 // Continue with your app routes here
-// ...
-Router::connect('/photos/', array('controller' => 'photos', 'action' => 'index'));
-Router::connect('/photos/:slug', array('controller' => 'photos', 'action' => 'view'));

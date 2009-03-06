@@ -16,7 +16,7 @@ $.jlm.component('EditButtons', 'wild_posts.wf_edit, wild_posts.wf_categorize, wi
 		// Do AJAX save
 		// Save content back to textareas
 		tinyMCE.triggerSave();
-        
+
         // Do AJAX form submit
         var successCallback = function(json) {
             buttonEl.attr('value', originalLabel).removeAttr('disabled');

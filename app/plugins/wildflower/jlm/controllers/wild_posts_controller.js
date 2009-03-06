@@ -1,3 +1,4 @@
+/*
 // @TODO create a Sections menu component from this
 $.jlm.bind('wild_posts.wf_edit, wild_pages.wf_edit', function() {
     
@@ -114,7 +115,7 @@ $.jlm.bind('wild_posts.wf_index, wild_pages.wf_index', function() {
         return true;
     });
     
-});
+}); */
 
 $.jlm.bind('wild_posts.wf_categorize', function() {
     

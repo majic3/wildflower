@@ -18,25 +18,22 @@ $.jlm.addComponent('tinyMce', {
                 tinyMCE.execCommand("mceAddControl", true, $.jlm.components.tinyMce.editorId);
             });
         }
- },
- 
- getConfig: function() {
-     var stylesheetUrl = $.jlm.base + '/css/tiny_mce.css';
+	},
+	
+	getConfig: function() {
+	    var stylesheetUrl = $.jlm.base + '/css/tiny_mce.css';
         var fullBaseUrl = window.location.protocol + "//" + window.location.host + '/';
-
-		// this should accept passed settings
-     return {
+	    return {
             mode: "none",
             theme: "advanced",
             // @TODO cleanup unneeded plugins
-            plugins: "wfinsertimage,wfinsertlink,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen,spellchecker",
+            plugins: "wfinsertimage,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
             doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 
             // Theme options
-            theme_advanced_buttons1: "undo,redo,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,link,unlink,wfinsertimage,wfinsertlink,|,charmap,code,fullscreen,|,spellchecker",
-			spellchecker_languages : "+English=en",
-			theme_advanced_buttons2: "",
-			theme_advanced_buttons3: "",
+            theme_advanced_buttons1: "undo,redo,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,link,unlink,wfinsertimage,wfinsertwidget,|,charmap,code,fullscreen",
+    		theme_advanced_buttons2: "",
+    		theme_advanced_buttons3: "",
             theme_advanced_toolbar_location: "top",
             theme_advanced_toolbar_align: "left",
             theme_advanced_statusbar_location: "none",
@@ -55,29 +52,36 @@ $.jlm.addComponent('tinyMce', {
             
             init_instance_callback: $.jlm.components.tinyMce.onReady
         };
- },
- 
- focus: function() {
-     $.jlm.components.tinyMce.focusOnReady = true;
- },
- 
- onReady: function(ed) {
-     $.jlm.components.tinyMce.editorInstance = ed;
-     if ($.jlm.components.tinyMce.focusOnReady) {
-         ed.focus();
-     }
- },
- 
- insertImage: function(editor) {
-     // @TODO: I want to do something like this:
-     // $.jlm.url({ plugin: 'wildflower', controller: 'wild_assets', action: 'wf_insert_image' });
-     var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
-     
-     $.get(url, function(html) {
-         var imageSidebarEl = $(html);
-         $('.main_sidebar').hide();
-         
-         $('#sidebar > ul').append(imageSidebarEl);
+	},
+	
+	focus: function() {
+	    $.jlm.components.tinyMce.focusOnReady = true;
+	},
+	
+	onReady: function(ed) {
+	    $.jlm.components.tinyMce.editorInstance = ed;
+	    if ($.jlm.components.tinyMce.focusOnReady) {
+	        ed.focus();
+	    }
+	},
+	
+	insertImage: function(editor) {
+	    // Close if open
+	    if ($('.insert_image_sidebar').size() > 0) {
+	        $('.insert_image_sidebar').remove();
+	        $('.main_sidebar').show();
+	        return false;
+	    }
+	    
+	    // @TODO: I want to do something like this:
+	    // $.jlm.url({ plugin: 'wildflower', controller: 'wild_assets', action: 'wf_insert_image' });
+	    var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
+	    
+	    $.get(url, function(html) {
+	        var imageSidebarEl = $(html);
+	        $('.main_sidebar').hide();
+	        
+	        $('#sidebar > ul').append(imageSidebarEl);
             
             // Bind selecting
             $('.file-list > li', imageSidebarEl).click(function() {
@@ -86,12 +90,12 @@ $.jlm.addComponent('tinyMce', {
             });
             
             // Bind insert button
-         $('#insert_image', imageSidebarEl).click(function() {
-             var imgName = $('.selected img', imageSidebarEl).attr('alt');
+    		$('#insert_image', imageSidebarEl).click(function() {
+    			var imgName = $('.selected img', imageSidebarEl).attr('alt');
 
-             if (typeof(imgName) == 'undefined' || trim(imgName) == '') {
-                 return false;
-             }
+    			if (typeof(imgName) == 'undefined' || trim(imgName) == '') {
+    			    return false;
+    			}
 
                 // Original size
                 imgNameEscaped = escape(imgName);
@@ -108,37 +112,69 @@ $.jlm.addComponent('tinyMce', {
                     imgUrl = $.jlm.base + '/wildflower/thumbnail/' + imgNameEscaped + '/' + resizeWidth + '/' + resizeHeight + '/' + crop;
                 }
 
-             // Image HTML
-             var imgHtml = '<img alt="' + imgName + '" src="' + imgUrl + '" />';
+				// Image HTML
+    			var imgHtml = '<img alt="' + imgName + '" src="' + imgUrl + '" />';
 
-             editor.execCommand('mceInsertContent', 0, imgHtml);
+    			editor.execCommand('mceInsertContent', 0, imgHtml);
 
-             return false;
-         });
+    			return false;
+    		});
 
-         // Bind close
+    		// Bind close
             $('.cancel', imageSidebarEl).click(function() {
                 $('.insert_image_sidebar').remove();
                 $('.main_sidebar').show();
                 return false;
             });
-     });
-     
-     return false;
- },
- 
- resizeToFillScreen: function(textareaEl) {
-     var otherContentHeight = $('body').height() - textareaEl.height();
-     var bumper = 20;
-     var result = $(window).height() - otherContentHeight - bumper; 
-     
-     textareaEl.height(result);
-     return result;
- },
- 
- closeDialog: function() {
-     $.jlm.components.tinyMce.dialogEl.remove();
- },
+		});
+	    
+	    return false;
+	},
+	
+	resizeToFillScreen: function(textareaEl) {
+	    var otherContentHeight = $('body').height() - textareaEl.height();
+	    var bumper = 20;
+	    var result = $(window).height() - otherContentHeight - bumper; 
+	    
+		textareaEl.height(result);
+		return result;
+	},
+	
+	closeDialog: function() {
+		$.jlm.components.tinyMce.dialogEl.remove();
+	},
+	
+	insertWidget: function(editor) {
+	    // Close if open
+	    var alreadyOpenEl = $('.insert_widget_sidebar');
+	    if (alreadyOpenEl.size() > 0) {
+	        alreadyOpenEl.remove();
+	        $('.main_sidebar').show();
+	        return false;
+	    }
+	    
+	    var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/list_widgets';
+	    
+	    $.get(url, function(html) {
+	        var widgetSidebarEl = $(html);
+	        $('.main_sidebar').hide();
+	        $('#sidebar > ul').append(widgetSidebarEl);
+	        
+	        // Bind insert
+	        $('.widget_list a').click(function() {
+	            var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/insert_widget';
+	            var widgetId = $(this).attr('rel');
+	            $.getJSON(url, function(json) {
+	                var instanceId = json.id;
+    	            var widgetHtml = '<div id ="' + widgetId + '" class="wf_widget">' + instanceId + '</div>';
+    	            editor.execCommand('mceInsertContent', 0, widgetHtml);
+	            });
+	            return false;
+	        });
+		});
+	    
+	    return false;
+	},
     
     insertLink: function() {
         log('INSERT LINK');

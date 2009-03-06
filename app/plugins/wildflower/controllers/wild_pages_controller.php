@@ -72,7 +72,7 @@ class WildPagesController extends WildflowerAppController {
      * @param int $id Page ID
      */
     function wf_edit($id = null) {
-        if ($isRevision = isset($this->params['named']['rev'])) {
+        if (isset($this->params['named']['rev'])) {
             $page = $this->WildPage->getRevision($id, $this->params['named']['rev']);
         } else {
             $page = $this->WildPage->findById($id);
@@ -82,9 +82,8 @@ class WildPagesController extends WildflowerAppController {
         $this->pageTitle = $page[$this->modelClass]['title'];
 
         $newParentPageOptions = $this->WildPage->getListThreaded();
-        $this->set(compact('isRevision', 'newParentPageOptions'));
-        
-        //$this->_setParentSelectBox($page[$this->modelClass]['id']);
+        $revisions = $this->WildPage->getRevisions($id, 10);
+        $this->set(compact('newParentPageOptions', 'revisions'));
     }
     
     function wf_view($id = null) {
@@ -93,6 +92,9 @@ class WildPagesController extends WildflowerAppController {
         } else {
             $page = $this->WildPage->findById($id);
         }
+        
+        // @TODO Process Widgets
+        
         $revisions = $this->WildPage->getRevisions($id, 10);
         $this->set(compact('page', 'revisions'));
     }

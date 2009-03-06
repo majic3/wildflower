@@ -38,7 +38,7 @@
         </li>
     <?php endforeach; ?>
 </ul>
-
+<span class="cleaner"></span>
 <?php
     echo
     $this->element('wf_uselect_actions'), 

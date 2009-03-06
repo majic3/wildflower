@@ -70,5 +70,19 @@
     <li class="sidebar-box post-info main_sidebar">
         <?php echo $this->element('../wild_pages/_page_info'); ?>
     </li>
-    <li><?php echo $html->link('Go to all pages', array('action' => 'index')); ?></li>
+    <li class="versions main_sidebar">
+        <h4>Versions</h4>
+        <ul>
+        <?php
+            $attr = array();
+            foreach ($revisions as $version) {
+                if (isset($this->params['named']['rev']) and $this->params['named']['rev'] == $version['WildRevision']['revision_number']) {
+                    $attr['class'] = 'current';
+                }
+                echo '<li>', $html->link($time->niceShort($version['WildRevision']['created']), "/{$this->params['prefix']}/pages/edit/{$this->data['WildPage']['id']}/rev:{$version['WildRevision']['revision_number']}", $attr), '</li>';
+                $attr['class'] = '';
+            }
+        ?>
+        </ul>
+    </li>
 <?php $partialLayout->blockEnd(); ?>
