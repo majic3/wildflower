@@ -9,7 +9,6 @@ echo $form->input('password',  array('between' => '<br />'));
 <div id="remember"><?php echo $form->input('remember', array(
 	'type' => 'checkbox',
 	'label' => 'Remember me?')); ?></div>
-<div id="forgottenlogin"><?php echo $html->link('Password Reset', '/wf/resetpass'); ?></div>
 <?php
 
 // Auth error message
@@ -20,4 +19,5 @@ if ($session->check('Message.auth')) {
 echo $wild->submit('Log in');
 echo $form->end();
 ?>
-<p id="gohome"><?php echo $html->link("Back to $siteName", '/'); ?></p>
+<span class="cleaner"></span>
+<p class="quiet"><small><?php echo $html->link("Back to $siteName", '/'), ' &#124; ', $html->link('Password Reset', '/wf/resetpass'); ?></small></p>
