@@ -714,6 +714,7 @@ select {
 }
 
 .post-categories,
+.link-categories,
 .post-comments {
     color: #535353;
     margin: 0;
@@ -752,11 +753,56 @@ select {
         background-position: 12px 5px;
     }
 
+ /* pagination */
+
 .paginator {
-    margin: 2em 0 1em;
+    margin: 50px 2em 0 1em;
 }
 
-    .paginator > div,
+.paginator li{
+border:0; margin:0; padding:0;
+font-size:11px;
+list-style:none;
+}
+.paginator li, .paginator a{
+border:solid 1px #DEDEDE
+margin-right:2px;
+}
+.paginator .paginate-prev.disabled,
+.paginator .paginate-next.disabled {
+color:#888888
+display:block;
+float:left;
+font-weight:bold;
+padding:3px 4px;
+}
+.paginator .paginate-prev a,
+.paginator .paginate-next a {
+font-weight:bold;
+border:solid 1px #FFFFFF;
+}
+.paginator .active{
+color:#00000
+font-weight:bold;
+display:block;
+float:left;
+padding:4px 6px;
+}
+.paginator a:link,
+.paginator a:visited {
+color:#0033CC
+display:block;
+float:left;
+padding:3px 6px;
+text-decoration:none;
+}
+.paginator a:hover{
+text-decoration:none;
+}
+
+.paginate-counter {	float: right; margin-right: 70px;	}
+	.paginate-counter p.quiet	{	margin-top: 5px;	}
+
     .paginate-prev,
     .paginate-next {
         float: left;
