@@ -7,10 +7,12 @@
  */
 ?>
 <div class="page">
-    <div class="entry">
-       <?php echo $page['WildPage']['content']; ?>
+    <div class="main">
+	<?php echo $page['WildPage']['content']; ?>
+	<?php echo $this->element('edit_this', array('id' => $page['WildPage']['id'])) ?>
     </div>
-    
-    <?php echo $this->element('edit_this', array('id' => $page['WildPage']['id'])) ?>
+    <div class="aside">
+       <?php echo $page['WildPage']['sidebar_content']; ?>
+    </div>
 </div>
 
