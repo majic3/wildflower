@@ -54,52 +54,56 @@ body	{	font-size: 62.5%; max-width: 100%; padding: 0; margin: 0;	}
 
 /*	main & aside	*/
 
-#main	{
-
+.main	{
+	float: left;
+	width: 550px;
 }
 
-#aside	{
+.main	img	{	float: left; margin: 0 15px 5px -15px; padding: 5px; border: 0;	}
 
+.aside	{
+	margin: 0 0 0 575px;
+	width: 350px;
 }
 
 /* HOME */
-body.home	#main { float: left; width: 580px; margin-right: 90px; }
+body.home	.main { float: left; width: 580px; margin-right: 90px; }
 		
 
 body.home		#introScroller
 		{
 			width: 100%;
 		}
-body.home		#main .jScrollPane
+body.home		.main .jScrollPane
 		{
 			width: 650px;
 			height: 590px;
 			overflow: auto;
 		}
 
-body.home	#aside { float: left; margin-top: 10px; width: 230px; }
-body.home	#aside h3 { color: #888; }
-body.home	#aside ul, 
-body.home	#aside ol { color: #888; }
-body.home	#aside ul a { color: #555; }
+body.home	.aside { float: left; margin-top: 10px; width: 230px; }
+body.home	.aside h3 { color: #888; }
+body.home	.aside ul, 
+body.home	.aside ol { color: #888; }
+body.home	.aside ul a { color: #555; }
 
 /* /HOME */
 
 /* ABOUT */
 
-body.about	#main	{
+body.about	.main	{
 	float: left;
 	width: 460px;
 }
 
-body.about	#aside	{
+body.about	.aside	{
 	float: left;
 	width: 400px;
 	margin: 5px 10px; 
 	
 }
 
-	body.about	#main .jScrollPane
+	body.about	.main .jScrollPane
 		{
 			width: 400px;
 			height: 340px;
@@ -109,13 +113,13 @@ body.about	#aside	{
 /* /ABOUT */
 
 /* POSTS */
-body.blog #main,
-body.posts #main	{ 
+body.blog .main,
+body.posts .main	{ 
 	float: left;
 	width: 460px;
 }
-body.blog #aside,
-body.posts #aside	{
+body.blog .aside,
+body.posts .aside	{
 	float: left;
 	width: 400px;
 	margin: 5px 10px; 
@@ -136,9 +140,9 @@ body.posts #aside	{
 /* /POSTS */
 
 /* GALLERY */
-body.gallery #main,
-body.gallery #aside	{	width: 100%;	}
-body.gallery #main li {
+body.gallery .main,
+body.gallery .aside	{	width: 100%;	}
+body.gallery .main li {
 	background:#FFFFFF none repeat scroll 0 0;
 	border-color:#CCCCCC;
 	border-style:solid;
@@ -185,11 +189,11 @@ body.gallery #fullplate-photo {
 	padding:5px 15px 15px;
 	width:600px;
 }
-body.gallery #main a span {
+body.gallery .main a span {
 	left:-9999px;
 	position:absolute;
 }
-body.gallery #main a:hover span {
+body.gallery .main a:hover span {
 	background:#FFFFFF none repeat scroll 0 0;
 	border-color:#EEEEEE;
 	border-style:solid;
@@ -209,12 +213,12 @@ body.gallery img {
 /* /GALLERY */
 
 /* CONTACT */
-body.contact #main,
-body.messages #main {
+body.contact .main,
+body.messages .main {
 	float: left; width: 630px;
 }
-body.contact #aside	,
-body.messages #aside{
+body.contact .aside	,
+body.messages .aside{
 	margin: 0 0 640px;
 	width: 340px; margin-left: 640px;
 }

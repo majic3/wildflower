@@ -41,7 +41,12 @@ function jLinkComplete(data, status)	{
 		$.growlUI('loaded', data.titleStr);
 }
 function init()	{
+	//Shadowbox.loadSkin('classic', '/js/shadowbox/skin/classic'); // use the "classic" skin
+	//Shadowbox.loadLanguage('en', '/js/shadowbox/lang'); // use the English language
+	//Shadowbox.loadPlayer(['img'], '/js/shadowbox/player'); // use img and qt players
+
 	Shadowbox.setup();
+
 	$('a[title]').tipsy({fade: true, gravity: 'n'})
 		$('#body .tabs').tabs();
 	$('.jScrollPane').jScrollPane();
