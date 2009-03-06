@@ -32,7 +32,9 @@
 </div>
 
 <p id="footer">
-    <?php echo $html->link('Powered by Wildflower', 'http://wf.klevo.sk/') ?>
+    <?php echo $html->link('Powered by Wildflower', 'http://wf.klevo.sk/') ?> &#124; 
+    <?php echo $html->link('Silk Icons by Mark@Famfamfam', 'http://www.famfamfam.com/lab/icons/silk/') ?> &#124; 
+    <?php echo $html->link('Bright Icons by Min@Icon Eden', 'http://www.iconeden.com/icon/bright-free-stock-iconset.html') ?>
 </p>
 
 </body>

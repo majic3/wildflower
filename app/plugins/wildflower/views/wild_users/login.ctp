@@ -16,8 +16,8 @@ if ($session->check('Message.auth')) {
 	$session->flash('auth');
 }
 
-echo $wild->submit('Log in');
+echo $wild->submit($html->image('/css/img/silk-icons/lock_go.png') . ' Log in');
 echo $form->end();
 ?>
 <span class="cleaner"></span>
-<p class="quiet"><small><?php echo $html->link("Back to $siteName", '/'), ' &#124; ', $html->link('Password Reset', '/wf/resetpass'); ?></small></p>
+<div class="buttons"><?php echo $html->link("exit", '/'), $html->link('Reset', '/wf/resetpass'); ?></div>
