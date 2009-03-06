@@ -221,11 +221,11 @@ body.messages #aside{
 /* /CONTACT */
 
 /* FOOTER */
-#footer { padding: 10px 20px; border-top: 1px solid #eee; }
-#footer .tabs { font-size: 13px; }
+#footer { padding: 10px 20px; border-top: 1px solid #eee;margin-bottom: 45px; }
+#footer .tabs { font-size: 13px; width: auto; float: right; }
 #footer .tabs li { margin-right: 20px; }
 #footer .tabs a { color: #999; text-decoration: none; }
-#footer p.quiet { color: #ccc; }
+#footer p.quiet { color: #ccc; width: auto; float: left; margin-top: 0px; margin-bottom: 0px; }
 #footer img { border: 0; vertical-align: bottom; }
 
 

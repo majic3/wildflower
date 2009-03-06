@@ -2,7 +2,7 @@
 class WildGalleriesController extends WildflowerAppController {
 
 	//public $name = 'WildGalleries'; 
-	public $components = array('Wildflower.Flickr', 'Wildflower.Director');
+	//public $components = array('Wildflower.Flickr', 'Wildflower.Director');
 	public $helpers = array('Cache', 'Wildflower.List', 'Rss', 'Wildflower.Textile', 'Wildflower.Category', 'Wildflower.Tree', 'Time');
     public $paginate = array(
         'limit' => 10,
@@ -23,9 +23,10 @@ class WildGalleriesController extends WildflowerAppController {
 	        'order' => array('WildGallery.created' => 'desc'),
 			'conditions' => 'WildGallery.draft = 0'
 	    );
-	    $galleries = $this->paginate($this->modelClass);   	 
+	    $galleries = $this->paginate($this->modelClass);
+		$this->render('view');
 
-		$director = $this->director;
+		/*	$director = $this->director;
 		$director->format->add(array(
 			'name' => 'thumb', 
 			'width' => '100', 
@@ -50,14 +51,14 @@ class WildGalleriesController extends WildflowerAppController {
 		$contents = $album->contents[0];
 		$this->set('director', $director);	 
 		$this->set('album', $album);	 
-		$this->set('contents', $contents);	 
+		$this->set('contents', $contents);	 */
 		
-		$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
-		$this->set('sets', $photosets);
-		$currset = (empty($id)) ? $photosets['photoset'][0]['id'] : $id;
-		$this->set('currset', $this->flickr->photosets_getInfo($currset));
-		$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
-		$this->set('flickr', $this->flickr); 
+		//$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
+		//$this->set('sets', $photosets);
+		//$currset = (empty($id)) ? $photosets['photoset'][0]['id'] : $id;
+		//$this->set('currset', $this->flickr->photosets_getInfo($currset));
+		//$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
+		//$this->set('flickr', $this->flickr); 
 	    
         if (isset($this->params['requested'])) {
             return $galleries;
@@ -122,8 +123,8 @@ class WildGalleriesController extends WildflowerAppController {
         }
 
         $slug = Sanitize::paranoid($this->params['slug']);
-        //$gallery = $this->WildGallery->findBySlugAndDraft($slug, 0);
-        //$gallery = $this->WildGallery->findBySlug($slug);
+        $gallery = $this->WildGallery->findBySlugAndDraft($slug, 0);
+        $gallery = $this->WildGallery->findBySlug($slug);
 
 		if (empty($gallery)) {	return $this->do404();	}
         
@@ -135,11 +136,11 @@ class WildGalleriesController extends WildflowerAppController {
             'descriptionMetaTag' => $gallery[$this->modelClass]['description_meta_tag']
         ));
 		
-		$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
-		$this->set('sets', $photosets);
-		$currset = $id == null ? $photosets['photoset'][0]['id'] : $id;
-		$this->set('currset', $this->flickr->photosets_getInfo($currset));
-		$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
+		//$photosets = $this->flickr->photosets_getList(Configure::read('Flickr.userID'));
+		//$this->set('sets', $photosets);
+		//$currset = $id == null ? $photosets['photoset'][0]['id'] : $id;
+		//$this->set('currset', $this->flickr->photosets_getInfo($currset));
+		//$this->set('thumbs', $this->flickr->photosets_getPhotos($currset)); 
 
 		$this->set('slug', $slug);
 		//$this->set('slug', $slug);
