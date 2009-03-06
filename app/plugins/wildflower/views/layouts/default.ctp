@@ -72,7 +72,7 @@ echo $html->doctype('xhtml-strict') ?>
 		)));
 	?>
 </head>
-<body id="<?php /* this is better as a method in a helper - later */ echo str_replace('wild_', '', $this->params['controller']) ?>" class="<?php echo $this->params['action'] ?>">
+<body id="<?php echo (($this->params['controller'] == 'wild_pages') ? $this->params['Wildflower']['page']['slug'] : str_replace('wild_', '', $this->params['controller'])); ?>" class="<?php echo (($this->params['controller'] == 'wild_pages') ? $this->params['Wildflower']['page']['slug'] : str_replace('wild_', '', $this->params['controller'])); ?> <?php echo $this->params['action'] ?>">
 <?php
         // Admin bar
         // Do not show for previews
