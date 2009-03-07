@@ -14,7 +14,7 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
-            '/css/ui/ui.all',
+            '/css/ui/jquery-ui-1.7.custom',
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?
@@ -67,6 +67,7 @@
             <?php echo $htmla->link(__('Settings', true), array('controller' => 'wild_settings')); ?> | 
             <?php echo $htmla->link(__('Users', true), array('controller' => 'wild_users')); ?> | 
             <?php if($session->read('Auth.WildUser.login') == 'admin')	echo $htmla->link(__('Utilities', true), array('controller' => 'wild_utilities')) . ' | '; ?>
+            <?php echo $htmla->link(__('About', true), array('controller' => 'wild_pages', 'action' => 'about'), array('id' => 'aboutwf')); ?>
             <?php echo $htmla->link(__('Logout', true), array('controller' => 'wild_users', 'action' => 'logout'), array('id' => 'logout')); ?>
             
         </div>
