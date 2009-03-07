@@ -13,7 +13,7 @@ echo $html->doctype('xhtml-strict') ?>
 
 	<?php
 		// echo $packager->css('admin/screen'); 
-		echo $html->css('ui/ui.all', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui-1.7.custom', 'stylesheet', Array('media' => 'screen'));
 		echo $html->css(array(
 			'boilerplate.css', 
 			'plugins.css', 

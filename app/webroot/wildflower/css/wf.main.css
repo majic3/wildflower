@@ -781,7 +781,7 @@ padding:3px 4px;
 font-weight:bold;
 border:solid 1px #FFFFFF;
 }
-.paginator .active{
+.paginator .current{
 color:#00000
 font-weight:bold;
 display:block;
@@ -1251,4 +1251,20 @@ text-decoration:none;
 
 .tabs	{	background: transparent !important;	margin-bottom: 30px;}
 body.dashboards	#content-pad	.tabs,
-body	#content-pad	.list	{	margin-right: 155px;	}
+body	#content-pad	.list	{	margin-right: 155px;	}	
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+.ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none; outline: none; background: transparent; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; background: transparent;  }
+.ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; background: transparent; }
+.ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; background: transparent; }
+
+/*	jquery ui flash messages	*/
+.ui-widget	p {	padding-left: 15px; padding-right: 15px;	}
+.ui-widget	p span.ui-icon	{	float: left; padding: 1px;	}
+
+#jqueryui		{	float: right; background: #fff; margin: -10px 0 0 0; 	}

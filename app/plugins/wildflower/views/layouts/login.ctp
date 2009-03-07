@@ -10,7 +10,7 @@
     <link rel="icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
     
-    <?php echo $html->css('login'); ?>
+    <?php echo $html->css(Array('login')); ?>
     
 </head>
 <body>

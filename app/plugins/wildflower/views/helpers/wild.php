@@ -161,12 +161,26 @@ class WildHelper extends WildflowerAppHelper {
         
         return "<ul$ulAttr>$html</ul>\n";
     }
-    
-    function submit($label = 'Save') {
-        $button = '<div class="submit"><button type="submit"><span class="bl1"><span class="bl2">' . $label . '</span></span></button></div>';
+
+	// added second param for option spans - particle tree styling better WO them
+    function submit($label = 'Save', $spans = true) {
+        $button = $spans ? '<div class="submit"><button type="submit"><span class="bl1"><span class="bl2">' . $label . '</span></span></button></div>' : '<div class="submit"><button type="submit">$label</button></div>';
         return $button;
     }
-    
+
+	/*
+	 * ptbuttons - particle tree buttons
+	 @buttons - Array of buttons each item is array of url, class & label later make each of these optional except for label href defaults to # class to positive
+	 @wrapper - option div wrapper
+	 */ 
+    function ptbuttons($buttons, $wrapper = 'buttons') {
+		$ptbuttons = '';
+		foreach($buttons as $btn)	{
+			$ptbuttons.= "<a href=\"{$btn['url']}\" class=\"{$btn['class']}\">{$btn['label']}</a>";
+		}
+		return ($wrapper) ? "<div class=\"$wrapper\">$ptbuttons</div>" : $ptbuttons;
+    }
+
     private function _createListNode($label, $link, $childPages = null) {
         $slug = $this->_getMenuSlug($label);
         $label = hsc($label);

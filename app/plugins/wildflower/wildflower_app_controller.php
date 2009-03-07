@@ -131,10 +131,10 @@ class WildflowerAppController extends AppController {
             }
         } else {
             if ($this->{$model}->del($this->data[$model][$this->{$model}->primaryKey])) {
-                $this->Session->setFlash("{$model} #$id was deleted.");
+                $this->Session->setFlash("<strong>{$model} #$id</strong> has been deleted.", 'messages/success');
                 $this->redirect(array('action' => 'index'));
             } else {
-            	$this->Session->setFlash("Error while deleting {$model} #$id.");
+            	$this->Session->setFlash("Error while deleting <strong>{$model} #$id</strong> .", 'messages/success');
             }
         }
     }
