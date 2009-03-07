@@ -52,16 +52,18 @@ class WildMessagesController extends WildflowerAppController {
         		}
 
         		if ($this->Email->send()) {
-        			$message = 'Your message has been succesfuly sent. Thanks!';
+					$mstatus = 'success';
+        			$message = '<strong>Success</strong> Your message has been succesfuly sent. Thanks!';
         		} else {
-        			$message = "A problem occured. Your message has not been send. Sorry!";
+					$mstatus = 'error';
+        			$message = "<strong>Error</strong> A problem occured. Your message has not been send. Sorry!";
         		}
 
         		if ($this->RequestHandler->isAjax()) {
         			$this->set('message', $message);
         			return $this->render('message');
         		} else {
-        			$this->Session->setFlash($message);
+        			$this->Session->setFlash($message, 'messages/' . $mstatus);
         			return $this->redirect('/contact');
         		}
         	}

@@ -112,7 +112,7 @@ class WildCommentsController extends WildflowerAppController {
     function create() {
         $this->WildComment->spamCheck = true;
         if ($this->WildComment->save($this->data)) {
-            $this->Session->setFlash('Comment succesfuly added.');
+            $this->Session->setFlash('<strong>Success</strong> Comment succesfuly added.', 'messages/success');
             $postId = intval($this->data['WildComment']['post_id']);
             $postSlug = $this->WildComment->Post->field('slug', "WildPost.id = $postId");
             $postLink = '/' . Configure::read('Wildflower.blogIndex') . "/$postSlug";

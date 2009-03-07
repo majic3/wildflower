@@ -12,7 +12,7 @@ class WildPostsController extends WildflowerAppController {
             $this->data[$this->modelClass]['draft'] = 1;
             $this->data[$this->modelClass]['uuid'] = sha1(String::uuid());
             if ($this->WildPost->save($this->data)) {
-                $this->Session->setFlash('You\'ve written a new post.');
+                $this->Session->setFlash('<strong>Success</strong> You\'ve written a new post.', 'messages/success', 'messages/success');
                 $this->redirect(array('action' => 'wf_edit', $this->WildPost->id));
             }
         }
@@ -295,7 +295,7 @@ class WildPostsController extends WildflowerAppController {
 
         $this->WildPost->WildComment->spamCheck = true;
         if ($this->WildPost->WildComment->save($this->data)) {
-            $this->Session->setFlash('Comment succesfuly added.');
+            $this->Session->setFlash('<strong>Success</strong> Comment has been added.', 'messages/success');
             $postId = intval($this->data['WildComment']['wild_post_id']);
             $postSlug = $this->WildPost->field('slug', "id = $postId");
             $postLink = '/' . Configure::read('Wildflower.blogIndex') . "/$postSlug";

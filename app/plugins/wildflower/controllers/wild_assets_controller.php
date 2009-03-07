@@ -75,7 +75,7 @@ class WildAssetsController extends WildflowerAppController {
 	 * @param int $id
 	 */
 	 // @TODO make require a POST
-	function wf_delete($id) {
+	function wf_adelete($id) {
 	    $this->WildAsset->delete($id);
 		$this->redirect(array('action' => 'index'));
 	}
