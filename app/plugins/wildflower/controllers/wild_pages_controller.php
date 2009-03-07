@@ -21,6 +21,13 @@ class WildPagesController extends WildflowerAppController {
      */
     function wf_about() {
     }
+
+    /**
+     * A static test page for jquery ui within admin - delete later
+     *
+     */
+    function wf_jqueryui() {
+    }
     
     /**
      * Create a new page, with title set, as a draft.
