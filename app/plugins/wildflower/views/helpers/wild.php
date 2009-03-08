@@ -1,5 +1,6 @@
 <?php
 require_once(WILDFLOWER_PLUGIN . DS . 'wildflower_app_helper.php');
+App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
 class WildHelper extends WildflowerAppHelper {
 	
@@ -213,22 +214,25 @@ class WildHelper extends WildflowerAppHelper {
         return WildflowerHelper::slug(low($label), '-');
     }
     
-    function renderPage($content) {
-        $content = json_decode($content);
-        
-        $output = '';
-        foreach($content as $element) {
-            switch($element->type) {
-                case 'content':
-                    if($element->image != '') {
-                        $output .= '<div class="image-' . $element->align . '"><img src="' . $this->Html->url('/wildflower/thumbnail_by_id/' . $element->image . '/320/1000/0') . '" /></div>';
-                    }
-                    $output .= $this->Textile->format($element->text);
-                    $output .= '<div class="clear"></div>';
-                    break;
-            }
+    function processWidgets($html) {
+        // Find the widget element
+        $selector = '.wf_widget';
+        $dom = str_get_html($html);
+        $widgets = $dom->find($selector);
+        $Widget = ClassRegistry::init('WildWidget');
+        $view = ClassRegistry::getObject('view');
+        foreach ($widgets as $widget) {
+            $widgetId = $widget->id;
+            $widgetClass = $widget->class;
+            $instanceId = intval(r('wf_widget wf_widget_id_', '', $widgetClass));
+            $data = $Widget->findById($instanceId);
+            $data = json_decode($data['WildWidget']['config'], true);
+            $replaceWith = $view->element('widgets/' . $widgetId, array('data' => $data));
+            // Replace the widget placeholder with real stuff
+            $html = r($widget->outertext, $replaceWith, $html);
         }
-        return $output;
+        
+        return $html;
     }
 
 }

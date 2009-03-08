@@ -90,7 +90,8 @@ class WildPagesController extends WildflowerAppController {
 
         $newParentPageOptions = $this->WildPage->getListThreaded();
         $revisions = $this->WildPage->getRevisions($id, 10);
-        $this->set(compact('newParentPageOptions', 'revisions'));
+        $isDraft = ($page['WildPage']['draft']);
+        $this->set(compact('newParentPageOptions', 'revisions', 'isDraft'));
     }
     
     function wf_view($id = null) {
@@ -147,7 +148,7 @@ class WildPagesController extends WildflowerAppController {
             return $this->render('wf_update');
         }
         
-        $this->redirect(array('action' => 'view', $this->data[$this->modelClass]['id']));
+        $this->redirect(array('action' => 'edit', $this->data[$this->modelClass]['id']));
     }
     
     /**
