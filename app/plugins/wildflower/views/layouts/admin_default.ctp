@@ -42,7 +42,9 @@
                 wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
             }
         });
-        
+
+		//	onliny load mce when theres content to edit -perhaps 
+		//	if($.jlm.config.action == 'edit')
         tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {

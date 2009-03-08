@@ -19,6 +19,14 @@ class WildWidgetsController extends WildflowerAppController {
         
     }
     
+    function wf_list_links() {	 
+        $postResults = ClassRegistry::init('WildPost')->find('all');
+        $pageResults = ClassRegistry::init('WildPage')->find('all');
+        $results = am($postResults, $pageResults);
+        $this->set('results', $results);
+        
+    }
+    
     function slider_config($id) {
         if (!empty($this->data)) {
             $config = json_encode($this->data);

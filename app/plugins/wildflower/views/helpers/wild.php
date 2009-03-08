@@ -176,7 +176,7 @@ class WildHelper extends WildflowerAppHelper {
     function ptbuttons($buttons, $wrapper = 'buttons') {
 		$ptbuttons = '';
 		foreach($buttons as $btn)	{
-			$ptbuttons.= "<a href=\"{$btn['url']}\" class=\"{$btn['class']}\">{$btn['label']}</a>";
+			$ptbuttons.= $this->Html->link($btn['label'], $btn['url'], Array('class' => $btn['class']));
 		}
 		return ($wrapper) ? "<div class=\"$wrapper\">$ptbuttons</div>" : $ptbuttons;
     }

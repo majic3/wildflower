@@ -5,4 +5,5 @@
     <ul class="widget_list">
         <li><a href="#InsertSlider" rel="slider">Slider</a></li>
     </ul>
+    <a class="cancel" href="#Close">Close insert widget sidebar</a>
 </li>

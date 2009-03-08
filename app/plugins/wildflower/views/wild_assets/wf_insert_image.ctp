@@ -48,6 +48,6 @@
 </li>
 -->
 
-<li class="insert_image_sidebar">
-    <a class="cancel" href="Close">Close insert image sidebar</a>
+<li class="insert_link_sidebar">
+    <a class="cancel" href="#Close">Close insert image sidebar</a>
 </li>
