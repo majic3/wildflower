@@ -262,6 +262,9 @@ p.quiet	{	text-align: center;	}
 }
 
 button.positive, .buttons a.positive{
+    color:#529214;
+}
+
 .buttons a.positive:hover, button.positive:hover{
     background-color:#E6EFC2;
     border:1px solid #C6D880;

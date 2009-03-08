@@ -1,7 +1,12 @@
 <?php if ($isLogged) { ?>
 <p>You are already logged in. There's no need to do it again. <?php echo $html->link('Go to admin area', '/' . Configure::read('Wildflower.prefix')); ?>.</p>
 <?php } ?>
-<?php
+<?php	 
+
+// Auth error message
+if ($session->check('Message.auth')) {
+	$session->flash('auth');
+}
 echo $form->create('WildUser', array('url' => $here));
 echo $form->input('login', array('between' => '<br />'));
 echo $form->input('password',  array('between' => '<br />'));
@@ -11,13 +16,8 @@ echo $form->input('password',  array('between' => '<br />'));
 	'label' => 'Remember me?')); ?></div>
 <?php
 
-// Auth error message
-if ($session->check('Message.auth')) {
-	$session->flash('auth');
-}
-
 echo $wild->submit($html->image('/css/img/silk-icons/lock_go.png') . ' Log in');
 echo $form->end();
 ?>
 <span class="cleaner"></span>
-<div class="buttons"><?php echo $html->link("exit", '/'), $html->link('Reset', '/wf/resetpass'); ?></div>
+<div class="buttons"><?php echo $html->link($html->image('/css/img/silk-icons/door_out.png') . " exit", '/', array('class' => 'positive'), false, false), $html->link($html->image('/css/img/silk-icons/textfield_key.png') . ' reset', '/wf/resetpass', array('class' => 'negative'), false, false); ?></div>
