@@ -12,8 +12,7 @@ echo $html->doctype('xhtml-strict') ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
 
 	<?php
-		// echo $packager->css('admin/screen'); 
-		echo $html->css('ui/jquery-ui-1.7.custom', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui-1.7', 'stylesheet', Array('media' => 'screen'));
 		echo $html->css(array(
 			'boilerplate.css', 
 			'plugins.css', 
@@ -41,8 +40,8 @@ echo $html->doctype('xhtml-strict') ?>
 	  /* change it to what suits you! */
 	</script>
 	<![endif]-->
-
 	<script type="text/javascript" src="http://www.google.com/jsapi?key=<?php	echo Configure::read('Icing.gfeed.api');	?>"></script>
+
 	<script type="text/javascript">
 		var settings = {
 			base: "<?php echo $this->base ?>",

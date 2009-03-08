@@ -14,7 +14,7 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
-            '/css/ui/jquery-ui-1.7.custom',
+            '/css/ui/jquery-ui-1.7',
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?

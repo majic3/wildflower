@@ -1247,7 +1247,7 @@ text-decoration:none;
 }
 
 
-/*	jquery ui overrides	*/
+/*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
 
 .tabs	{	background: transparent !important;	margin-bottom: 30px;}
 body.dashboards	#content-pad	.tabs,
@@ -1370,3 +1370,27 @@ button.positive, .buttons a.positive{
     border:1px solid #d12f19;
     color:#fff;
 }
+
+/* Widgets */
+
+    #edit_widget_form .submit {
+        float: left;
+        margin-right: 5px;
+    }
+    
+.slider_block {
+    overflow: hidden;
+}
+
+    .slider_block .input {
+        float: left;
+        margin-right: 10px;
+    }
+    
+    .slider_block label {
+        margin-right: 5px;
+    }
+    
+    .slider_block input {
+        font-size: 14px;
+    }

@@ -16,7 +16,11 @@ class WildWidgetsController extends WildflowerAppController {
     }
     
     function wf_list_widgets() {
-        
+        // Scan plugin and theme element dirs for widgets
+        $themeWidgets = $this->_parseWidgetFileList(scandir(APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'elements' . DS . 'widgets'));
+        $wfWidgets = $this->_parseWidgetFileList(scandir(WILDFLOWER_PLUGIN . DS . 'views' . DS . 'elements' . DS . 'widgets'));
+		$widgets = am($wfWidgets, $themeWidgets);
+		$this->set(compact('widgets'));
     }
 
     function wf_list_links() {	 
@@ -26,11 +30,30 @@ class WildWidgetsController extends WildflowerAppController {
         $this->set('results', $results);
         
     }
+
+    private function _parseWidgetFileList($list) {
+        $result = array();
+        foreach ($list as $fileName) {
+		    if ($fileName[0] == '.' or strpos($fileName, '.ctp') < 1 or strpos($fileName, '_config') !== false) {
+		        continue;
+		    }
+		    
+	        $fileName = r('.ctp', '', $fileName);
+	        $humanized = Inflector::humanize(r('wf_widget_', '', $fileName));
+	        $result[] = array(
+	            'id' => $fileName,
+	            'name' => $humanized,
+	            'href' => r(' ', '', $humanized)
+	        );
+		}
+		return $result;
+    }
     
-	function wf_slider_config($id) {
+    function wf_config($name, $id) {
         $widget = $this->WildWidget->findById($id);
         $this->data = json_decode($widget['WildWidget']['config'], true);
         $this->data['WildWidget']['id'] = intval($id);
+        $this->render("/elements/widgets/{$name}_config");
     }
     
     function wf_update() {
