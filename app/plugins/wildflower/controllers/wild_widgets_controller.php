@@ -18,7 +18,7 @@ class WildWidgetsController extends WildflowerAppController {
     function wf_list_widgets() {
         
     }
-    
+
     function wf_list_links() {	 
         $postResults = ClassRegistry::init('WildPost')->find('all');
         $pageResults = ClassRegistry::init('WildPage')->find('all');
@@ -27,15 +27,18 @@ class WildWidgetsController extends WildflowerAppController {
         
     }
     
-    function slider_config($id) {
-        if (!empty($this->data)) {
-            $config = json_encode($this->data);
-            $this->WildWidget->id = intval($id);
-            $this->WildWidget->saveField('config', $config);
-        }
-        
+	function wf_slider_config($id) {
         $widget = $this->WildWidget->findById($id);
         $this->data = json_decode($widget['WildWidget']['config'], true);
+        $this->data['WildWidget']['id'] = intval($id);
+    }
+    
+    function wf_update() {
+        if (!empty($this->data)) {
+            $config = json_encode($this->data);
+            $this->WildWidget->id = intval($this->data['WildWidget']['id']);
+            $this->WildWidget->saveField('config', $config);
+        }
     }
     
 }
