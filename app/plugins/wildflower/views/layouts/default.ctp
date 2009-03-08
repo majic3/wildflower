@@ -12,7 +12,7 @@ echo $html->doctype('xhtml-strict') ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
 
 	<?php
-		echo $html->css('ui/jquery-ui-1.7.custom', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui-1.7', 'stylesheet', Array('media' => 'screen'));
 		echo $html->css(array(
 			'boilerplate.css', 
 			'plugins.css', 
