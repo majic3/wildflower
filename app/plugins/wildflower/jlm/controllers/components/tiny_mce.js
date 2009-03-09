@@ -146,8 +146,8 @@ $.jlm.addComponent('tinyMce', {
 	
 	insertLink: function(editor, selection) { 
 	    // Close if open
-		console.info('		insertLink: ');
-		var alreadyOpenEl = $('.insert_link_sidebar');	
+		//console.info('		insertLink: ');
+		var alreadyOpenEl = $('.insert_link_sidebar'), sel = selection.getSel();	
 		if (alreadyOpenEl.size() > 0) {
 			alreadyOpenEl.remove();
 			$('.main_sidebar').show();
@@ -155,8 +155,7 @@ $.jlm.addComponent('tinyMce', {
 		}
 
 		var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/list_links';  
-		console.info('		link widget url: ' + url + ' selection: ' +selection);
-		console.debug(selection);
+		//	console.info('		link widget url: ' + url + ' selection: ' +selection);
 
 		$.get(url, function(html) {
 			var linksSidebarEl = $(html);
@@ -168,7 +167,8 @@ $.jlm.addComponent('tinyMce', {
 				var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/list_links';
 				var linkId = $(this).attr('rel');
 				var linkHref = $(this).attr('href');
-				var linkHtml = '<a id="' + linkId + '" href="' + linkHref + '">' + selection + '</a>';
+				var titleStr = ($(this).attr('title') !== '') ? ' title="'+$(this).attr('title')+'"' : '';
+				var linkHtml = '<a id="' + linkId + '" href="' + linkHref + '"'+ titleStr +'>' + selection.getSel() + '</a>';
 				editor.execCommand('mceInsertContent', 0, linkHtml);
 				return false;
 			});	 
@@ -176,6 +176,19 @@ $.jlm.addComponent('tinyMce', {
     		// Bind close
             $('.cancel', linksSidebarEl).click(function() {
                 $('.insert_link_sidebar').remove();
+                $('.main_sidebar').show();
+                return false;
+            });
+
+    		// Bind close
+            $('.rss', linksSidebarEl).click(function() {
+				var rsslinksSidebarEl = $('.rssLink'); 
+				if (rsslinksSidebarEl.size() > 0) {
+					$('.main_sidebar').show();
+					return false;
+				}
+                $('.insert_link_sidebar').hide();
+				$('<div class="rssLink"><a href="#rss">rss links todo</a></div>', linksSidebarEl).insertAfter('ul');
                 $('.main_sidebar').show();
                 return false;
             });

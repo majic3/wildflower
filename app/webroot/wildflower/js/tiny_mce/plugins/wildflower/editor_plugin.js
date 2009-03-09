@@ -25,6 +25,10 @@
 	            },
 	            'image' : $.jlm.base + '/wildflower/img/cog.png'
 	        });
+	        
+	        ed.onDblClick.add(function(ed, e) {
+                $.jlm.components.widgets.edit(e.target);
+            });
 
 			//ed.addShortcut('ctrl+l', '??', 'wfinsertlink');
 			//ed.addShortcut('ctrl+l', '??', 'wfinsertimage');
@@ -35,7 +39,8 @@
 	            title : 'Insert a Link to Content or resource',
 	            onclick : function() {
 					var se=ed.selection;
-	                 $.jlm.components.tinyMce.insertLink(ed, se);
+
+					$.jlm.components.tinyMce.insertLink(ed, se);
 	            },
 	            'class' : 'mceIcon mce_link'
 	            //'image' : $.jlm.base + '/wildflower/img/page_link.png'
