@@ -26,7 +26,8 @@ class WildWidgetsController extends WildflowerAppController {
     function wf_list_links() {	 
         $postResults = ClassRegistry::init('WildPost')->find('all');
         $pageResults = ClassRegistry::init('WildPage')->find('all');
-        $results = am($postResults, $pageResults);
+        $linkResults = ClassRegistry::init('WildLink')->find('all');
+        $results = am($postResults, $pageResults, $linkResults);
         $this->set('results', $results);
         
     }

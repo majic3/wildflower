@@ -245,6 +245,13 @@ class WildPagesController extends WildflowerAppController {
         parent::beforeRender();
         $this->set('isPage', true);
         $this->params['Wildflower']['view']['isPage'] = true;
+
+		if(Configure::read('Icing.gfeed.api') && $this->isHome)	{
+			App::import('Model', 'Wildflower.WildLink'); 
+			$WildLink = new WildLink;
+			$this->set('rssFeeds', $WildLink->rssArray());
+		}
+
     }
     
     /**

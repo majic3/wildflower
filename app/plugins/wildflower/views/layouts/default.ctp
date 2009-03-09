@@ -114,6 +114,9 @@ echo $html->doctype('xhtml-strict') ?>
 		<?php echo $content_for_layout; ?>
 	</div>
 
+	<?php	if(isset($rssFeeds))	{	
+		Configure::write('debug', 2); ?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
+
 	<div id="footer">
         <?php 
             echo $navigation->create(array(
