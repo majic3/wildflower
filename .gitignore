@@ -10,7 +10,7 @@ app/tmp/sessions/*
 app/tmp/logs/*.log
 
 # Wildflower caches
-app/plugins/wildflower/tmp/cache/wf_thumbnails/*.jpg
+wildflower/tmp/cache/wf_thumbnails/*.jpg
 
 app/webroot/uploads/*
 app/webroot/img/screenshots/*
@@ -26,7 +26,7 @@ app/webroot/amcharts/fonts/*.fla
 *.*.bak
 
 # only my local settings which git should ignore as contains my details
-app/plugins/wildflower/config/icing.core.php
+wildflower/config/icing.core.php
 
 
 app/tmp/cache/wf_previews/*.json
