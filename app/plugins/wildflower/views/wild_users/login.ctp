@@ -19,5 +19,4 @@ echo $form->input('password',  array('between' => '<br />'));
 echo $wild->submit($html->image('/css/img/silk-icons/lock_go.png') . ' Log in');
 echo $form->end();
 ?>
-<span class="cleaner"></span>
 <div class="buttons"><?php echo $html->link($html->image('/css/img/silk-icons/door_out.png') . " exit", '/', array('class' => 'positive'), false, false), $html->link($html->image('/css/img/silk-icons/textfield_key.png') . ' reset', '/wf/resetpass', array('class' => 'negative'), false, false); ?></div>

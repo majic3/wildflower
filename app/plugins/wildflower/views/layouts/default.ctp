@@ -12,16 +12,20 @@ echo $html->doctype('xhtml-strict') ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
 
 	<?php
-		echo $html->css('ui/jquery-ui-1.7', 'stylesheet', Array('media' => 'screen'));
+		//	echo $html->css('ui/jquery-ui-1.7', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui', 'stylesheet', Array('media' => 'screen'));
 		echo $html->css(array(
+			'combined5',
+		), 'stylesheet', Array('media' => 'screen'));
+		/*	echo $html->css(array(
 			'boilerplate.css', 
 			'plugins.css', 
 			'tipsy.css', 
 			'jscrollpane.css', 
 			'growl.css', 
 			'iscreen.css'
-		), 'stylesheet', Array('media' => 'screen'));
-		echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
+		), 'stylesheet', Array('media' => 'screen')); */
+		//	echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
 
 	<!--[if lte IE 6]>
 	<?php echo $html->css(Array('ie6'), 'stylesheet', Array('media' => 'screen')); ?>
@@ -54,7 +58,7 @@ echo $html->doctype('xhtml-strict') ?>
 			echo $this->element('google_analytics') ?>
 	</script>
 	<?php 
-		e($javascript->link(array(
+		/* e($javascript->link(array(
 			'jquery', 
 			'swfobject', 
 			'jquery-ui', 
@@ -68,6 +72,10 @@ echo $html->doctype('xhtml-strict') ?>
 			'jquery.easing',
 			'shadowbox', 
 			'common'
+		))); */
+		e($javascript->link(array(
+			'combined2', 
+			'cmn'
 		)));
 	?>
 </head>
@@ -90,15 +98,17 @@ echo $html->doctype('xhtml-strict') ?>
         }
     ?>
 
-<div id="page" class="wrapper">
-	<div id="header">
-		<p id="ident"><?php echo $html->link(Configure::read('AppSettings.site_name'), '/', null, null, false); ?></p>
+<div id="page" class="icing">
+	<div id="hd">
+		<div id="ident">
+			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
+		</div>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
-		<div class="searchBox"><?php	echo ($this->element('sidebar_search'));	?></div>
-		<?php	echo $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false)	?>
+		<div id="searchrss"><?php	echo $this->element('sidebar_search'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
+		<div id="skipto"><a href="#content"></a></div>
 	</div>
 
-	<div id="navigation">
+	<div id="nv">
         <?php 
             echo $navigation->create(array(
                 'Home' => '/',
@@ -110,14 +120,13 @@ echo $html->doctype('xhtml-strict') ?>
 	</div>
 
 
-	<div id="body" class="wrapper">
+	<div id="bd">
 		<?php echo $content_for_layout; ?>
+
+		<?php	if(isset($rssFeeds))	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>
 
-	<?php	if(isset($rssFeeds))	{	
-		Configure::write('debug', 2); ?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
-
-	<div id="footer">
+	<div id="ft">
         <?php 
             echo $navigation->create(array(
                 'Home' => '/',
@@ -128,9 +137,8 @@ echo $html->doctype('xhtml-strict') ?>
         ?>
 
 		<p class="quiet"><small>Powered by <?php 
-	           echo $html->link('Wildflower', 'http://wf.klevo.sk/'),
-	           '. ',
-	           $this->element('admin_link') ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/"><img src="/img/cake.power.gif" /></a> &#124; <a href="http://jquery.com/"><img src="/img/jquery-icon.png" /></a> &#124; <a href="http://code.google.com/p/css-boilerplate/">boilerplate</a></small></p>
+	           echo $html->link('<img src="/img/wildflower.png" />', 'http://wf.klevo.sk/', array(), false, false); ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/"><img src="/img/cake.power.gif" /></a> &#124; <a href="http://jquery.com/"><img src="/img/jquery-icon.png" /></a> &#124; <a href="http://github.com/stubbornella/oocss/">OO CSS</a></small></p>
+		<?php	if ($isLogged and $this->params['action'] != 'wf_preview') echo '<p class="quiet"><small>', $this->element('admin_link'), '</small></p>';	?>
 	</div>
 </div>
 </body>

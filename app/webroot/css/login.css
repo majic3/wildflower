@@ -122,15 +122,6 @@ textarea {
 
 /* Footer */
 
-#wrap {
-    /* Footer stick */
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 0 -30px;
-}
-
-
 #footer {
     clear: both;
     text-align: center;
@@ -144,10 +135,6 @@ textarea {
         color: #e5e5e5;
         font-weight: normal;
     }
-
-#push {
-    height: 30px;
-}
 
 
 /* Buttons */
@@ -323,3 +310,9 @@ button.positive, .buttons a.positive{
 }
 
 
+
+
+.buttons	{	height: 25px; margin-top: 60px;	}
+
+	.submit	{	margin-top: 15px;
+	}

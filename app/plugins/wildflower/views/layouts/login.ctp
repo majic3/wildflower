@@ -17,19 +17,15 @@
 
 	<div id="floater"></div>
 	<div id="centered">
-
-
-<div id="floater"></div>
-
-<div id="header">
-	<h1 id="site-title">
-		<?php echo $html->link($siteName, '/', array('title' => 'View site home page')) ?>
-	</h1>
-</div>
-<div id="content">
-	<?php echo $content_for_layout; ?>
-</div>
-</div>
+		<div id="header">
+			<h1 id="site-title">
+				<?php echo $html->link($siteName, '/', array('title' => 'View site home page')) ?>
+			</h1>
+		</div>
+		<div id="content">
+			<?php echo $content_for_layout; ?>
+		</div>
+	</div>
 
 <p id="footer">
     <?php echo $html->link('Powered by Wildflower', 'http://wf.klevo.sk/') ?> &#124; 

@@ -23,10 +23,12 @@ class WildPagesController extends WildflowerAppController {
     }
 
     /**
-     * A static test page for jquery ui within admin - delete later
+     * A static test page for jquery ui & for oo css within admin - delete later
      *
      */
     function wf_jqueryui() {
+    }
+    function wf_oocss() {
     }
     
     /**
