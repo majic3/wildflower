@@ -1247,6 +1247,7 @@ text-decoration:none;
 }
 
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 /*	jquery ui overrides	*/
 
 .tabs	{	background: transparent !important;	margin-bottom: 30px;}
@@ -1268,3 +1269,28 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 .ui-widget	p span.ui-icon	{	float: left; padding: 1px;	}
 
 #jqueryui		{	float: right; background: #fff; margin: -10px 0 0 0; 	}
+=======
+/* Widgets */
+
+    #edit_widget_form .submit {
+        float: left;
+        margin-right: 5px;
+    }
+    
+.slider_block {
+    overflow: hidden;
+}
+
+    .slider_block .input {
+        float: left;
+        margin-right: 10px;
+    }
+    
+    .slider_block label {
+        margin-right: 5px;
+    }
+    
+    .slider_block input {
+        font-size: 14px;
+    }
+>>>>>>> 2b5533e94f48825d345012cb022a47fcb9201d8e:app/webroot/wildflower/css/wf.main.css
