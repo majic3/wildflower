@@ -1247,7 +1247,11 @@ text-decoration:none;
 }
 
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 /*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
+=======
+/*	jquery ui overrides	*/
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 
 .tabs	{	background: transparent !important;	margin-bottom: 30px;}
 body.dashboards	#content-pad	.tabs,
@@ -1269,6 +1273,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 
 #jqueryui		{	float: right; background: #fff; margin: -10px 0 0 0; 	}
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 
 
 
@@ -1371,6 +1376,8 @@ button.positive, .buttons a.positive{
     color:#fff;
 }
 
+=======
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 /* Widgets */
 
     #edit_widget_form .submit {
