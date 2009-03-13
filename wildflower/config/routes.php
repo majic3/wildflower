@@ -54,7 +54,6 @@ Router::connect('/contact', array('controller' => 'wild_messages', 'action' => '
 Router::connect('/contact/create', array('controller' => 'wild_messages', 'action' => 'create'));
 
 // RSS
-<<<<<<< HEAD:app/plugins/wildflower/config/routes.php
 Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/feed', array('controller' => 'wild_posts', 'action' => 'feed'));
 
 // Ultra sexy short SEO friendly post URLs in form of http://my-domain/p/40-char-uuid
