@@ -3,8 +3,8 @@
 
 class WildCategoriesController extends AppController {
 
-	public $helpers = array('Wildflower.List', 'Wildflower.Tree');
-	public $components = array('Wildflower.Seo');
+	public $helpers = array('Tree');
+	public $pageTitle = 'Categories';
 
 	public $paginate = array(
         'limit' => 3,
@@ -16,9 +16,15 @@ class WildCategoriesController extends AppController {
      * 
      */
     function wf_index() {
+        if (!empty($this->data)) {
+            if ($this->WildCategory->save($this->data)) {
+                return $this->redirect(array('action' => 'index'));
+            }
+        }
+        
 		$categoriesForTree = $this->WildCategory->find('all', array('order' => 'lft ASC', 'recursive' => -1));
-        $this->set(compact('categoriesForTree'));
-        $this->pageTitle = ucfirst(Configure::read('Wildflower.blogName')) . ' Categories';
+		$categoriesForSelect = $this->WildCategory->find('list', array('fields' => array('id', 'title')));
+        $this->set(compact('categoriesForTree', 'categoriesForSelect'));
     }
     
     /**
@@ -27,11 +33,6 @@ class WildCategoriesController extends AppController {
      * Returns the updated category list as JSON.
      */
     function wf_create() {
-		if (empty($this->data[$this->modelClass]['parent_id'])) {
-    		// Make sure parent_id will be NULL
-    		unset($this->data[$this->modelClass]['parent_id']);
-    	}
-    	
     	$postId = intval($this->data[$this->modelClass]['wild_post_id']);
     	unset($this->data[$this->modelClass]['wild_post_id']);
     	
@@ -46,6 +47,15 @@ class WildCategoriesController extends AppController {
             $categoriesForTree = $this->WildCategory->find('all', array('order' => 'lft ASC', 'recursive' => -1));
             $this->set(compact('inCategories', 'categoriesForTree'));
     	}
+    }
+    
+    // @TODO make POST only
+    function wf_delete($id) {
+        if ($this->_isFixed($id)) {
+            return $this->_renderNoEdit($id);
+        }
+        $this->WildCategory->delete(intval($id));
+        $this->redirect(array('action' => 'index'));
     }
     
     /**
@@ -65,6 +75,10 @@ class WildCategoriesController extends AppController {
      * @param int $id
      */
     function wf_edit($id = null) {
+        if ($this->_isFixed($id)) {
+            return $this->_renderNoEdit($id);
+        }
+        
     	if (!empty($this->data)) {
     	    if ($this->WildCategory->save($this->data['WildCategory'])) {
         	    return $this->redirect(array('action' => 'edit', $id));
@@ -77,8 +91,7 @@ class WildCategoriesController extends AppController {
     	
 		$parentCategories = $this->WildCategory->generatetreelist(null, null, null, '-');
         $this->set(compact('parentCategories'));
-    	
-    	$this->pageTitle = $this->data[$this->modelClass]['title'];
+        $this->pageTitle = $this->data[$this->modelClass]['title'];
     }
     
     function view($slug = null) {
@@ -90,6 +103,22 @@ class WildCategoriesController extends AppController {
         $this->params['current'] = array('type' => 'category', 'slug' => $category['WildCategory']['slug']);
         
         $this->Seo->title($category['WildCategory']['title']);
+    }
+    
+    private function _isFixed($id) {
+        $fixedCategories = Configure::read('App.fixedWildCategories');
+        if (!is_array($fixedCategories)) $fixedCategories = array();
+        $id = intval($id);
+        if (in_array($id, $fixedCategories)) {
+            return true;
+        }
+        return false;
+    }
+    
+    private function _renderNoEdit($id) {
+        $this->data = $this->WildCategory->findById($id);
+        $this->pageTitle = $this->data[$this->modelClass]['title'];
+        return $this->render('no_edit');
     }
     
 }
