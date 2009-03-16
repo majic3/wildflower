@@ -1,5 +1,5 @@
 <?php echo $html->doctype('xhtml-strict') ?>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <?php echo $html->charset(); ?>
     
@@ -36,6 +36,5 @@
     <?php echo $html->link('Silk Icons by Mark@Famfamfam', 'http://www.famfamfam.com/lab/icons/silk/') ?> &#124; 
     <?php echo $html->link('Bright Icons by Min@Icon Eden', 'http://www.iconeden.com/icon/bright-free-stock-iconset.html') ?>
 </p>
-
 </body>
 </html>
