@@ -1,0 +1,1 @@
+<li><a rel="<?php	echo $rel;	?>" class="<?php	echo $class;	?>" title="<?php	echo $title;	?>" href="<?php	echo $source-bg;	?>"><img src="<?php	echo $source-sm;	?>" alt="" /><span><?php	echo $description;	?></span></a></li> 

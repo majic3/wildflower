@@ -303,6 +303,9 @@ class AppController extends Controller {
         );
         $this->params['Wildflower']['view'] = $params;
     	$this->set($params);
+
+		if(Configure::read('Wildflower.settings.public_theme')) $this->theme = Configure::read('Wildflower.settings.public_theme');
+		// debug(Configure::read('Wildflower.settings.public_theme')); die();
     	
     	// User ID for views
 		$this->set('loggedUserId', $this->Auth->user('id'));

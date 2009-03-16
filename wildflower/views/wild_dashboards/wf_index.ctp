@@ -92,6 +92,7 @@
 			if (empty($comments)) {
 				echo '<p>No Comments Since Last Login.</p>';
 			} else {
+				debug($comments);
 				echo '<ul class="comments-list list">';
 				foreach($comments as $cmt)	{
 					echo "<li><div class=\"list-item\">",

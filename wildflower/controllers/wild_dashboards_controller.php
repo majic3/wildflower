@@ -7,7 +7,7 @@ class WildDashboardsController extends AppController {
 	
 	function wf_index() {
         $comments = $this->WildComment->find('all', array(
-			'recursive' => 1, 'limit' => 5, 'conditions' => 'spam = 0'));
+			'recursive' => 2, 'limit' => 5, 'conditions' => 'spam = 0'));
         $messages = $this->WildMessage->find('all', array(
 			'recursive' => 0, 'limit' => 5));
         $pages = $this->WildPage->find('all', array('limit' => 10, 'order' => 'WildPage.updated DESC'));

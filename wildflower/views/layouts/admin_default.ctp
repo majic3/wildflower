@@ -57,13 +57,9 @@
 <body<?php if (isset($editorMode)) echo ' class="editor_mode"'; echo str_replace('wild_', '', $this->params['controller']); ?>>
 
 <?php if (!isset($editorMode)): ?>    
-<div id="admin_bar">
-    <?php echo $html->link('View homepage', '/'); ?>
-</div>
-
 <div id="header">
     <div id="header-wrap">
-        <h1 id="site-title"><?php echo hsc($siteName); ?></h1>
+        <h1 id="site-title"><?php echo $html->link($siteName, '/', array('title' => __('View homepage', true))); ?></h1>
         
         <div id="login-info">
             <?php echo $htmla->link(__('Settings', true), array('controller' => 'wild_settings')); ?> | 
@@ -78,7 +74,8 @@
             echo $navigation->create(array(
                 __('Dashboard', true) => '/' . Configure::read('Wildflower.prefix'),
                 __('Pages', true) => array('controller' => 'wild_pages'),
-                __('Posts', true) => array('controller' => 'wild_posts'),
+                __('Posts', true) => array('controller' => 'wild_posts'),  
+                __('Categories', true) => array('controller' => 'wild_categories'),
                 __('Assets', true) => array('controller' => 'wild_assets'),
                 __('Messages', true) => array('controller' => 'wild_messages'),
                 __('Galleries', true) => array('controller' => 'wild_galleries'),
