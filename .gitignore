@@ -1,0 +1,42 @@
+# Cake caches
+app/tmp/cache/cake_*
+app/tmp/cache/models/cake_*
+app/tmp/cache/persistent/cake_*
+app/tmp/cache/views/*.php
+
+app/tmp/sessions/*
+
+# Cake logs
+app/tmp/logs/*.log
+
+# Wildflower caches
+wildflower/tmp/cache/wf_thumbnails/*.jpg
+
+app/webroot/uploads/*
+app/webroot/img/screenshots/*
+app/webroot/img/xml/*
+
+app/vendors/phpflickr/*
+app/vendors/Director/*
+
+app/webroot/amcharts/amcharts_key.txt
+app/webroot/amcharts/fonts/*.fla
+
+
+*.*.bak
+
+# only my local settings which git should ignore as contains my details
+wildflower/config/icing.core.php
+
+
+app/tmp/cache/wf_previews/*.json
+app/tmp/cache/wf_root_pages
+wildflower/tmp/cache/wf_thumbnails/*.jpg
+
+# Wildflower uploaded files
+app/webroot/uploads/*
+
+# Ruckusing log file
+vendors/ruckusing/logs/development.log
+
+.DS_Store
