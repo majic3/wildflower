@@ -1,6 +1,6 @@
 <?php 
     echo 
-    $form->create('WildPost', array('url' => $here)),
+    $form->create('WildPost', array('controller' => 'wild_posts', 'action' => 'create')),
     $form->input('title', array(
         'between' => '<br />',
         'tabindex' => '1',
@@ -8,8 +8,8 @@
     $form->input('content', array(
         'type' => 'textarea',
         'tabindex' => '2',
-        'class' => 'tinymce',
-        'rows' => '25',
+        'class' => 'tinymceLight',
+        'rows' => '10',
         'label' => 'Content',
         'between' => '<br />',
         'div' => array('class' => 'input editor'))),

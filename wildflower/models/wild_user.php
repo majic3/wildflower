@@ -16,7 +16,7 @@ class WildUser extends AppModel {
 	
 
 	var $hasOne = array(
-			'WildProfile' => array('className' => 'Wildflower.WildProfile',
+			'WildProfile' => array('className' => 'WildProfile',
 								'foreignKey' => 'user_id',
 								'dependent' => false,
 								'conditions' => '',
