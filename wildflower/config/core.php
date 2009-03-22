@@ -10,9 +10,6 @@
 /** Constant used in CmsHelper */
 define('CHILD_PAGES_PLEASE', 'CHILD_PAGES_PLEASE');
 
-/** Wildflower cache path */
-define('WILDFLOWER_CACHE', WILDFLOWER_DIR . DS . 'tmp' . DS . 'cache');
-
 /** Wildflower config. Access like Configure::read('Wildflower.settingName'); */
 Configure::write(array('Wildflower' => array(
     'cookie' => array(
@@ -28,15 +25,9 @@ Configure::write(array('Wildflower' => array(
     'thumbnailsCache' => WILDFLOWER_CACHE . DS . 'wf_thumbnails',
     'postsParent' => 'post',
     'blogName' => 'posts',	 
-    'blogIndex' => 'posts',	 
-    'galleryDirectoryName' => 'img/gallery',
-    'galleryDirectory' => APP . WEBROOT_DIR .  DS . 'img/gallery', // @TODO rename the key
-    'galleryName' => 'media',
-    'galleryView' => 'media/view',
-    'galleryShow' => 'media/show',
-    'galleryIndex' => 'media',
+    'blogIndex' => 'posts',
     // Disabling the root page cache may be useful in debugging 
-    // (the cache file won't be created, page routes load from the database)
+    // (the cache file won't be created, page routes load from the database on every request)
     'disableRootPageCache' => false,
 )));
 
@@ -96,6 +87,8 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
+
+Configure::write('debug', '2');
 
 if(strpos($_SERVER['HTTP_HOST'], '.ss29'))
 include('icing.core.php');
