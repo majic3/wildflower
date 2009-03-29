@@ -1,9 +1,9 @@
 <?php
-class WildProfile extends WildflowerAppModel {
+class WildProfile extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
-			'WildUser' => array('className' => 'Wildflower.WildUser',
+			'WildUser' => array('className' => 'WildUser',
 								'foreignKey' => 'user_id',
 								'conditions' => '',
 								'fields' => '',
@@ -12,7 +12,7 @@ class WildProfile extends WildflowerAppModel {
 	);
 	
 	var $actsAs= array(
-		'Wildflower.Image'=>array(
+		'Image'=>array(
 			'fields'=>array(
 				'avatar'=>array(
 					'thumbnail'=>array('create'=>true),

@@ -7,8 +7,9 @@ uses('Sanitize');
  */
 class WildPagesController extends AppController {
 	
+	// chk helps needed	 ~ element?
 	public $components = array('RequestHandler', 'Seo');
-	public $helpers = array('Cache', 'Form', 'Html', 'Text', 'Time', 'Wildflower.Element', 'Wildflower.List', 'Wildflower.Tree');
+	public $helpers = array('Cache', 'Form', 'Html', 'Text', 'Time', 'Wildflower.List', 'Wildflower.Tree');
     public $paginate = array(
         'limit' => 25,
         'order' => array('WildPage.lft' => 'asc')

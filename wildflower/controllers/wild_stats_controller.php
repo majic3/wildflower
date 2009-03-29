@@ -1,6 +1,6 @@
 <?php
-class WildStatsController extends WildflowerAppController {	
-	public $helpers = array('Cache', 'Wildflower.List', 'Wildflower.Navigation', 'Wildflower.Tree', 'Time');
+class WildStatsController extends AppController {	
+	public $helpers = array('Cache', 'List', 'Navigation', 'Tree', 'Time');
 	/** Pagination options for the wf_index action **/
     public $paginate = array(
         'limit' => 10,

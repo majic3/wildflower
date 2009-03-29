@@ -1,9 +1,9 @@
 <?php
-class WildGallery extends WildflowerAppModel {
+class WildGallery extends AppModel {
 
 	var $name = 'WildGallery'; 
 	public $actsAs = array(
-	   'Wildflower.Slug' => array('separator' => '-', 'overwrite' => true, 'label' => 'name')
+	   'Slug' => array('separator' => '-', 'overwrite' => true, 'label' => 'name')
 	);
 	
 	public static $statusOptions = array(
