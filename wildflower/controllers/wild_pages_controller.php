@@ -1,5 +1,5 @@
 <?php
-App::import('Sanitize');
+uses('Sanitize');
 /**
  * Pages Controller
  *
@@ -9,7 +9,7 @@ class WildPagesController extends AppController {
 	
 	// chk helps needed	 ~ element?
 	public $components = array('RequestHandler', 'Seo');
-	public $helpers = array('Cache', 'Text', 'Time', 'Element', 'List', 'Tree');
+	public $helpers = array('Cache', 'Form', 'Html', 'Text', 'Time', 'Wildflower.List', 'Wildflower.Tree');
     public $paginate = array(
         'limit' => 25,
         'order' => array('WildPage.lft' => 'asc')
@@ -45,6 +45,26 @@ class WildPagesController extends AppController {
     function wf_diff($pageId, $revisionId) {
         $pageDiff = $this->WildPage->revisionDiff($pageId, $revisionId);
         $this->set('revisionDiff', $pageDiff);
+    }
+    
+    /**
+     * @TODO not done yet
+     *
+     * Discard any unsaved changes to a page
+     *
+     * @param int $id
+     */
+    function wf_discardChanges($id = null, $actionAfter = null) {
+        $previewCachePath = TMP . 'preview' . DS . "page_{$id}_preview.txt";
+        if (file_exists($previewCachePath)) {
+            unlink($previewCachePath);
+        }
+        
+        if ($actionAfter) {
+            $this->redirect(array('action' => $actionAfter));
+        } else {
+            $this->redirect(array('action' => 'edit', $id));
+        }
     }
     
     /**

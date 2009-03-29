@@ -10,6 +10,9 @@
 /** Constant used in CmsHelper */
 define('CHILD_PAGES_PLEASE', 'CHILD_PAGES_PLEASE');
 
+/** Wildflower cache path */
+define('WILDFLOWER_CACHE', WILDFLOWER_DIR . DS . 'tmp' . DS . 'cache');
+
 /** Wildflower config. Access like Configure::read('Wildflower.settingName'); */
 Configure::write(array('Wildflower' => array(
     'cookie' => array(
@@ -27,7 +30,7 @@ Configure::write(array('Wildflower' => array(
     'blogName' => 'posts',	 
     'blogIndex' => 'posts',
     // Disabling the root page cache may be useful in debugging 
-    // (the cache file won't be created, page routes load from the database on every request)
+    // (the cache file won't be created, page routes load from the database)
     'disableRootPageCache' => false,
 )));
 
