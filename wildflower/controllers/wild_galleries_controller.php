@@ -1,9 +1,9 @@
 <?php
-class WildGalleriesController extends WildflowerAppController {
+class WildGalleriesController extends AppController {
 
 	//public $name = 'WildGalleries'; 
 	//public $components = array('Wildflower.Flickr', 'Wildflower.Director');
-	public $helpers = array('Cache', 'Wildflower.List', 'Rss', 'Wildflower.Textile', 'Wildflower.Category', 'Wildflower.Tree', 'Time');
+	public $helpers = array('Cache', 'List', 'Rss', 'Textile', 'Category', 'Tree', 'Time');
     public $paginate = array(
         'limit' => 10,
         'order' => array('created' => 'desc'),

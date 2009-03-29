@@ -279,6 +279,7 @@ a {
 border:2px solid #DDDDDD;
 margin-bottom:1em;
 padding:0.8em;
+padding-left: 50px;
 }
 .error	p, .notice	p, .success p	{
 	margin: 2px 3px;

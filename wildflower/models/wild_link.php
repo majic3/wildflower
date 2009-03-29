@@ -1,5 +1,5 @@
 <?php
-class WildLink extends WildflowerAppModel {
+class WildLink extends AppModel {
 
 	var $name = 'WildLink';
 	var $validate = array(
@@ -8,12 +8,12 @@ class WildLink extends WildflowerAppModel {
 	);	
 	public $actsAs = array(
 	   'Containable',
-	   'Wildflower.Slug' => array('separator' => '-', 'overwrite' => true, 'label' => 'name')
+	   'Slug' => array('separator' => '-', 'overwrite' => true, 'label' => 'name')
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasAndBelongsToMany = array(
-			'WildCategory' => array('className' => 'Wildflower.WildCategory',
+			'WildCategory' => array('className' => 'WildCategory',
 						'joinTable' => 'wild_categories_wild_links',
 						'foreignKey' => 'link_id',
 						'associationForeignKey' => 'category_id',

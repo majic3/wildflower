@@ -2,7 +2,7 @@
 class WildDashboardsController extends AppController {
 	
 	public $helpers = array('Wildflower.List', 'Time', 'Text');
-	public $uses = array('Wildflower.WildComment', 'Wildflower.WildMessage', 'WildFlower.WildPage', 'Wildflower.WildPost');
+	public $uses = array('Wildflower.WildComment', 'Wildflower.WildMessage', 'WildFlower.WildPage', 'WildFlower.WildfPost');
 	public $pageTitle = 'Dashboard';
 	
 	function wf_index() {
