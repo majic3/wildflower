@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: xml.php 7945 2008-12-19 02:16:01Z gwoo $ */
+/* SVN FILE: $Id$ */
 /**
  * XML Helper class file.
  *
@@ -17,9 +17,9 @@
  * @package       cake
  * @subpackage    cake.cake.libs.view.helpers
  * @since         CakePHP(tm) v 1.2
- * @version       $Revision: 7945 $
- * @modifiedby    $LastChangedBy: gwoo $
- * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Core', array('Xml', 'Set'));
@@ -148,12 +148,16 @@ class XmlHelper extends AppHelper {
  * Serializes a model resultset into XML
  *
  * @param  mixed  $data The content to be converted to XML
- * @param  array  $options The data formatting options
+ * @param  array  $options The data formatting options.  For a list of valid options, see
+ *                         XmlNode::__construct().
  * @return string A copy of $data in XML format
+ * @see XmlNode
  */
 	function serialize($data, $options = array()) {
-		$data =& new Xml($data, array_merge(array('attributes' => false, 'format' => 'attributes'), $options));
-		return $data->toString(array_merge(array('header' => false), $options));
+		$options += array('attributes' => false, 'format' => 'attributes');
+		$data =& new Xml($data, $options);
+		return $data->toString($options + array('header' => false));
 	}
 }
+
 ?>

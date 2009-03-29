@@ -40,14 +40,6 @@ Configure::write(array('Wildflower' => array(
     'disableRootPageCache' => false,
 )));
 
-// flickr - 0.1a
-Configure::write(array('Flickr' => array(
-	'userID' => 'your uid',
-	'secret' => 'your-secret',
-	'api_key' => 'your-key',
-	'cache' => CACHE . 'flickr',
-)));
-
 // slideshowpro director - 0.1a
 Configure::write(array('Director' => array(
 	'api_key' => 'your-api-key',
@@ -55,9 +47,9 @@ Configure::write(array('Director' => array(
 	'cache' => CACHE . 'Director',
 )));
 
-// icing config 0.6
+// icing config 0.7 - tidying up and reviewing everything (entire set of modifications reviewed)
 Configure::write(array('Icing' => array(
-	'version' => '0.6.9',
+	'version' => '0.7.0',
     'dashboardFeeds' => array(
 		array(
         'url' => 'wf.klevo.sk/posts/feed',
@@ -71,19 +63,6 @@ Configure::write(array('Icing' => array(
         'name' => 'jQuery',
         'url' => 'jquery.com/blog/feed/'
 		),
-	),
-    'open_id' => array(
-		'adminConfig' => array(
-			'email' => 'youropenid@network.com'
-		),
-		'pubSettings' => array(
-			'useOnComments' => false
-		)
-	),
-    'gravatar' => array(
-		'pubSettings' => array(
-			'useOnComments' => false
-		)
 	),
     'gfeed' => array(
 		'api' => ''

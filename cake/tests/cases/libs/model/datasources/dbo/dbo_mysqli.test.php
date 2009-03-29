@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * DboMysqli test
+ * DboMysqliTest file
  *
  * PHP versions 4 and 5
  *
@@ -22,16 +22,14 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-
 if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
 	define('CAKEPHP_UNIT_TEST_EXECUTION', 1);
 }
 App::import('Core', array('Model', 'DataSource', 'DboSource', 'DboMysqli'));
-
 /**
- * Short description for class.
+ * DboMysqliTestDb class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources
  */
 class DboMysqliTestDb extends DboMysqli {
@@ -74,9 +72,9 @@ class DboMysqliTestDb extends DboMysqli {
 	}
 }
 /**
- * Short description for class.
+ * MysqliTestModel class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources
  */
 class MysqliTestModel extends Model {
@@ -150,16 +148,16 @@ class MysqliTestModel extends Model {
 	}
 }
 /**
- * The test class for the DboMysqli
+ * DboMysqliTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources.dbo
  */
 class DboMysqliTest extends CakeTestCase {
 /**
  * The Dbo instance to be tested
  *
- * @var object
+ * @var DboSource
  * @access public
  */
 	var $Db = null;
@@ -189,6 +187,68 @@ class DboMysqliTest extends CakeTestCase {
  */
 	function tearDown() {
 		unset($this->db);
+	}
+/**
+ * testIndexDetection method
+ *
+ * @return void
+ * @access public
+ */
+	function testIndexDetection() {
+		$this->db->cacheSources = $this->db->testing = false;
+
+		$name = $this->db->fullTableName('simple');
+		$this->db->query('CREATE TABLE ' . $name . ' (id int(11) AUTO_INCREMENT, bool tinyint(1), small_int tinyint(2), primary key(id));');
+		$expected = array('PRIMARY' => array('column' => 'id', 'unique' => 1));
+		$result = $this->db->index($name, false);
+		$this->assertEqual($expected, $result);
+		$this->db->query('DROP TABLE ' . $name);
+
+		$name = $this->db->fullTableName('with_a_key');
+		$this->db->query('CREATE TABLE ' . $name . ' (id int(11) AUTO_INCREMENT, bool tinyint(1), small_int tinyint(2), primary key(id), KEY `pointless_bool` ( `bool` ));');
+		$expected = array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'pointless_bool' => array('column' => 'bool', 'unique' => 0),
+		);
+		$result = $this->db->index($name, false);
+		$this->assertEqual($expected, $result);
+		$this->db->query('DROP TABLE ' . $name);
+
+		$name = $this->db->fullTableName('with_two_keys');
+		$this->db->query('CREATE TABLE ' . $name . ' (id int(11) AUTO_INCREMENT, bool tinyint(1), small_int tinyint(2), primary key(id), KEY `pointless_bool` ( `bool` ), KEY `pointless_small_int` ( `small_int` ));');
+		$expected = array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'pointless_bool' => array('column' => 'bool', 'unique' => 0),
+			'pointless_small_int' => array('column' => 'small_int', 'unique' => 0),
+		);
+		$result = $this->db->index($name, false);
+		$this->assertEqual($expected, $result);
+		$this->db->query('DROP TABLE ' . $name);
+
+		$name = $this->db->fullTableName('with_compound_keys');
+		$this->db->query('CREATE TABLE ' . $name . ' (id int(11) AUTO_INCREMENT, bool tinyint(1), small_int tinyint(2), primary key(id), KEY `pointless_bool` ( `bool` ), KEY `pointless_small_int` ( `small_int` ), KEY `one_way` ( `bool`, `small_int` ));');
+		$expected = array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'pointless_bool' => array('column' => 'bool', 'unique' => 0),
+			'pointless_small_int' => array('column' => 'small_int', 'unique' => 0),
+			'one_way' => array('column' => array('bool', 'small_int'), 'unique' => 0),
+		);
+		$result = $this->db->index($name, false);
+		$this->assertEqual($expected, $result);
+		$this->db->query('DROP TABLE ' . $name);
+
+		$name = $this->db->fullTableName('with_multiple_compound_keys');
+		$this->db->query('CREATE TABLE ' . $name . ' (id int(11) AUTO_INCREMENT, bool tinyint(1), small_int tinyint(2), primary key(id), KEY `pointless_bool` ( `bool` ), KEY `pointless_small_int` ( `small_int` ), KEY `one_way` ( `bool`, `small_int` ), KEY `other_way` ( `small_int`, `bool` ));');
+		$expected = array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'pointless_bool' => array('column' => 'bool', 'unique' => 0),
+			'pointless_small_int' => array('column' => 'small_int', 'unique' => 0),
+			'one_way' => array('column' => array('bool', 'small_int'), 'unique' => 0),
+			'other_way' => array('column' => array('small_int', 'bool'), 'unique' => 0),
+		);
+		$result = $this->db->index($name, false);
+		$this->assertEqual($expected, $result);
+		$this->db->query('DROP TABLE ' . $name);
 	}
 /**
  * testColumn method
@@ -238,5 +298,4 @@ class DboMysqliTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 	}
 }
-
 ?>

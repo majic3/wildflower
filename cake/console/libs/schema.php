@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: schema.php 7961 2008-12-25 23:21:36Z gwoo $ */
+/* SVN FILE: $Id$ */
 /**
  * Command-line database management utility to automate programmer chores.
  *
@@ -20,9 +20,9 @@
  * @package       cake
  * @subpackage    cake.cake.console.libs
  * @since         CakePHP(tm) v 1.2.0.5550
- * @version       $Revision: 7961 $
- * @modifiedby    $LastChangedBy: gwoo $
- * @lastmodified  $Date: 2008-12-25 15:21:36 -0800 (Thu, 25 Dec 2008) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('File');
