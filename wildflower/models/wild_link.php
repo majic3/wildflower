@@ -40,28 +40,5 @@ class WildLink extends AppModel {
         return $url;
     }
 
-    
-    /**
-     * Returns an array of rss urls for either admin dashboard or public view
-     *
-     * @param bool $public
-     * @return array
-     */
-	function rssArray($public = true)	{
-		$feeds = Array();	
-        $this->recursive = 2;
-		$conditions = Array('contain'=>array('WildCategory.slug = "rss"'));
-		$links = $this->find('all', $conditions);
-
-		foreach($links as $item)	{
-			// use set here or some xpath ala felixge
-			foreach($item['WildCategory'] as $cat)
-				if($cat['slug'] == 'rss')
-					$feeds[] = Array('name' => $item['WildLink']['name'], 'url' => $item['WildLink']['url']);
-		}
-
-		return $feeds;
-	}
-
 }
 ?>
