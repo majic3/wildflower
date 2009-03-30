@@ -76,5 +76,6 @@ Configure::write(array('Icing' => array(
     )
 )));
 
-if(strpos($_SERVER['HTTP_HOST'], '.ss29'))
-include('icing.core.php');
+#if(strpos($_SERVER['HTTP_HOST'], '.ss29'))
+#include('icing.core.php');
+	Configure::write('debug', 2);
