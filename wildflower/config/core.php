@@ -28,13 +28,7 @@ Configure::write(array('Wildflower' => array(
     'thumbnailsCache' => WILDFLOWER_CACHE . DS . 'wf_thumbnails',
     'postsParent' => 'post',
     'blogName' => 'posts',	 
-    'blogIndex' => 'posts',	 
-    'galleryDirectoryName' => 'img/gallery',
-    'galleryDirectory' => APP . WEBROOT_DIR .  DS . 'img/gallery', // @TODO rename the key
-    'galleryName' => 'media',
-    'galleryView' => 'media/view',
-    'galleryShow' => 'media/show',
-    'galleryIndex' => 'media',
+    'blogIndex' => 'posts',
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
     'disableRootPageCache' => false,
@@ -78,4 +72,3 @@ Configure::write(array('Icing' => array(
 
 #if(strpos($_SERVER['HTTP_HOST'], '.ss29'))
 #include('icing.core.php');
-	Configure::write('debug', 2);

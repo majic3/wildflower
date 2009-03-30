@@ -1,6 +1,6 @@
 <?php
-class WildLinksController extends WildflowerAppController {
-	public $helpers = array('Cache', 'Wildflower.List', 'Rss', 'Wildflower.Textile', 'Wildflower.Category', 'Wildflower.Tree', 'Wildflower.Navigation', 'Time');
+class WildLinksController extends AppController {
+	public $helpers = array('Cache', 'List', 'Rss', 'Textile', 'Category', 'Tree', 'Navigation', 'Time');
 	/** Pagination options for the wf_index action **/
     public $paginate = array(
         'limit' => 30,

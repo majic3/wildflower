@@ -1,7 +1,7 @@
 <?php
-class WildProfilesController extends WildflowerAppController {
+class WildProfilesController extends AppController {
 
-    public $helpers = array('Wildflower.List', 'Time');
+    public $helpers = array('List', 'Time');
     public $pageTitle = 'User Profiles';
 
 
