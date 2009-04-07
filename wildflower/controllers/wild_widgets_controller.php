@@ -23,6 +23,7 @@ class WildWidgetsController extends AppController {
 		$this->set(compact('widgets'));
     }
 
+/* todo: list links for insertion into editor */
     function wf_list_links() {	 
         $postResults = ClassRegistry::init('WildPost')->find('all');
         $pageResults = ClassRegistry::init('WildPage')->find('all');

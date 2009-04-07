@@ -1,4 +1,6 @@
-<div class="wrapper">
+<?php
+/* oo css type - sass or compass seo classes later */
+?><div class="wrapper">
 	<div class="post" id="post-<?php echo $post['WildPost']['id']; ?>">
 		<h2><?php echo $post['WildPost']['title']; ?></h2>
 		<small class="post-date">Posted <?php echo $time->nice($post['WildPost']['created']); ?></small>
@@ -22,7 +24,7 @@
 		<?php
 		} ?>
 
-		<?php if (!$post['WildPost']['cmtsClosed']) { ?>
+		<?php /* handle closed comments? */ if (!$post['WildPost']['cmtsClosed']) { ?>
 			<div id="commentFrm">
 			<h3>Post a comment</h3>
 		<?php
@@ -30,6 +32,8 @@
 			$session->flash();
 		}
 
+
+		/* jquery wysiwyg */
 		$postUrl = WildPost::getUrl($post['WildPost']['uuid']);
 		echo $form->create('WildComment', array('class' => 'vform', 'url' => $here, 'id' => 'PostAComment')),
 		$form->input('name'),

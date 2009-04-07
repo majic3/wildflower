@@ -14,7 +14,6 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
-            '/css/ui/jquery-ui-1.7',
             'ct.admin',
         )),
         // TinyMCE 
@@ -30,7 +29,6 @@
     <![endif]-->
     
     <!-- JQuery Light MVC -->
-	<script type="text/javascript" src="http://www.google.com/jsapi?key=<?php	echo Configure::read('Icing.gfeed.api');	?>"></script>
     <script type="text/javascript" src="<?php echo $html->url('/' . Configure::read('Wildflower.prefix') . '/assets/jlm'); ?>"></script>
     <script type="text/javascript">
     //<![CDATA[
@@ -43,9 +41,7 @@
                 wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
             }
         });
-
-		//	only load mce when theres content to edit -perhaps.  Add Googlie speller 
-		//	if($.jlm.config.action == 'edit')
+        
         tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
@@ -55,7 +51,7 @@
     </script>
     
 </head>
-<body<?php if (isset($editorMode)) echo ' class="editor_mode"'; echo str_replace('wild_', '', $this->params['controller']); ?>>
+<body<?php if (isset($editorMode)) echo ' class="editor_mode"'; ?>>
 
 <?php if (!isset($editorMode)): ?>    
 <div id="header">
@@ -65,8 +61,6 @@
         <div id="login-info">
             <?php echo $htmla->link(__('Settings', true), array('controller' => 'wild_settings')); ?> | 
             <?php echo $htmla->link(__('Users', true), array('controller' => 'wild_users')); ?> | 
-            <?php if($session->read('Auth.WildUser.login') == 'admin')	echo $htmla->link(__('Utilities', true), array('controller' => 'wild_utilities')) . ' | '; ?>
-            <?php echo $htmla->link(__('About', true), array('controller' => 'wild_pages', 'action' => 'about'), array('id' => 'aboutwf')); ?>
             <?php echo $htmla->link(__('Logout', true), array('controller' => 'wild_users', 'action' => 'logout'), array('id' => 'logout')); ?>
             
         </div>
@@ -74,15 +68,13 @@
         <?php 
             echo $navigation->create(array(
                 __('Dashboard', true) => '/' . Configure::read('Wildflower.prefix'),
+                __('Biogs', true) => array('controller' => 'biogs'),
+                __('Examples', true) => array('controller' => 'examples'),
                 __('Pages', true) => array('controller' => 'wild_pages'),
                 __('Posts', true) => array('controller' => 'wild_posts'),
-                __('Comments', true) => array('controller' => 'wild_comments'),
                 __('Categories', true) => array('controller' => 'wild_categories'),
-                __('Assets', true) => array('controller' => 'wild_assets'),
-                __('Messages', true) => array('controller' => 'wild_messages'),
-                __('Galleries', true) => array('controller' => 'wild_galleries'),
-                __('Statistics &amp; Data', true) => array('controller' => 'wild_stats'),
-                __('Links &amp; Feeds', true) => array('controller' => 'wild_links'),
+                __('Files', true) => array('controller' => 'wild_assets'),
+                __('Comments', true) => array('controller' => 'wild_comments'),
             ), array('id' => 'nav'));
         ?>
     </div>

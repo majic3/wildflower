@@ -7,5 +7,4 @@
             <li><a href="#Insert<?php echo hsc($widget['href']); ?>" rel="<?php echo hsc($widget['id']); ?>"><?php echo hsc($widget['name']); ?></a></li>
         <?php endforeach; ?>
     </ul>
-    <a class="cancel" href="#Close">Close insert widget sidebar</a>
 </li>

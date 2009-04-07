@@ -1,4 +1,5 @@
 <?php 
+/* todo: rel=canonical SEO stuff */
 echo $html->doctype('xhtml-strict') ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -45,7 +46,7 @@ echo $html->doctype('xhtml-strict') ?>
 			ctrlr: "<?php echo str_replace('wild_', '', $this->params['controller']) ?>",
 			model: "<?php echo ucwords(Inflector::singularize($this->params['controller'])) ?>",
 			action: "<?php echo $this->params['action'] ?>",
-			hasFeeds: "<?php echo $hasFeeds ? '1' : '0'; ?>"
+			hasFeeds: "<?php echo isset($hasFeeds) ? '1' : '0'; ?>"
 		}
 		<?php
 			// ga tracker using jquery
@@ -92,7 +93,7 @@ echo $html->doctype('xhtml-strict') ?>
 			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
 		</div>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
-		<div id="searchrss"><?php	echo $this->element('sidebar_search'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
+		<div id="searchrss"><?php	//echo $this->element('sidebar_search'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
 	</div>
 
 	<div id="nv">

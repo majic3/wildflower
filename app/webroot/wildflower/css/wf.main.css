@@ -6,6 +6,8 @@ Colors
 #000 - Ligter Black - Main type color
 #e2e2e2 - Light Grey - Non-content background 
 #0033CC - Link Blue - Hyperlinks
+
+todo: some tweaking after other stuff done minor, but a tidy up to might find more worth doing
 */
 
 html,
@@ -106,7 +108,7 @@ img {
 }
 
 #site-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: normal;
     margin: 0;
     letter-spacing: 0.5px;

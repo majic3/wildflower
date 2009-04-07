@@ -1,0 +1,26 @@
+Wildflower 1.3 Beta - A CakePHP CMS
+***********************************
+
+EXAMPLE Custom MVC Set Up Expanded
+
+The contents of this folder can be added to your wildflower app.  It will set up the following run the sql first point to create the example table.  This is based upon Klevo Pages in response to Seguer Custom Controller - which he figured out but this example expands upon the existing example to include a few more features - its intended to illustrate how cusotm MVC's can be set.
+This is an example MVC set based on wf pages
+
+
+Requirements
+============
+a wildflower app working  1.3b1 non plugin version (see wf readme)
+
+
+
+Installation
+============
+copy this structure to your wf install. run the config/core/sql/example.sql file
+
+
+Features
+============
++using a database table
++using an additional behaviour image - helpers or componants could be added in respective folders in your app directory within wf
++using custom JLM Controller - app/jlm/ you can also add JLM views or componants
++customises admin menu app/views/layouts/admin_layout.ctp

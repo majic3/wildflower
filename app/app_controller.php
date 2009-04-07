@@ -11,7 +11,7 @@ class AppController extends Controller {
 	public $isAuthorized = false;
     public $isHome = false;
     public $view = 'Theme';
-//    public $theme = 'wildflower';
+    public $theme = '';
 	
 	private $_isDatabaseConnected = true;
 	

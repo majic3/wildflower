@@ -43,11 +43,12 @@ ul.tabs, ul.tabs li ul { display: block; }
 
 /* HEADER */
 #hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
+#hd #skipto		{	padding: 0pt 10px 0pt 0pt; position: absolute; text-align: right; width: 100%;	}
 #hd a:link,
 #hd a:active,
 #hd a:visited	{	color: #000;	}
 #hd a:hover		{	color: #000;	}
-#hd h1 { font-size: 100%; line-height: 100%; padding: 0; margin: 0; }
+#hd h1 { font-size: 100%; line-height: 100%; padding: 3px 0 0 0; margin: 0 0 0 25px;}
 #hd h1	a { margin-top: 0px; padding-top: 20px; padding-left: 215px;}
 #hd #ident {	float: left; height: 55px;	}
 #hd #ident p	{ background: transparent url(/css/img/wildflower.png) no-repeat; height: 45px; padding: 20px 0 0 70px; margin: 0 5px 0 15px; height: 45px; }
