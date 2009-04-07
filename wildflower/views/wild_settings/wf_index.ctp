@@ -31,6 +31,7 @@
         } else if ($setting['WildSetting']['name'] == 'admin_theme') {
             $options['options'] = $wfThemes['admin'];
         }
+        
         if (empty($setting['WildSetting']['label'])) {
             $options['label'] = Inflector::humanize($setting['WildSetting']['name']);
         } else {

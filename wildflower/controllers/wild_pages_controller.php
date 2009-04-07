@@ -7,7 +7,7 @@ uses('Sanitize');
  */
 class WildPagesController extends AppController {
 	
-	// chk helps needed	 ~ element?
+	// todo: chk helper needed	 ~ element? part of widgets 
 	public $components = array('RequestHandler', 'Seo');
 	public $helpers = array('Cache', 'Form', 'Html', 'Text', 'Time', 'Wildflower.List', 'Wildflower.Tree');
     public $paginate = array(
@@ -309,24 +309,33 @@ class WildPagesController extends AppController {
         if (Configure::read('AppSettings.cache') == 'on') {
             $this->cacheAction = 60 * 60 * 24 * 3; // Cache for 3 days
         }
-        
-        // Parse attributes
-        $args = func_get_args();
-        $corrected = false;
-        $argsCountBeforeFilter = count($args);
-        $args = array_filter($args);
-        $url = '/' . $this->params['url']['url'];
-        
-        // Redirect if the entered URL is not correct
-        if (count($args) !== $argsCountBeforeFilter) {
-            return $this->redirect($url);
-        }
-        
-        // Determine if this is the site root (home page)
-        $homeArgs = array('app', 'webroot');
-        if ($url === '//' or $args === $homeArgs or $url === '/app/webroot/') {
-            $this->isHome = true;
-        }
+		//     yuraji - Fix for URL trailing slash and named params
+		$args = func_get_args();
+		$corrected = false;
+		$argsCountBeforeFilter = count($args);
+		$args = array_filter($args);
+		$url = '/' . $this->params['url']['url'];
+
+		// Redirect if the entered URL is not correct
+		if (count($args) !== $argsCountBeforeFilter) {
+			return $this->redirect($url);
+		}
+
+		// Determine if this is the site root (home page)
+		$homeArgs = array('app', 'webroot');
+		if ($url === '//' or $args === $homeArgs or $url === '/app/webroot/') {
+			$this->isHome = true;
+		}
+
+
+		// Inserted code: //
+		$urlParts=explode('/',$url);
+		$url='';
+		foreach($urlParts as $urlPart) {
+			if(!empty($urlPart) && strpos($urlPart,':')===false) {
+				$url.='/'.$urlPart;
+			}
+		}
         
         $this->params['Wildflower']['view']['isHome'] = $this->isHome;
         

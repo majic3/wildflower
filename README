@@ -18,6 +18,7 @@ Installation
    4. You've got a working copy of http://wf.klevo.sk site. You can start working on your project by modifying the application inside the app directory. When a new release of Wildflower comes, you simply update the cake, vendors and wildflower directories.
    5. The admin area is located under 'http://your-site/wf'. This can be changed by changing the 'Wildflower.prefix' configure key in 'app/plugins/wildflower/config/core.php'.
    6. Default login/password combination for admin area is admin/admin321 --Don`t forget to change this when in production.
+   7. Adding MVC see README.EXAMPLE
    
 Wildflower is not and won't be a CakePHP plugin
 ===============================================

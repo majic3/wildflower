@@ -69,6 +69,3 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
-
-#if(strpos($_SERVER['HTTP_HOST'], '.ss29'))
-#include('icing.core.php');

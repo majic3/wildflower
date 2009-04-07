@@ -1,4 +1,5 @@
 <?php
+/*	todo: themes? take out mu is good	*/
 class WildSettingsController extends AppController {
 
 	public $uses = array('WildPage', 'WildSetting');

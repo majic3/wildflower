@@ -57,34 +57,5 @@ class HtmlaHelper extends HtmlHelper {
         
         return $return;
     }
-
-
-	/*	might not be the best place for this geshi formater	*/
-        public function formatCode($content) {         
-                App::import('Vendor','Geshi');
-                $this->geshi = new GeSHi('', '');
-                $this->geshi->set_header_type(GESHI_HEADER_DIV);
-                // Turn on fancy lines
-                $this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);        
-                // Enable css class names
-                $this->geshi->enable_classes();
-              
-               return preg_replace_callback("#
-<pre class=\"([^\"]*)\">(.*?)</pre>
-#s", array(&$this, 'GeshiReplaceCallback'), $content);
-
-        }
-       
-        /**
-         * Method to return the formatted code by Geshi
-         *
-         * @access private
-         * @param string $matches
-         * @return string
-         */
-        private function GeshiReplaceCallback($matches) {
-                $this->geshi->set_source(str_replace('', '', $matches[2]));
-                $this->geshi->set_language($matches[1]);
-                return $this->geshi->parse_code();
-        }    
+    
 }

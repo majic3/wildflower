@@ -12,7 +12,7 @@
     $form->input('draft', array('type' => 'select', 'label' => 'Status', 'options' => WildPost::getStatusOptions())),
     $form->input('description_meta_tag', array('type' => 'textarea', 'rows' => 4, 'cols' => 60, 'tabindex' => '4')),
     $form->input('slug', array('label' => 'URL slug', 'size' => 61)),
-    $form->input('cmtsClosed', array('label' => 'Allow Comments', 'size' => 1)),
+/* bye bye? */    $form->input('cmtsClosed', array('label' => 'Allow Comments', 'size' => 1)),
     $form->input('created', array());
 ?>
 

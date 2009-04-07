@@ -1,4 +1,6 @@
 <?php
+		/*
+			todo: handle closed comments */
 class WildPostsController extends AppController {
 	public $helpers = array('Cache', 'Wildflower.List', 'Rss', 'Wildflower.Textile', 'Wildflower.Category', 'Wildflower.Tree', 'Time');
 	/** Pagination options for the wf_index action **/
@@ -6,18 +8,6 @@ class WildPostsController extends AppController {
         'limit' => 10,
         'order' => array('WildPost.created' => 'desc'),
     );
-
-    /*
-    function wf_add() {
-        if (!empty($this->data)) {
-            $this->data[$this->modelClass]['draft'] = 1;
-            $this->data[$this->modelClass]['uuid'] = sha1(String::uuid());
-            if ($this->WildPost->save($this->data)) {
-                $this->Session->setFlash('<strong>Success</strong> You\'ve written a new post.', 'messages/success', 'messages/success');
-                $this->redirect(array('action' => 'wf_edit', $this->WildPost->id));
-            }
-        }
-    } */
 
     /**
      * Create a post and redirect to it's edit screen
@@ -49,7 +39,8 @@ class WildPostsController extends AppController {
     function wf_comments($id = null) {
 
 		/*
-			icing::escher	- adding gravatar helper for people who post - also want the open id too options to choose between the two?? nice
+			todo: 
+			icing::tesla	- adding gravatar helper for people who post - also want the open id too options to choose between the two?? nice
 
 			gravatar needs some testing 2 options
 				*  bryce (bdude) - http://bakery.cakephp.org/articles/view/gravatar

@@ -6,7 +6,6 @@
 
    # Maitenance mode: (uncoment following line)
    # RewriteRule    ^(.*)$ app/webroot/offline.html    [L]
-
    RewriteRule    ^$ app/webroot/    [L]
    RewriteRule    (.*) app/webroot/$1 [L]
 </IfModule>

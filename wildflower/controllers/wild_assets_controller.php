@@ -75,7 +75,7 @@ class WildAssetsController extends AppController {
 	 * @param int $id
 	 */
 	 // @TODO make require a POST
-	function wf_adelete($id) {
+	function wf_delete($id) {
 	    $this->WildAsset->delete($id);
 		$this->redirect(array('action' => 'index'));
 	}
@@ -118,7 +118,7 @@ class WildAssetsController extends AppController {
 		$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
 		$images = $this->paginate($this->modelClass);
 		$this->set('images', $images);
-		Configure::write('Debug', 0);
+		//Configure::write('Debug', 0);
 	}
 	
 	function wf_update() {
@@ -138,7 +138,7 @@ class WildAssetsController extends AppController {
         if ($uploadMaxSize < $postMaxSize) {
             $size = $uploadMaxSize;
         }
-
+		/* todo: add screen thumb */
 		if(isset($this->data) && ($this->action == 'wf_save_screen')) {
 			App::import('Component', 'Wildflower.Webthumb');
 			$this->Webthumb = new WebthumbComponent($this);
@@ -269,6 +269,10 @@ class WildAssetsController extends AppController {
      *
      * @param $imageName File name from webroot/uploads/
      */
+	/*	todo:
+			#make work better
+			#handle delayed response from webugla
+	*/
 	function wf_save_screen() {
 		if($this->data)	{
 			//die(json_encode($this->data));
