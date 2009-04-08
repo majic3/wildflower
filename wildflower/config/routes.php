@@ -45,7 +45,6 @@ Router::connect("/$prefix/dashboards/search", array('controller' => 'wild_dashbo
 
 // Login screen
 Router::connect("/$prefix/login", array('controller' => 'wild_users', 'action' => 'login'));
-// todo: reset pass Router::connect("/$prefix/resetpass/:useroremail", array('controller' => 'wild_users', 'action' => 'resetpass'));
 
 // Contact form
 Router::connect('/contact', array('controller' => 'wild_messages', 'action' => 'index'));
