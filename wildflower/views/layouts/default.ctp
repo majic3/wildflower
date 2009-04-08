@@ -11,6 +11,7 @@ echo $html->doctype('xhtml-strict') ?>
 
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
+	<link rel="canonical" href="<?php echo($canonical) ?>" />
 
 	<?php
 		echo $html->css('ui/jquery-ui', 'stylesheet', Array('media' => 'screen'));
@@ -46,7 +47,7 @@ echo $html->doctype('xhtml-strict') ?>
 			ctrlr: "<?php echo str_replace('wild_', '', $this->params['controller']) ?>",
 			model: "<?php echo ucwords(Inflector::singularize($this->params['controller'])) ?>",
 			action: "<?php echo $this->params['action'] ?>",
-			hasFeeds: "<?php echo isset($hasFeeds) ? '1' : '0'; ?>"
+			hasFeeds: <?php echo isset($hasFeeds) ? 'true' : 'false'; ?>
 		}
 		<?php
 			// ga tracker using jquery
@@ -62,13 +63,13 @@ echo $html->doctype('xhtml-strict') ?>
 			'plugins/jquery.form'
 		);
 
-		if($hasFeeds)	$javascripts[] = 'plugins/jquery.gfeed';
+		if(isset($hasFeeds))	$javascripts[] = 'plugins/jquery.gfeed';
 
 		$javascripts[] = 'common';
 		e($javascript->link($javascripts));
 	?>
 </head>
-<body class="<?php /*controller too but not wild_ prefix */ echo $this->params['action']; ?>">
+<?php echo $wild->bodyTagWithClass(); ?>
 <?php
 	// Admin bar
 	// Do not show for previews

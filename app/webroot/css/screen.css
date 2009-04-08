@@ -43,7 +43,8 @@ ul.tabs, ul.tabs li ul { display: block; }
 
 /* HEADER */
 #hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
-#hd #skipto		{	padding: 0pt 10px 0pt 0pt; position: absolute; text-align: right; width: 100%;	}
+#hd #skipto		{	padding: 0; margin: 0; position: absolute; text-align: right; width: 100%;	}
+	#skipto	a	{	margin-right: 10px;	}
 #hd a:link,
 #hd a:active,
 #hd a:visited	{	color: #000;	}
