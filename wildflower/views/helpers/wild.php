@@ -236,5 +236,33 @@ class WildHelper extends AppHelper {
         }
         return $html;
     }
+    
+    function subPageNav() {
+        $html = '<ul>';
+        $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
+        $pages = ClassRegistry::init('WildPage')->findChildrenBySlug($pageSlug);
+        if (empty($pages)) {
+            return '';
+        }
+        foreach ($pages as $page) {
+            $html .= '<li>' . $this->Html->link($page['WildPage']['title'], $page['WildPage']['url']) . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+    
+    function postsFromCategory($slug) {
+        $WildCategory = ClassRegistry::init('WildCategory');
+        $WildCategory->contain(array(
+            'WildPost' => array(
+                'conditions' => array(
+                    'draft' => 0
+                )
+            )
+        ));
+        $category = $WildCategory->findBySlug($slug);
+        $posts = $category['WildPost'];
+        return $posts;
+    }
 
 }
