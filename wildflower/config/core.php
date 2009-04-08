@@ -24,14 +24,14 @@ Configure::write(array('Wildflower' => array(
     'uploadDirectory' => APP . WEBROOT_DIR .  DS . 'uploads', // @TODO rename the key
     'prefix' => 'wf',
     'rootPageCache' => CACHE . 'wf_root_pages',
-    'previewCache' => CACHE . 'wf_previews' . DS,
-    'thumbnailsCache' => WILDFLOWER_CACHE . DS . 'wf_thumbnails',
+    'previewCache' => CACHE . 'wf_previews',
+    'thumbnailsCache' => CACHE . 'wf_thumbnails',
     'postsParent' => 'post',
     'blogName' => 'posts',	 
     'blogIndex' => 'posts',
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
-    'disableRootPageCache' => false,
+    'disableRootPageCache' => false
 )));
 
 // slideshowpro director - 0.1a
