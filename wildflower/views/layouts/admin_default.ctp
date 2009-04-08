@@ -14,8 +14,7 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
-            '/css/ui/jquery-ui-1.7',
-            'ct.admin',
+            '/css/ui/jquery-ui-1.7'
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?
@@ -80,8 +79,8 @@
                 __('Categories', true) => array('controller' => 'wild_categories'),
                 __('Assets', true) => array('controller' => 'wild_assets'),
                 __('Messages', true) => array('controller' => 'wild_messages'),
-                __('Galleries', true) => array('controller' => 'wild_galleries'),
-                __('Statistics &amp; Data', true) => array('controller' => 'wild_stats'),
+                //	__('Galleries', true) => array('controller' => 'wild_galleries'),
+                //	__('Statistics &amp; Data', true) => array('controller' => 'wild_stats'),
                 __('Links &amp; Feeds', true) => array('controller' => 'wild_links'),
             ), array('id' => 'nav'));
         ?>
@@ -89,10 +88,8 @@
 </div>
 <?php else: ?>
 <ul id="editor_mode_header">
-    <li><?php echo $html->link('Go to all ' . r('wild_', '', $this->params['controller']), array('action' => 'index')); ?></li>
-    <?php if ($this->data[Inflector::singularize(Inflector::camelize($this->params['controller']))]['draft'] == 0): ?>
-        <li><small>(Published at: <?php if (isset($publishedLink)) echo $publishedLink; ?>)</small></li>
-    <?php endif; ?>
+    <li><?php echo $html->link('Go to all pages', array('action' => 'index')); ?></li>
+    <li><small>(Published at: <?php if (isset($publishedLink)) echo $publishedLink; ?>)</small></li>
 </ul>
 <?php endif; ?>
 
