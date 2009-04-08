@@ -1,3 +1,22 @@
+/*		*/
+
+
+body { font-size: 12px; }
+/*	uncomment the following to test vertical rhythm	*/
+/**/ #hd, #bd, #ft {	background: url(oo/baseline_18px.png);	} /**/
+
+p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
+#bd .main	{	padding-left: 2.2em; padding-right: 1.5em;	}
+#bd .rightCol,
+#bd .leftCol	{	padding-left: 0.6em; padding-right: 0.6em;	}
+#bd blockquote		{	margin: 1.5em auto 1.5em auto; width: 80%;	}
+#bd blockquote p	{	margin: 0; padding: 0;	}
+#bd blockquote cite	{	float: right; font-style: italic; margin-right: 5em	}
+
+.line	h4				{	margin-left: 3.2em	}
+.line	.simpleList		{	margin-left: 4em	}
+
+
 /*	hd is expanded bd is set width centered	*/
 #page.icing		{width:100%;margin: 0; }
 #page.icing	#hd	{width:100%;margin: 0; }
@@ -24,11 +43,13 @@ ul.tabs, ul.tabs li ul { display: block; }
 
 /* HEADER */
 #hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
+#hd #skipto		{	padding: 0; margin: 0; position: absolute; text-align: right; width: 100%;	}
+	#skipto	a	{	margin-right: 10px;	}
 #hd a:link,
 #hd a:active,
 #hd a:visited	{	color: #000;	}
 #hd a:hover		{	color: #000;	}
-#hd h1 { font-size: 100%; line-height: 100%; padding: 0; margin: 0; }
+#hd h1 { font-size: 100%; line-height: 100%; padding: 3px 0 0 0; margin: 0 0 0 25px;}
 #hd h1	a { margin-top: 0px; padding-top: 20px; padding-left: 215px;}
 #hd #ident {	float: left; height: 55px;	}
 #hd #ident p	{ background: transparent url(/css/img/wildflower.png) no-repeat; height: 45px; padding: 20px 0 0 70px; margin: 0 5px 0 15px; height: 45px; }
