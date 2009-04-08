@@ -14,14 +14,14 @@ echo $html->doctype('xhtml-strict') ?>
 	<link rel="canonical" href="<?php echo($canonical) ?>" />
 
 	<?php
-		echo $html->css('ui/jquery-ui', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui-1.7', 'stylesheet', Array('media' => 'screen'));
 		// darwin will combine these using a minify cake filter - for clean living put your tweaks in scrren
 		echo $html->css(array(
 			'oo/libraries',
 			'oo/template',
 			'oo/grids',
 			'oo/content',
-			'screen',
+			'iscreen',
 		), 'stylesheet', Array('media' => 'screen'));
 		//	echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
 	<!--[if IE 6]>
@@ -94,7 +94,7 @@ echo $html->doctype('xhtml-strict') ?>
 			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
 		</div>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
-		<div id="searchrss"><?php	//echo $this->element('sidebar_search'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
+		<div id="searchrss"><?php	echo $this->element('search_form'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
 	</div>
 
 	<div id="nv">

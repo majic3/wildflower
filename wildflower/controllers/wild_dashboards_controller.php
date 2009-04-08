@@ -2,7 +2,7 @@
 class WildDashboardsController extends AppController {
 	
 	public $helpers = array('Wildflower.List', 'Time', 'Text');
-	public $uses = array('Wildflower.WildComment', 'Wildflower.WildMessage', 'WildFlower.WildPage', 'WildFlower.WildfPost');
+	public $uses = array('Wildflower.WildComment', 'Wildflower.WildMessage', 'Wildflower.WildPage', 'Wildflower.WildPost');
 	public $pageTitle = 'Dashboard';
 	
 	function wf_index() {
@@ -51,8 +51,8 @@ class WildDashboardsController extends AppController {
                 return;
             }
             
-            $postResults = $this->Post->search($query);
-	        $pageResults = $this->Page->search($query);
+            $postResults = $this->WildPost->search($query);
+	        $pageResults = $this->WildPage->search($query);
 	        if (!is_array($postResults)) {
 	        	$postResults = array();
 	        }
