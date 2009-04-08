@@ -24,37 +24,13 @@ class WildUtilitiesController extends AppController {
         }
     }
     
-    function _massAddPages($howMany = 10) {
-        @set_time_limit(60 * 60);
-        App::import('Vendor', 'Randomizer', array('file' => 'randomizer.php'));
-        $randomizer = new Randomizer;
-        for ($i = 0; $i < $howMany; $i++) {
-            $page = array(
-                'title' => $randomizer->title(),
-                'uuid' => $uuid,
-                'content' => $randomizer->text(),
-                'user_id' => $this->getLoggedInUserId(),
-                'parent_id' => $randomizer->parentId($this->WildPost->id),
-            );
-            $this->WildPage->create($page);
-            $this->WildPage->save();
-		}
-    }
-    
     function _massAddPosts($howMany = 10) {
         @set_time_limit(60 * 60);
         App::import('Vendor', 'Randomizer', array('file' => 'randomizer.php'));
         $randomizer = new Randomizer;
         for ($i = 0; $i < $howMany; $i++) {
-        // Generate UUID
-        $uuid = sha1(String::uuid()); 
-        // Check if unique
-        while ($this->WildPost->findByUuid($uuid)) {
-            $uuid = sha1(String::uuid()); 
-        }
             $post = array(
                 'title' => $randomizer->title(),
-                'uuid' => $uuid,
                 'content' => $randomizer->text(),
                 'user_id' => $this->getLoggedInUserId(),
                 'parent_id' => $randomizer->parentId($this->WildPost->id),

@@ -34,19 +34,21 @@ textarea {
         color: #fff;
         font-weight: bold;
     }
+
+    #header p {	margin: 3px 0 0 0;	}
     
     #header a:hover,
     #footer a:hover {
         color: #fff400;
     }
 
-#site-title {
-    margin: 0;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: normal;
-    float: left;
-}
+	#site-title {
+		margin: 0;
+		font-size: 12px;
+		text-transform: uppercase;
+		font-weight: normal;
+		float: left;
+	}
 
     #site-title a {
         display: block;
@@ -122,15 +124,6 @@ textarea {
 
 /* Footer */
 
-#wrap {
-    /* Footer stick */
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 0 -30px;
-}
-
-
 #footer {
     clear: both;
     text-align: center;
@@ -144,10 +137,6 @@ textarea {
         color: #e5e5e5;
         font-weight: normal;
     }
-
-#push {
-    height: 30px;
-}
 
 
 /* Buttons */
@@ -191,10 +180,10 @@ button {
 }
  
 #content {
-	position:absolute; left:0; top:35px;
+	position:absolute; left:0; top:30px;
 	overflow:auto; 
-	padding:2px; margin:5px;
-	width: 305px; height: 210px;
+	padding:2px; margin: 0 5px;
+	width: 305px; height: 240px;
 }
 
 
@@ -262,6 +251,9 @@ p.quiet	{	text-align: center;	}
 }
 
 button.positive, .buttons a.positive{
+    color:#529214;
+}
+
 .buttons a.positive:hover, button.positive:hover{
     background-color:#E6EFC2;
     border:1px solid #C6D880;
@@ -320,3 +312,6 @@ button.positive, .buttons a.positive{
 }
 
 
+
+
+.buttons	{	height: 25px; margin-top: 60px;	}

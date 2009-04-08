@@ -1,4 +1,5 @@
 <?php 
+/* todo: rel=canonical SEO stuff */
 echo $html->doctype('xhtml-strict') ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -10,125 +11,121 @@ echo $html->doctype('xhtml-strict') ?>
 
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
+	<link rel="canonical" href="<?php echo($canonical) ?>" />
 
 	<?php
-		// echo $packager->css('admin/screen'); 
-		echo $html->css('ui/jquery-ui-1.7.custom', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui', 'stylesheet', Array('media' => 'screen'));
+		// darwin will combine these using a minify cake filter - for clean living put your tweaks in scrren
 		echo $html->css(array(
-			'boilerplate.css', 
-			'plugins.css', 
-			'tipsy.css', 
-			'jscrollpane.css', 
-			'growl.css', 
-			'iscreen.css'
+			'oo/libraries',
+			'oo/template',
+			'oo/grids',
+			'oo/content',
+			'screen',
 		), 'stylesheet', Array('media' => 'screen'));
-		echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
-
-	<!--[if lte IE 6]>
-	<?php echo $html->css(Array('ie6'), 'stylesheet', Array('media' => 'screen')); ?>
-	<![endif]-->
-	<!--[if lte IE 7]>
-	<?php echo $html->css(Array('ie7'), 'stylesheet', Array('media' => 'screen')); ?>
-	<![endif]-->
+		//	echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
 	<!--[if IE 6]>
-	<script src="/js/dd-pngfix.js"></script>
-	<script>
-	  /* fixing pngs with style Drew Diller Style */
-	DD_belatedPNG.fix('#navWrap, #page, #navigation'); // argument is a CSS selector
+	<script type="text/javascript" src="/js/plugins/dd-pngfix.js"></script>
+	<script type="text/javascript">
+	/* fixing pngs with style Drew Diller Style http://www.dillerdesign.com/experiment/DD_belatedPNG/ medicine for ie6 - see his roundies to */
+	DD_belatedPNG.fix('.png'); // argument is a CSS selector
 	  
 	  /* string argument can be any CSS selector */
 	  /* .png_bg example is unnecessary */
 	  /* change it to what suits you! */
 	</script>
 	<![endif]-->
-
+	<?php	
+	// safe to remove this if you not interested in gfeed jquery plugin displaying feeds
+	if(Configure::read('Icing.gfeed.api')):	$hasFeeds = true;	?>
 	<script type="text/javascript" src="http://www.google.com/jsapi?key=<?php	echo Configure::read('Icing.gfeed.api');	?>"></script>
+	<?php	endif;	?>
+
 	<script type="text/javascript">
 		var settings = {
 			base: "<?php echo $this->base ?>",
 			ctrlr: "<?php echo str_replace('wild_', '', $this->params['controller']) ?>",
 			model: "<?php echo ucwords(Inflector::singularize($this->params['controller'])) ?>",
-			action: "<?php echo $this->params['action'] ?>"
+			action: "<?php echo $this->params['action'] ?>",
+			hasFeeds: <?php echo isset($hasFeeds) ? 'true' : 'false'; ?>
 		}
 		<?php
 			// ga tracker using jquery
 			echo $this->element('google_analytics') ?>
 	</script>
-	<?php 
-		e($javascript->link(array(
-			'jquery', 
+	<?php
+		$javascripts = array(
 			'swfobject', 
-			'jquery-ui', 
-			'jquery.jScrollPane',
-			'jquery.form', 
-			'jquery.tipsy', 
-			'jquery.blockui', 
-			'jquery.growl', 
-			'jquery.gfeed', 
-			'jquery.gatracker', 
-			'jquery.easing',
-			'shadowbox', 
-			'common'
-		)));
+			'jquery',
+			'plugins/jquery-ui-1.7', 
+			'plugins/jquery.tipsy', 
+			'plugins/jquery.gatracker', 
+			'plugins/jquery.form'
+		);
+
+		if(isset($hasFeeds))	$javascripts[] = 'plugins/jquery.gfeed';
+
+		$javascripts[] = 'common';
+		e($javascript->link($javascripts));
 	?>
 </head>
-<body id="<?php echo (($this->params['controller'] == 'wild_pages') ? $this->params['Wildflower']['page']['slug'] : str_replace('wild_', '', $this->params['controller'])); ?>" class="<?php echo (($this->params['controller'] == 'wild_pages') ? $this->params['Wildflower']['page']['slug'] : str_replace('wild_', '', $this->params['controller'])); ?> <?php echo $this->params['action'] ?>">
+<?php echo $wild->bodyTagWithClass(); ?>
 <?php
-        // Admin bar
-        // Do not show for previews
-        if ($isLogged and $this->params['action'] != 'wf_preview') {
-            $c = str_replace('wild_', '', $this->params['controller']);
-            $editCurrentLink = '/' 
-                . Configure::read('Wildflower.prefix') 
-                . '/' . $c . '/edit/' . '';
-            
-            echo 
-            '<div id="admin-bar"><ul class="tabs"><li>',
-                $html->link('Site admin', '/' . Configure::read('Wildflower.prefix')),
-                '</li><li>',
-                $html->link('Edit current page', $editCurrentLink), 
-             '</li></ul></div>';
-        }
-    ?>
-
-<div id="page" class="wrapper">
-	<div id="header">
-		<p id="ident"><?php echo $html->link(Configure::read('AppSettings.site_name'), '/', null, null, false); ?></p>
+	// Admin bar
+	// Do not show for previews
+	if ($isLogged and $this->params['action'] != 'wf_preview') {
+		$c = str_replace('wild_', '', $this->params['controller']);
+		$editCurrentLink = '/' 
+			. Configure::read('Wildflower.prefix') 
+			. '/' . $c . '/edit/' . '';
+		
+		echo 
+		'<div id="admin-bar"><ul class="tabs"><li>',
+			$html->link('Site admin', '/' . Configure::read('Wildflower.prefix')),
+			'</li><li>',
+			$html->link('Edit current page', $editCurrentLink), 
+		 '</li></ul></div>';
+	}
+	/*	OO CSS has width settings applied to page container via the class - customise yours see icing example - remove for liquid oldScool for narrow	*/	?>
+<div id="page" class="icing">
+	<div id="hd">
+		<div id="skipto"><a href="#main">skip to content</a></div>
+		<div id="ident">
+			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
+		</div>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
-		<div class="searchBox"><?php	echo ($this->element('sidebar_search'));	?></div>
-		<?php	echo $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false)	?>
+		<div id="searchrss"><?php	//echo $this->element('sidebar_search'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
 	</div>
 
-	<div id="navigation">
-        <?php 
-            echo $navigation->create(array(
-                'Home' => '/',
-                ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
-                'About' => '/about',
-                'Contact' => '/contact'
-            ), array('class' => 'tabs', 'liClass' => false));
-        ?>
+	<div id="nv">
+		<?php 
+			echo $navigation->create(array(
+				'Home' => '/',
+				ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
+				'About' => '/about',
+				'Contact' => '/contact'
+			), array('class' => 'tabs', 'liClass' => false));
+		?>
 	</div>
 
 
-	<div id="body" class="wrapper">
+	<div id="bd">
 		<?php echo $content_for_layout; ?>
+
+		<?php	if(isset($rssFeeds) && $hasFeeds)	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>
 
-	<div id="footer">
-        <?php 
-            echo $navigation->create(array(
-                'Home' => '/',
-                ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
-                'About' => '/about',
-                'Contact' => '/contact'
-            ), array('class' => 'tabs', 'liClass' => false));
-        ?>
-
-		<p class="quiet"><small>Powered by <?php 
-	           echo $html->link('Wildflower', 'http://wf.klevo.sk/'),
-	           '. ',
-	           $this->element('admin_link') ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/"><img src="/img/cake.power.gif" /></a> &#124; <a href="http://jquery.com/"><img src="/img/jquery-icon.png" /></a> &#124; <a href="http://code.google.com/p/css-boilerplate/">boilerplate</a></small></p>
+	<div id="ft">
+		<?php 
+			echo $navigation->create(array(
+				'Home' => '/',
+				ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
+				'About' => '/about',
+				'Contact' => '/contact'
+			), array('class' => 'tabs', 'liClass' => false));
+		?>
+		<p class="quiet"><small>Wildflower is a CakePHP, utilizing jQuery. Theme by Sam@Majic3 using OO CSS</small></p>
+		<?php	if ($isLogged and $this->params['action'] != 'wf_preview') echo '<p class="quiet"><small>', $this->element('admin_link'), '</small></p>';	?>
 	</div>
 </div>
 </body>

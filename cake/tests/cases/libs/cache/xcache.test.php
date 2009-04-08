@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * XcacheEngineTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.cache
  * @since         CakePHP(tm) v 1.2.0.5434
  * @version       $Revision$
@@ -28,9 +28,9 @@ if (!class_exists('Cache')) {
 	require LIBS . 'cache.php';
 }
 /**
- * Short description for class.
+ * XcacheEngineTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.cache
  */
 class XcacheEngineTest extends UnitTestCase {
@@ -57,6 +57,15 @@ class XcacheEngineTest extends UnitTestCase {
 		Cache::config('xcache', array('engine'=>'Xcache', 'prefix' => 'cake_'));
 	}
 /**
+ * tearDown method
+ *
+ * @access public
+ * @return void
+ */
+	function tearDown() {
+		Cache::config('default');
+	}
+/**
  * testSettings method
  *
  * @access public
@@ -80,17 +89,21 @@ class XcacheEngineTest extends UnitTestCase {
  * @return void
  */
 	function testReadAndWriteCache() {
+		Cache::set(array('duration' => 1));
+
 		$result = Cache::read('test');
 		$expecting = '';
 		$this->assertEqual($result, $expecting);
 
 		$data = 'this is a test of the emergency broadcasting system';
-		$result = Cache::write('test', $data, 1);
+		$result = Cache::write('test', $data);
 		$this->assertTrue($result);
 
 		$result = Cache::read('test');
 		$expecting = $data;
 		$this->assertEqual($result, $expecting);
+
+		Cache::delete('test');
 	}
 /**
  * testExpiry method
@@ -99,29 +112,27 @@ class XcacheEngineTest extends UnitTestCase {
  * @return void
  */
 	function testExpiry() {
-		Cache::engine('Xcache', array('duration' => 4));
-
-		sleep(3);
+		Cache::set(array('duration' => 1));
 		$result = Cache::read('test');
 		$this->assertFalse($result);
 
 		$data = 'this is a test of the emergency broadcasting system';
-		$result = Cache::write('other_test', $data, 1);
+		$result = Cache::write('other_test', $data);
 		$this->assertTrue($result);
 
 		sleep(2);
 		$result = Cache::read('other_test');
 		$this->assertFalse($result);
+
+		Cache::set(array('duration' =>  "+1 second"));
 
 		$data = 'this is a test of the emergency broadcasting system';
-		$result = Cache::write('other_test', $data, "+1 second");
+		$result = Cache::write('other_test', $data);
 		$this->assertTrue($result);
 
 		sleep(2);
 		$result = Cache::read('other_test');
 		$this->assertFalse($result);
-
-		Cache::engine('Xcache', array('duration' => 3600));
 	}
 /**
  * testDeleteCache method
@@ -138,13 +149,21 @@ class XcacheEngineTest extends UnitTestCase {
 		$this->assertTrue($result);
 	}
 /**
- * tearDown method
+ * testClearCache method
  *
  * @access public
  * @return void
  */
-	function tearDown() {
-		Cache::config('default');
+	function testClearCache() {
+		$data = 'this is a test of the emergency broadcasting system';
+		$result = Cache::write('clear_test_1', $data);
+		$this->assertTrue($result);
+
+		$result = Cache::write('clear_test_2', $data);
+		$this->assertTrue($result);
+
+		$result = Cache::clear();
+		$this->assertTrue($result);
 	}
 }
 ?>

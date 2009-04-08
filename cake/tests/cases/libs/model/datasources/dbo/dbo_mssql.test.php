@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * DboMssql test
+ * DboMssqlTest file
  *
  * PHP versions 4 and 5
  *
@@ -29,7 +29,6 @@ require_once LIBS.'model'.DS.'model.php';
 require_once LIBS.'model'.DS.'datasources'.DS.'datasource.php';
 require_once LIBS.'model'.DS.'datasources'.DS.'dbo_source.php';
 require_once LIBS.'model'.DS.'datasources'.DS.'dbo'.DS.'dbo_mssql.php';
-
 /**
  * DboMssqlTestDb class
  *
@@ -37,6 +36,32 @@ require_once LIBS.'model'.DS.'datasources'.DS.'dbo'.DS.'dbo_mssql.php';
  * @subpackage    cake.tests.cases.libs.model.datasources.dbo
  */
 class DboMssqlTestDb extends DboMssql {
+/**
+ * Contructor
+ *
+ * @return void
+ * @access public
+ */
+	function __construct() {
+	}
+/**
+ * connect method
+ *
+ * @return boolean
+ * @access public
+ */
+	function connect() {
+		$this->connected = true;
+		return true;
+	}
+/**
+ * lastError method
+ *
+ * @return void
+ * @access public
+ */
+	function lastError() {
+	}
 /**
  * simulated property
  *
@@ -46,7 +71,7 @@ class DboMssqlTestDb extends DboMssql {
 	var $simulated = array();
 /**
  * fetchAllResultsStack
- * 
+ *
  * @var array
  * @access public
  */
@@ -64,8 +89,18 @@ class DboMssqlTestDb extends DboMssql {
 	}
 /**
  * fetchAll method
- * 
- * @param mixed $sql 
+ *
+ * @param mixed $sql
+ * @access protected
+ * @return void
+ */
+	function _matchRecords(&$model, $conditions = null) {
+		return $this->conditions(array('id' => array(1, 2)));
+	}
+/**
+ * fetchAll method
+ *
+ * @param mixed $sql
  * @access protected
  * @return void
  */
@@ -86,11 +121,10 @@ class DboMssqlTestDb extends DboMssql {
 		return $this->simulated[count($this->simulated) - 1];
 	}
 }
-
 /**
- * Short description for class.
+ * MssqlTestModel class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources
  */
 class MssqlTestModel extends Model {
@@ -165,16 +199,16 @@ class MssqlTestModel extends Model {
 	}
 }
 /**
- * The test class for the DboMssql
+ * DboMssqlTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources.dbo
  */
 class DboMssqlTest extends CakeTestCase {
 /**
  * The Dbo instance to be tested
  *
- * @var object
+ * @var DboSource
  * @access public
  */
 	var $db = null;
@@ -197,6 +231,16 @@ class DboMssqlTest extends CakeTestCase {
 		$this->db = new DboMssqlTestDb($db->config);
 		$this->model = new MssqlTestModel();
 	}
+/**
+ * tearDown method
+ *
+ * @access public
+ * @return void
+ */
+	function tearDown() {
+		unset($this->model);
+	}
+
 /**
  * testQuoting method
  *
@@ -266,7 +310,7 @@ class DboMssqlTest extends CakeTestCase {
 	}
 /**
  * testDescribe method
- * 
+ *
  * @access public
  * @return void
  */
@@ -296,16 +340,22 @@ class DboMssqlTest extends CakeTestCase {
 		);
 		$this->assertEqual($result, $expected);
 	}
-
-
 /**
- * tearDown method
+ * testUpdateAllSyntax method
  *
- * @access public
  * @return void
+ * @access public
  */
-	function tearDown() {
-		unset($this->model);
+	function testUpdateAllSyntax() {
+		$model = ClassRegistry::init('MssqlTestModel');
+		$fields = array('MssqlTestModel.client_id' => '[MssqlTestModel].[client_id] + 1');
+		$conditions = array('MssqlTestModel.updated <' => date('2009-01-01 00:00:00'));
+		$this->db->update($model, $fields, null, $conditions);
+
+		$result = $this->db->getLastQuery();
+		$this->assertNoPattern('/MssqlTestModel/', $result);
+		$this->assertPattern('/^UPDATE \[mssql_test_models\]/', $result);
+		$this->assertPattern('/SET \[client_id\] = \[client_id\] \+ 1/', $result);
 	}
 }
 ?>

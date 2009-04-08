@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: l10n.php 7945 2008-12-19 02:16:01Z gwoo $ */
+/* SVN FILE: $Id$ */
 /**
  * Short description for file.
  *
@@ -19,9 +19,9 @@
  * @package       cake
  * @subpackage    cake.cake.libs
  * @since         CakePHP(tm) v 1.2.0.4116
- * @version       $Revision: 7945 $
- * @modifiedby    $LastChangedBy: gwoo $
- * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 /**
@@ -381,7 +381,6 @@ class L10n extends Object {
 		if (Configure::read('Config.language') === null) {
 			Configure::write('Config.language', $this->lang);
 		}
-		Configure::write('charset', $this->charset);
 
 		if ($language) {
 			return $language;

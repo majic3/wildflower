@@ -26,12 +26,12 @@ $.jlm.addComponent('tinyMce', {
 	    return {
             mode: "none",
             theme: "advanced",
-            // @TODO cleanup unneeded plugins
-            plugins: "wfinsertimage,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
+            // @TODO cleanup unneeded plugins - think wildflower should be a single plugin here renamed to wildflowerWidgets and handle images, links & other widgets - then easy to add extra goodness n goodies
+            plugins: "wildflower,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
             doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 
             // Theme options
-            theme_advanced_buttons1: "undo,redo,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,link,unlink,wfinsertimage,wfinsertwidget,|,charmap,code,fullscreen",
+            theme_advanced_buttons1: "undo,redo,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,wfinsertimage,wfinsertwidget,wfinsertlink,unlink,|,charmap,code,fullscreen",
     		theme_advanced_buttons2: "",
     		theme_advanced_buttons3: "",
             theme_advanced_toolbar_location: "top",
@@ -144,6 +144,59 @@ $.jlm.addComponent('tinyMce', {
 		$.jlm.components.tinyMce.dialogEl.remove();
 	},
 	
+	insertLink: function(editor, selection) { 
+	    // Close if open
+		//console.info('		insertLink: ');
+		var alreadyOpenEl = $('.insert_link_sidebar'), sel = selection.getSel();	
+		if (alreadyOpenEl.size() > 0) {
+			alreadyOpenEl.remove();
+			$('.main_sidebar').show();
+			return false;
+		}
+
+		var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/list_links';  
+		//	console.info('		link widget url: ' + url + ' selection: ' +selection);
+
+		$.get(url, function(html) {
+			var linksSidebarEl = $(html);
+			$('.main_sidebar').hide();
+			$('#sidebar > ul').append(linksSidebarEl);
+			
+			// Bind insert
+			$('.widget_links a').click(function() {
+				var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/list_links';
+				var linkId = $(this).attr('rel');
+				var linkHref = $(this).attr('href');
+				var titleStr = ($(this).attr('title') !== '') ? ' title="'+$(this).attr('title')+'"' : '';
+				var linkHtml = '<a id="' + linkId + '" href="' + linkHref + '"'+ titleStr +'>' + selection.getSel() + '</a>';
+				editor.execCommand('mceInsertContent', 0, linkHtml);
+				return false;
+			});	 
+
+    		// Bind close
+            $('.cancel', linksSidebarEl).click(function() {
+                $('.insert_link_sidebar').remove();
+                $('.main_sidebar').show();
+                return false;
+            });
+
+    		// Bind close
+            $('.rss', linksSidebarEl).click(function() {
+				var rsslinksSidebarEl = $('.rssLink'); 
+				if (rsslinksSidebarEl.size() > 0) {
+					$('.main_sidebar').show();
+					return false;
+				}
+                $('.insert_link_sidebar').hide();
+				$('<div class="rssLink"><a href="#rss">rss links todo</a></div>', linksSidebarEl).insertAfter('ul');
+                $('.main_sidebar').show();
+                return false;
+            });
+		});
+		
+		return false;
+	},
+	
 	insertWidget: function(editor) {
 	    // Close if open
 	    var alreadyOpenEl = $('.insert_widget_sidebar');
@@ -171,13 +224,16 @@ $.jlm.addComponent('tinyMce', {
     	            editor.execCommand('mceInsertContent', 0, widgetHtml);
 	            });
 	            return false;
-	        });
+	        });	 
+
+    		// Bind close
+            $('.cancel', widgetSidebarEl).click(function() {
+                $('.insert_widget_sidebar').remove();
+                $('.main_sidebar').show();
+                return false;
+            });
 		});
 	    
 	    return false;
-	},
-    
-    insertLink: function() {
-        log('INSERT LINK');
-    }
+	}
 });

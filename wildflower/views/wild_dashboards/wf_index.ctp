@@ -1,4 +1,7 @@
-<h2 class="section">Welcome to <?php echo $siteName ?> administration</h2>
+<?php
+/* todo: fix up quick post, fix messages error */
+
+?><h2 class="section">Welcome to <?php echo $siteName ?> administration</h2>
 
 <p>Dashboard shows a summary of the latest happening on your site.</p>
 
@@ -92,6 +95,7 @@
 			if (empty($comments)) {
 				echo '<p>No Comments Since Last Login.</p>';
 			} else {
+				debug($comments);
 				echo '<ul class="comments-list list">';
 				foreach($comments as $cmt)	{
 					echo "<li><div class=\"list-item\">",

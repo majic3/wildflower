@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * ErrorHandlerTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5432
  * @version       $Revision$
@@ -27,15 +27,13 @@
 if (class_exists('TestErrorHandler')) {
 	return;
 }
-
 if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
 	define('CAKEPHP_UNIT_TEST_EXECUTION', 1);
 }
-
 /**
  * BlueberryComponent class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class BlueberryComponent extends Object {
@@ -59,7 +57,7 @@ class BlueberryComponent extends Object {
 /**
  * BlueberryDispatcher class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class BlueberryDispatcher extends Dispatcher {
@@ -77,7 +75,7 @@ class BlueberryDispatcher extends Dispatcher {
 /**
  * Short description for class.
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class AuthBlueberryUser extends CakeTestModel {
@@ -100,7 +98,7 @@ if (!class_exists('AppController')) {
 /**
  * AppController class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class AppController extends Controller {
@@ -144,7 +142,7 @@ App::import('Core', array('Error', 'Controller'));
 /**
  * TestErrorController class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class TestErrorController extends AppController {
@@ -169,7 +167,7 @@ class TestErrorController extends AppController {
 /**
  * BlueberryController class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class BlueberryController extends AppController {
@@ -198,7 +196,7 @@ class BlueberryController extends AppController {
 /**
  * TestErrorHandler class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class TestErrorHandler extends ErrorHandler {
@@ -213,12 +211,12 @@ class TestErrorHandler extends ErrorHandler {
 	}
 }
 /**
- * Short description for class.
+ * ErrorHandlerTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
-class TestErrorHandlerTest extends CakeTestCase {
+class ErrorHandlerTest extends CakeTestCase {
 /**
  * skip method
  *
@@ -258,7 +256,19 @@ class TestErrorHandlerTest extends CakeTestCase {
 		$TestErrorHandler = new TestErrorHandler('error404', array('message' => 'Page not found', 'url' => '/test_error'));
 		$result = ob_get_clean();
 		$this->assertPattern('/<h2>Not Found<\/h2>/', $result);
-		$this->assertPattern("/<strong>'\/test_error'<\/strong>/", $result);
+	 	$this->assertPattern("/<strong>'\/test_error'<\/strong>/", $result);
+
+		ob_start();
+		$TestErrorHandler =& new TestErrorHandler('error404', array('message' => 'Page not found'));
+		ob_get_clean();
+		ob_start();
+		$TestErrorHandler->error404(array(
+			'url' => 'pages/<span id=333>pink</span></id><script>document.body.style.background = t=document.getElementById(333).innerHTML;window.alert(t);</script>',
+			'message' => 'Page not found'
+		));
+		$result = ob_get_clean();
+		$this->assertNoPattern('#<script>#', $result);
+		$this->assertNoPattern('#</script>#', $result);
 	}
 /**
  * testMissingController method

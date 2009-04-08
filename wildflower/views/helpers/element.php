@@ -9,7 +9,7 @@
  * @version 1.0
  */
 
-class ElementHelper extends Helper {
+class ElementHelper extends AppHelper {
 
     /**
      * The base directory containing your elements.

@@ -3,3 +3,12 @@ body {
 	padding: 0 6px;
 }
 
+
+/* Widgets */
+
+.wf_widget {
+    background: #eee;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+

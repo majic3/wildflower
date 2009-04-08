@@ -77,66 +77,34 @@ class WildUsersController extends AppController {
     }
 
     /**
-     * reset password
+     * Logout
      * 
-     * Three stage process to reset password first sent link then click link to reset the new pass is sent to address
+     * Delete User info from Session, Cookie and reset cookie token.
      */
-    function resetpass() {	
-		$this->layout = 'login';   
-		$this->pageTitle = 'Reseting password';
+    function wf_logout() {
+        $this->WildUser->create($this->Auth->user());
+        $this->WildUser->saveField('cookie_token', '');
+        $this->Cookie->del('Auth.WildUser');
+        $this->redirect($this->Auth->logout());
+    }
 
-		if ($this->data) {	
-			$email = Sanitize::paranoid($this->data['WildUser']['useroremail']);
-			$stage = 2;
-			$user = $this->WildUser->find(array('email' => $email));
-			$type = 'notice';
-			$message = "";
-			$this->Email->to = $user['User']['email'];
-			$this->Email->from = Configure::read('AppSettings.contact_email');
-			$this->Email->replyTo = Configure::read('AppSettings.contact_email');
-			$this->Email->subject = Configure::read('AppSettings.site_name') . ' Password Reset';
-			$this->Email->sendAs = 'text';
-			$this->Email->template = 'password_reset';	
-			$this->set('message', "a link has been sent to you address use that link to have another pass generated and sent to <strong>$email</strong>");
-			$this->Email->send();
+    function wf_view($id) {
+        $this->WildUser->recursive = -1;
+        $this->set('user', $this->WildUser->findById($id));
+    }
 
-		} else {  
-			$type = 'notice';	  
-			$stage = 1;
-			$message = "Enter login or email a new password will be generated and an activation link sent to you";
-		}
-		$this->set(compact('stage', 'email', 'message', 'type', 'useroremail'));
-	}
-
-	/**
-	 * Logout
-	 * 
-	 * Delete User info from Session, Cookie and reset cookie token.
-	 */
-	function wf_logout() {
-		$this->WildUser->create($this->Auth->user());
-		$this->WildUser->saveField('cookie_token', '');
-		$this->Cookie->del('Auth.WildUser');
-		$this->redirect($this->Auth->logout());
-	}
-
-	function wf_view($id) {
-		$this->WildUser->recursive = -1;
-		$this->set('user', $this->WildUser->findById($id));
-	}
-
-	/**
-	 * Users overview
-	 * 
-	 */
-	function wf_index() {
-		$users = $this->WildUser->findAll();
-		$this->set(compact('users'));
-	}
-
-	function wf_change_password($id = null) {
-		$this->data = $this->WildUser->findById($id);
-	}
+    /**
+     * Users overview
+     * 
+     */
+    function wf_index() {
+        $users = $this->WildUser->findAll();
+        $this->set(compact('users'));
+    }
+    
+    function wf_change_password($id = null) {
+        $this->data = $this->WildUser->findById($id);
+    }
 
     /**
      * Create new user
@@ -182,5 +150,13 @@ class WildUsersController extends AppController {
         }
         $this->render('wf_change_password');
     }
+
+    /**
+     * reset password todo: make it work bashed unfocused attempt voided redo
+     * 
+     * Three stage process to reset password first sent link then click link to reset the new pass is sent to address
+     */
+    function resetpass() {
+	}
 
 }

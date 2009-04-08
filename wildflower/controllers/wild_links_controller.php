@@ -10,7 +10,7 @@ class WildLinksController extends AppController {
     function wf_add() {
         if (!empty($this->data)) {
             if ($this->WildLink->save($this->data)) {
-                $this->Session->setFlash('You\'ve written a new post.');
+                $this->Session->setFlash('<strong>Success</strong> You\'ve written a new post.', 'messages/success');
                 $this->redirect(array('action' => 'wf_edit', $this->WildLink->id));
             }
         }

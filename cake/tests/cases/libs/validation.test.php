@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Validation Class Test Case
+ * ValidationTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.4206
  * @version       $Revision$
@@ -43,14 +43,13 @@ class CustomValidator {
 		return preg_match('/^[0-9]{3}$/', $check);
 	}
 }
-
 /**
  * Test Case for Validation Class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
-class ValidationTestCase extends CakeTestCase {
+class ValidationTest extends CakeTestCase {
 /**
  * Validation property
  *
@@ -64,7 +63,7 @@ class ValidationTestCase extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setup() {
+	function setUp() {
 		$this->Validation =& Validation::getInstance();
 	}
 /**
@@ -77,7 +76,28 @@ class ValidationTestCase extends CakeTestCase {
 		$this->assertTrue(Validation::notEmpty('abcdefg'));
 		$this->assertTrue(Validation::notEmpty('fasdf '));
 		$this->assertTrue(Validation::notEmpty('fooo'.chr(243).'blabla'));
+		$this->assertTrue(Validation::notEmpty('abçďĕʑʘπй'));
+		$this->assertTrue(Validation::notEmpty('José'));
+		$this->assertTrue(Validation::notEmpty('é'));
+		$this->assertTrue(Validation::notEmpty('π'));
+		$this->assertFalse(Validation::notEmpty("\t "));
+		$this->assertFalse(Validation::notEmpty(""));
 
+	}
+/**
+ * testNotEmptyISO88591Encoding method
+ *
+ * @return void
+ * @access public
+ */
+	function testNotEmptyISO88591AppEncoding() {
+		Configure::write('App.encoding', 'ISO-8859-1');
+		$this->assertTrue(Validation::notEmpty('abcdefg'));
+		$this->assertTrue(Validation::notEmpty('fasdf '));
+		$this->assertTrue(Validation::notEmpty('fooo'.chr(243).'blabla'));
+		$this->assertTrue(Validation::notEmpty('abçďĕʑʘπй'));
+		$this->assertTrue(Validation::notEmpty('José'));
+		$this->assertTrue(Validation::notEmpty(utf8_decode('José')));
 		$this->assertFalse(Validation::notEmpty("\t "));
 		$this->assertFalse(Validation::notEmpty(""));
 	}
@@ -1492,6 +1512,8 @@ class ValidationTestCase extends CakeTestCase {
 		$this->assertTrue(Validation::email('abc.efg@12345.co.jp'));
 		$this->assertTrue(Validation::email('abc@g.cn'));
 		$this->assertTrue(Validation::email('abc@x.com'));
+		$this->assertTrue(Validation::email('henrik@sbcglobal.net'));
+		$this->assertTrue(Validation::email('sani@sbcglobal.net'));
 
 		// all ICANN TLDs
 		$this->assertTrue(Validation::email('abc@example.aero'));
@@ -1656,6 +1678,8 @@ class ValidationTestCase extends CakeTestCase {
 		$this->assertTrue(Validation::url('http://www.domain.com/real%20url%20encodeing'));
 		$this->assertTrue(Validation::url('http://en.wikipedia.org/wiki/Architectural_pattern_(computer_science)'));
 		$this->assertFalse(Validation::url('http://en.(wikipedia).org/'));
+		$this->assertFalse(Validation::url('www.cakephp.org', true));
+		$this->assertTrue(Validation::url('http://www.cakephp.org', true));
 	}
 /**
  * testInList method
@@ -1780,6 +1804,8 @@ class ValidationTestCase extends CakeTestCase {
 		$this->assertTrue(Validation::multiple(array(0, 1, 2, 3)));
 		$this->assertTrue(Validation::multiple(array(50, 32, 22, 0)));
 		$this->assertTrue(Validation::multiple(array('str', 'var', 'enum', 0)));
+		$this->assertFalse(Validation::multiple(''));
+		$this->assertFalse(Validation::multiple(null));
 		$this->assertFalse(Validation::multiple(array()));
 		$this->assertFalse(Validation::multiple(array(0)));
 		$this->assertFalse(Validation::multiple(array('0')));

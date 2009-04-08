@@ -9,7 +9,7 @@ class WildComment extends AppModel {
 	        'counterCache' => true
 	    )
 	);
-	/** @var bool Do a spam check before save? **/
+	/** @var bool Do a spam check before each save? **/
 	public $spamCheck = false;
 	public $validate = array(
 		'name' => VALID_NOT_EMPTY,
@@ -19,6 +19,10 @@ class WildComment extends AppModel {
 	);
 	
 	function beforeSave() {
+	    parent::beforeSave();
+	    
+	    $this->data[$this->name]['spam'] = 0;
+	    
 	    if ($this->spamCheck) {
 	        // Reset spamCheck for another save
             $this->spamCheck = false;
@@ -26,10 +30,6 @@ class WildComment extends AppModel {
 	        if ($this->isSpam($this->data)) {
 	            $this->data[$this->name]['spam'] = 1;
 	        }
-	    }
-	    
-	    if (!isset($this->data[$this->name]['spam'])) {
-            $this->data[$this->name]['spam'] = 0;
 	    }
 	    
 	    return true;
@@ -58,29 +58,29 @@ class WildComment extends AppModel {
      * Use Akismet to check comment data for spam
      *
      * @param array $data
-     * @return array Data with spam field set
+     * @return bool
      */
     function isSpam(&$data) {
-        $apiKey = Configure::read('AppSettings.wordpress_api_key');
+        $apiKey = Configure::read('Wildflower.settings.wordpress_api_key');
         if (empty($apiKey)) {
             return false;
         }
         
         try {
             App::import('Vendor', 'akismet');
-            $siteUrl = 'http://' . getenv('SERVER_NAME');
+            $siteUrl = Configure::read('Wildflower.fullSiteUrl');
             $akismet = new Akismet($siteUrl, $apiKey);
             $akismet->setCommentAuthor($data[$this->name]['name']);
             $akismet->setCommentAuthorEmail($data[$this->name]['email']);
             $akismet->setCommentAuthorURL($data[$this->name]['url']);
             $akismet->setCommentContent($data[$this->name]['content']);
-            $akismet->setPermalink($data['Post']['permalink']);
+            $akismet->setPermalink($data['WildPost']['permalink']);
             
             if ($akismet->isCommentSpam()) {
                 return true;
             }
         } catch(Exception $e) {
-            $this->log('Akismet not reachable!');
+            trigger_error('Akismet not reachable: ' . $e->message);
         }
         
         return false;
@@ -91,7 +91,6 @@ class WildComment extends AppModel {
      *
      */
     function spam() {
-        // @TODO add Akismet spam reporting
         return $this->saveField('spam', 1);
     }
     
@@ -100,7 +99,6 @@ class WildComment extends AppModel {
      *
      */
     function unspam() {
-        // @TODO add Akismet interaction
         return $this->saveField('spam', 0);
     }
 

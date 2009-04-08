@@ -35,3 +35,5 @@
 	<?php } ?>
 	
 </div>
+
+<?php echo $this->renderElement('sidebar') ?>

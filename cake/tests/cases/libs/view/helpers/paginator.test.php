@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * PaginatorHelperTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.view.helpers
  * @since         CakePHP(tm) v 1.2.0.4206
  * @version       $Revision$
@@ -26,12 +26,12 @@
  */
 App::import('Helper', array('Html', 'Paginator', 'Form', 'Ajax', 'Javascript'));
 /**
- * Short description for class.
+ * PaginatorHelperTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.view.helpers
  */
-class PaginatorTest extends CakeTestCase {
+class PaginatorHelperTest extends CakeTestCase {
 /**
  * setUp method
  *
@@ -68,6 +68,15 @@ class PaginatorTest extends CakeTestCase {
 
 		Configure::write('Routing.admin', '');
 		Router::reload();
+	}
+/**
+ * tearDown method
+ *
+ * @access public
+ * @return void
+ */
+	function tearDown() {
+		unset($this->Paginator);
 	}
 /**
  * testHasPrevious method
@@ -166,6 +175,25 @@ class PaginatorTest extends CakeTestCase {
 		$this->Paginator->params['paging']['Article']['options']['order'] = array('Article.title' => 'asc');
 		$result = $this->Paginator->sort('Title','Article.title');
 		$this->assertPattern('/\/accounts\/index\/page:1\/sort:Article.title\/direction:desc">Title<\/a>$/', $result);
+
+		$this->Paginator->params['paging']['Article']['options']['order'] = array('Article.title' => 'asc');
+		$result = $this->Paginator->sort('title');
+		$this->assertPattern('/\/accounts\/index\/page:1\/sort:title\/direction:asc">Title<\/a>$/', $result);
+
+	}
+/**
+ * testSortKey method
+ *
+ * @access public
+ * @return void
+ */
+	function testSortKey() {
+
+		$result = $this->Paginator->sortKey(null, array(
+				'order' => array('Article.title' => 'desc'
+		)));
+		$this->assertEqual('Article.title', $result);
+
 
 	}
 /**
@@ -349,29 +377,29 @@ class PaginatorTest extends CakeTestCase {
 		$result = $this->Paginator->prev('<< Previous', null, null, array('class' => 'disabled'));
 		$this->assertPattern('/^<a[^<>]+>&lt;&lt; Previous<\/a>$/', $result);
 		$this->assertPattern('/href="\/index\/page:1"/', $result);
-		
+
 		$result = $this->Paginator->next('Next');
 		$this->assertPattern('/^<a[^<>]+>Next<\/a>$/', $result);
 		$this->assertPattern('/href="\/index\/page:3"/', $result);
-		
+
 		$result = $this->Paginator->prev('<< Previous', array('escape' => true));
 		$this->assertPattern('/^<a[^<>]+>&lt;&lt; Previous<\/a>$/', $result);
-		
+
 		$result = $this->Paginator->prev('<< Previous', array('escape' => false));
 		$this->assertPattern('/^<a[^<>]+><< Previous<\/a>$/', $result);
-		
+
 		$this->Paginator->params['paging'] = array('Client' => array(
 			'page' => 1, 'current' => 1, 'count' => 13, 'prevPage' => false, 'nextPage' => true, 'pageCount' => 5,
 			'defaults' => array(),
 			'options' => array('page' => 1, 'limit' => 3, 'order' => array('Client.name' => 'DESC'), 'conditions' => array()))
 		);
-		
+
 		$result = $this->Paginator->prev('<< Previous', null, '<strong>Disabled</strong>');
 		$this->assertPattern('/^<div>&lt;strong&gt;Disabled&lt;\/strong&gt;<\/div>$/', $result);
-		
+
 		$result = $this->Paginator->prev('<< Previous', null, '<strong>Disabled</strong>', array('escape' => true));
 		$this->assertPattern('/^<div>&lt;strong&gt;Disabled&lt;\/strong&gt;<\/div>$/', $result);
-		
+
 		$result = $this->Paginator->prev('<< Previous', null, '<strong>Disabled</strong>', array('escape' => false));
 		$this->assertPattern('/^<div><strong>Disabled<\/strong><\/div>$/', $result);
 
@@ -401,6 +429,35 @@ class PaginatorTest extends CakeTestCase {
 			'/a',
 		);
 		$this->assertTags($result, $expected);
+	}
+/**
+ * testPagingLinksNotDefaultModel
+ *
+ * Test the creation of paging links when the non default model is used.
+ *
+ * @access public
+ * @return void
+ */
+	function testPagingLinksNotDefaultModel() {
+		// Multiple Model Paginate
+		$this->Paginator->params['paging'] = array(
+			'Client' => array(
+				'page' => 1, 'current' => 3, 'count' => 13, 'prevPage' => false, 'nextPage' => true, 'pageCount' => 5,
+				'defaults' => array( 'limit'=>3, 'order' => array('Client.name' => 'DESC')),
+				'options' => array('page' => 1, 'limit' => 3, 'order' => array('Client.name' => 'DESC'), 'conditions' => array())
+			),
+			'Server' => array(
+				'page' => 1, 'current' => 1, 'count' => 5, 'prevPage' => false, 'nextPage' => false, 'pageCount' => 5,
+				'defaults' => array(),
+				'options' => array('page' => 1, 'limit' => 5, 'order' => array('Server.name' => 'ASC'), 'conditions' => array())
+			)
+		);
+		$result = $this->Paginator->next('Next', array('model' => 'Client'));
+		$this->assertPattern('/^<a[^<>]+>Next<\/a>$/', $result);
+		$this->assertPattern('/href="\/index\/page:2"/', $result); // These is passed.
+
+		$result = $this->Paginator->next('Next', array('model' => 'Server'), 'No Next', array('model' => 'Server'));
+		$this->assertPattern('/^<div>No Next<\/div>$/', $result);
 	}
 /**
  * testGenericLinks method
@@ -753,13 +810,39 @@ class PaginatorTest extends CakeTestCase {
 		$this->assertTrue($result);
 	}
 /**
- * tearDown method
+ * testWithPlugin method
  *
  * @access public
  * @return void
  */
-	function tearDown() {
-		unset($this->Paginator);
+	function testWithPlugin() {
+		Router::reload();
+		Router::setRequestInfo(array(
+			array(
+				'pass' => array(), 'named' => array(), 'prefix' => null, 'form' => array(),
+				'controller' => 'magazines', 'plugin' => 'my_plugin', 'action' => 'index',
+				'url' => array('ext' => 'html', 'url' => 'my_plugin/magazines')),
+			array('base' => '', 'here' => '/my_plugin/magazines', 'webroot' => '/')
+		));
+
+		$result = $this->Paginator->link('Page 3', array('page' => 3));
+		$this->assertPattern('/["\']\/my_plugin\/magazines\/index\/page:3["\']/', $result);
+
+		$this->Paginator->options(array('url' => array('action' => 'another_index')));
+		$result = $this->Paginator->link('Page 3', array('page' => 3));
+		$this->assertPattern('/["\']\/my_plugin\/magazines\/another_index\/page:3["\']/', $result);
+
+		$this->Paginator->options(array('url' => array('controller' => 'issues')));
+		$result = $this->Paginator->link('Page 3', array('page' => 3));
+		$this->assertPattern('/["\']\/my_plugin\/issues\/index\/page:3["\']/', $result);
+
+		$this->Paginator->options(array('url' => array('plugin' => null)));
+		$result = $this->Paginator->link('Page 3', array('page' => 3));
+		$this->assertPattern('/["\']\/magazines\/index\/page:3["\']/', $result);
+
+		$this->Paginator->options(array('url' => array('plugin' => null, 'controller' => 'issues')));
+		$result = $this->Paginator->link('Page 3', array('page' => 3));
+		$this->assertPattern('/["\']\/issues\/index\/page:3["\']/', $result);
 	}
 }
 ?>
