@@ -12,7 +12,7 @@ class WildUser extends AppModel {
 	
 	public $hasMany = array(
 	    'WildPage',
-	    'WildPost',
+	    'WildPost'
 	);
 	
 
