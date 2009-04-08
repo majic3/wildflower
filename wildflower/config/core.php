@@ -24,22 +24,14 @@ Configure::write(array('Wildflower' => array(
     'uploadDirectory' => APP . WEBROOT_DIR .  DS . 'uploads', // @TODO rename the key
     'prefix' => 'wf',
     'rootPageCache' => CACHE . 'wf_root_pages',
-    'previewCache' => CACHE . 'wf_previews' . DS,
-    'thumbnailsCache' => WILDFLOWER_CACHE . DS . 'wf_thumbnails',
+    'previewCache' => CACHE . 'wf_previews',
+    'thumbnailsCache' => CACHE . 'wf_thumbnails',
     'postsParent' => 'post',
     'blogName' => 'posts',	 
     'blogIndex' => 'posts',
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
-    'disableRootPageCache' => false,
-)));
-
-// flickr - 0.1a
-Configure::write(array('Flickr' => array(
-	'userID' => 'your uid',
-	'secret' => 'your-secret',
-	'api_key' => 'your-key',
-	'cache' => CACHE . 'flickr',
+    'disableRootPageCache' => false
 )));
 
 // slideshowpro director - 0.1a
@@ -49,9 +41,9 @@ Configure::write(array('Director' => array(
 	'cache' => CACHE . 'Director',
 )));
 
-// icing config 0.6
+// icing config 0.7 - tidying up and reviewing everything (entire set of modifications reviewed)
 Configure::write(array('Icing' => array(
-	'version' => '0.6.9',
+	'version' => '0.7.0',
     'dashboardFeeds' => array(
 		array(
         'url' => 'wf.klevo.sk/posts/feed',
@@ -66,19 +58,6 @@ Configure::write(array('Icing' => array(
         'url' => 'jquery.com/blog/feed/'
 		),
 	),
-    'open_id' => array(
-		'adminConfig' => array(
-			'email' => 'youropenid@network.com'
-		),
-		'pubSettings' => array(
-			'useOnComments' => false
-		)
-	),
-    'gravatar' => array(
-		'pubSettings' => array(
-			'useOnComments' => false
-		)
-	),
     'gfeed' => array(
 		'api' => ''
 	),
@@ -90,8 +69,3 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
-
-Configure::write('debug', '2');
-
-if(strpos($_SERVER['HTTP_HOST'], '.ss29'))
-include('icing.core.php');

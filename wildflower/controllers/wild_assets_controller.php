@@ -118,7 +118,7 @@ class WildAssetsController extends AppController {
 		$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
 		$images = $this->paginate($this->modelClass);
 		$this->set('images', $images);
-		Configure::write('Debug', 0);
+		//Configure::write('Debug', 0);
 	}
 	
 	function wf_update() {
@@ -138,7 +138,7 @@ class WildAssetsController extends AppController {
         if ($uploadMaxSize < $postMaxSize) {
             $size = $uploadMaxSize;
         }
-
+		/* todo: add screen thumb */
 		if(isset($this->data) && ($this->action == 'wf_save_screen')) {
 			App::import('Component', 'Wildflower.Webthumb');
 			$this->Webthumb = new WebthumbComponent($this);
@@ -216,7 +216,7 @@ class WildAssetsController extends AppController {
         }
 
         if ($cacheFileExists && !$refreshCache) {
-        	return $this->_renderJpeg($cachedFilePath);
+        	return $this->_renderImage($cachedFilePath);
         } else {
         	// Create cache and render it
         	$sourceFile = Configure::read('Wildflower.uploadDirectory') . DS . $imageName;
@@ -237,15 +237,16 @@ class WildAssetsController extends AppController {
 
         	if ($phpThumb->GenerateThumbnail()) {
         		$phpThumb->RenderToFile($cachedFilePath);
-        		return $this->_renderJpeg($cachedFilePath);
+        		return $this->_renderImage($cachedFilePath);
         	} else {
         		return trigger_error("Thumbnail generator: Can't GenerateThumbnail.");
         	}
         }
     }
     
-    function _renderJpeg($cachedFilePath) {
-        $this->JlmPackager->browserCacheHeaders(filemtime($cachedFilePath), 'image/jpeg');
+    function _renderImage($cachedFilePath) {
+		$mime = mime_content_type($cachedFilePath);
+        $this->JlmPackager->browserCacheHeaders(filemtime($cachedFilePath), $mime);
         
         $fileSize = filesize($cachedFilePath);
         header("Content-Length: $fileSize");
@@ -268,6 +269,10 @@ class WildAssetsController extends AppController {
      *
      * @param $imageName File name from webroot/uploads/
      */
+	/*	todo:
+			#make work better
+			#handle delayed response from webugla
+	*/
 	function wf_save_screen() {
 		if($this->data)	{
 			//die(json_encode($this->data));

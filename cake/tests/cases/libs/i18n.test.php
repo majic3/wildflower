@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * I18nTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.5432
  * @version       $Revision$
@@ -26,9 +26,9 @@
  */
 App::import('Core', 'i18n');
 /**
- * Short description for class.
+ * I18nTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class I18nTest extends CakeTestCase {
@@ -2336,7 +2336,12 @@ class I18nTest extends CakeTestCase {
 		$this->assertFalse(in_array('24 everything else (from core translated)', $corePlurals));
 		$this->assertFalse(in_array('25 everything else (from core translated)', $corePlurals));
 	}
-
+/**
+ * testPluginTranslation method
+ *
+ * @access public
+ * @return void
+ */
 	function testPluginTranslation() {
 		$pluginPaths = Configure::read('pluginPaths');
 		Configure::write('pluginPaths', array(TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'plugins'));
@@ -2469,6 +2474,21 @@ class I18nTest extends CakeTestCase {
 		$expected = 'this is a "quoted string" (translated)';
 		$this->assertEqual(__('this is a "quoted string"', true), $expected);
 	}
+	function testFloatValue() {
+		Configure::write('Config.language', 'rule_9_po');
+
+		$result = __n('%d = 1', '%d = 0 or > 1', (float)1, true);
+		$expected = '%d is 1 (translated)';
+		$this->assertEqual($result, $expected);
+
+		$result = __n('%d = 1', '%d = 0 or > 1', (float)2, true);
+		$expected = "%d ends in 2-4, not 12-14 (translated)";
+		$this->assertEqual($result, $expected);
+
+		$result = __n('%d = 1', '%d = 0 or > 1', (float)5, true);
+		$expected = "%d everything else (translated)";
+		$this->assertEqual($result, $expected);
+	}
 /**
  * Singular method
  *
@@ -2488,7 +2508,7 @@ class I18nTest extends CakeTestCase {
 	function __domainPlural($domain = 'test_plugin') {
 		$plurals = array();
 		for ($number = 0; $number <= 25; $number++) {
-			$plurals[] =  sprintf(__dn($domain, '%d = 1', '%d = 0 or > 1', $number, true), $number );
+			$plurals[] =  sprintf(__dn($domain, '%d = 1', '%d = 0 or > 1', (float)$number, true), (float)$number );
 		}
 		return $plurals;
 	}
@@ -2511,7 +2531,7 @@ class I18nTest extends CakeTestCase {
 	function __plural() {
 		$plurals = array();
 		for ($number = 0; $number <= 25; $number++) {
-			$plurals[] =  sprintf(__n('%d = 1', '%d = 0 or > 1', $number, true), $number );
+			$plurals[] =  sprintf(__n('%d = 1', '%d = 0 or > 1', (float)$number, true), (float)$number );
 		}
 		return $plurals;
 	}
@@ -2534,7 +2554,7 @@ class I18nTest extends CakeTestCase {
 	function __pluralFromCore() {
 		$plurals = array();
 		for ($number = 0; $number <= 25; $number++) {
-			$plurals[] =  sprintf(__n('%d = 1 (from core)', '%d = 0 or > 1 (from core)', $number, true), $number );
+			$plurals[] =  sprintf(__n('%d = 1 (from core)', '%d = 0 or > 1 (from core)', (float)$number, true), (float)$number );
 		}
 		return $plurals;
 	}

@@ -7,6 +7,8 @@
  *
  * @package wildflower
  */
+
+/* todo: oo css */
 ?>
 <div id="main"> 
 		<h2><?php echo $page['WildPage']['title']; ?></h2>
@@ -17,6 +19,8 @@
 
 <div id="aside">
 	<?php
+		
+		/* todo: flash message sucess/failure+details */
 		echo 
 		$form->create('Message', array('url' => '/contact/create', 'class' => 'hform')),
 		"<fieldset>\n",

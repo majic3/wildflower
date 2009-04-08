@@ -1,100 +1,122 @@
-<?php echo $html->doctype('xhtml-strict') ?>
+<?php 
+echo $html->doctype('xhtml-strict') ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <?php echo $html->charset(); ?>
-    
-    <title>wf1.3b1(19.01.09) wf theme <?php echo $title_for_layout; ?></title>
-    
-    <meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
-    <meta name="keywords" content="<?php echo isset($keywordsMetaTag) ? $keywordsMetaTag : '' ?>" />
-    
-    <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/' . Configure::read('Wildflower.blogIndex') . '/rss'); ?>" />
-    
-    <base href="<?php echo FULL_BASE_URL . rtrim($this->here, '/') . '/'; ?>" />
-    
-    <?php echo $html->css(array('wildflower/main')); ?>
-        
-    <script type="text/javascript">
-        BASE = '<?php echo $this->base ?>';
-    </script>
+	<?php echo $html->charset(); ?>
+
+	<title><?php echo $title_for_layout; ?></title>
+
+	<meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
+
+	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
+
+	<?php
+		echo $html->css('ui/jquery-ui', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css(array(
+			'combined5',
+		), 'stylesheet', Array('media' => 'screen'));
+		//	echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
+
+	<!--[if lte IE 6]>
+	<?php // echo $html->css(Array('ie6'), 'stylesheet', Array('media' => 'screen')); ?>
+	<![endif]-->
+	<!--[if lte IE 7]>
+	<?php //	echo $html->css(Array('ie7'), 'stylesheet', Array('media' => 'screen')); ?>
+	<![endif]-->
+	<!--[if IE 6]>
+	<script type="text/javascript" src="/js/dd-pngfix.js"></script>
+	<script type="text/javascript">
+	/* fixing pngs with style Drew Diller Style */
+	DD_belatedPNG.fix('#navWrap, #page, #navigation'); // argument is a CSS selector
+	  
+	  /* string argument can be any CSS selector */
+	  /* .png_bg example is unnecessary */
+	  /* change it to what suits you! */
+	</script>
+	<![endif]-->
+	<script type="text/javascript" src="http://www.google.com/jsapi?key=<?php	echo Configure::read('Icing.gfeed.api');	?>"></script>
+
+	<script type="text/javascript">
+		var settings = {
+			base: "<?php echo $this->base ?>",
+			ctrlr: "<?php echo str_replace('wild_', '', $this->params['controller']) ?>",
+			model: "<?php echo ucwords(Inflector::singularize($this->params['controller'])) ?>",
+			action: "<?php echo $this->params['action'] ?>"
+		}
+		<?php
+			// ga tracker using jquery
+			echo $this->element('google_analytics') ?>
+	</script>
+	<?php 
+		e($javascript->link(array(
+			'combined2', 
+			'cmn'
+		)));
+	?>
 </head>
-<body>
-    
-    <?php
-        // @TODO Refactor to a Helper
-        
+<body id="<?php echo (($this->params['controller'] == 'wild_pages') ? $this->params['Wildflower']['page']['slug'] : str_replace('wild_', '', $this->params['controller'])); ?>" class="<?php echo (($this->params['controller'] == 'wild_pages') ? $this->params['Wildflower']['page']['slug'] : str_replace('wild_', '', $this->params['controller'])); ?> <?php echo $this->params['action'] ?>">
+<?php
         // Admin bar
         // Do not show for previews
-        if (($isLogged or Configure::read('debug') > 0) and $this->params['action'] != 'wf_preview') {
+        if ($isLogged and $this->params['action'] != 'wf_preview') {
             $c = str_replace('wild_', '', $this->params['controller']);
-            if (isset($page['WildPage']['id'])) {
-                $id = $page['WildPage']['id'];
-            } else if (isset($post['WildPost']['id'])) {
-                $id = $post['WildPost']['id'];
-            }
-            
-            if (isset($id)) {
-                $editCurrentLink = '/' 
-                    . Configure::read('Wildflower.prefix') 
-                    . '/' . $c . '/edit/' . $id;
-            } else {
-                $editCurrentLink = '/' 
-                    . Configure::read('Wildflower.prefix') 
-                    . '/' . $c;
-            }
-
+            $editCurrentLink = '/' 
+                . Configure::read('Wildflower.prefix') 
+                . '/' . $c . '/edit/' . '';
             
             echo 
-            '<div id="admin_bar">',
+            '<div id="admin-bar"><ul class="tabs"><li>',
                 $html->link('Site admin', '/' . Configure::read('Wildflower.prefix')),
-                $html->link('Edit current page', $editCurrentLink),
-             '</div>';
+                '</li><li>',
+                $html->link('Edit current page', $editCurrentLink), 
+             '</li></ul></div>';
         }
     ?>
 
-    <div id="wrap">
-    
-        <div id="header">   
-            <h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
-        </div>
-        
-        <hr />
-        
+<div id="page" class="icing">
+	<div id="hd">
+		<div id="ident">
+			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
+		</div>
+		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
+		<div id="searchrss"><?php	echo $this->element('sidebar_search'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
+		<div id="skipto"><a href="#content"></a></div>
+	</div>
+
+	<div id="nv">
         <?php 
             echo $navigation->create(array(
                 'Home' => '/',
-                'Feature tour' => '/feature-tour',
-                Configure::read('Wildflower.blogName') => '/' . Configure::read('Wildflower.blogIndex'),
-                'Documentation' => '/documentation',
-                Configure::read('Wildflower.galleryName') => '/' . Configure::read('Wildflower.galleryIndex'),
+                ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
+                'About' => '/about',
                 'Contact' => '/contact'
-            ), array('id' => 'navigation'));
+            ), array('class' => 'tabs', 'liClass' => false));
         ?>
-        
-        <hr />
-        
-        <div id="content">
-            <?php echo $content_for_layout; ?>
-            <span class="cleaner">&nbsp;</span>
-        </div>
-        <div class="clear"></div>
-        <hr />
-        
-        <div id="footer">
-	        <p>Powered by <?php 
-	           echo $html->image('wildflower/small-logo.gif', array('alt' => 'Wildflower', 'class' => 'wf-icon')), 
-	           ' ', 
-	           $html->link('Wildflower', '/'),
-	           '. ',
-	           $this->element('admin_link'); ?></p>
-	        
-	        <?php echo $this->element('debug_notice'); ?>
-	    </div>
-        
-    </div>
-    
-    <?php echo $this->element('google_analytics'); ?>
-    
+	</div>
+
+
+	<div id="bd">
+		<?php echo $content_for_layout; ?>
+
+		<?php	if(isset($rssFeeds))	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
+	</div>
+
+	<div id="ft">
+        <?php 
+            echo $navigation->create(array(
+                'Home' => '/',
+                ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
+                'About' => '/about',
+                'Contact' => '/contact'
+            ), array('class' => 'tabs', 'liClass' => false));
+        ?>
+
+		<p class="quiet"><small>default theme &#124; Powered by <?php 
+	           echo $html->link('<img src="/img/wildflower.png" />', 'http://wf.klevo.sk/', array(), false, false); ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/"><img src="/img/cake.power.gif" /></a> &#124; <a href="http://jquery.com/"><img src="/img/jquery-icon.png" /></a> &#124; <a href="http://github.com/stubbornella/oocss/">OO CSS</a></small></p>
+		<?php	if ($isLogged and $this->params['action'] != 'wf_preview') echo '<p class="quiet"><small>', $this->element('admin_link'), '</small></p>';	?>
+	</div>
+</div>
 </body>
 </html>
+

@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * InflectorTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.4206
  * @version       $Revision$
@@ -25,11 +25,10 @@
  * @license       http://www.opensource.org/licenses/opengroup.php The Open Group Test Suite License
  */
 App::import('Core', 'Inflector');
-
 /**
- * Short description for class.
+ * InflectorTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class InflectorTest extends CakeTestCase {
@@ -48,6 +47,15 @@ class InflectorTest extends CakeTestCase {
  */
 	function setUp() {
 		$this->Inflector = Inflector::getInstance();
+	}
+/**
+ * tearDown method
+ *
+ * @access public
+ * @return void
+ */
+	function tearDown() {
+		unset($this->Inflector);
 	}
 /**
  * testInstantiation method
@@ -102,6 +110,10 @@ class InflectorTest extends CakeTestCase {
 		$this->assertEqual(Inflector::singularize('knives'), 'knife');
 		$this->assertEqual(Inflector::singularize('wolves'), 'wolf');
 		$this->assertEqual(Inflector::singularize('shelves'), 'shelf');
+		$this->assertEqual(Inflector::singularize('taxis'), 'taxi');
+		$this->assertEqual(Inflector::singularize('taxes'), 'tax');
+		$this->assertEqual(Inflector::singularize('faxes'), 'fax');
+		$this->assertEqual(Inflector::singularize('waxes'), 'wax');
 		$this->assertEqual(Inflector::singularize(''), '');
 	}
 /**
@@ -144,6 +156,7 @@ class InflectorTest extends CakeTestCase {
 		$this->assertEqual(Inflector::pluralize('person'), 'people');
 		$this->assertEqual(Inflector::pluralize('people'), 'people');
 		$this->assertEqual(Inflector::pluralize('glove'), 'gloves');
+		$this->assertEqual(Inflector::pluralize('crisis'), 'crises');
 		$this->assertEqual(Inflector::pluralize(''), '');
 	}
 /**
@@ -241,15 +254,6 @@ class InflectorTest extends CakeTestCase {
 		$this->assertEqual(Inflector::humanize('posts'), 'Posts');
 		$this->assertEqual(Inflector::humanize('posts_tags'), 'Posts Tags');
 		$this->assertEqual(Inflector::humanize('file_systems'), 'File Systems');
-	}
-/**
- * tearDown method
- *
- * @access public
- * @return void
- */
-	function tearDown() {
-		unset($this->Inflector);
 	}
 }
 ?>

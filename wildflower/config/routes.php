@@ -14,9 +14,7 @@ $admin = Configure::read('Routing.admin');
  * Changing Wildflower.prefix in app/plugins/wildflower/config/core.php allows you
  * to change the WF admin url. After this access the admin under /your-prefix.
  */
-
-$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'widgets', 'links', 'galleries', 'images', 'stats', 'profiles');
-
+$wfControllers = array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'widgets', 'sitemaps');
 foreach ($wfControllers as $shortcut) {
 	Router::connect(
 		"/$prefix/$shortcut", 
@@ -47,7 +45,6 @@ Router::connect("/$prefix/dashboards/search", array('controller' => 'wild_dashbo
 
 // Login screen
 Router::connect("/$prefix/login", array('controller' => 'wild_users', 'action' => 'login'));
-Router::connect("/$prefix/resetpass/:useroremail", array('controller' => 'wild_users', 'action' => 'resetpass'));
 
 // Contact form
 Router::connect('/contact', array('controller' => 'wild_messages', 'action' => 'index'));
@@ -59,7 +56,8 @@ Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/feed', array('
 // Ultra sexy short SEO friendly post URLs in form of http://my-domain/p/40-char-uuid
 Router::connect('/' . Configure::read('Wildflower.postsParent') . '/:slug', array('controller' => 'wild_posts', 'action' => 'view'));  
 // post is going to need /* to catch pagination params
-Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/*', array('controller' => 'wild_posts', 'action' => 'index'));
+Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/*', array('controller' => 'wild_posts', 'action' => 'index'));	 
+Router::connect('/c/:slug', array('controller' => 'wild_posts', 'action' => 'category'));
 Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/rss', array('controller' => 'wild_posts', 'action' => 'rss'));
 
 // Image thumbnails
@@ -68,6 +66,12 @@ Router::connect('/wildflower/thumbnail_by_id/*', array('controller' => 'wild_ass
 
 // Site search (pages & posts)
 Router::connect('/wildflower/search', array('controller' => 'wild_dashboards', 'action' => 'search'));
+
+// sitemaps
+Router::connect('/sitemap', array('controller' => 'wild_sitemaps', 'action' => 'index')); 
+
+// parseextension xml for sitemap
+Router::parseExtensions('rss','xml'); 
 
 WildflowerRootPagesCache::connect();
 

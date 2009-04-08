@@ -17,12 +17,26 @@ class WildWidgetsController extends AppController {
     
     function wf_list_widgets() {
         // Scan plugin and theme element dirs for widgets
-        $themeWidgets = $this->_parseWidgetFileList(scandir(APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'elements' . DS . 'widgets'));
+        $widgetsPath = APP . 'views' . DS . 'elements' . DS . 'widgets';
+        if (isset($this->theme) and is_dir(APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'elements' . DS . 'widgets')) {
+            $widgetsPath = APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'elements' . DS . 'widgets';
+        }
+        $themeWidgets = $this->_parseWidgetFileList(scandir($widgetsPath));
         $wfWidgets = $this->_parseWidgetFileList(scandir(WILDFLOWER_DIR . DS . 'views' . DS . 'elements' . DS . 'widgets'));
 		$widgets = am($wfWidgets, $themeWidgets);
 		$this->set(compact('widgets'));
     }
-    
+
+/* todo: list links for insertion into editor */
+    function wf_list_links() {	 
+        $postResults = ClassRegistry::init('WildPost')->find('all');
+        $pageResults = ClassRegistry::init('WildPage')->find('all');
+        $linkResults = ClassRegistry::init('WildLink')->find('all');
+        $results = am($postResults, $pageResults, $linkResults);
+        $this->set('results', $results);
+        
+    }
+
     private function _parseWidgetFileList($list) {
         $result = array();
         foreach ($list as $fileName) {

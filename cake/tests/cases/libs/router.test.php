@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * RouterTest file
  *
  * Long description for file
  *
@@ -16,7 +16,7 @@
  * @filesource
  * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          https://trac.cakephp.org/wiki/Developement/TestSuite CakePHP(tm) Tests
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  * @since         CakePHP(tm) v 1.2.0.4206
  * @version       $Revision$
@@ -29,11 +29,10 @@ App::import('Core', array('Router', 'Debugger'));
 if (!defined('FULL_BASE_URL')) {
 	define('FULL_BASE_URL', 'http://cakephp.org');
 }
-
 /**
- * Short description for class.
+ * RouterTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs
  */
 class RouterTest extends CakeTestCase {
@@ -232,6 +231,39 @@ class RouterTest extends CakeTestCase {
 		$this->assertEqual($result, array('pass' => array(), 'named' => array(), 'plugin' => '', 'controller' => 'posts', 'action' => 'index', '[method]' => array('GET', 'POST')));
 	}
 /**
+ * testGenerateUrlResourceRoute method
+ *
+ * @access public
+ * @return void
+ */
+	function testGenerateUrlResourceRoute() {
+		Router::mapResources('Posts');
+
+		$result = Router::url(array('controller' => 'posts', 'action' => 'index', '[method]' => 'GET'));
+		$expected = '/posts';
+		$this->assertEqual($result, $expected);
+
+		$result = Router::url(array('controller' => 'posts', 'action' => 'view', '[method]' => 'GET', 'id' => 10));
+		$expected = '/posts/10';
+		$this->assertEqual($result, $expected);
+
+		$result = Router::url(array('controller' => 'posts', 'action' => 'add', '[method]' => 'POST'));
+		$expected = '/posts';
+		$this->assertEqual($result, $expected);
+
+		$result = Router::url(array('controller' => 'posts', 'action' => 'edit', '[method]' => 'PUT', 'id' => 10));
+		$expected = '/posts/10';
+		$this->assertEqual($result, $expected);
+
+		$result = Router::url(array('controller' => 'posts', 'action' => 'delete', '[method]' => 'DELETE', 'id' => 10));
+		$expected = '/posts/10';
+		$this->assertEqual($result, $expected);
+
+		$result = Router::url(array('controller' => 'posts', 'action' => 'edit', '[method]' => 'POST', 'id' => 10));
+		$expected = '/posts/10';
+		$this->assertEqual($result, $expected);
+	}
+/**
  * testUrlNormalization method
  *
  * @access public
@@ -266,6 +298,17 @@ class RouterTest extends CakeTestCase {
 
 		$result = Router::normalize('/recipe/recipes/add');
 		$this->assertEqual($result, '/recipe/recipes/add');
+
+		Router::setRequestInfo(array(array(), array('base' => 'us')));
+		$result = Router::normalize('/us/users/logout/');
+		$this->assertEqual($result, '/users/logout');
+
+		Router::reload();
+
+		Router::setRequestInfo(array(array(), array('base' => '/cake_12')));
+		$result = Router::normalize('/cake_12/users/logout/');
+		$this->assertEqual($result, '/users/logout');
+
 	}
 /**
  * testUrlGeneration method
@@ -615,14 +658,14 @@ class RouterTest extends CakeTestCase {
 
 		Router::reload();
 		Router::setRequestInfo(array(
-				array ('plugin' => 'shows', 'controller' => 'show_tickets', 'action' => 'admin_edit', 'pass' =>
-						array (0 => '6'), 'prefix' => 'admin', 'admin' => true, 'form' => array (), 'url' =>
-						array ('url' => 'admin/shows/show_tickets/edit/6')),
-				array ('plugin' => NULL, 'controller' => NULL, 'action' => NULL, 'base' => '', 'here' => '/admin/shows/show_tickets/edit/6', 'webroot' => '/')));
+				array('plugin' => 'shows', 'controller' => 'show_tickets', 'action' => 'admin_edit', 'pass' =>
+						array(0 => '6'), 'prefix' => 'admin', 'admin' => true, 'form' => array(), 'url' =>
+						array('url' => 'admin/shows/show_tickets/edit/6')),
+				array('plugin' => NULL, 'controller' => NULL, 'action' => NULL, 'base' => '', 'here' => '/admin/shows/show_tickets/edit/6', 'webroot' => '/')));
 
 		Router::parse('/');
 
-		$result = Router::url(array ( 'plugin' => 'shows', 'controller' => 'show_tickets', 'action' => 'edit', 'id' => '6', 'admin' => true, 'prefix' => 'admin', ));
+		$result = Router::url(array('plugin' => 'shows', 'controller' => 'show_tickets', 'action' => 'edit', 'id' => '6', 'admin' => true, 'prefix' => 'admin', ));
 		$expected = '/admin/shows/show_tickets/edit/6';
 		$this->assertEqual($result, $expected);
 	}
@@ -696,7 +739,28 @@ class RouterTest extends CakeTestCase {
 		));
 
 		$this->assertEqual(Router::url('read/1'), '/base/test/controller/read/1');
+
 		Router::reload();
+
+		Router::connect('/:lang/:plugin/:controller/*', array(), array('action' => 'index'));
+
+		Router::setRequestInfo(array(
+				array(
+					'lang' => 'en',
+					'plugin' => 'shows', 'controller' => 'shows', 'action' => 'index', 'pass' =>
+						array(), 'form' => array(), 'url' =>
+						array('url' => 'en/shows/')),
+				array('plugin' => NULL, 'controller' => NULL, 'action' => NULL, 'base' => '',
+				'here' => '/en/shows/', 'webroot' => '/')));
+
+		Router::parse('/en/shows/');
+
+		$result = Router::url(array(
+			'lang' => 'en',
+			'controller' => 'shows', 'action' => 'index', 'page' => '1',
+		));
+		$expected = '/en/shows/page:1';
+		$this->assertEqual($result, $expected);
 	}
 /**
  * testUrlParsing method
@@ -1048,6 +1112,10 @@ class RouterTest extends CakeTestCase {
 		$result = Router::url(array('controller' => 'posts', 'action'=>'index', '0', '?' => array('var' => 'test', 'var2' => 'test2', 'more' => 'test data')));
 		$this->assertEqual($result, $expected);
 		ini_set('arg_separator.output', $restore);
+
+		$result = Router::url(array('controller' => 'posts', 'action'=>'index', '0', '?' => array('var' => 'test', 'var2' => 'test2')), array('escape' => true));
+		$expected = '/posts/index/0?var=test&amp;var2=test2';
+		$this->assertEqual($result, $expected);
 	}
 /**
  * testConnectNamed method
@@ -1425,7 +1493,6 @@ class RouterTest extends CakeTestCase {
 		$expected = array('pass' => array(), 'named' => array(), 'plugin' => null, 'controller' => 'posts', 'action' => 'index');
 		$this->assertEqual($result, $expected);
 	}
-
 /**
  * Tests URL generation with flags and prefixes in and out of context
  *

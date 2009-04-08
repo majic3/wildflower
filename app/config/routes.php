@@ -32,8 +32,8 @@ $myWfAdminControllers = array('examples');
 
 require_once(WILDFLOWER_DIR . DS . 'config' . DS . 'routes.php');
 
-$prefix = Configure::read('Wildflower.prefix');
-$admin = Configure::read('Routing.admin');
-
-
 // Continue with your app routes here
+//
+
+Router::connect('/examples', array('controller' => 'examples', 'action' => 'index'));
+Router::connect('/examples/:slug', array('controller' => 'examples', 'action' => 'view'));

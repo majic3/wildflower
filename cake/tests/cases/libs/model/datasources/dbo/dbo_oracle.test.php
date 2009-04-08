@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * DboOracle test
+ * DboOracleTest file
  *
  * PHP versions 4 and 5
  *
@@ -22,13 +22,11 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-
 if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
 	define('CAKEPHP_UNIT_TEST_EXECUTION', 1);
 }
 require_once LIBS . 'model' . DS . 'datasources' . DS . 'dbo_source.php';
 require_once LIBS . 'model' . DS . 'datasources' . DS . 'dbo' . DS . 'dbo_oracle.php';
-
 /**
  * DboOracleTest class
  *
@@ -36,6 +34,10 @@ require_once LIBS . 'model' . DS . 'datasources' . DS . 'dbo' . DS . 'dbo_oracle
  * @subpackage    cake.tests.cases.libs.model.datasources.dbo
  */
 class DboOracleTest extends CakeTestCase {
+/**
+ * fixtures property
+ */
+	var $fixtures = array('core.oracle_user');
 /**
  * setup method
  *
@@ -86,13 +88,15 @@ class DboOracleTest extends CakeTestCase {
 		}
 
 		$config = $this->db->config;
+		$old_pw = $this->db->config['password'];
 		$this->db->config['password'] = 'keepmeout';
 		$this->db->connect();
 		$e = $this->db->lastError();
 		$r = 'ORA-01017: invalid username/password; logon denied';
 		$this->assertEqual($e, $r);
+		$this->db->config['password'] = $old_pw;
+		$this->db->connect();
 	}
-
 /**
  * testName method
  *
@@ -125,5 +129,4 @@ class DboOracleTest extends CakeTestCase {
 
 	}
 }
-
 ?>

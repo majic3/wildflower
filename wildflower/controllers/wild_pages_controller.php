@@ -7,7 +7,7 @@ uses('Sanitize');
  */
 class WildPagesController extends AppController {
 	
-	// chk helps needed	 ~ element?
+	// todo: chk helper needed	 ~ element? part of widgets 
 	public $components = array('RequestHandler', 'Seo');
 	public $helpers = array('Cache', 'Form', 'Html', 'Text', 'Time', 'Wildflower.List', 'Wildflower.Tree');
     public $paginate = array(
@@ -21,6 +21,15 @@ class WildPagesController extends AppController {
      *
      */
     function wf_about() {
+    }
+
+    /**
+     * A static test page for jquery ui & for oo css within admin - delete later
+     *
+     */
+    function wf_jqueryui() {
+    }
+    function wf_oocss() {
     }
     
     /**
@@ -248,6 +257,13 @@ class WildPagesController extends AppController {
         parent::beforeRender();
         $this->set('isPage', true);
         $this->params['Wildflower']['view']['isPage'] = true;
+
+		if(Configure::read('Icing.gfeed.api') && $this->isHome)	{
+			App::import('Model', 'WildLink'); 
+			$WildLink = new WildLink;
+			$this->set('rssFeeds', $WildLink->rssArray());
+		}
+
     }
     
     /**
@@ -293,24 +309,33 @@ class WildPagesController extends AppController {
         if (Configure::read('AppSettings.cache') == 'on') {
             $this->cacheAction = 60 * 60 * 24 * 3; // Cache for 3 days
         }
-        
-        // Parse attributes
-        $args = func_get_args();
-        $corrected = false;
-        $argsCountBeforeFilter = count($args);
-        $args = array_filter($args);
-        $url = '/' . $this->params['url']['url'];
-        
-        // Redirect if the entered URL is not correct
-        if (count($args) !== $argsCountBeforeFilter) {
-            return $this->redirect($url);
-        }
-        
-        // Determine if this is the site root (home page)
-        $homeArgs = array('app', 'webroot');
-        if ($url === '//' or $args === $homeArgs or $url === '/app/webroot/') {
-            $this->isHome = true;
-        }
+		//     yuraji - Fix for URL trailing slash and named params
+		$args = func_get_args();
+		$corrected = false;
+		$argsCountBeforeFilter = count($args);
+		$args = array_filter($args);
+		$url = '/' . $this->params['url']['url'];
+
+		// Redirect if the entered URL is not correct
+		if (count($args) !== $argsCountBeforeFilter) {
+			return $this->redirect($url);
+		}
+
+		// Determine if this is the site root (home page)
+		$homeArgs = array('app', 'webroot');
+		if ($url === '//' or $args === $homeArgs or $url === '/app/webroot/') {
+			$this->isHome = true;
+		}
+
+
+		// Inserted code: //
+		$urlParts=explode('/',$url);
+		$url='';
+		foreach($urlParts as $urlPart) {
+			if(!empty($urlPart) && strpos($urlPart,':')===false) {
+				$url.='/'.$urlPart;
+			}
+		}
         
         $this->params['Wildflower']['view']['isHome'] = $this->isHome;
         
@@ -326,13 +351,14 @@ class WildPagesController extends AppController {
             $slug = end(explode('/', $url));
 	        $slug = self::slug($slug);
             $page = $this->WildPage->findBySlugAndDraft($slug, 0);
-        }
+        } 
 
 		// Give 404 if no page found or requesting a parents page without a parent in the url
 		$isChildWithoutParent = (!$this->isHome and ($page[$this->modelClass]['url'] !== $url));
 		if (empty($page) or $isChildWithoutParent) {
 			return $this->do404();
         }
+			$this->canonical = $page[$this->modelClass]['url'];
         
         $this->pageTitle = $page[$this->modelClass]['title'];
         
@@ -408,9 +434,16 @@ class WildPagesController extends AppController {
         }
         $render = $template;
         
-        $possibleThemeFile = APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'wild_pages' . DS . $slug . '.ctp';
-        if (file_exists($possibleThemeFile)) {
-            $render = $possibleThemeFile;
+        if (isset($this->theme)) {
+            $possibleThemeFile = APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'wild_pages' . DS . $slug . '.ctp';
+            if (file_exists($possibleThemeFile)) {
+                $render = $possibleThemeFile;
+            }
+        } else {
+            $possibleThemeFile = APP . 'views' . DS . 'wild_pages' . DS . $slug . '.ctp';
+            if (file_exists($possibleThemeFile)) {
+                $render = $possibleThemeFile;
+            }
         }
         
         return $this->render($render);

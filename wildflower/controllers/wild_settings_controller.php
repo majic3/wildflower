@@ -1,4 +1,5 @@
 <?php
+/*	todo: themes? take out mu is good	*/
 class WildSettingsController extends AppController {
 
 	public $uses = array('WildPage', 'WildSetting');
@@ -15,7 +16,7 @@ class WildSettingsController extends AppController {
 				// Regenerate settings cache
 				$this->WildSetting->createCache();
 				
-				$this->Session->setFlash('Setting added.');
+				$this->Session->setFlash('<strong>success</strong> Setting added.', 'messages/success');
 				$this->redirect(array('action' => 'index'));
 			}
 		}
@@ -53,7 +54,7 @@ class WildSettingsController extends AppController {
 	        $this->WildSetting->save();
 	    }
 	    
-        $this->Session->setFlash('Setings updated.');
+        $this->Session->setFlash('<strong>success</strong> Setings updated.', 'messages/success');
         $this->redirect(array('action' => 'index'));
 	}
 	

@@ -67,15 +67,15 @@ class WildHelper extends AppHelper {
 	    extract($this->params['Wildflower']['view']);
 	    $html = '<body';
 	    if ($isHome) { 
-	       $html .= ' class="home-page"'; 
+	       $html .= ' class="home"'; 
 	    } else if ($isPage) {
 	       $pageSlug = '';
 	       if (isset($this->params['current']['slug'])) {
               $pageSlug = ' ' . $this->params['current']['slug'] . '-page';           
 	       }
-	       $html .= ' class="page-view' . $pageSlug . '"'; 
+	       $html .= ' class="page ' . $pageSlug . '"'; 
 	    } else if ($isPosts) { 
-	       $html .= ' class="post-view"'; 
+	       $html .= ' class="' . (($this->action == 'view') ? 'post' : 'posts') . '"'; 
 	    } else if (isset($this->params['current']['body_class'])) {
 	       $html .= " class=\"{$this->params['current']['body_class']}\"";
 	    }
@@ -176,7 +176,7 @@ class WildHelper extends AppHelper {
     function ptbuttons($buttons, $wrapper = 'buttons') {
 		$ptbuttons = '';
 		foreach($buttons as $btn)	{
-			$ptbuttons.= "<a href=\"{$btn['url']}\" class=\"{$btn['class']}\">{$btn['label']}</a>";
+			$ptbuttons.= $this->Html->link($btn['label'], $btn['url'], Array('class' => $btn['class']));
 		}
 		return ($wrapper) ? "<div class=\"$wrapper\">$ptbuttons</div>" : $ptbuttons;
     }
@@ -235,6 +235,34 @@ class WildHelper extends AppHelper {
             $html = r($replace, $replaceWith, $html);
         }
         return $html;
+    }
+    
+    function subPageNav() {
+        $html = '<ul>';
+        $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
+        $pages = ClassRegistry::init('WildPage')->findChildrenBySlug($pageSlug);
+        if (empty($pages)) {
+            return '';
+        }
+        foreach ($pages as $page) {
+            $html .= '<li>' . $this->Html->link($page['WildPage']['title'], $page['WildPage']['url']) . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+    
+    function postsFromCategory($slug) {
+        $WildCategory = ClassRegistry::init('WildCategory');
+        $WildCategory->contain(array(
+            'WildPost' => array(
+                'conditions' => array(
+                    'draft' => 0
+                )
+            )
+        ));
+        $category = $WildCategory->findBySlug($slug);
+        $posts = $category['WildPost'];
+        return $posts;
     }
 
 }

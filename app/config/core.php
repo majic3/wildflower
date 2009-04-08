@@ -224,4 +224,11 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
+
+	
+//die(APP . 'tmp' . DS . 'min');
+/*	minify filter	cache store, js filter & css filter */
+//Configure::write('Asset.filter.cache', APP . 'tmp' . DS . 'min');
+//Configure::write('Asset.filter.css', 'min.php');
+//Configure::write('Asset.filter.js', 'min.php');
 ?>

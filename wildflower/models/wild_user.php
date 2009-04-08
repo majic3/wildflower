@@ -7,6 +7,7 @@
  * @todo Allow login to have chars like _.
  * @package wildflower
  */
+/* todo: profile */
 class WildUser extends AppModel {
 	
 	public $hasMany = array(

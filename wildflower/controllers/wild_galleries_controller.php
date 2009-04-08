@@ -170,7 +170,7 @@ class WildGalleriesController extends AppController {
         if (!empty($this->data)) {
             $this->data[$this->modelClass]['draft'] = 1;
             if ($this->WildGallery->save($this->data)) {
-                $this->Session->setFlash('You\'ve made a new gallery so add some media.');
+                $this->Session->setFlash('<strong>Success</strong> You\'ve made a new gallery so add some media.', 'messages/success');
                 $this->redirect(array('action' => 'wf_edit', $this->WildGallery->id));
             }
         }

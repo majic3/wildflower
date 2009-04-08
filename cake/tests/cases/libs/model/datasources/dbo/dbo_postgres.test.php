@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * DboPostgres test
+ * DboPostgresTest file
  *
  * PHP versions 4 and 5
  *
@@ -22,20 +22,13 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-
-if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
-	define('CAKEPHP_UNIT_TEST_EXECUTION', 1);
-}
-require_once LIBS . 'model' . DS . 'model.php';
-require_once LIBS . 'model' . DS . 'datasources' . DS . 'datasource.php';
-require_once LIBS . 'model' . DS . 'datasources' . DS . 'dbo_source.php';
-require_once LIBS . 'model' . DS . 'datasources' . DS . 'dbo' . DS . 'dbo_postgres.php';
+App::import('Core', array('Model', 'DataSource', 'DboSource', 'DboPostgres'));
+App::import('Model', 'App');
 require_once dirname(dirname(dirname(__FILE__))) . DS . 'models.php';
-
 /**
- * Short description for class.
+ * DboPostgresTestDb class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources
  */
 class DboPostgresTestDb extends DboPostgres {
@@ -68,9 +61,9 @@ class DboPostgresTestDb extends DboPostgres {
 	}
 }
 /**
- * Short description for class.
+ * PostgresTestModel class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources
  */
 class PostgresTestModel extends Model {
@@ -144,9 +137,9 @@ class PostgresTestModel extends Model {
 	}
 }
 /**
- * The test class for the DboPostgres
+ * DboPostgresTest class
  *
- * @package       cake.tests
+ * @package       cake
  * @subpackage    cake.tests.cases.libs.model.datasources.dbo
  */
 class DboPostgresTest extends CakeTestCase {
@@ -164,18 +157,19 @@ class DboPostgresTest extends CakeTestCase {
  * @var object
  * @access public
  */
-	var $fixtures = array('core.user', 'core.binary_test');
+	var $fixtures = array('core.user', 'core.binary_test', 'core.comment', 'core.article',
+		'core.tag', 'core.articles_tag', 'core.attachment', 'core.person', 'core.post', 'core.author');
 /**
  * Actual DB connection used in testing
  *
- * @var object
+ * @var DboSource
  * @access public
  */
 	var $db = null;
 /**
  * Simulated DB connection used in testing
  *
- * @var object
+ * @var DboSource
  * @access public
  */
 	var $db2 = null;
@@ -324,9 +318,6 @@ class DboPostgresTest extends CakeTestCase {
  * @return void
  */
 	function testLastInsertIdMultipleInsert() {
-		$this->loadFixtures('User');
-
-		$User =& new User();
 		$db1 = ConnectionManager::getDataSource('test_suite');
 
 		if (PHP5) {
@@ -338,9 +329,7 @@ class DboPostgresTest extends CakeTestCase {
 		$db2->connect();
 		$this->assertNotEqual($db1->connection, $db2->connection);
 
-		$db1->truncate($User->useTable);
-
-		$table = $db1->fullTableName($User->useTable, false);
+		$table = $db1->fullTableName('users', false);
 		$password = '5f4dcc3b5aa765d61d8327deb882cf99';
 		$db1->execute(
 			"INSERT INTO {$table} (\"user\", password) VALUES ('mariano', '{$password}')"
@@ -385,7 +374,6 @@ class DboPostgresTest extends CakeTestCase {
 		$expected = '"foo" text DEFAULT \'FOO\'';
 		$this->assertEqual($this->db->buildColumn($result), $expected);
 	}
-
 /**
  * Tests that binary data is escaped/unescaped properly on reads and writes
  *
@@ -418,7 +406,6 @@ class DboPostgresTest extends CakeTestCase {
 		$result = $model->find('first');
 		$this->assertEqual($result['BinaryTest']['data'], $data);
 	}
-
 /**
  * Tests the syntax of generated schema indexes
  *
@@ -487,6 +474,156 @@ class DboPostgresTest extends CakeTestCase {
 		$this->assertEqual($result, $result2);
 
 		$db1->query('DROP TABLE ' . $db1->fullTableName('datatypes'));
+	}
+/**
+ * Test index generation from table info.
+ *
+ * @return void
+ **/
+	function testIndexGeneration() {
+		$name = $this->db->fullTableName('index_test', false);
+		$this->db->query('CREATE TABLE ' . $name . ' ("id" serial NOT NULL PRIMARY KEY, "bool" integer, "small_char" varchar(50), "description" varchar(40) )');
+		$this->db->query('CREATE INDEX pointless_bool ON ' . $name . '("bool")');
+		$this->db->query('CREATE UNIQUE INDEX char_index ON ' . $name . '("small_char")');
+		$expected = array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'pointless_bool' => array('column' => 'bool', 'unique' => 0),
+			'char_index' => array('column' => 'small_char', 'unique' => 1),
+
+		);
+		$result = $this->db->index($name);
+		$this->assertEqual($expected, $result);
+
+		$this->db->query('DROP TABLE ' . $name);
+		$name = $this->db->fullTableName('index_test_2', false);
+		$this->db->query('CREATE TABLE ' . $name . ' ("id" serial NOT NULL PRIMARY KEY, "bool" integer, "small_char" varchar(50), "description" varchar(40) )');
+		$this->db->query('CREATE UNIQUE INDEX multi_col ON ' . $name . '("small_char", "bool")');
+		$expected = array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'multi_col' => array('column' => array('small_char', 'bool'), 'unique' => 1),
+		);
+		$result = $this->db->index($name);
+		$this->assertEqual($expected, $result);
+		$this->db->query('DROP TABLE ' . $name);
+	}
+/**
+ * Test the alterSchema capabilities of postgres
+ *
+ * @access public
+ * @return void
+ */
+	function testAlterSchema() {
+		$Old =& new CakeSchema(array(
+			'connection' => 'test_suite',
+			'name' => 'AlterPosts',
+			'alter_posts' => array(
+				'id' => array('type' => 'integer', 'key' => 'primary'),
+				'author_id' => array('type' => 'integer', 'null' => false),
+				'title' => array('type' => 'string', 'null' => false),
+				'body' => array('type' => 'text'),
+				'published' => array('type' => 'string', 'length' => 1, 'default' => 'N'),
+				'created' => array('type' => 'datetime'),
+				'updated' => array('type' => 'datetime'),
+			)
+		));
+		$this->db->query($this->db->createSchema($Old));
+
+		$New =& new CakeSchema(array(
+			'connection' => 'test_suite',
+			'name' => 'AlterPosts',
+			'alter_posts' => array(
+				'id' => array('type' => 'integer', 'key' => 'primary'),
+				'author_id' => array('type' => 'integer', 'null' => false),
+				'title' => array('type' => 'string', 'null' => false),
+				'body' => array('type' => 'string', 'length' => 500),
+				'status' => array('type' => 'integer', 'length' => 3),
+				'created' => array('type' => 'datetime'),
+				'updated' => array('type' => 'datetime'),
+			)
+		));
+		$this->db->query($this->db->alterSchema($New->compare($Old), 'alter_posts'));
+
+		$model = new CakeTestModel(array('table' => 'alter_posts', 'ds' => 'test_suite'));
+		$result = $model->schema();
+		$this->assertTrue(isset($result['status']));
+		$this->assertFalse(isset($result['published']));
+		$this->assertEqual($result['body']['type'], 'string');
+
+		$this->db->query($this->db->dropSchema($New));
+	}
+/**
+ * Test the alter index capabilities of postgres
+ *
+ * @access public
+ * @return void
+ */
+	function testAlterIndexes() {
+		$this->db->cacheSources = false;
+
+		$schema1 =& new CakeSchema(array(
+			'name' => 'AlterTest1',
+			'connection' => 'test_suite',
+			'altertest' => array(
+				'id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+				'name' => array('type' => 'string', 'null' => false, 'length' => 50),
+				'group1' => array('type' => 'integer', 'null' => true),
+				'group2' => array('type' => 'integer', 'null' => true)
+			)
+		));
+		$this->db->query($this->db->createSchema($schema1));
+
+		$schema2 =& new CakeSchema(array(
+			'name' => 'AlterTest2',
+			'connection' => 'test_suite',
+			'altertest' => array(
+				'id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+				'name' => array('type' => 'string', 'null' => false, 'length' => 50),
+				'group1' => array('type' => 'integer', 'null' => true),
+				'group2' => array('type' => 'integer', 'null' => true),
+				'indexes' => array(
+					'name_idx' => array('column' => 'name', 'unique' => 0),
+					'group_idx' => array('column' => 'group1', 'unique' => 0),
+					'compound_idx' => array('column' => array('group1', 'group2'), 'unique' => 0),
+					'PRIMARY' => array('column' => 'id', 'unique' => 1)
+				)
+			)
+		));
+		$this->db->query($this->db->alterSchema($schema2->compare($schema1)));
+
+		$indexes = $this->db->index('altertest');
+		$this->assertEqual($schema2->tables['altertest']['indexes'], $indexes);
+
+		// Change three indexes, delete one and add another one
+		$schema3 =& new CakeSchema(array(
+			'name' => 'AlterTest3',
+			'connection' => 'test_suite',
+			'altertest' => array(
+				'id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+				'name' => array('type' => 'string', 'null' => false, 'length' => 50),
+				'group1' => array('type' => 'integer', 'null' => true),
+				'group2' => array('type' => 'integer', 'null' => true),
+				'indexes' => array(
+					'name_idx' => array('column' => 'name', 'unique' => 1),
+					'group_idx' => array('column' => 'group2', 'unique' => 0),
+					'compound_idx' => array('column' => array('group2', 'group1'), 'unique' => 0),
+					'another_idx' => array('column' => array('group1', 'name'), 'unique' => 0))
+		)));
+
+		$this->db->query($this->db->alterSchema($schema3->compare($schema2)));
+
+		$indexes = $this->db->index('altertest');
+		$this->assertEqual($schema3->tables['altertest']['indexes'], $indexes);
+
+		// Compare us to ourself.
+		$this->assertEqual($schema3->compare($schema3), array());
+
+		// Drop the indexes
+		$this->db->query($this->db->alterSchema($schema1->compare($schema3)));
+
+		$indexes = $this->db->index('altertest');
+		$this->assertEqual(array(), $indexes);
+
+		$this->db->query($this->db->dropSchema($schema1));
 	}
 }
 ?>

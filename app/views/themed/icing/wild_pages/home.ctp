@@ -11,10 +11,10 @@
 <div class="page"> 
     <div class="main">
     <h2><?php echo $page['WildPage']['title']; ?></h2>
-       <?php echo $page['WildPage']['content']; ?>
+       <?php echo $wild->processWidgets($page['WildPage']['content']); ?>
     </div>
     <div class="sidebar">
-       <?php echo $page['WildPage']['sidebar_content']; ?>
+       <?php echo $wild->processWidgets($page['WildPage']['sidebar_content']); ?>
     </div>
     
     <?php echo $this->element('edit_this', array('id' => $page['WildPage']['id'])) ?>
