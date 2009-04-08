@@ -351,13 +351,14 @@ class WildPagesController extends AppController {
             $slug = end(explode('/', $url));
 	        $slug = self::slug($slug);
             $page = $this->WildPage->findBySlugAndDraft($slug, 0);
-        }
+        } 
 
 		// Give 404 if no page found or requesting a parents page without a parent in the url
 		$isChildWithoutParent = (!$this->isHome and ($page[$this->modelClass]['url'] !== $url));
 		if (empty($page) or $isChildWithoutParent) {
 			return $this->do404();
         }
+			$this->canonical = $page[$this->modelClass]['url'];
         
         $this->pageTitle = $page[$this->modelClass]['title'];
         

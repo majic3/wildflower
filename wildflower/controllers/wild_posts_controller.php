@@ -259,6 +259,8 @@ class WildPostsController extends AppController {
             'recursive' => -1, 
             'conditions' => array('parent_id' => Configure::read('App.blogCategoryId')),
         ));
+
+		$this->canonical = '/' . Configure::read('Wildflower.blogIndex');
         
         $this->set(compact('posts', 'sidebarCategories'));
     }
@@ -270,7 +272,7 @@ class WildPostsController extends AppController {
     function category() {
         //$this->cacheAction = true;
         
-        $this->pageTitle = 'Blog';
+        $this->pageTitle = Configure::read('Wildflower.blogName') . ' Catergories';
         
         $this->WildPost->WildCategory->recursive = -1;
         $category = $this->WildPost->WildCategory->findBySlug($this->params['slug']);

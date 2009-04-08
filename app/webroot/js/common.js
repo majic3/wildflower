@@ -2,7 +2,7 @@ function init()	{
 	$('a[title]').tipsy({fade: true, gravity: 'n'})
 		$('#body .tabs').tabs();
 	///$('.accordion').accordion();
-	if(hasFeeds)	{
+	if(settings.hasFeeds)	{
 		$('a.feed').gFeed( { target: '#feeds', tabs: true } );
 	}
 
