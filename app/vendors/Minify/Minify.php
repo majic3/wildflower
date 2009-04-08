@@ -17,7 +17,7 @@ require_once 'Minify/Source.php';
  * This library was inspired by {@link mailto:flashkot@mail.ru jscsscomp by Maxim Martynyuk}
  * and by the article {@link http://www.hunlock.com/blogs/Supercharged_Javascript "Supercharged JavaScript" by Patrick Hunlock}.
  *
- * requires PHP 5.1.0.
+ * Requires PHP 5.1.0.
  * Tested on PHP 5.1.6.
  *
  * @package Minify
@@ -47,6 +47,16 @@ class Minify {
      * @var int $uploaderHoursBehind
      */
     public static $uploaderHoursBehind = 0;
+    
+    /**
+     * If this string is not empty AND the serve() option 'bubbleCssImports' is
+     * NOT set, then serve() will check CSS files for @import declarations that
+     * appear too late in the combined stylesheet. If found, serve() will prepend
+     * the output with this warning.
+     *
+     * @var string $importWarning
+     */
+    public static $importWarning = "/* See http://code.google.com/p/minify/wiki/CommonProblems#@imports_can_appear_in_invalid_locations_in_combined_CSS_files */";
     
     /**
      * Specify a cache object (with identical interface as Minify_Cache_File) or
@@ -102,6 +112,10 @@ class Minify {
      * 
      * 'rewriteCssUris' : If true, serve() will automatically set the 'currentDir'
      * minifier option to enable URI rewriting in CSS files (default true)
+     * 
+     * 'bubbleCssImports' : If true, all @import declarations in combined CSS
+     * files will be move to the top. Note this may alter effective CSS values
+     * due to a change in order. (default false)
      * 
      * 'debug' : set to true to minify all sources with the 'Lines' controller, which
      * eases the debugging of combined files. This also prevents 304 responses.
@@ -321,18 +335,22 @@ class Minify {
      * 
      * @param array $sources array of filepaths and/or Minify_Source objects
      * 
+     * @param array $options (optional) array of options for serve. By default
+     * these are already set: quiet = true, encodeMethod = '', lastModifiedTime = 0.
+     * 
      * @return string
      */
-    public static function combine($sources)
+    public static function combine($sources, $options = array())
     {
         $cache = self::$_cache;
         self::$_cache = null;
-        $out = self::serve('Files', array(
+        $options = array_merge(array(
             'files' => (array)$sources
             ,'quiet' => true
             ,'encodeMethod' => ''
             ,'lastModifiedTime' => 0
-        ));
+        ), $options);
+        $out = self::serve('Files', $options);
         self::$_cache = $cache;
         return $out['content'];
     }
@@ -358,7 +376,7 @@ class Minify {
             if ($unsetPathInfo) {
                 unset($_SERVER['PATH_INFO']);
             }
-            require_once 'Logger.php';
+            require_once 'Minify/Logger.php';
             Minify_Logger::log("setDocRoot() set DOCUMENT_ROOT to \"{$_SERVER['DOCUMENT_ROOT']}\"");
         }
     }
@@ -453,9 +471,13 @@ class Minify {
             $content = implode($implodeSeparator, $pieces);
         }
         
+        if ($type === self::TYPE_CSS && false !== strpos($content, '@import')) {
+            $content = self::_handleCssImports($content);
+        }
+        
         // do any post-processing (esp. for editing build URIs)
-        if (self::$_options['postprocessorrequire']) {
-            require_once self::$_options['postprocessorrequire'];
+        if (self::$_options['postprocessorRequire']) {
+            require_once self::$_options['postprocessorRequire'];
         }
         if (self::$_options['postprocessor']) {
             $content = call_user_func(self::$_options['postprocessor'], $content, $type);
@@ -476,6 +498,32 @@ class Minify {
             ,self::$_options['minifiers'] 
             ,self::$_options['minifierOptions']
             ,self::$_options['postprocessor']
+            ,self::$_options['bubbleCssImports']
         )));
+    }
+    
+    /**
+     * Bubble CSS @imports to the top or prepend a warning if an
+     * @import is detected not at the top.
+     */
+    protected static function _handleCssImports($css) {
+        if (self::$_options['bubbleCssImports']) {
+            // bubble CSS imports
+            preg_match_all('/@import.*?;/', $css, $imports);
+            $css = implode('', $imports[0]) . preg_replace('/@import.*?;/', '', $css);
+        } else if ('' !== self::$importWarning) {
+            // remove comments so we don't mistake { in a comment as a block
+            $noCommentCss = preg_replace('@/\\*[\\s\\S]*?\\*/@', '', $css);
+            $lastImportPos = strrpos($noCommentCss, '@import');
+            $firstBlockPos = strpos($noCommentCss, '{');
+            if (false !== $lastImportPos
+                && false !== $firstBlockPos
+                && $firstBlockPos < $lastImportPos
+            ) {
+                // { appears before @import : prepend warning
+                $css = self::$importWarning . $css;
+            }
+        }
+        return $css;
     }
 }
