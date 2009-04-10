@@ -65,7 +65,7 @@ Router::connect('/wildflower/thumbnail/*', array('controller' => 'wild_assets', 
 Router::connect('/wildflower/thumbnail_by_id/*', array('controller' => 'wild_assets', 'action' => 'thumbnail_by_id'));
 
 // Site search (pages & posts)
-Router::connect('/wildflower/search', array('controller' => 'wild_dashboards', 'action' => 'search'));
+Router::connect('/search', array('controller' => 'wild_dashboards', 'action' => 'search'));
 
 // sitemaps
 Router::connect('/sitemap', array('controller' => 'wild_sitemaps', 'action' => 'index')); 

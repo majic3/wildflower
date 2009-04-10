@@ -47,4 +47,29 @@ class AppModel extends Model {
         return parent::invalidate($field, __($value, true));
     }
 
+	function doSearch($query)	{
+    	$fields = array('id', 'title', 'slug');
+    	$titleResults = $this->find('all', Array('conditions' => Array("{$this->name}.title LIKE '%$query%'"), 'fields' => $fields));
+    	$contentResults = array();
+    	if (empty($titleResults)) {
+    		$titleResults = array();
+			$contentResults = $this->find('all', Array('conditions' => Array("MATCH ({$this->name}.content) AGAINST '%$query%'"), 'fields' => $fields));
+		} else {
+			$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.WildPost.id'));
+			$notInQueryPart = '';
+			$conditions['AND'][] = "match ({$this->name}.content) AGAINST ('$query')";
+			if (!empty($alredyFoundIds)) {
+				$conditions['AND'][] = "{$this->name}.id NOT IN ($alredyFoundIds)";
+			}
+			$contentResults = $this->find('all', Array('conditions' => $conditions, 'fields' => $fields));
+		}
+
+		if (!is_array(($contentResults))) {
+			$contentResults = array();
+		}
+
+		$results = array_merge($titleResults, $contentResults);
+		return $results;
+	}
+
 }

@@ -69,3 +69,5 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
+
+Configure::write('debug', 2);
