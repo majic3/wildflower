@@ -32,7 +32,7 @@ class WildPostsController extends AppController {
         
         $defaultParams = array(
             'draft' => 1,
-            'cmtsClosed' => 0,
+            'allowComments' => 0,
             'uuid' => $uuid
         );
         $this->data[$this->modelClass] = am($this->data[$this->modelClass], $defaultParams);
