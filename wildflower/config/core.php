@@ -20,8 +20,8 @@ Configure::write(array('Wildflower' => array(
         'expire' => 2592000,
     ),
     'gzipOutput' => true,
-    'uploadsDirectoryName' => 'uploads',
-    'uploadDirectory' => APP . WEBROOT_DIR .  DS . 'uploads', // @TODO rename the key
+    'uploadsDirectoryName' => 'img/cms',
+    'uploadDirectory' => APP . WEBROOT_DIR . DS . 'img' . DS . 'cms', // @TODO rename the key
     'prefix' => 'wf',
     'rootPageCache' => CACHE . 'wf_root_pages',
     'previewCache' => CACHE . 'wf_previews',
@@ -69,3 +69,5 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
+
+Configure::write('debug', 0);

@@ -22,7 +22,6 @@
 	        if (isset($item['WildPage'])) {
 	            $row = $html->link($item['WildPage']['title'], $item['WildPage']['url']); 
 	        } else if (isset($item['WildPost'])) {
-				debug($item);
 	            $row = $html->link($item['WildPost']['title'], "/$pparent/{$item['WildPost']['slug']}");
 	        } else {
 	            continue;
@@ -36,4 +35,4 @@
 	
 </div>
 
-<?php echo $this->renderElement('sidebar') ?>
+<?php //echo $this->renderElement('sidebar') ?>

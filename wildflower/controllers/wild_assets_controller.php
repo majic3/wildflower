@@ -216,7 +216,7 @@ class WildAssetsController extends AppController {
         }
 
         if ($cacheFileExists && !$refreshCache) {
-        	return $this->_renderImage($cachedFilePath);
+        	return $this->_renderJpeg($cachedFilePath);
         } else {
         	// Create cache and render it
         	$sourceFile = Configure::read('Wildflower.uploadDirectory') . DS . $imageName;
@@ -237,16 +237,15 @@ class WildAssetsController extends AppController {
 
         	if ($phpThumb->GenerateThumbnail()) {
         		$phpThumb->RenderToFile($cachedFilePath);
-        		return $this->_renderImage($cachedFilePath);
+        		return $this->_renderJpeg($cachedFilePath);
         	} else {
         		return trigger_error("Thumbnail generator: Can't GenerateThumbnail.");
         	}
         }
     }
     
-    function _renderImage($cachedFilePath) {
-		$mime = mime_content_type($cachedFilePath);
-        $this->JlmPackager->browserCacheHeaders(filemtime($cachedFilePath), $mime);
+    function _renderJpeg($cachedFilePath) {
+        $this->JlmPackager->browserCacheHeaders(filemtime($cachedFilePath), 'image/jpeg');
         
         $fileSize = filesize($cachedFilePath);
         header("Content-Length: $fileSize");
