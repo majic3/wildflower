@@ -53,27 +53,30 @@ ul.tabs, ul.tabs li ul { display: block; }
 #hd h1	a { margin-top: 0px; padding-top: 20px; padding-left: 215px;}
 #hd #ident {	float: left; height: 55px;	}
 #hd #ident p	{ background: transparent url(/css/img/wildflower.png) no-repeat; height: 45px; padding: 20px 0 0 70px; margin: 0 5px 0 15px; height: 45px; }
-#hd #ident a	{ display: block; padding-top: 20px; width: 100%; height: 100%;  }
-#hd #searchrss 	{	float: right; width: 214px; height: 22px; margin: -25px 5px 0;	}
-#hd input.text,
-#hd .input.text	{	float: left; width: 162px;	}
-#hd .submit	{	float: left; width: 35px;	}
-#hd #searchrss input[type=submit] {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent url(/css/img/go.png) no-repeat center top;
-  text-indent: -1000em;
-  cursor: pointer; /* hand-shaped cursor */
-  cursor: hand; /* for IE 5.x */
+#hd #ident a	{ display: block; padding-top: 20px; width: 100%; height: 100%; margin-left: 0px; }
+#hd #searchrss 	{	float: right; width: 237px; height: 31px; margin: -10px 15px 0; 	}
+#hd #searchrss 	#searchBox	{
+    width: 201px;
+    height: 31px;
+    background: url(/css/img/bg_search_box.gif);
+}
+#searchBox #s {
+    float: left;
+    padding: 0;
+    margin: 8px 0 0 6px;
+    border: 0;
+    width: 159px;
+    background: none;
+}
+#searchBox #go {
+    float: right;
+    margin: 3px 4px 0 0;
 }
 
-#hd #searchrss input.text:focus	{	background: #ddd;	}
-#hd #searchrss input.text:hover	{	background: #eee;	}
-#hd #searchrss a	{	float: right;	}
-	#searchrss a img	{	border: 0;	}
+#hd #searchBox input.text:focus	{	background: #ddd;	}
+#hd #searchBox input.text:hover	{	background: #eee;	}
+#hd #searchrss a	{	float: right; width: 31px; height: 31px; margin-top: -31px; margin-right: 0; background: transparent url(/css/img/bg_block.gif); text-align: center; 	}
+	#searchrss a img	{ display: block; padding-top: 8px; padding-left: 8px; }
 
 /* NAVIGATION */
 #nv { width: 100%; margin: 0; padding: 0; background: #ddd; border-bottom: 2px solid #bbb; }

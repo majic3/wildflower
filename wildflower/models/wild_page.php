@@ -230,6 +230,7 @@ class WildPage extends AppModel {
      * @param string $query
      * @return array
      */
+	 /** /
     function search($query) {
         $query = Sanitize::escape($query);
     	$fields = null;
@@ -254,5 +255,5 @@ class WildPage extends AppModel {
     	$results = array_merge($titleResults, $contentResults);
     	return $results;
     }
-    
+    # */
 }

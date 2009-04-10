@@ -51,8 +51,8 @@ class WildDashboardsController extends AppController {
                 return;
             }
             
-            $postResults = $this->WildPost->search($query);
-	        $pageResults = $this->WildPage->search($query);
+            $postResults = $this->WildPost->doSearch($query);
+	        $pageResults = $this->WildPage->doSearch($query);
 	        if (!is_array($postResults)) {
 	        	$postResults = array();
 	        }

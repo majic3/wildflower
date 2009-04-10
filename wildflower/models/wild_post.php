@@ -89,28 +89,29 @@ class WildPost extends AppModel {
      * @param string $query
      * @return array
      */
-    function search($query) {
+    /** /
+	function search($query) {
     	$fields = array('id', 'title', 'slug');
-    	$titleResults = $this->findAll("{$this->name}.title LIKE '%$query%'", $fields, null, null, 1);
+    	$titleResults = $this->find('all', Array('conditions' => Array("{$this->name}.title LIKE '%$query%'"), 'fields' => $fields));
     	$contentResults = array();
     	if (empty($titleResults)) {
     		$titleResults = array();
-			$contentResults = $this->findAll("MATCH ({$this->name}.content) AGAINST ('$query')", $fields, null, null, 1);
-    	} else {
-    		$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.WildPost.id'));
-    	    $notInQueryPart = '';
-            if (!empty($alredyFoundIds)) {
-                $notInQueryPart = " AND {$this->name}.id NOT IN ($alredyFoundIds)";
-            }
-    		$contentResults = $this->findAll("MATCH ({$this->name}.content) AGAINST ('$query')$notInQueryPart", $fields, null, null, 1);
-    	}
-    	
-    	if (!is_array(($contentResults))) {
-    		$contentResults = array();
-    	}
-    	
-    	$results = array_merge($titleResults, $contentResults);
-    	return $results;
-    }
-    
+			$contentResults = $this->find('all', Array('conditions' => Array("MATCH ({$this->name}.content) AGAINST '%$query%'"), 'fields' => $fields));
+		} else {
+			$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.WildPost.id'));
+			$notInQueryPart = '';
+			$conditions = Array("match ({$this->name}.content) AGAINST '%$query%'");
+			if (!empty($alredyFoundIds)) {
+				$conditions["AND {$this->name}.id NOT IN ($alredyFoundIds)"];
+			}
+			$contentResults = $this->find('all', Array('conditions' => $conditions, 'fields' => $fields));
+		}
+
+		if (!is_array(($contentResults))) {
+			$contentResults = array();
+		}
+
+		$results = array_merge($titleResults, $contentResults);
+		return $results;
+	}	#*/
 }
