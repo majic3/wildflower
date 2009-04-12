@@ -17,15 +17,19 @@
 	<p><?php echo $html->link('Back to all posts', '/' . Configure::read('Wildflower.blogIndex')) ?></p>
 </div>
 
-<div class="wrapper">
-	<div id="comments">
+<div class="line">
 		<?php if (!empty($post['WildComment'])) { ?>
+		<div id="comments" class="size2of3 unit">
 			<h3>Comments</h3>
+			<?php	
+				debug($post['WildComment']);
+			?>
+		</div>
 		<?php
 		} ?>
 
-		<?php /* handle closed comments? */ if (!$post['WildPost']['cmtsClosed']) { ?>
-			<div id="commentFrm">
+		<?php /* handle closed comments? */ if ($post['WildPost']['allowComments']) { ?>
+			<div id="commentFrm" class="size1of3 lastUnit">
 			<h3>Post a comment</h3>
 		<?php
 		if ($session->check('Message.flash')) {
