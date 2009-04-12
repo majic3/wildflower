@@ -18,11 +18,27 @@
 </div>
 
 <div class="line">
-		<?php if (!empty($post['WildComment'])) { ?>
+		<?php if (!empty($post['WildComment'])) { 
+			$i = 0;	
+
+			$class = null;
+			
+			$class = ($i++ % 2 == 0) ? $class = ' even' : ' odd';
+		?>
 		<div id="comments" class="size2of3 unit">
 			<h3>Comments</h3>
-			<?php	
-				debug($post['WildComment']);
+			<?php
+				foreach($post['WildComment'] as $comment):
+					?><div class="comment<?php	echo ($class);	?>">
+						<div class="authorMedta">
+							<p><img src="#" width="" height="" alt="" /><span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span></p>
+						</div>
+						<div class="commentBody">
+							<p><?php	echo $html->link('<span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when">' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></span></p>
+							<?php	echo nl2br($comment['content'])	?>
+						</div>
+					</div><?php
+				endforeach;
 			?>
 		</div>
 		<?php
