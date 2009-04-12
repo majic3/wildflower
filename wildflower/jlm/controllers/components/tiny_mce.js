@@ -65,17 +65,8 @@ $.jlm.addComponent('tinyMce', {
 	    }
 	},
 	
-	insertImage: function(editor) {
-	    // Close if open
-	    if ($('.insert_image_sidebar').size() > 0) {
-	        $('.insert_image_sidebar').remove();
-	        $('.main_sidebar').show();
-	        return false;
-	    }
-	    
-	    // @TODO: I want to do something like this:
-	    // $.jlm.url({ plugin: 'wildflower', controller: 'wild_assets', action: 'wf_insert_image' });
-	    var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
+	loadInsertImageContent: function(url) {
+	    $('.insert_image_sidebar').remove();
 	    
 	    $.get(url, function(html) {
 	        var imageSidebarEl = $(html);
@@ -115,7 +106,7 @@ $.jlm.addComponent('tinyMce', {
 				// Image HTML
     			var imgHtml = '<img alt="' + imgName + '" src="' + imgUrl + '" />';
 
-    			editor.execCommand('mceInsertContent', 0, imgHtml);
+    			$.jlm.components.tinyMce.editor.execCommand('mceInsertContent', 0, imgHtml);
 
     			return false;
     		});
@@ -126,8 +117,28 @@ $.jlm.addComponent('tinyMce', {
                 $('.main_sidebar').show();
                 return false;
             });
+            
+            // Bind pagination
+            $('.paginator a', imageSidebarEl).click(function() {
+                var url = $(this).attr('href');
+                $.jlm.components.tinyMce.loadInsertImageContent(url);
+                return false;
+            });
 		});
+	},
+	
+	insertImage: function(editor) {
+	    $.jlm.components.tinyMce.editor = editor;
 	    
+	    // Close if open
+	    if ($('.insert_image_sidebar').size() > 0) {
+	        $('.insert_image_sidebar').remove();
+	        $('.main_sidebar').show();
+	        return false;
+	    }
+	    
+	    var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
+	    $.jlm.components.tinyMce.loadInsertImageContent(url);	    
 	    return false;
 	},
 	
