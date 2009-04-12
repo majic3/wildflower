@@ -17,15 +17,35 @@
 	<p><?php echo $html->link('Back to all posts', '/' . Configure::read('Wildflower.blogIndex')) ?></p>
 </div>
 
-<div class="wrapper">
-	<div id="comments">
-		<?php if (!empty($post['WildComment'])) { ?>
+<div class="line">
+		<?php if (!empty($post['WildComment'])) { 
+			$i = 0;	
+
+			$class = null;
+			
+			$class = ($i++ % 2 == 0) ? $class = ' even' : ' odd';
+		?>
+		<div id="comments" class="size2of3 unit">
 			<h3>Comments</h3>
+			<?php
+				foreach($post['WildComment'] as $comment):
+					?><div class="comment<?php	echo ($class);	?>">
+						<div class="authorMedta">
+							<p><img src="#" width="" height="" alt="" /><span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span></p>
+						</div>
+						<div class="commentBody">
+							<p><?php	echo $html->link('<span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when">' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></span></p>
+							<?php	echo nl2br($comment['content'])	?>
+						</div>
+					</div><?php
+				endforeach;
+			?>
+		</div>
 		<?php
 		} ?>
 
-		<?php /* handle closed comments? */ if (!$post['WildPost']['cmtsClosed']) { ?>
-			<div id="commentFrm">
+		<?php /* handle closed comments? */ if ($post['WildPost']['allowComments']) { ?>
+			<div id="commentFrm" class="size1of3 lastUnit">
 			<h3>Post a comment</h3>
 		<?php
 		if ($session->check('Message.flash')) {
