@@ -1,22 +1,10 @@
 <?php 
-    $partialLayout->switchToEditorMode();
-    $partialLayout->setLayoutVar('publishedLink', $html->link(FULL_BASE_URL . $this->base . $this->data['WildPage']['url'], $this->data['WildPage']['url']));
-    $session->flash();
+    if ($session->check('Message.flash')) {
+        $session->flash();
+    }
     
     echo 
-    $form->create('WildPage', array('url' => $html->url(array('action' => 'wf_update', 'base' => false)), 'class' => 'editor_form'));
-?>
-
-<?php /* 
-<ul id="page_inserts">
-    <li><span>Insert into page: </span></li>
-    <li><a href="#InsertLink">Link</a></li>
-    <li><a href="#InsertImage">Image or file</a></li>
-</ul>
-*/?>
-
-<?php
-    echo
+    $form->create('WildPage', array('url' => $html->url(array('action' => 'wf_update', 'base' => false)), 'class' => 'editor_form')),
     $form->input('title', array('between' => '', 'label' => 'Page title')), 
     $form->input('content', array(
         'type' => 'textarea',
@@ -64,6 +52,7 @@
     </li>
     
     <li class="main_sidebar">
+        
         <ul class="sidebar-menu-alt edit-sections-menu">
             <li><?php echo $html->link('Options <small>like status, publish date, etc.</small>', array('action' => 'options', $this->data['WildPage']['id']), array('escape' => false)); ?></li>
             <li><?php echo $html->link('Sidebar', array('action' => 'sidebar', $this->data['WildPage']['id']), array('escape' => false)); ?></li>
