@@ -42,10 +42,10 @@ class WildPostsController extends AppController {
     }
     
     /**
-     * View particular post's comments
+     * Manage post's comments
      * 
      */
-    function wf_comments($id = null) {
+    function wf_comments($id = null, $status = null) {
 
 		/*
 			todo: 
@@ -55,13 +55,18 @@ class WildPostsController extends AppController {
 				*  bryce (bdude) - http://bakery.cakephp.org/articles/view/gravatar
 				*  Graham Weldon - http://bakery.cakephp.org/articles/view/gravatar-helper
 		*/
-
+        $spam = ($status == 'spam') ? 1 : 0;
+        $approved = ($status == 'unapproved') ? 0 : 1;
+        if ($spam) {
+            // Spam comments should show no matter of approval status
+            $approved = array(0, 1);
+        }
         $this->data = $this->{$this->modelClass}->find('first', array(
             'conditions' => array('WildPost.id' => $id),
             'contain' => array(
                 'WildComment' => array(
                     'order' => 'WildComment.created DESC',
-                    'conditions' => array('WildComment.spam' => 0)
+                    'conditions' => array(compact('spam', 'approved'))
                 ),
                 'WildUser'
             )
@@ -81,20 +86,14 @@ class WildPostsController extends AppController {
     }
 
     /**
-     * Edit page
+     * Edit a post
      * 
-     * @param int $id post ID
+     * @param int $id
      */
     function wf_edit($id = null, $revisionNumber = null) {
-        if (empty($this->data)) {
-            $this->WildPost->contain(array('WildUser', 'WildCategory'));
-            $this->data = $this->WildPost->findById($id);
-            if (empty($this->data)) return $this->cakeError('object_not_found');
-        } else {
-            if ($this->WildPost->save($this->data)) {
-                return $this->redirect(array('action' => 'wf_edit', $this->WildPost->id));
-            }
-        }
+        $this->WildPost->contain(array('WildUser', 'WildCategory'));
+        $this->data = $this->WildPost->findById($id);
+        //var_dump($this->data);
         
         // If viewing a revision, merge with revision content
         if ($revisionNumber) {
@@ -112,10 +111,9 @@ class WildPostsController extends AppController {
         $categories = $this->WildPost->WildCategory->find('list', array('fields' => array('id', 'title')));
         $inCategories = Set::extract($this->data['WildCategory'], '{n}.id');
         
-        // Revisions
-        $revisions = $this->WildPost->getRevisions($id);
+        $categoryId = isset($inCategories[0]) ? $inCategories[0] : null;
         
-        $this->set(compact('isRevision', 'hasUser', 'isDraft', 'categories', 'inCategories', 'revisions'));
+        $this->set(compact('isRevision', 'hasUser', 'isDraft', 'categories', 'inCategories', 'categoryId'));
         $this->pageTitle = $this->data[$this->modelClass]['title'];
     }
     
@@ -147,6 +145,7 @@ class WildPostsController extends AppController {
     }
     
     function wf_update() {
+        //fb($this->data);
         $this->data[$this->modelClass]['wild_user_id'] = $this->getLoggedInUserId();
 
         // Publish?
@@ -326,7 +325,7 @@ class WildPostsController extends AppController {
             'WildUser', 
             'WildCategory',
             'WildComment' => array(
-                'conditions' => array('spam' => 0),
+                'conditions' => array('spam' => 0, 'approved' => 1),
             ),
         ));
         $post = $this->WildPost->findBySlugAndDraft($slug, 0);
