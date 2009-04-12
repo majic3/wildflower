@@ -5,7 +5,7 @@ echo $html->doctype('xhtml-strict') ?>
 <head>
 	<?php echo $html->charset(); ?>
 
-	<title><?php echo $title_for_layout; ?></title>
+	<title><?php echo $title_for_layout; ?><?php	if(Configure::read('debug'))	echo "cake: " . Configure::version();	?></title>
 
 	<meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
 
