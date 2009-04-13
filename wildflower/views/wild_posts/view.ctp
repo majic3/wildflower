@@ -30,8 +30,12 @@
 			<?php
 				foreach($post['WildComment'] as $comment):
 					?><div class="comment<?php	echo ($class);	?>">
-						<div class="authorMedta">
-							<p><img src="#" width="" height="" alt="" /><span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span></p>
+						<div class="authorMedta">	default.png
+							<p><?php debug($gravatar->image($comment['email'],
+								  array(
+									'default' => 'http://tesla.icing.ss29/img/gravatar/default.png'
+								  )
+								)); ?><span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span></p>
 						</div>
 						<div class="commentBody">
 							<p><?php	echo $html->link('<span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when">' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></span></p>

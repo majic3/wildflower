@@ -10,6 +10,7 @@ class WildPostsController extends AppController {
 	    'Category', 
 	    'Tree', 
 	    'Time',
+		'Gravatar'
 	);
 	
 	/** Pagination options for the wf_index action **/

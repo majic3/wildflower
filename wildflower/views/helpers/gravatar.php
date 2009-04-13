@@ -91,7 +91,7 @@ class GravatarHelper extends AppHelper {
                         foreach ($options as $k => $v) {
                                 $optionArray[] = $k . '=' . $v;
                         }
-                        $optionString = implode('&', $optionArray);
+                        $optionString = implode('&amp;', $optionArray);
                         return '?' . $optionString;
                 }
                 return '';
