@@ -96,7 +96,32 @@ ul.tabs, ul.tabs li ul { display: block; }
 #ft p.quiet { color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
 #ft img { border: 0; vertical-align: bottom; }
 
+/*	comments	*/
 
+.comments	{}
+	.comment		{	border-bottom:1px solid #bbb;	}
+	.comment.odd	{}
+	.comment.even	{}
+	.comment.author	{}
+
+	.commment .authorMedta	{
+		float:left;
+		margin:0 15px 0 0;
+		width:72px;
+	}
+
+	.commment .authorMedta	img {
+		margin:0 0 7px;
+		vertical-align:top;	}
+
+	.comment .commentBody	{
+		float:left;
+		margin:0;
+		width:420px;
+	}
+		.comment .commentBody  p	{
+			margin:0 0 7px;
+		}
 
 /* widflower:admin bar */
 
