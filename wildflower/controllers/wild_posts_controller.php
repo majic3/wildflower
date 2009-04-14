@@ -12,6 +12,7 @@ class WildPostsController extends AppController {
 	    'Time',
 		'Gravatar'
 	);
+	public $components = array('Email');
 	
 	/** Pagination options for the wf_index action **/
     public $paginate = array(
@@ -363,17 +364,50 @@ class WildPostsController extends AppController {
     private function _acceptComment() {
         if (empty($this->data)) return; // Else we would have a redirect loop
         
+        if (Configure::read('Wildflower.settings.approve_comments')) {
+            $this->data['WildComment']['approved'] = 0;
+        }
+        
         $this->WildPost->WildComment->spamCheck = true;
         if ($this->WildPost->WildComment->save($this->data)) {
-            $this->Session->setFlash('<strong>Success</strong> Comment has been added.', 'messages/success');
             $postId = intval($this->data['WildComment']['wild_post_id']);
-            $postSlug = $this->WildPost->field('slug', "id = $postId");
-            $postLink = '/' . Configure::read('Wildflower.blogIndex') . "/$postSlug";
 
             // Clear post cache
             // @TODO find out better method
             // $cacheName = str_replace('-', '_', $postSlug);
             // clearCache($cacheName, 'views', '.php');
+            
+            // Email alert
+            // @TODO create a function in app_controller to be used in wild_messages too
+            $this->Email->to = Configure::read('Wildflower.settings.contact_email');
+    		$this->Email->from = $this->data['WildComment']['email'];
+    		$this->Email->replyTo = $this->data['WildComment']['email'];
+    		$this->Email->subject = Configure::read('Wildflower.settings.site_name') . ' - new comment from ' . $this->data['WildComment']['name'];
+    		$this->Email->sendAs = 'text';
+    		$this->Email->template = 'new_comment_notification';
+
+    		$this->set($this->data['WildComment']);
+    		$message = $this->data['WildComment']['content']; // @TODO remove Textile syntax - to plain text
+    		$this->set(compact('postId', 'message'));
+
+    		$this->Email->delivery = Configure::read('Wildflower.settings.email_delivery');
+    		if ($this->Email->delivery == 'smtp') {
+        		$this->Email->smtpOptions = array(
+                    'username' => Configure::read('Wildflower.settings.smtp_username'),
+                    'password' => Configure::read('Wildflower.settings.smtp_password'),
+                    'host' => Configure::read('Wildflower.settings.smtp_server'),
+        		    'port' => 25, // @TODO add port to settings
+        		    'timeout' => 30
+        		);
+    		}
+    		
+    		$this->Email->send();
+            
+            $message = __('Comment succesfuly posted.', true);
+            if (Configure::read('Wildflower.settings.approve_comments')) {
+                $message = __('Your comment will be posted after it\'s approved by the administrator.', true);
+            }
+            $this->Session->setFlash('<strong>Success</strong> ' . $message, 'messages/success');
 
             $this->redirect($this->data['WildPost']['permalink'] . '#comment-' . $this->WildPost->WildComment->id);
         }
