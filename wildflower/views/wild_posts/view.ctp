@@ -56,7 +56,6 @@
 			$session->flash();
 		}
 
-
 		/* jquery wysiwyg */
 		$postUrl = WildPost::getUrl($post['WildPost']['uuid']);
 		echo $form->create('WildComment', array('class' => 'vform', 'url' => $here, 'id' => 'PostAComment')),
@@ -69,9 +68,10 @@
 		'</div>',
 		$form->hidden('WildPost.permalink', array('value' => $html->url($postUrl, true))),
 		$form->submit('Post comment'),
-		$form->end(); ?>
+		$form->end();
+		?>
 			</div>
 		<?php	} ?>
 	</div>
 </div>
-
+?>

@@ -362,6 +362,9 @@ class WildPagesController extends AppController {
         
         $this->pageTitle = $page[$this->modelClass]['title'];
         
+        // Decode custom fields
+        $page['WildPage']['custom_fields'] = json_decode($page['WildPage']['custom_fields'], true);
+        
         // View variables
         $this->set(array(
             'page' => $page,
@@ -402,6 +405,42 @@ class WildPagesController extends AppController {
         }
         
         return $rootPages;
+    }
+    
+    /**
+     * Edit and save page custom fields
+     *
+     * @param int $id Page ID
+     */
+    function wf_custom_fields($id) {
+        $page = $this->WildPage->findById($id);
+        $customFields = $page[$this->modelClass]['custom_fields'];
+        $customFields = json_decode($customFields, true);
+        
+        if (!empty($this->data)) {
+            foreach ($customFields as &$field) {
+                foreach ($this->data[$this->modelClass] as $name => $value) {
+                    if ($field['name'] == $name) {
+                        if ($field['type'] != 'file') {
+                            $field['value'] = $value;
+                        }
+                        
+                        // Upload file
+                        if ($field['type'] == 'file' and !empty($value['name'])) {
+                            App::import('Model', 'WildAsset');
+                            $field['value'] = WildAsset::upload($value);
+                        }
+                    }
+                }
+            }
+            $customFields = json_encode($customFields);
+            $this->WildPage->id = intval($id);
+            $this->WildPage->saveField('custom_fields', $customFields);
+            return $this->redirect(array('action' => 'custom_fields', $id));
+        }
+        
+        $this->data = $page;
+        $this->set(compact('customFields'));
     }
     
     /**
