@@ -6,7 +6,7 @@
         $options = array(
             'type' => 'text',
             'value' => $setting[1],
-            'div' => array('id' => "setting-{$setting[0]}")
+            'div' => array('id' => "setting-{$setting[0]}-$i")
         );
         
         if (!empty($setting[3])) {

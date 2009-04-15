@@ -1,5 +1,5 @@
 <h2 class="section">Site Settings</h2>
-<div class="tabs">
+<div>
 <?php
     $session->flash();
 	$adminCustomSettings = array_values(am(Configure::read('System.adminCustomSettings'), Configure::read('Wildflower.settings.adminCustomSettings')));
@@ -75,18 +75,20 @@
 		}
     }
 	
+	echo '<div id="settings" class="tabs">';
 	echo $this->element('../wild_settings/_grouped', array("adminCustomSettings" => $adminCustomSettings));
 	$i = 0;
 	foreach($adminCustomSettings as $key)	{
 		if(!empty($key))	{
 			$lkey = strtolower(Inflector::singularize($key));
-			echo "<div id=\"$key\">", '<h3>', Inflector::humanize($key), '</h3>';
+			echo "<div id=\"$key\" class=\"tab\">", '<h3>', Inflector::humanize($key), '</h3>';
 			echo (array_key_exists($lkey, $SiteSettings)) ? implode('', $SiteSettings[$lkey]) : $this->element('../wild_settings/_form', Array('frmSettings' => $key));
 			echo "</div>";
 			$groupOptions[$lkey] = "$i $key";
 			$i++;
 		}
 	}
+	echo '</div>';
     
     echo
     $form->submit('Save changes', array('div' => array('class' => 'submit save-section'))),

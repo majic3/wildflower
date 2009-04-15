@@ -13,7 +13,7 @@
         echo
         // Load your CSS files here
         $html->css(array(
-            '/css/ui/jquery-ui-1.7',
+            '/css/ui/jquery-ui-1.7.1',
             '/wildflower/css/wf.main',
         )),
         // TinyMCE 
