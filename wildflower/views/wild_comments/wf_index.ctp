@@ -1,10 +1,10 @@
+<h2>Comments</h2>
+
 <?php echo $navigation->create(array(
         'Delete' => '#Delete',
-        'Approved' => array('action' => 'wf_index'),
-        'Spam' => array('action' => 'wf_spam'),
+        'Approved' => array('action' => 'wf_index', 'id' => 'ApprovedComments'),
+        'Spam' => array('action' => 'wf_spam', 'id' => 'ApprovedComments'),
     ), array('id' => 'list-toolbar')) ?>
-
-<h2>Approved comments</h2>
 
 <?php
     // The list node

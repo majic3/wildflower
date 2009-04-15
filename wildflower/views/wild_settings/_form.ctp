@@ -1,4 +1,5 @@
 <?php 
+	$i = 0; 
     //echo("$frmSettings");debug(Configure::read("$frmSettings"));die();
     foreach (Configure::read("$frmSettings") as $setting) {
         $name = "WildSetting.$frmSettings.{$setting[0]}";
@@ -28,5 +29,6 @@
             $options['checked'] = true;
         }
 	echo $form->input($name, $options);
+	echo $form->input("WildSetting.$frmSettings.{$setting[0]}.order", array('value' => $i++));
 	}
 ?>

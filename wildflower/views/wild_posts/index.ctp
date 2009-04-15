@@ -1,4 +1,4 @@
-<div id="primary-content">
+<div id="posts" class="unit size4of5">
 
     <?php
         $cssClasses = array('post');
@@ -29,4 +29,15 @@
     
     <?php echo $this->element('wf_ppagination') ?>
     
+</div>
+<div id="postsSidebar" class="lastUnit size1of5">
+	<div>
+		<h3>Related</h3>
+	</div> 
+	<div>
+		<h3>Categories</h3>
+	</div>
+	<div>
+		<h3>Tag Cloud</h3>
+	</div>
 </div>

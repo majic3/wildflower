@@ -30,11 +30,10 @@ class WildSettingsController extends AppController {
 	    $this->pageTitle = 'Site settings';
 	    
 	    $homePageIdOptions = $this->WildPage->getListThreaded();
-	    $wfThemes = $this->WildSetting->getThemes();
 	    
 	    $settings = $this->WildSetting->find('all', array('order' => 'order ASC'));
 	    
-	    $this->set(compact('settings', 'homePageIdOptions', 'wfThemes'));
+	    $this->set(compact('settings', 'homePageIdOptions'));
 	}
 
 	/**

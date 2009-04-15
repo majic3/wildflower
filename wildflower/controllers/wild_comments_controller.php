@@ -46,6 +46,10 @@ class WildCommentsController extends AppController {
         $this->set('comments', $comments);
     }
     
+    function wf_reply() {
+		// allow admin users to reply show them a ajax'd lists of previous comments provide a mini mce interface and permit links
+    }
+    
     function wf_mark_spam() {
         $this->WildComment->create($this->data);
         if (!$this->WildComment->exists()) {

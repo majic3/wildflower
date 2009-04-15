@@ -13,8 +13,8 @@
         echo
         // Load your CSS files here
         $html->css(array(
+            '/css/ui/jquery-ui-1.7',
             '/wildflower/css/wf.main',
-            '/css/ui/jquery-ui-1.7'
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?
@@ -54,7 +54,7 @@
     </script>
     
 </head>
-<body<?php if (isset($editorMode)) echo ' class="editor_mode"'; echo str_replace('wild_', '', $this->params['controller']); ?>>
+<body class="<?php if (isset($editorMode)) echo 'editor_mode'; echo	str_replace('wild_', ' ', $this->params['controller']); ?>">
 
 <?php if (!isset($editorMode)): ?>    
 <div id="header">

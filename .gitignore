@@ -34,3 +34,5 @@ app/webroot/uploads/*
 vendors/ruckusing/logs/development.log
 
 .DS_Store
+
+app/views/_themed

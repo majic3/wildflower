@@ -34,11 +34,24 @@ Configure::write(array('Wildflower' => array(
     'disableRootPageCache' => false
 )));
 
+// system admin user with this login can reset & ad
+Configure::write(array('System' => array(
+	'adminUser' => array(
+		'admin'
+	),
+	'adminCustomSettings' => array('general', 'themes', 'director', 'posts')
+)));
+
 // slideshowpro director - 0.1a
-Configure::write(array('Director' => array(
-	'api_key' => 'your-api-key',
-	'path' => 'your-api-path',
-	'cache' => CACHE . 'Director',
+Configure::write(array('themes' => array(
+	array('public' => 'wildflower', 'text', 'theme use by wf'),
+)));
+
+// slideshowpro director - 0.1a
+Configure::write(array('director' => array(
+	array('api-key', 'your-api-key', 'text', 'director API key'),
+	array('path', 'your-api-path', 'text', 'director API path'),
+	array('cache', CACHE . 'Director', 'text', 'director API cache'),
 )));
 
 // icing config 0.7 - tidying up and reviewing everything (entire set of modifications reviewed)
@@ -70,4 +83,4 @@ Configure::write(array('Icing' => array(
     )
 )));
 
-Configure::write('debug', 2);
+Configure::write('debug', 0);

@@ -14,5 +14,8 @@ $.jlm.bind('wild_settings.wf_index', function() {
 	$('#setting-email_delivery select').change(showHideSmtpOptions);
 
 	$('#tabs').tabs();
+
+	$('select').selectToUISlider();
+
 	
 });

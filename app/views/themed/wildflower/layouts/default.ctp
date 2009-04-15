@@ -10,6 +10,7 @@ echo $html->doctype('xhtml-strict') ?>
 
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
+	<link rel="canonical" href="<?php echo($canonical) ?>" />
 
 	<?php
 		echo $html->css('ui/jquery-ui', 'stylesheet', Array('media' => 'screen'));
@@ -97,7 +98,14 @@ echo $html->doctype('xhtml-strict') ?>
 
 
 	<div id="bd">
-		<?php echo $content_for_layout; ?>
+		<?php 
+			/*
+				optional leftCol & rightCol with selected widgets
+				for better SEO source ordering use nested lines.
+				Compass can help you generate nicer classes for seo
+				but not pages apart from home
+			*/
+			echo $content_for_layout; ?>
 
 		<?php	if(isset($rssFeeds))	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>

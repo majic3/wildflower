@@ -1,7 +1,7 @@
 <?php
 /* oo css type - sass or compass seo classes later */
 ?><div class="line">
-	<div class="post" id="post-<?php echo $post['WildPost']['id']; ?>">
+	<div class="post lastUnit" id="post-<?php echo $post['WildPost']['id']; ?>">
 		<h2><?php echo $post['WildPost']['title']; ?></h2>
 		<small class="post-date">Posted <?php echo $time->nice($post['WildPost']['created']); ?></small>
 		
@@ -31,14 +31,10 @@
 				foreach($post['WildComment'] as $comment):
 					?><div class="comment line<?php	echo ($class);	?>">
 						<div class="authorMedta">
-							<p><?php echo $gravatar->image($comment['email'],
-								  array(
-									'default' => '/img/gravatar/default.png'
-								  )
-								); ?><!-- span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span --></p>
+							<p><?php echo $gravatar->image($comment['email']); ?><!-- span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span --></p>
 						</div>
 						<div class="commentBody">
-							<p><?php	echo $html->link('<span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when"> ' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></span></p>
+							<p><?php	echo $html->link(' <span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when"> ' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></span></p>
 							<?php	echo nl2br($comment['content'])	?>
 						</div>
 					</div><?php
@@ -74,4 +70,3 @@
 		<?php	} ?>
 	</div>
 </div>
-?>
