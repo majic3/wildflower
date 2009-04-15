@@ -12,7 +12,7 @@ class WildPostsController extends AppController {
 	    'Time',
 		'Gravatar'
 	);
-	public $components = array('Email');
+	public $components = array('RequestHandler', 'Email');
 	
 	/** Pagination options for the wf_index action **/
     public $paginate = array(
@@ -73,6 +73,11 @@ class WildPostsController extends AppController {
                 'WildUser'
             )
         ));
+
+        // JSON response
+        if ($this->RequestHandler->isAjax()) {
+            return $this->render('wf_comments_by_status');
+        }
         
         $goBackAction = $this->referer(array('action' => 'edit', $this->data['WildPost']['id']));
         $this->set('goBackAction', $goBackAction);
