@@ -4,6 +4,9 @@
  * Used on lists with checkboxes. On checking some, action menus pop up.
  */
 $.jlm.component('SelectActions', 'wild_posts.wf_index, wild_posts.wf_comments, wild_pages.wf_index, wild_assets.wf_index, wild_users.wf_index, wild_links.wf_index, wild_stats.wf_index, wild_galleries.wf_index', function() {
+	 console.info('first select actions');
+	$('body').live('SelectActions', function(e) {
+	 console.info('live select actions');
      var selectActionsEl = $('.select-actions');
      var handledFormEl = $('form:first');
      
@@ -52,4 +55,6 @@ $.jlm.component('SelectActions', 'wild_posts.wf_index, wild_posts.wf_comments, w
          return false;
      });
      
+});
+$('body').trigger('SelectActions');
 });

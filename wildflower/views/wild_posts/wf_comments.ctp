@@ -20,6 +20,6 @@
 <?php echo $form->end(); ?>
 
 
-<?php //$partialLayout->blockStart('sidebar'); ?>
-
-<?php //$partialLayout->blockEnd(); ?>
+<?php $partialLayout->blockStart('sidebar'); ?>
+	<li class="sidebarblock"><?php	echo $html->link(__('reply', true), array('controler' => 'comments', 'action' => 'reply', $this->params['pass'][0]));	?></li>
+<?php $partialLayout->blockEnd(); ?>

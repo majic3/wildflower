@@ -190,8 +190,11 @@ $.jlm.bind('wild_posts.wf_comments', function() {
     load: function(event, ui) {
         $('a', ui.panel).click(function() {
             $(ui.panel).load(this.href);
+			$('body').trigger('SelectActions');
             return false;
         });
+	},
+	show: function()	{;
 	}});
 	var selected = $tabs.tabs('option', 'selected');
 });

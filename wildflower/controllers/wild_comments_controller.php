@@ -27,6 +27,11 @@ class WildCommentsController extends AppController {
         $this->data = $this->WildComment->findById($id);
     }
     
+    function wf_reply($id = null) {
+        $this->WildComment->contain('WildPost.slug');
+        $this->data = $this->WildComment->findById($id);
+    }
+    
     function wf_get_content($id) {
         $comment = $this->WildComment->findById($id, array('content'));
         $data = array('content' => $comment['WildComment']['content']);

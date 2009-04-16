@@ -75,7 +75,8 @@ class WildPostsController extends AppController {
         ));
 
         // JSON response
-        if ($this->RequestHandler->isAjax()) {
+        if ($this->RequestHandler->isAjax()) {	
+			Configure::write('debug', 0);
             return $this->render('wf_comments_by_status');
         }
         
