@@ -87,8 +87,8 @@ echo $html->doctype('xhtml-strict') ?>
 		 '</li></ul></div>';
 	}
 	/*	OO CSS has width settings applied to page container via the class - customise yours see icing example - remove for liquid oldScool for narrow	*/	?>
-<div id="page" class="icing">
-	<div id="hd">
+<div class="icing">
+	<div id="hd" class="hd">
 		<div id="skipto"><a href="#main">skip to content</a></div>
 		<div id="ident">
 			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
@@ -97,7 +97,7 @@ echo $html->doctype('xhtml-strict') ?>
 		<div id="searchrss"><?php	echo $this->element('search_form'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
 	</div>
 
-	<div id="nv">
+	<div id="nv" class="nv">
 		<?php 
 			echo $navigation->create(array(
 				'Home' => '/',
@@ -109,13 +109,13 @@ echo $html->doctype('xhtml-strict') ?>
 	</div>
 
 
-	<div id="bd">
+	<div id="bd" class="bd">
 		<?php echo $content_for_layout; ?>
 
 		<?php	if(isset($rssFeeds) && $hasFeeds)	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>
 
-	<div id="ft">
+	<div id="ft" class="ft">
 		<?php 
 			echo $navigation->create(array(
 				'Home' => '/',

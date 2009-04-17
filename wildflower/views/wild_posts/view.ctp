@@ -35,7 +35,7 @@
 						</div>
 						<div class="commentBody">
 							<p><?php	echo $html->link(' <span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when"> ' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></span></p>
-							<?php	echo nl2br($comment['content'])	?>
+							<?php	echo "<p>", nl2br($comment['content']), "</p>";	?>
 						</div>
 					</div><?php
 				endforeach;

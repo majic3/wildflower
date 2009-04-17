@@ -75,8 +75,8 @@ echo $html->doctype('xhtml-strict') ?>
         }
     ?>
 
-<div id="page" class="icing">
-	<div id="hd">
+<div class="page icing">
+	<div id="hd" class="hd">
 		<div id="ident">
 			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
 		</div>
@@ -97,7 +97,7 @@ echo $html->doctype('xhtml-strict') ?>
 	</div>
 
 
-	<div id="bd">
+	<div id="bd" class="bd">
 		<?php 
 			/*
 				optional leftCol & rightCol with selected widgets
@@ -110,7 +110,7 @@ echo $html->doctype('xhtml-strict') ?>
 		<?php	if(isset($rssFeeds))	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>
 
-	<div id="ft">
+	<div id="ft" class="ft">
         <?php 
             echo $navigation->create(array(
                 'Home' => '/',

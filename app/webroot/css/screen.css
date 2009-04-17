@@ -1,27 +1,27 @@
 /*		*/
 
-
+body{font-family:"Segoe UI",tahoma, Arial, sans-serif;}
 body { font-size: 12px; }
 /*	uncomment the following to test vertical rhythm	*/
-/**/ #hd, #bd, #ft {	background: url(oo/baseline_18px.png);	} /**/
+/**/ .hd, .bd, .ft {	background: url(oo/baseline_18px.png);	} /**/
 
 p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
-#bd .main	{	padding-left: 2.2em; padding-right: 1.5em;	}
-#bd .rightCol,
-#bd .leftCol	{	padding-left: 0.6em; padding-right: 0.6em;	}
-#bd blockquote		{	margin: 1.5em auto 1.5em auto; width: 80%;	}
-#bd blockquote p	{	margin: 0; padding: 0;	}
-#bd blockquote cite	{	float: right; font-style: italic; margin-right: 5em	}
+#bd.bd .main	{	padding-left: 2.2em; padding-right: 1.5em;	}
+#bd.bd .rightCol,
+#bd.bd .leftCol	{	padding-left: 0.6em; padding-right: 0.6em;	}
+#bd.bd blockquote		{	margin: 1.5em auto 1.5em auto; width: 80%;	}
+#bd.bd blockquote p	{	margin: 0; padding: 0;	}
+#bd.bd blockquote cite	{	float: right; font-style: italic; margin-right: 5em	}
 
 .line	h4				{	margin-left: 3.2em	}
 .line	.simpleList		{	margin-left: 4em	}
 
 
 /*	hd is expanded bd is set width centered	*/
-#page.icing		{width:100%;margin: 0; }
-#page.icing	#hd	{width:100%;margin: 0; }
-#page.icing	#nv	{width:100%;margin: 0; }
-#page.icing	#bd	{width:1050px !important;margin: .5em auto}
+.icing		{width:100%;margin: 0; }
+.icing	#hd.hd	{width:100%;margin: 0; }
+.icing	.nv	{width:100%;margin: 0; }
+.icing	#bd.bd	{width:1050px !important;margin: .5em auto}
 
 /* -------------------------------------------------------------- 
    TABS - Starting point for turning lists into tabs.
@@ -42,23 +42,23 @@ ul.tabs, ul.tabs li ul { display: block; }
 
 
 /* HEADER */
-#hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
-#hd #skipto		{	padding: 0; margin: 0; position: absolute; text-align: right; width: 100%;	}
+#hd.hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
+#hd.hd #skipto		{	padding: 0; margin: 0; position: absolute; text-align: right; width: 100%;	}
 	#skipto	a	{	margin-right: 10px;	}
-#hd a:link,
-#hd a:active,
-#hd a:visited	{	color: #000;	}
-#hd a:hover		{	color: #000;	}
-#hd h1 { font-size: 100%; line-height: 100%; padding: 3px 0 0 0; margin: 0 0 0 25px;}
-#hd h1	a { margin-top: 0px; padding-top: 20px; padding-left: 215px;}
-#hd #ident {	float: left; height: 55px;	}
-#hd #ident p	{ background: transparent url(/css/img/wildflower.png) no-repeat; height: 45px; padding: 20px 0 0 70px; margin: 0 5px 0 15px; height: 45px; }
-#hd #ident a	{ display: block; padding-top: 20px; width: 100%; height: 100%;  }
-#hd #searchrss 	{	float: right; width: 214px; height: 22px; margin: -25px 5px 0;	}
-#hd input.text,
-#hd .input.text	{	float: left; width: 162px;	}
-#hd .submit	{	float: left; width: 35px;	}
-#hd #searchrss input[type=submit] {
+#hd.hd a:link,
+#hd.hd a:active,
+#hd.hd a:visited	{	color: #000;	}
+#hd.hd a:hover		{	color: #000;	}
+#hd.hd h1 { font-size: 100%; line-height: 100%; padding: 3px 0 0 0; margin: 0 0 0 25px;}
+#hd.hd h1	a { margin-top: 0px; padding-top: 20px; padding-left: 215px;}
+#hd.hd #ident {	float: left; height: 55px;	}
+#hd.hd #ident p	{ background: transparent url(/css/img/wildflower.png) no-repeat; height: 45px; padding: 20px 0 0 70px; margin: 0 5px 0 15px; height: 45px; }
+#hd.hd #ident a	{ display: block; padding-top: 20px; width: 100%; height: 100%;  }
+#hd.hd #searchrss 	{	float: right; width: 214px; height: 22px; margin: -25px 5px 0;	}
+#hd.hd input.text,
+#hd.hd .input.text	{	float: left; width: 162px;	}
+#hd.hd .submit	{	float: left; width: 35px;	}
+#hd.hd #searchrss input[type=submit] {
   width: 20px;
   height: 20px;
   margin: 0;
@@ -70,28 +70,28 @@ ul.tabs, ul.tabs li ul { display: block; }
   cursor: hand; /* for IE 5.x */
 }
 
-#hd #searchrss input.text:focus	{	background: #ddd;	}
-#hd #searchrss input.text:hover	{	background: #eee;	}
-#hd #searchrss a	{	float: right;	}
+#hd.hd #searchrss input.text:focus	{	background: #ddd;	}
+#hd.hd #searchrss input.text:hover	{	background: #eee;	}
+#hd.hd #searchrss a	{	float: right;	}
 	#searchrss a img	{	border: 0;	}
 
 /* NAVIGATION */
-#nv { width: 100%; margin: 0; padding: 0; background: #ddd; border-bottom: 2px solid #bbb; }
-#nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
-#nv .tabs a:hover { background: #bbb; color: #333; }
+.nv { width: 100%; margin: 0; padding: 0; background: #ddd; border-bottom: 2px solid #bbb; }
+.nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
+.nv .tabs a:hover { background: #bbb; color: #333; }
 
 /* BODY */
-#bd { width: 960px; margin: 0 auto; padding: 20px; }
+#bd.bd { width: 960px; margin: 0 auto; padding: 20px; }
 
 
 
 /* FOOTER */
-#ft { margin: .2em .6em; border-top: 1px solid #eee; }
-#ft .tabs { padding: 10px; font-size: 13px; width: auto; float: right; }
-#ft .tabs li { margin-right: 20px; }
-#ft .tabs a { color: #999; text-decoration: none; }
-#ft p.quiet { color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
-#ft img { border: 0; vertical-align: bottom; }
+#ft.ft { margin: .2em .6em; border-top: 1px solid #eee; }
+#ft.ft .tabs { padding: 10px; font-size: 13px; width: auto; float: right; }
+#ft.ft .tabs li { margin-right: 20px; }
+#ft.ft .tabs a { color: #999; text-decoration: none; }
+#ft.ft p.quiet { color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
+#ft.ft img { border: 0; vertical-align: bottom; }
 
 
 

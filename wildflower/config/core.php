@@ -34,7 +34,7 @@ Configure::write(array('Wildflower' => array(
     'disableRootPageCache' => false
 )));
 
-// system admin user with this login can reset & ad
+// system admin user with this login can reset & ad. theres a better wf cake way to do this was just hack to be replaced
 Configure::write(array('System' => array(
 	'adminUser' => array(
 		'admin'
@@ -42,12 +42,12 @@ Configure::write(array('System' => array(
 	'adminCustomSettings' => array('general', 'themes', 'director', 'posts')
 )));
 
-// slideshowpro director - 0.1a
+// configured theme list - can be overriden in settings. These settings can be overridden in wildflower/admin/settings/#themes
 Configure::write(array('themes' => array(
 	array('public' => 'wildflower', 'text', 'theme use by wf'),
 )));
 
-// slideshowpro director - 0.1a
+// slideshowpro director - 0.1a - Director Media suite for Wildflower. These settings can be overridden in wildflower/admin/settings/#director
 Configure::write(array('director' => array(
 	array('api-key', 'your-api-key', 'text', 'director API key'),
 	array('path', 'your-api-path', 'text', 'director API path'),
@@ -82,5 +82,4 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
-
-Configure::write('debug', 0);
+if($_SERVER['HTTP_HOST'] == 'ss29')	include('icing.core.php');

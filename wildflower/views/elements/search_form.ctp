@@ -1,4 +1,4 @@
-<div id="searchBox">
+<div id="searchBox" class="main">
 <?php
 	echo $form->create('Dashboard', array('url' => '/search', 'class' => 'search'));
 	echo $form->input('query', array('label' => 'Search', 'id' => 's'));

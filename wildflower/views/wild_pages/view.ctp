@@ -5,7 +5,7 @@
  * @package wildflower
  */
 ?>
-<div class="page">
+<div class="main">
     <h2><?php echo $page['WildPage']['title']; ?></h2>
     
     <div class="entry">

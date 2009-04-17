@@ -67,7 +67,33 @@ Configure::write(array('Flickr' => array(
 	'cache' => CACHE . 'flickr',
 )));
 
+
 // slideshowpro director - 0.1a
+Configure::write(array('director' => array(
+	array('api-key', 'local-0c20d92e349979b46da03566120892ae', 'text', 'director API key'),
+	array('path', 'media.danceordie.co.uk', 'text', 'director API path'),
+	array('cache', CACHE . 'Director', 'text', 'director API cache'), ,
+	'settings' => array(
+		'thumb' => array(
+			'w' => 150,
+			'h' => 150,
+			's' => 85,
+			'c' => true
+		),
+		'preview' => array(
+			'w' => 280,
+			'h' => 120,
+			's' => 65,
+			'c' => false
+		),
+		'large' => array(
+			'w' => 600,
+			'h' => 400,
+			's' => 85,
+			'c' => false
+		)
+	)
+)));
 Configure::write(array('Director' => array(
 	'api_key' => 'local-0c20d92e349979b46da03566120892ae',
 	'path' => 'www.danceordie.co.uk/photos2', 
@@ -92,4 +118,46 @@ Configure::write(array('Director' => array(
 			'c' => false
 		)
 	)
+)));
+
+// system admin user with this login can reset & ad
+Configure::write(array('System' => array(
+	'adminUser' => array(
+		'admin'
+	),
+	'adminCustomSettings' => array('general', 'themes', 'director', 'posts')
+)));
+
+// slideshowpro director - 0.1a
+Configure::write(array('themes' => array(
+	array('public' => 'wildflower', 'text', 'theme use by wf'),
+)));
+
+// icing config 0.7 - tidying up and reviewing everything (entire set of modifications reviewed)
+Configure::write(array('Icing' => array(
+	'version' => '0.7.0',
+    'dashboardFeeds' => array(
+		array(
+        'url' => 'wf.klevo.sk/posts/feed',
+        'name' => 'Wildflower',
+		),
+		array(
+        'name' => 'CakePHP',
+        'url' => 'bakery.cakephp.org/articles/rss'
+		),
+		array(
+        'name' => 'jQuery',
+        'url' => 'jquery.com/blog/feed/'
+		),
+	),
+    'gfeed' => array(
+		'api' => ''
+	),
+    'webthumbs' => array(
+		'thumb_url' => 'http://webthumb.bluga.net/easythumb.php',
+		'user_id' => '1234',
+		'api_key' => 'replace0this0with0your0key000000', 
+		'default_size' => 'medium2', 
+		'default_cache' => '-1'
+    )
 )));
