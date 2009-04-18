@@ -1,9 +1,20 @@
 /*		*/
 
-body{font-family:"Segoe UI",tahoma, Arial, sans-serif;}
-body { font-size: 12px; }
+body{font-family:"Segoe UI",tahoma, Arial, sans-serif; font-size: 12px; max-width: 100%; }
 /*	uncomment the following to test vertical rhythm	*/
 /**/ .hd, .bd, .ft {	background: url(oo/baseline_18px.png);	} /**/
+
+
+/*sam@majic3.com - added this for vertical-rhythm - but padding also need adjustin - to 0 next stage to adjust it back*/
+p, ul, blockquote, pre, td, th, label {	margin: 0;	font-size: 1em;	line-height: 1.5em;	margin-bottom: 1.5em;	color:#131313;	}
+h1, .h1 {	margin: 0;	font-size: 1.6666666666666667em;	line-height: 0.9em;	margin-bottom: 0.9em; color: #434343;	}
+h2, .h2 {	margin: 0;	font-size: 1.5em;	line-height: 1em;	margin-bottom: 1em; color: #434343;		}
+h3, .h3 {	margin: 0;	font-size: 1.3333333333333333em;	line-height: 1.125em;	margin-bottom: 1.125em;  color: #434343; }
+h4, .h4 {	margin: 0;	font-size: 1.1666666666666667em;	line-height: 1.2857142857142858em;	margin-bottom: 1.2857142857142858em;  color: #434343;	}
+h5, .h5 {	margin: 0;	font-size: 1.1666666666666667em;	line-height: 1.2857142857142858em;	margin-bottom: 1.2857142857142858em; color: #434343;	}
+h6, .h6 {	margin: 0;	font-size: 1.1666666666666667em;	line-height: 1.2857142857142858em;	margin-bottom: 1.2857142857142858em; color: #434343;	}
+p.small {	margin: 0;	font-size: 0.8333333333333334em;	line-height: 1.8em;	margin-bottom: 1.8em; color: #828282;	}
+table {	border-collapse: collapse;	margin-bottom: 1.5em;	}
 
 p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
 #bd.bd .main	{	padding-left: 2.2em; padding-right: 1.5em;	}
@@ -18,10 +29,47 @@ p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
 
 
 /*	hd is expanded bd is set width centered	*/
-.icing		{width:100%;margin: 0; }
-.icing	#hd.hd	{width:100%;margin: 0; }
-.icing	.nv	{width:100%;margin: 0; }
-.icing	#bd.bd	{width:1050px !important;margin: .5em auto}
+.wildflower		{width:100%;margin: 0; }
+.wildflower	#hd.hd	{width:100%;margin: 0; }
+.wildflower	.nv	{width:100%;margin: 0; }
+.wildflower	#bd.bd	{width:1050px !important;margin: .5em auto}
+
+/* HEADER */
+#hd.hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
+#hd.hd #skipto		{	padding: 0; margin: 0; position: absolute; text-align: right; width: 100%;	}
+	#skipto	a	{	margin-right: 10px;	}
+#hd.hd a:link,
+#hd.hd a:active,
+#hd.hd a:visited	{	color: #000;	}
+#hd.hd a:hover		{	color: #000;	}
+#hd.hd h1 {  }
+#hd.hd h1	a {  }
+#hd.hd p	{  }
+#hd.hd a	{ display: block; width: 100%; height: 100%;  }
+#hd #searchrss 	{	float: right; width: 237px; height: 31px; margin: -10px 15px 0; 	}
+#hd #searchrss 	#searchBox	{
+    width: 201px;
+    height: 31px;
+    background: url(/css/img/bg_search_box.gif);
+}
+#searchBox #s {
+    float: left;
+    padding: 0;
+    margin: 8px 0 0 6px;
+    border: 0;
+    width: 159px;
+    background: none;
+}
+#searchBox #go {
+    float: right;
+    margin: 3px 4px 0 0;
+}
+#hd #searchBox input.text:focus	{	background: #ddd;	}
+#hd #searchBox input.text:hover	{	background: #eee;	}
+#hd #searchrss a	{	float: right; width: 31px; height: 31px; margin-top: -31px; margin-right: 0; background: transparent url(/css/img/bg_block.gif); text-align: center; 	}
+	#searchrss a img	{ display: block; padding-top: 8px; padding-left: 8px; }
+
+/* NAVIGATION & TABS */
 
 /* -------------------------------------------------------------- 
    TABS - Starting point for turning lists into tabs.
@@ -38,50 +86,21 @@ ul.tabs:after { content: "."; display: block; height: 0; clear: both; visibility
 * html ul.tabs { height: 1%; }
 ul.tabs, ul.tabs li ul { display: block; }
 
-
-
-
-/* HEADER */
-#hd.hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
-#hd.hd #skipto		{	padding: 0; margin: 0; position: absolute; text-align: right; width: 100%;	}
-	#skipto	a	{	margin-right: 10px;	}
-#hd.hd a:link,
-#hd.hd a:active,
-#hd.hd a:visited	{	color: #000;	}
-#hd.hd a:hover		{	color: #000;	}
-#hd.hd h1 { font-size: 100%; line-height: 100%; padding: 3px 0 0 0; margin: 0 0 0 25px;}
-#hd.hd h1	a { margin-top: 0px; padding-top: 20px; padding-left: 215px;}
-#hd.hd #ident {	float: left; height: 55px;	}
-#hd.hd #ident p	{ background: transparent url(/css/img/wildflower.png) no-repeat; height: 45px; padding: 20px 0 0 70px; margin: 0 5px 0 15px; height: 45px; }
-#hd.hd #ident a	{ display: block; padding-top: 20px; width: 100%; height: 100%;  }
-#hd.hd #searchrss 	{	float: right; width: 214px; height: 22px; margin: -25px 5px 0;	}
-#hd.hd input.text,
-#hd.hd .input.text	{	float: left; width: 162px;	}
-#hd.hd .submit	{	float: left; width: 35px;	}
-#hd.hd #searchrss input[type=submit] {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent url(/css/img/go.png) no-repeat center top;
-  text-indent: -1000em;
-  cursor: pointer; /* hand-shaped cursor */
-  cursor: hand; /* for IE 5.x */
-}
-
-#hd.hd #searchrss input.text:focus	{	background: #ddd;	}
-#hd.hd #searchrss input.text:hover	{	background: #eee;	}
-#hd.hd #searchrss a	{	float: right;	}
-	#searchrss a img	{	border: 0;	}
-
-/* NAVIGATION */
-.nv { width: 100%; margin: 0; padding: 0; background: #ddd; border-bottom: 2px solid #bbb; }
-.nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
-.nv .tabs a:hover { background: #bbb; color: #333; }
+#nv { width: 100%; margin: 0; padding: 0; background: #ddd; border-bottom: 2px solid #bbb; }
+#nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
+#nv .tabs a:hover { background: #bbb; color: #333; }
+.nv	{}
+.nv.vert	{}
 
 /* BODY */
 #bd.bd { width: 960px; margin: 0 auto; padding: 20px; }
+	#bd .main .pageHeader	{
+		margin: 0.75em 0 1.5em 0;
+	}
+	#bd .main p	{
+		margin-left: .35em;
+		margin-right: .2em;
+	}
 
 
 
@@ -137,7 +156,11 @@ table.ui-datepicker-calendar	td	{
 
 
 /*	jquery ui flash messages	*/
-.ui-widget	p {	padding-left: 15px; padding-right: 15px;	}
+#bd .ui-widget,
+.bd .ui-widget	{	margin: 0.75em auto 1.5em auto;	}
+.ui-widget	p {	padding-left: 1.5em; padding-right: 1.5em; margin-bottom: 0;	}
+.ui-widget	.ui-state-error,
+.ui-widget	.ui-state-highlight	{ padding-bottom: 0.75em; padding-top: 0.75em; }
 .ui-widget	p span.ui-icon	{	float: left; padding: 1px;	}
 
 #jqueryui		{	float: right; background: #fff; margin: -10px 0 0 0; 	}

@@ -18,16 +18,14 @@
     <input type="submit" value="<?php __('Save as the newest version'); ?>" />
     <?php 
         if ($this->params['controller'] == 'wild_pages') {
-            $entityUrl = $this->data['WildPage']['url'];
+            $entityUrl = $page['WildPage']['url'];
             $entity = 'page';
         } else if ($this->params['controller'] == 'wild_posts') {
-            $entityUrl = '/' . Configure::read('Wildflower.postsParent') . '/' . $this->data['WildPost']['slug'];
+            $entityUrl = '/' . Configure::read('Wildflower.postsParent') . '/' . $post['WildPost']['slug'];
             $entity = 'post';
         }
         echo $html->link("View this $entity", $entityUrl, array('class' => 'editor_view_link')); 
     ?>
 </div>
-
-<div class="buttons"> <?php /* __('or'); */ ?> <?php /* echo $html->link(__('Cancel', true), array('action' => 'view', (isset($this->data['WildPost'])) ? $this->data['WildPost']['id'] : $this->data['WildPage']['id'])); */ ?></div>	  
 
 <?php endif; ?>

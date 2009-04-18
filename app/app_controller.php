@@ -36,7 +36,7 @@ class AppController extends Controller {
     public $isHome = false;
     
     public $view = 'Theme';
-    public $theme = '';
+    public $theme = 'wildflower';
     public $canonical = '';
 	
 	private $_isDatabaseConnected = true;
@@ -343,8 +343,7 @@ class AppController extends Controller {
         $this->params['Wildflower']['view'] = $params;
     	$this->set($params);
 
-		if(Configure::read('Wildflower.settings.public_theme')) $this->theme = Configure::read('Wildflower.settings.public_theme');
-		// debug(Configure::read('Wildflower.settings.public_theme')); die();
+		//if(Configure::read('themes.public')) $this->theme = Configure::read('themes.public');
     	
     	// User ID for views
 		$this->set('loggedUserId', $this->Auth->user('id'));

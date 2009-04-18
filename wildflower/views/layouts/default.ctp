@@ -1,6 +1,5 @@
 <?php 
-/* todo: rel=canonical SEO stuff */
-echo $html->doctype('xhtml-strict') ?>
+echo $html->doctype('xhtml-trans') ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<?php echo $html->charset(); ?>
@@ -14,14 +13,14 @@ echo $html->doctype('xhtml-strict') ?>
 	<link rel="canonical" href="<?php echo($canonical) ?>" />
 
 	<?php
-		echo $html->css('ui/jquery-ui-1.7', 'stylesheet', Array('media' => 'screen'));
+		echo $html->css('ui/jquery-ui-1.7.1', 'stylesheet', Array('media' => 'screen'));
 		// darwin will combine these using a minify cake filter - for clean living put your tweaks in scrren
 		echo $html->css(array(
 			'oo/libraries',
 			'oo/template',
 			'oo/grids',
 			'oo/content',
-			'iscreen',
+			'screen',
 		), 'stylesheet', Array('media' => 'screen'));
 		//	echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
 	<!--[if IE 6]>
@@ -57,7 +56,7 @@ echo $html->doctype('xhtml-strict') ?>
 		$javascripts = array(
 			'swfobject', 
 			'jquery',
-			'plugins/jquery-ui-1.7', 
+			'plugins/jquery-ui-1.7.1', 
 			'plugins/jquery.tipsy', 
 			'plugins/jquery.gatracker', 
 			'plugins/jquery.form'
@@ -87,12 +86,10 @@ echo $html->doctype('xhtml-strict') ?>
 		 '</li></ul></div>';
 	}
 	/*	OO CSS has width settings applied to page container via the class - customise yours see icing example - remove for liquid oldScool for narrow	*/	?>
-<div class="icing">
+<div class="wildflower">
 	<div id="hd" class="hd">
 		<div id="skipto"><a href="#main">skip to content</a></div>
-		<div id="ident">
-			<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
-		</div>
+		<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
 		<div id="searchrss"><?php	echo $this->element('search_form'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
 	</div>
