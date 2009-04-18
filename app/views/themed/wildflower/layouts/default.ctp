@@ -9,7 +9,7 @@ echo $html->doctype('xhtml-trans') ?>
 	<meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
 
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/posts/feed'); ?>" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/' . Configure::read('Wildflower.blogIndex') . '/rss'); ?>" />
 	<link rel="canonical" href="<?php echo($canonical) ?>" />
 
 	<?php
@@ -92,7 +92,7 @@ echo $html->doctype('xhtml-trans') ?>
 		<div id="skipto"><a href="#main">skip to content</a></div>
 		<p><?php echo Configure::read('AppSettings.site_name'); ?></p>
 		<h1><?php echo $html->link(Configure::read('AppSettings.description'), '/', null, null, false) ?></h1>
-		<div id="searchrss"><?php	echo $this->element('search_form'), $html->link($html->image('feed.png', Array()), '/posts/feed', Array('id' => 'rss'), false, false);	?></div>
+		<div id="searchrss"><?php	echo $this->element('search_form'), $html->link($html->image('feed.png', Array()), '/' . Configure::read('Wildflower.blogIndex') . '/rss', Array('id' => 'rss'), false, false);	?></div>
 	</div>
 
 	<div id="nv">

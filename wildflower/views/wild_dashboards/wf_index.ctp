@@ -1,10 +1,46 @@
 <?php
 /* todo: fix up quick post, fix messages error */
 
+
+    $labels = array(
+        'WildPage' => array(
+            'name' => __('Page', true),
+            'link' => '/pages/edit/:id',
+            'class' => 'page'
+        ), 
+        'WildPost' => array(
+            'name' => __('Post', true),
+            'link' => '/posts/edit/:id',
+            'class' => 'post'
+        ),
+        'WildComment' => array(
+            'name' => __('Comment', true),
+            'link' => '/comments/edit/:id',
+            'class' => 'comment'
+        ),
+        'WildMessage' => array(
+            'name' => __('Message', true),
+            'link' => '/messages/view/:id',
+            'class' => 'message'
+        ),
+        'WildAsset' => array(
+            'name' => __('File', true),
+            'link' => '/assets/edit/:id',
+            'class' => 'file'
+        ),
+    );
+
+	$pages = $items['WildPage'];
+	$posts = $items['WildPost'];
+	$comments = $items['WildComment'];
+	$messages = $items['WildMessage'];
+	$assets = $items['WildAsset'];
+
 ?><h2 class="section">Welcome to <?php echo $siteName ?> administration</h2>
 
-<p>Dashboard shows a summary of the latest happening on your site.</p>
+<p><?php __('Recently added or changed content:'); ?></p>
 
+<!-- <<<<<< HEAD:wildflower/views/wild_dashboards/wf_index.ctp -->
 <div class="wrapper">
 	<div id="dashPages" class="tabs">
 		<h3>Pages modified recently</h3> 
@@ -21,9 +57,10 @@
 			} else {
 				echo '<ul class="pages-list list">';
 				foreach ($pages as $page) {
-					echo "<li><div class=\"list-item\">",
-						$html->link($page['WildPage']['title'], array('controller' => 'wild_pages', 'action' => 'edit', $page['WildPage']['id'])), 
-						'</div></li>';    
+					$label = empty($page['item']['title']) ? '<em>untitled</em>' : hsc($page['item']['title']);
+					$url = '/' . Configure::read('Wildflower.prefix') . '/' . r(':id', $page['item']['id'], $labels[$page['class']]['link']);
+					$link = $html->link($label, $url, array('escape' => false)); 
+					echo "<li><div class=\"list-item\">", $link, '</div></li>';
 				}
 				echo '</ul>';
 			}
@@ -35,9 +72,6 @@
 			} else {
 				echo '<ul class="pages-list list">';
 				foreach ($pageDrafts as $page) {
-					echo "<li><div class=\"list-item\">",
-						$html->link($page['WildPage']['title'], array('controller' => 'wild_pages', 'action' => 'edit', $page['WildPage']['id'])), 
-						'</div></li>';    
 				}
 				echo '</ul>';
 			}
@@ -60,9 +94,10 @@
 			} else {
 				echo '<ul class="posts-list list">';
 				foreach ($posts as $post) {
-					echo "<li><div class=\"list-item\">",
-						$html->link($post['WildPost']['title'], array('controller' => 'wild_posts', 'action' => 'edit', $post['WildPost']['id'])), 
-						'</div></li>';    
+					$label = empty($post['item']['title']) ? '<em>untitled</em>' : hsc($post['item']['title']);
+					$url = '/' . Configure::read('Wildflower.prefix') . '/' . r(':id', $post['item']['id'], $labels[$post['class']]['link']);
+					$link = $html->link($label, $url, array('escape' => false)); 
+					echo "<li><div class=\"list-item\">", $link, '</div></li>';
 				}
 				echo '</ul>';
 			}
@@ -73,9 +108,6 @@
 			} else {
 				echo '<ul class="posts-list list">';
 				foreach ($postDrafts as $post) {
-					echo "<li><div class=\"list-item\">",
-						$html->link($post['WildPost']['title'], array('controller' => 'wild_posts', 'action' => 'edit', $post['WildPost']['id'])), 
-						'</div></li>';    
 				}
 				echo '</ul>';
 			}
@@ -98,9 +130,10 @@
 				debug($comments);
 				echo '<ul class="comments-list list">';
 				foreach($comments as $cmt)	{
-					echo "<li><div class=\"list-item\">",
-						$html->link($cmt['WildPost']['title'] . '/' . $cmt['WildComment']['email'] . ' - ' . $time->format('j M y', $link['WildComment']['created']), array('controller' => 'wild_comments', 'action' => 'view', $cmt['WildComment']['id'])), 
-						'</div></li>';
+					$label = empty($cmt['item']['title']) ? '<em>untitled</em>' : hsc($cmt['item']['title']);
+					$url = '/' . Configure::read('Wildflower.prefix') . '/' . r(':id', $cmt['item']['id'], $labels[$cmt['class']]['link']);
+					$link = $html->link($label, $url, array('escape' => false)); 
+					echo "<li><div class=\"list-item\">", $link, '</div></li>';
 				}
 				echo '</ul>';
 			}	?></div>
@@ -116,9 +149,10 @@
 			} else {
 				echo '<ul class="msgs-list list">';
 				foreach($messages as $msg)	{
-					echo "<li><div class=\"list-item\">",
-						$html->link($msg['WildMessage']['subject'] . ' - ' . $time->format('j M y', $msg['WildMessage']['created']), array('controller' => 'wild_messages', 'action' => 'view', $msg['WildMessage']['id'])), 
-						'</div></li>';
+					$label = empty($msg['item']['title']) ? '<em>untitled</em>' : hsc($msg['item']['title']);
+					$url = '/' . Configure::read('Wildflower.prefix') . '/' . r(':id', $msg['item']['id'], $labels[$msg['class']]['link']);
+					$link = $html->link($label, $url, array('escape' => false)); 
+					echo "<li><div class=\"list-item\">", $link, '</div></li>';
 				}
 				echo '</ul>';
 			}	?>
