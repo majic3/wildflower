@@ -121,17 +121,15 @@ echo $html->doctype('xhtml-trans') ?>
 	</div>
 
 	<div id="ft" class="ft">
-        <?php 
-            echo $navigation->create(array(
-                'Home' => '/',
-                ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
-                'About' => '/about',
-                'Contact' => '/contact'
-            ), array('class' => 'tabs', 'liClass' => false));
-        ?>
-
-		<p class="quiet"><small>default theme &#124; Powered by <?php 
-	           echo $html->link('<img src="/img/wildflower.png" />', 'http://wf.klevo.sk/', array(), false, false); ?> <a href="http://majic3.com/">icing <?php	echo Configure::read('Icing.version');	?></a>  &#124; <a href="http://cakephp.org/"><img src="/img/cake.power.gif" /></a> &#124; <a href="http://jquery.com/"><img src="/img/jquery-icon.png" /></a> &#124; <a href="http://github.com/stubbornella/oocss/">OO CSS</a></small></p>
+		<?php 
+			echo $navigation->create(array(
+				'Home' => '/',
+				ucfirst(Configure::read('Wildflower.blogName')) => '/' . Configure::read('Wildflower.blogIndex'),
+				'About' => '/about',
+				'Contact' => '/contact'
+			), array('class' => 'tabs', 'liClass' => false));
+		?>
+		<p class="quiet"><small>Wildflower is a CakePHP, utilizing jQuery. Theme by Sam@Majic3 using OO CSS</small></p>
 		<?php	if ($isLogged and $this->params['action'] != 'wf_preview') echo '<p class="quiet"><small>', $this->element('admin_link'), '</small></p>';	?>
 	</div>
 </div>

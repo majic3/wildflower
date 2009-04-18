@@ -179,10 +179,11 @@ class WildPostsController extends AppController {
 
         // $cacheName = str_replace('-', '_', $this->data[$this->modelClass]['slug']); // @TODO check cache for proper naming method
         // clearCache($cacheName, 'views', '.php');
+
 		
         if ($this->RequestHandler->isAjax()) {
             $this->WildPost->contain('WildUser');
-            $post = $this->WildPost->findById($this->WildPost->id);
+            $post = $this->WildPost->findById($this->WildPost->id);	
             $this->set(compact('post'));
             return $this->render('wf_update');
         }
