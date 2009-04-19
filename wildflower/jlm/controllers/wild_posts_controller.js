@@ -65,6 +65,20 @@ $.jlm.bind('wild_posts.wf_categorize', function() {
     
 });
 
+$.jlm.bind('wild_posts.wf_comments', function() {
+    var $tabs = $('#comments').tabs({
+    load: function(event, ui) {
+        $('a', ui.panel).click(function() {
+            $(ui.panel).load(this.href);
+			$('body').trigger('SelectActions');
+            return false;
+        });
+	},
+	show: function()	{;
+	}});
+	var selected = $tabs.tabs('option', 'selected');
+});
+
 $.jlm.bind('wild_posts.wf_edit', function() {
     // Update post form on category select
     $('#category_id').change(function() {
