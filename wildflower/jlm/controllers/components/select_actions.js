@@ -53,5 +53,3 @@ $.jlm.component('SelectActions', 'wild_posts.wf_index, wild_posts.wf_comments, w
      });
      
 });
-$('body').trigger('SelectActions');
-});

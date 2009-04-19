@@ -6,7 +6,16 @@ class WildDashboardsController extends AppController {
 	
 	function wf_index() {
         $items = $this->WildDashboard->findRecentHappening();
-		$this->set(compact('items'));
+
+		//debug($items);//die();
+		$dashClasses = WildDashboard::$classNames;
+		$dashItems = array();
+		foreach($dashClasses as $name => $model)	{
+			$dashItems[$name] = Set::extract("/{$name}", $items);
+		}
+		//debug($dashItems);	die();
+
+		$this->set(compact('dashItems', 'dashClasses'));
 	}
 	
     /**

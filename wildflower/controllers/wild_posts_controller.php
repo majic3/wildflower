@@ -47,21 +47,13 @@ class WildPostsController extends AppController {
      * 
      */
     function wf_comments($id = null, $status = null) {
-
-		/*
-			todo: 
-			icing::tesla	- adding gravatar helper for people who post - also want the open id too options to choose between the two?? nice
-
-			gravatar needs some testing 2 options
-				*  bryce (bdude) - http://bakery.cakephp.org/articles/view/gravatar
-				*  Graham Weldon - http://bakery.cakephp.org/articles/view/gravatar-helper
-		*/
         $spam = ($status == 'spam') ? 1 : 0;
         $approved = ($status == 'unapproved') ? 0 : 1;
         if ($spam) {
             // Spam comments should show no matter of approval status
             $approved = array(0, 1);
         }
+        
         $this->data = $this->{$this->modelClass}->find('first', array(
             'conditions' => array('WildPost.id' => $id),
             'contain' => array(
@@ -178,7 +170,6 @@ class WildPostsController extends AppController {
 
         // $cacheName = str_replace('-', '_', $this->data[$this->modelClass]['slug']); // @TODO check cache for proper naming method
         // clearCache($cacheName, 'views', '.php');
-
 		
         if ($this->RequestHandler->isAjax()) {
             $this->WildPost->contain('WildUser');

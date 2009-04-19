@@ -3,10 +3,10 @@ class WildDashboard extends AppModel {
 
     public $useTable = false;
     static public $classNames = array(
-        'WildPage' => array('id', 'title', 'updated'), 
-        'WildPost' => array('id', 'title', 'updated'), 
-        'WildComment' => array('id', 'name', 'updated'), 
-        'WildMessage' => array('id', 'name', 'updated'), 
+        'WildPage' => array('id', 'title', 'updated', 'draft'), 
+        'WildPost' => array('id', 'title', 'updated', 'draft'), 
+        'WildComment' => array('id', 'name', 'updated', 'spam', 'approved'), 
+        'WildMessage' => array('id', 'name', 'updated', 'spam', 'subject'), 
         'WildAsset' => array('id', 'name', 'updated'),
     );
     
@@ -32,9 +32,9 @@ class WildDashboard extends AppModel {
         usort($items, 'cmp');
         
         // Create an array without diff keys
-        foreach ($items as &$item) {
+        /* foreach ($items as &$item) {
             $item = WildDashboard::accessByClassName($item);
-        }
+        }  */
         
         return $items;
     }

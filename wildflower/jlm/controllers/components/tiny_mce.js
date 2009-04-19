@@ -39,7 +39,7 @@ $.jlm.addComponent('tinyMce', {
             theme_advanced_statusbar_location: "none",
             theme_advanced_resizing: false,
             theme_advanced_resize_horizontal: false,
-			theme_advanced_path: false,
+    		theme_advanced_path: false,
             width: '100%',
 
             // URLs
@@ -103,7 +103,7 @@ $.jlm.addComponent('tinyMce', {
                     imgUrl = $.jlm.base + '/wildflower/thumbnail/' + imgNameEscaped + '/' + resizeWidth + '/' + resizeHeight + '/' + crop;
                 }
 
-				// Image HTML
+    			// Image HTML
     			var imgHtml = '<img alt="' + imgName + '" src="' + imgUrl + '" />';
 
     			$.jlm.components.tinyMce.editor.execCommand('mceInsertContent', 0, imgHtml);

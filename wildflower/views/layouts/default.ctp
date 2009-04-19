@@ -94,6 +94,8 @@ echo $html->doctype('xhtml-trans') ?>
 		<div id="searchrss"><?php	echo $this->element('search_form'), $html->link($html->image('feed.png', Array()), '/' . Configure::read('Wildflower.blogIndex') . '/rss', Array('id' => 'rss'), false, false);	?></div>
 	</div>
 
+	<hr />
+	
 	<div id="nv" class="nv">
 		<?php 
 			echo $navigation->create(array(
@@ -105,13 +107,14 @@ echo $html->doctype('xhtml-trans') ?>
 		?>
 	</div>
 
+	<hr />
 
 	<div id="bd" class="bd">
 		<?php echo $content_for_layout; ?>
 
 		<?php	if(isset($rssFeeds) && $hasFeeds)	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>
-
+	<hr />
 	<div id="ft" class="ft">
 		<?php 
 			echo $navigation->create(array(

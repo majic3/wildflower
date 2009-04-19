@@ -1573,7 +1573,6 @@ button.positive, .buttons a.positive{
         padding: 10px 0 1px;
         border-bottom: 3px solid #ddd;
     }
-<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 
 .ui-slider {
 	text-decoration:none !important;
@@ -1652,7 +1651,6 @@ button.positive, .buttons a.positive{
 .ui-slider .first .ui-slider-tic, .ui-slider .last .ui-slider-tic {
 	display:none;
 }
-=======
     
     
 /* Dashboard */
@@ -1699,4 +1697,3 @@ button.positive, .buttons a.positive{
         color: #474747;
         width: 160px;
     }
->>>>>>> klevo:app/webroot/wildflower/css/wf.main.css
