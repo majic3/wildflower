@@ -137,9 +137,9 @@ img {
     
     #nav a {
         display: block;
-        height: 12px;
+        height: 13px;
         margin: 0 3px 0 0;
-        padding: 3px 8px 9px 8px;
+        padding: 4px 9px 9px 9px;
         background-color: #446076;
         color: #fff;
         text-decoration: none;
@@ -507,7 +507,7 @@ select {
 
     #sidebar > ul > li {
         margin: 0;
-        padding: 8px 14px;
+        padding: 8px 0;
     }
     
     #sidebar > ul > li:last-child {
@@ -880,8 +880,10 @@ text-decoration:none;
     
 /* Post edit */
 
-#save-preview {
-    display: none; /* Preview does not work yet */
+#close_preview {
+    background: #eee;
+    margin: 10px -25px -20px -25px;
+    padding: 10px 25px;
 }
 
 #save-draft,
@@ -897,7 +899,8 @@ text-decoration:none;
     #save-publish input,
     #save-preview input,
     .save-section input,
-    .wf-form-button input {
+    .wf-form-button input,
+    #close_preview input {
         font-size: 13px;
     }
     
@@ -1304,9 +1307,9 @@ text-decoration:none;
     
 #edit-buttons {
     overflow: hidden;
-    margin-top: 1em;
+    margin: 10px -25px -22px;
     background: #eee;
-    padding: 8px;
+    padding: 10px 25px;
     position: relative;
 }
 
@@ -1318,13 +1321,6 @@ text-decoration:none;
 
 .sidebar_editor {
     display: none;
-}
-
-#sidebar_content {
-    background: #eee;
-    padding: 10px;
-    float: right;
-    width: 30%;
 }
 
 
@@ -1696,4 +1692,50 @@ button.positive, .buttons a.positive{
     td.recent_date {
         color: #474747;
         width: 160px;
+    }
+
+/* Preview */
+
+#preview_frame {
+    margin: 0 0 0 -6px;
+    width: 100%;
+    border: 6px solid #fff689;
+}
+
+
+/* Page reorder */
+
+.page_reorder_list {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+}
+
+    .page_reorder_list ul {
+        margin: 0;
+        padding: 0 0 0 30px;
+    }
+
+    .page_reorder_list li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+.drop_zone {
+    border: 1px dashed #ddd;
+    color: #474747;
+    font-size: 11px;
+    width: 150px;
+    text-align: center;
+    padding: 2px;
+    margin: 2px 0;
+    cursor: pointer;
+    display: none;
+    background: #eee;
+}
+
+    .drop_zone:hover {
+        background-color: #fff;
     }
