@@ -141,9 +141,61 @@ ul.tabs, ul.tabs li ul { display: block; }
         background-color: transparent;
     }
 
+/*	pagination	*/
 
+.paginate-counter	{	float: right; 	}
 
+.paging	{	float: left; width: 60em; margin-top: -4px;	}
 
+.paging li{
+	border:0; margin:0; padding:0;
+	font-size:11px;
+	list-style:none;
+	margin-right:2px;
+}
+.paging a{
+	border:solid 1px #9aafe5
+	margin-right:2px;
+}
+.paging .previous.disabled,
+.paging .next.disabled {
+	border:solid 1px #FFF;
+	color:#DEDEDE;
+	display:block;
+	float:left;
+	font-weight:bold;
+	margin-right:2px;
+	padding:3px 4px;
+}
+.paging .next a,
+.paging .previous a {
+	font-weight:bold;
+	border:solid 1px #fff;
+}
+.paging .current	{
+	background:#2e6ab1;
+	color:#FFFFFF;
+	font-weight:bold;
+	display:block;
+	float:left;
+	padding:4px 6px;
+}
+.paging a:link,
+.paging a:visited {
+	color:#0e509e
+	display:block;
+	float:left;
+	padding:3px 6px;
+	text-decoration:none;
+	border:solid 1px #fff;
+}
+.paging a:hover{
+	border:solid 1px #fff;
+	background-color: #EAF1F7;
+	color: #777;
+}
+
+/*		rework below		*/
 
 /*	jquery ui extras	*/
 table.ui-datepicker-calendar	{

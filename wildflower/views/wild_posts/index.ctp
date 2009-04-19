@@ -28,7 +28,7 @@
 		</div>
 		<?php } ?>
 		
-		<?php echo $this->element('wf_ppagination') ?>
+		<?php echo $this->element('wf_pagination') ?>
 		
 	</div>
 	<div id="postsSidebar" class="lastUnit size1of5">
