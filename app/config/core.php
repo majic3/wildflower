@@ -38,7 +38,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 2);
+	Configure::write('debug', 0);
 /**
  * Application wide charset encoding
  */
@@ -228,7 +228,7 @@
 	
 //die(APP . 'tmp' . DS . 'min');
 /*	minify filter	cache store, js filter & css filter */
-//Configure::write('Asset.filter.cache', APP . 'tmp' . DS . 'min');
-//Configure::write('Asset.filter.css', 'min.php');
-//Configure::write('Asset.filter.js', 'min.php');
+Configure::write('Asset.filter.cache', APP . 'tmp' . DS . 'cache' . DS . 'min');
+Configure::write('Asset.filter.css', 'min.php');
+Configure::write('Asset.filter.js', 'min.php');
 ?>

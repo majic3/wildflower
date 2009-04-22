@@ -14,14 +14,16 @@ echo $html->doctype('xhtml-trans') ?>
 
 	<?php
 		echo $html->css('ui/jquery-ui-1.7.1', 'stylesheet', Array('media' => 'screen'));
-		// darwin will combine these using a minify cake filter - for clean living put your tweaks in scrren
-		echo $html->css(array(
+		// this is almost darwin now
+		// this is better if we join the array with .css & , 
+		$styles = (Configure::read('debug')) ? array(
 			'oo/libraries',
 			'oo/template',
 			'oo/grids',
 			'oo/content',
 			'screen',
-		), 'stylesheet', Array('media' => 'screen'));
+		) : array('oo/libraries.css,oo/template.css,oo/grids.css,oo/content.css,screen.css');
+		echo $html->css($styles, 'stylesheet', Array('media' => 'screen'));
 		//	echo $html->css(Array('print'), 'stylesheet', Array('media' => 'print'), false); 	?>
 	<!--[if IE 6]>
 	<script type="text/javascript" src="/js/plugins/dd-pngfix.js"></script>
@@ -53,14 +55,14 @@ echo $html->doctype('xhtml-trans') ?>
 			echo $this->element('google_analytics') ?>
 	</script>
 	<?php
-		$javascripts = array(
+		$javascripts = (Configure::read('debug')) ? array(
 			'swfobject', 
 			'jquery',
 			'plugins/jquery-ui-1.7.1', 
 			'plugins/jquery.tipsy', 
 			'plugins/jquery.gatracker', 
 			'plugins/jquery.form'
-		);
+		) : array('swfobject.js,jquery.js,plugins/jquery-ui-1.7.1.js,plugins/jquery.tipsy.js,plugins/jquery.gatracker.js,plugins/jquery.form.js');
 
 		if(isset($hasFeeds))	$javascripts[] = 'plugins/jquery.gfeed';
 
@@ -115,7 +117,7 @@ echo $html->doctype('xhtml-trans') ?>
 				Compass can help you generate nicer classes for seo
 				but not pages apart from home
 			*/
-			echo $content_for_layout; ?>
+			echo $content_for_layout,"<strong>",Configure::read('Asset.filter.cache'),"</strong>"; ?>
 
 		<?php	if(isset($rssFeeds))	{	?><div id="feeds"><?php	foreach($rssFeeds as $feed): echo ($html->link($feed['name'], 'http://' . $feed['url'], Array('class' => 'feed'))); endforeach;	?></div><?php	}	?>
 	</div>
