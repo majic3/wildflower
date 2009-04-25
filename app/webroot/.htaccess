@@ -36,6 +36,15 @@
      Header append Vary User-Agent
    </IfModule>
 </IfModule>
+
+<FilesMatch "^\/(cjs|ccss)">
+# set expires causes 500 error on some systems
+#Header set Expires "Thu, 15 Apr 2012 20:00:00 GMT"
+# etag ~  causes 500 error on some systems
+FileETag None
+</FilesMatch>
+
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
 # set expires causes 500 error on some systems
 #Header set Expires "Thu, 15 Apr 2012 20:00:00 GMT"
 # etag ~  causes 500 error on some systems

@@ -23,10 +23,6 @@ app/vendors/Director/*
 
 app/views/_themed
 
-app/webroot/amcharts/amcharts_key.txt
-app/webroot/amcharts/fonts/*.fla
-
-
 *.*.bak
 
 # Wildflower uploaded files
