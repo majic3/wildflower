@@ -10,7 +10,7 @@
 				<?php
 					if ($data['WildWidget']['tweets']) {	
 						foreach($data['WildWidget']['tweets'] as $tweet)	{
-							echo '<blockquote><p>' . $tweet['text'] . '</p><p><cite>' . $html->link($tweet['tweetee'], $tweeter['twitterurl']) . '</cite>' . $ . '</p>', '</blockquote>';
+							echo '<blockquote><p>' . $tweet['text'] . '</p><p><cite>' . $html->link($tweet['tweetee'], $tweeter['twitterurl']) . '</cite>' . $tweet['tweetee'] . '</p>', '</blockquote>';
 						}
 					}
 				?>
@@ -36,9 +36,9 @@
 				</li>
 			</ul>
 		</div>
-		<?php if(isset($data['WildWidget']['foot']))): ?>
-        <div class="ft">
-            <?php	echo $html->link($data['WildWidget']['twitterUrl'], '');	?>
+		<?php if(isset($data['WildWidget']['foot'])): ?>
+		<div class="ft">
+			<?php	echo $html->link($data['WildWidget']['twitterUrl'], '');	?>
 		</div>
 		<?php endif; ?>
 	</div> 

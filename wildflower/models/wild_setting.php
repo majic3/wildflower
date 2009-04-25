@@ -40,7 +40,7 @@ class WildSetting extends AppModel {
      * 
      * @TODO cache settings
      */
-    function getThemes() { 
+    /* function getThemes() { 
 		// list folders inside app/views/themed -using cake folder class
 		App::import('Core', 'Folder');
 		$folder = new Folder(); 
@@ -61,6 +61,6 @@ class WildSetting extends AppModel {
 		}
 		//debug($themes);
         return $themes;	
-    }
+    }  */
 	
 }

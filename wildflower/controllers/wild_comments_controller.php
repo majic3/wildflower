@@ -27,6 +27,11 @@ class WildCommentsController extends AppController {
         $this->data = $this->WildComment->findById($id);
     }
     
+    function wf_reply($id = null) {
+        $this->WildComment->contain('WildPost.slug');
+        $this->data = $this->WildComment->findById($id);
+    }
+    
     function wf_get_content($id) {
         $comment = $this->WildComment->findById($id, array('content'));
         $data = array('content' => $comment['WildComment']['content']);
@@ -44,6 +49,10 @@ class WildCommentsController extends AppController {
         $this->WildComment->contain('WildPost.title', 'WildPost.id');
         $comments = $this->paginate('WildComment', 'WildComment.spam = 1');
         $this->set('comments', $comments);
+    }
+    
+    function wf_reply() {
+		// allow admin users to reply show them a ajax'd lists of previous comments provide a mini mce interface and permit links
     }
     
     function wf_mark_spam() {

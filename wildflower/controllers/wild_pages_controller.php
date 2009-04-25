@@ -9,12 +9,19 @@ class WildPagesController extends AppController {
 	
 	// todo: chk helper needed	 ~ element? part of widgets 
 	public $components = array('RequestHandler', 'Seo');
-	public $helpers = array('Cache', 'Form', 'Html', 'Text', 'Time', 'Wildflower.List', 'Wildflower.Tree');
+	public $helpers = array('Form', 'Html', 'Text', 'Time', 'List', 'Tree');
     public $paginate = array(
         'limit' => 25,
         'order' => array('WildPage.lft' => 'asc')
     );
     public $pageTitle = 'Pages';
+    
+    function beforeFilter() {
+        parent::beforeFilter();
+        if (Configure::read('Wildflower.htmlCache') and $this->params['action'] == 'view') {
+            $this->helpers[] = 'HtmlCache';
+        }
+    }
     
     /**
      * A static about Wildflower page
@@ -97,17 +104,19 @@ class WildPagesController extends AppController {
         $this->set(compact('newParentPageOptions', 'revisions', 'isDraft'));
     }
     
-    function wf_view($id = null) {
+    function wf_preview($id, $previewCacheFileName = null) {
         if (isset($this->params['named']['rev'])) {
             $page = $this->WildPage->getRevision($id, $this->params['named']['rev']);
         } else {
             $page = $this->WildPage->findById($id);
         }
         
-        // @TODO Process Widgets
+        if (!is_null($previewCacheFileName)) {
+            $previewData = $this->__readPreviewCache($previewCacheFileName);
+            $page = am($page, $previewData);
+        }
         
-        $revisions = $this->WildPage->getRevisions($id, 10);
-        $this->set(compact('page', 'revisions'));
+        $this->set(compact('page'));
     }
     
     function wf_options($id = null) {
@@ -119,6 +128,15 @@ class WildPagesController extends AppController {
         $this->pageTitle = $this->data[$this->modelClass]['title'];
         $parentPageOptions = $this->WildPage->getListThreaded($this->data['WildPage']['id']);
         $this->set(compact('parentPageOptions'));
+    }
+    
+    function wf_reorder() {
+        $this->pageTitle = 'Reordering pages';
+        $this->WildPage->recursive = -1;
+        $order = 'lft ASC';
+        $fields = array('id', 'lft', 'rght', 'parent_id', 'title');
+    	$pages = $this->WildPage->find('all', compact('order', 'fields'));
+    	$this->set(compact('pages'));
     }
     
     function wf_sidebar($id = null) {
@@ -156,6 +174,7 @@ class WildPagesController extends AppController {
 		$hasUser = $page['WildUser']['id'] ? true : false;
         // JSON response
         if ($this->RequestHandler->isAjax()) {
+            $this->data = $page;
             $this->set(compact('page', 'hasUser'));
             return $this->render('wf_update');
         }
@@ -306,7 +325,7 @@ class WildPagesController extends AppController {
      * Handles redirect if the correct url for page is not entered.
      */
     function view() {
-        if (Configure::read('AppSettings.cache') == 'on') {
+     if (Configure::read('AppSettings.cache') == 'on') {
             $this->cacheAction = 60 * 60 * 24 * 3; // Cache for 3 days
         }
 		//     yuraji - Fix for URL trailing slash and named params
@@ -340,7 +359,7 @@ class WildPagesController extends AppController {
         $this->params['Wildflower']['view']['isHome'] = $this->isHome;
         
         // Find the requested page
-		$this->WildPage->recursive = -1;
+		$this->WildPage->contain('WildSidebar');
         $page = array();
         
         if (isset($this->params['id'])) {

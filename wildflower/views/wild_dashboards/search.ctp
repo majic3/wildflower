@@ -1,4 +1,4 @@
-<div id="primary-content">
+<div id="primary-content" class="main">
 
 	<h2>Search</h2>
 	

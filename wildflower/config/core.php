@@ -31,14 +31,30 @@ Configure::write(array('Wildflower' => array(
     'blogIndex' => 'posts',
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
-    'disableRootPageCache' => false
+    'disableRootPageCache' => false,
+    // 60000% speed increase with pure HTML caching into the webroot
+    // @TODO expering not implemented yet, so don't use
+    'htmlCache' => false
 )));
 
-// slideshowpro director - 0.1a
-Configure::write(array('Director' => array(
-	'api_key' => 'your-api-key',
-	'path' => 'your-api-path',
-	'cache' => CACHE . 'Director',
+// system admin user with this login can reset & ad. theres a better wf cake way to do this was just hack to be replaced
+Configure::write(array('System' => array(
+	'adminUser' => array(
+		'admin'
+	),
+	'adminCustomSettings' => array('general', 'themes', 'director', 'posts')
+)));
+
+// configured theme list - can be overriden in settings. These settings can be overridden in wildflower/admin/settings/#themes
+Configure::write(array('themes' => array(
+	array('public' => 'wildflower', 'text', 'theme use by wf'),
+)));
+
+// slideshowpro director - 0.1a - Director Media suite for Wildflower. These settings can be overridden in wildflower/admin/settings/#director
+Configure::write(array('director' => array(
+	array('api-key', 'your-api-key', 'text', 'director API key'),
+	array('path', 'your-api-path', 'text', 'director API path'),
+	array('cache', CACHE . 'Director', 'text', 'director API cache'),
 )));
 
 // icing config 0.7 - tidying up and reviewing everything (entire set of modifications reviewed)
@@ -69,5 +85,3 @@ Configure::write(array('Icing' => array(
 		'default_cache' => '-1'
     )
 )));
-
-Configure::write('debug', 2);

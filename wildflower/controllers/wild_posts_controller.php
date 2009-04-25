@@ -10,13 +10,14 @@ class WildPostsController extends AppController {
 	    'Category', 
 	    'Tree', 
 	    'Time',
-		'Gravatar'
+		'Gravatar',
+	    'Paginator'
 	);
-	public $components = array('Email');
+	public $components = array('RequestHandler', 'Email');
 	
 	/** Pagination options for the wf_index action **/
     public $paginate = array(
-        'limit' => 10,
+        'limit' => 12,
         'order' => array('WildPost.created' => 'desc'),
     );
 
@@ -48,15 +49,6 @@ class WildPostsController extends AppController {
      * 
      */
     function wf_comments($id = null, $status = null) {
-
-		/*
-			todo: 
-			icing::tesla	- adding gravatar helper for people who post - also want the open id too options to choose between the two?? nice
-
-			gravatar needs some testing 2 options
-				*  bryce (bdude) - http://bakery.cakephp.org/articles/view/gravatar
-				*  Graham Weldon - http://bakery.cakephp.org/articles/view/gravatar-helper
-		*/
         $spam = ($status == 'spam') ? 1 : 0;
         $approved = ($status == 'unapproved') ? 0 : 1;
         if ($spam) {
@@ -73,6 +65,12 @@ class WildPostsController extends AppController {
                 'WildUser'
             )
         ));
+
+        // JSON response
+        if ($this->RequestHandler->isAjax()) {	
+			Configure::write('debug', 0);
+            return $this->render('wf_comments_by_status');
+        }
         
         $goBackAction = $this->referer(array('action' => 'edit', $this->data['WildPost']['id']));
         $this->set('goBackAction', $goBackAction);
@@ -176,7 +174,7 @@ class WildPostsController extends AppController {
 		
         if ($this->RequestHandler->isAjax()) {
             $this->WildPost->contain('WildUser');
-            $post = $this->WildPost->findById($this->WildPost->id);
+            $this->data = $post = $this->WildPost->findById($this->WildPost->id); // @TODO clean up
             $this->set(compact('post'));
             return $this->render('wf_update');
         }
@@ -245,7 +243,7 @@ class WildPostsController extends AppController {
     	
     	$this->pageTitle = ucfirst(Configure::read('Wildflower.blogName'));
         $this->paginate = array(
-            'limit' => 10,
+            'limit' => 4,
             'order' => array('WildPost.created' => 'desc'),
             'conditions' => 'WildPost.draft = 0'
         );

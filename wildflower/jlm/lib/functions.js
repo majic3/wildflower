@@ -3,6 +3,22 @@ function ucwords(string) {
 }
 
 /**
+ * Testing for the occurence of a
+ * if( name in oc(['bobby', 'sue','smith']) ) { ... }
+ * http://snook.ca/archives/javascript/testing_for_a_v/
+ * 
+ * @param object / array
+ */
+function oc(a)	{
+  var o = {};
+  for(var i=0;i<a.length;i++)
+  {
+    o[a[i]]='';
+  }
+  return o;
+}
+
+/**
  * Wrapper for Firebug's console.debug()
  * 
  * If the browser does not support it nothing happens.

@@ -401,6 +401,21 @@ class NavigationHelper extends AppHelper {
     	return $return;
     }
     
+    /**
+     * Generate simple tabs list from array
+     *
+     * @param array $indexArray Settings
+     * @param string $ulClass
+     */
+    function tabslist($items, $ulClass = 'tabs') {
+		$return = "<ul".($ulClass ? " class=\"$ulClass\"" : '').">";
+			foreach($items as $item)	{
+				$return.= "<li>" . $this->Html->link($item['display'], $item['url'], $item['attribs']) . "</li>";
+			}
+		$return.= "</ul>";
+		return $return;
+    }
+    
     function _get_parent_indexes($thisLeft) {
         if (!$this->_limits) {
             return array (

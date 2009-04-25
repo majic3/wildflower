@@ -28,6 +28,4 @@
     ?>
 </div>
 
-<div class="buttons"> <?php /* __('or'); */ ?> <?php /* echo $html->link(__('Cancel', true), array('action' => 'view', (isset($this->data['WildPost'])) ? $this->data['WildPost']['id'] : $this->data['WildPage']['id'])); */ ?></div>	  
-
 <?php endif; ?>

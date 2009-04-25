@@ -1,4 +1,4 @@
-<div id="primary-content">
+<div id="primary-content" class="main">
 
     <?php
         $cssClasses = array('link');
@@ -11,8 +11,9 @@
         }
     ?>
 
+	<div class="line">
     <?php foreach ($links as $link) { ?>
-    <div class="<?php echo join(' ', $cssClasses) ?>" id="link-<?php echo $link['WildLink']['id'] ?>">
+    <div class="unit size1of3<?php echo join(' ', $cssClasses) ?>" id="link-<?php echo $link['WildLink']['id'] ?>">
         <h2><?php echo $html->link($link['WildLink']['name'], WildLink::getUrl($link['WildLink']['uuid'])) ?></h2>
         <small class="link-date">Linked <?php echo $time->nice($link['WildLink']['created']) ?></small>
         
@@ -28,7 +29,7 @@
         
     </div>
     <?php } ?>
-    
+	</div>
     <?php echo $this->element('wf_pagination') ?>
     
 </div>

@@ -13,6 +13,7 @@
         echo
         // Load your CSS files here
         $html->css(array(
+            '/css/ui/jquery-ui-1.7.1',
             '/wildflower/css/wf.main',
             '/css/ui/jquery-ui-1.7'
         )),
@@ -54,7 +55,7 @@
     </script>
     
 </head>
-<body<?php if (isset($editorMode)) echo ' class="editor_mode"'; echo str_replace('wild_', '', $this->params['controller']); ?>>
+<body class="<?php if (isset($editorMode)) echo 'editor_mode'; echo	str_replace('wild_', ' ', $this->params['controller']); ?>">
 
 <?php if (!isset($editorMode)): ?>    
 <div id="header">
@@ -94,15 +95,11 @@
 
 <div id="wrap">
     <div id="content">
-        <div id="co_top_shadow">
-        <div id="co_top_right_corner">
         <div id="co_bottom_shadow">
         <div id="co_right_shadow">
         <div id="co_right_bottom_corner">
-        <div id="content-pad">
+        <div id="content_pad">
             <?php echo $content_for_layout; ?>
-        </div>
-        </div>
         </div>
         </div>
         </div>

@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS `wild_messages` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `subject` varchar(255) collate utf8_unicode_ci default NULL,
+  `spam` int(1) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Stores all contact form communication' AUTO_INCREMENT=5 ;
 

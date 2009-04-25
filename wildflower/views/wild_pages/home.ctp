@@ -7,16 +7,17 @@
  *
  * @package wildflower
  */
-/* todo: oo css */
 ?>
-<div class="page"> 
-    <div class="main">
-    <h2><?php echo $page['WildPage']['title']; ?></h2>
-       <?php echo $page['WildPage']['content']; ?>
-    </div>
-    <div class="sidebar">
-       <?php echo $page['WildPage']['sidebar_content']; ?>
-    </div>
-    
-    <?php echo $this->element('edit_this', array('id' => $page['WildPage']['id'])) ?>
+<div class="main">
+	<div class="line">
+		<?php echo $this->element('edit_this', array('id' => $page['WildPage']['id'])) ?>
+		<div id="size3of4 unit">
+			<h2><?php echo $page['WildPage']['title']; ?></h2>
+			<?php echo $page['WildPage']['content']; ?>
+		</div>
+
+		<div id="size1of4 lastUnit">
+			<?php echo $page['WildPage']['sidebar_content']; ?>
+		</div>
+	</div>
 </div>
