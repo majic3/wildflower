@@ -1,11 +1,5 @@
 function init()	{
 	$('a[title]').tipsy({fade: true, gravity: 'n'})
-		$('#body .tabs').tabs();
-	///$('.accordion').accordion();
-	if(settings.hasFeeds)	{
-		$('a.feed').gFeed( { target: '#feeds', tabs: true } );
-	}
-
 }
 
 this.label2value = function(){	
@@ -14,7 +8,8 @@ this.label2value = function(){
 	var active = "active";
 	var focused = "focused";
 	
-	$("label").each(function(){		
+	$("label").each(function(){
+		var obj;
 		obj = document.getElementById($(this).attr("for"));
 		if(($(obj).attr("type") == "text") || (obj.tagName.toLowerCase() == "textarea"))	{
 			$(obj).addClass(inactive);
@@ -42,10 +37,5 @@ this.label2value = function(){
 
 $(document).ready(function (){
 	label2value();
-	$('#body .tabs').tabs();
-	$('#body .tabs').live("initUI", function()	{
-		$(this).tabs();
-	});
-
 	init();	
 });

@@ -51,8 +51,8 @@ class CakeTestFixtureTestFixture extends CakeTestFixture {
  */
 	var $fields = array(
 		'id' => array('type' => 'integer',  'key' => 'primary'),
-		'name' => array('type' => 'text', 'length' => '255'),
-		'created' => array('type' => 'datetime'),
+		'name' => array('type' => 'string', 'length' => '255'),
+		'created' => array('type' => 'datetime')
 	);
 /**
  * Records property
@@ -60,9 +60,9 @@ class CakeTestFixtureTestFixture extends CakeTestFixture {
  * @var array
  */
 	var $records = array(
-		array('name' => 'Gandalf'),
-		array('name' => 'Captain Picard'),
-		array('name' => 'Chewbacca')
+		array('name' => 'Gandalf', 'created' => '2009-04-28 19:20:00'),
+		array('name' => 'Captain Picard', 'created' => '2009-04-28 19:20:00'),
+		array('name' => 'Chewbacca', 'created' => '2009-04-28 19:20:00')
 	);
 }
 /**

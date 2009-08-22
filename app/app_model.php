@@ -46,7 +46,27 @@ class AppModel extends Model {
     function invalidate($field, $value = true) {
         return parent::invalidate($field, __($value, true));
     }
-
+    
+    /**
+     * Delete record(s)
+     *
+     * @param mixed $ids
+     * @return void
+     */
+    function mass_delete($ids) {
+        if (!is_array($ids)) {
+            $ids = array(intval($ids));
+        }
+        $ids = join(', ', $ids);
+        $this->query("DELETE FROM {$this->useTable} WHERE id IN ($ids)");
+    }
+    
+    /**
+     * Search units (Pages & Posts by default; can be expanded to search more units)
+     *
+     * @param str $query
+     * @return void
+     */
 	function doSearch($query)	{
 		/*	compatible with latest cake reused code & might be possible to work wit custom models in future	*/
 		if($this->name == 'WildPost')	{
@@ -58,11 +78,11 @@ class AppModel extends Model {
 		$contentResults = array();
 		if (empty($titleResults)) {
 			$titleResults = array();
-			$contentResults = $this->find('all', Array('conditions' => Array("MATCH ({$this->name}.content) AGAINST '%$query%'"), 'fields' => $fields));
+			$contentResults = $this->find('all', Array('conditions' => Array("MATCH ({$this->name}.content) AGAINST (\"%$query%\")"), 'fields' => $fields));
 		} else {
 			$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.WildPost.id'));
 			$notInQueryPart = '';
-			$conditions['AND'][] = "match ({$this->name}.content) AGAINST ('$query')";
+			$conditions['AND'][] = "match ({$this->name}.content) AGAINST (\"%$query%\")";
 			if (!empty($alredyFoundIds)) {
 				$conditions['AND'][] = "{$this->name}.id NOT IN ($alredyFoundIds)";
 			}

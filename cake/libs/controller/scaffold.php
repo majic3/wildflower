@@ -161,13 +161,13 @@ class Scaffold extends Object {
 		$displayField = $this->ScaffoldModel->displayField;
 		$singularVar = Inflector::variable($modelClass);
 		$pluralVar = Inflector::variable($this->controller->name);
-		$singularHumanName = Inflector::humanize($modelClass);
-		$pluralHumanName = Inflector::humanize($this->controller->name);
+		$singularHumanName = Inflector::humanize(Inflector::underscore($modelClass));
+		$pluralHumanName = Inflector::humanize(Inflector::underscore($this->controller->name));
 		$scaffoldFields = array_keys($this->ScaffoldModel->schema());
 		$associations = $this->__associations();
 
 		$this->controller->set(compact('modelClass', 'primaryKey', 'displayField', 'singularVar', 'pluralVar',
-								'singularHumanName', 'pluralHumanName', 'scaffoldFields', 'associations'));
+			'singularHumanName', 'pluralHumanName', 'scaffoldFields', 'associations'));
 
 		if ($this->controller->view && $this->controller->view !== 'Theme') {
 			$this->controller->view = 'scaffold';
@@ -378,7 +378,7 @@ class Scaffold extends Object {
  * @access private
  */
 	function __scaffold($params) {
-		$db = &ConnectionManager::getDataSource($this->ScaffoldModel->useDbConfig);
+		$db =& ConnectionManager::getDataSource($this->ScaffoldModel->useDbConfig);
 		$admin = Configure::read('Routing.admin');
 
 		if (isset($db)) {

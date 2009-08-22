@@ -5,6 +5,8 @@
  * If you have a custom AppController in your application, you need to merge 
  * the functionality with this. It's essential for Wildflower's functionality.
  *
+ * to enable extra features of the majic branch remove //majic
+ *
  * WF AppController does:
  * - authentificate users
  * - set WF Configure settings
@@ -16,7 +18,7 @@ App::import('Core', 'l10n');
 
 class AppController extends Controller {
 
-	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo', 'DebugKit.Toolbar');
+	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo', 'DebugKit.Toolbar' => array('panels' => array('Interactive.interactive')));
 	public $currentUserId;
 	public $helpers = array(
 	    'Html', 
@@ -29,16 +31,29 @@ class AppController extends Controller {
 	    'Textile', 
 	    'Tree', 
 	    'Text',
-	    'Time'
+	    'Time',
+	    //majic
+		'Asset.Asset'
 	);
 	public $homePageId;
 	public $isAuthorized = false;
     public $isHome = false;
-    
-    public $view = 'Theme';
-    public $theme = 'wildflower';
-    public $canonical = '';
+
+	// theme setting
+    //majic
+	public $view = 'Theme';
+    //majic
+	///public $theme = 'wildflower';
 	
+	// canonical urls
+    public $canonical = Array('rel' => false, 'rev' => false);
+
+	// setting of the body class (allows page params to set class of html body)
+    public $bdyClass = false;
+
+	// setting of the templateSwitch class (allows page params to set class of division in template; layouts may also be switched)
+    public $templateSwitch = null;
+
 	private $_isDatabaseConnected = true;
 	
 	/**
@@ -53,29 +68,33 @@ class AppController extends Controller {
      */
 	private function _configureWildflower() {
 	    // AuthComponent config
-        $this->Auth->userModel = 'WildUser';
+        $this->Auth->userModel = 'User';
         $this->Auth->fields = array('username' => 'login', 'password' => 'password');
-        $prefix = Configure::read('Wildflower.prefix');
-        $this->Auth->loginAction = "/$prefix/login";
-        $this->Auth->logoutAction = array('prefix' => $prefix, 'controller' => 'wild_users', 'action' => 'logout');
+        $prefix = Configure::read('Routing.admin');
+        $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login', 'admin' => false);
+        $this->Auth->logoutAction = array('controller' => 'users', 'action' => 'logout', 'admin' => false);
         $this->Auth->autoRedirect = false;
         $this->Auth->allow('update_root_cache'); // requestAction() actions need to be allowed
         $this->Auth->loginRedirect = "/$prefix";
 	    
 	    // Site settings
-		$settings = ClassRegistry::init('WildSetting')->getKeyValuePairs();
+		$settings = ClassRegistry::init('Setting')->getKeyValuePairs();
         Configure::write('AppSettings', $settings); // @TODO add under Wildlfower. configure namespace
         Configure::write('Wildflower.settings', $settings); // The new namespace for WF settings
         
         // Admin area requires authentification
 		if ($this->isAdminAction()) {
 			$this->layout = 'admin_default';
+			// might need this if using themes might not #
+			$this->theme = null;
+			if(!Configure::read('Wildflower.debug.admin'))	Configure::write('debug', 0);
 		} else {
 			$this->layout = 'default';
 			$this->Auth->allow('*');
+			//	if(!Configure::read('Wildflower.debug.public'))	Configure::write('debug', 0);
 		}
 		
-		// Internationalization
+		// Internationalization - check if multi lang settings are being used and use that
 		$this->L10n = new L10n();
         $this->L10n->get('eng');
         Configure::write('Config.language', 'en');
@@ -86,7 +105,8 @@ class AppController extends Controller {
 		// Set cookie defaults
 		$this->cookieName = Configure::read('Wildflower.cookie.name');
 		$this->cookieTime = Configure::read('Wildflower.cookie.expire');
-		$this->cookieDomain = '.' . getenv('SERVER_NAME');
+		// making this www or having images on a static domain if not using cdn is advised by ydn perhaps wf can be configured to handle this
+		$this->cookieDomain = (Configure::read('Wildflower.cookie.domain')) ? Configure::read('Wildflower.cookie.domain') : '.' . getenv('SERVER_NAME');
 
 		// Compress output to save bandwith / speed site up
 		if (!isset($this->params['requested']) && Configure::read('Wildflower.gzipOutput')) {
@@ -106,7 +126,8 @@ class AppController extends Controller {
      *
      * @param int $id
      */
-    function wf_delete($id = null) {
+    function admin_delete($id = null) {
+		Configure::write('debug', 0);
     	$id = intval($id);
     	$model = $this->modelClass;
     	
@@ -138,39 +159,26 @@ class AppController extends Controller {
      *
      * @TODO Could be much faster using custom UPDATE or DELETE queries
      */
-    function wf_mass_update() {
+    function admin_mass_update() {
+        //fb($this->data);exit();
+        if ($this->data['__action'] == 'delete') {
+            $this->data['__action'] = 'mass_delete';
+        }
+        $availActions = array('mass_delete', 'publish', 'unpublish', 'approve', 'unapprove', 'spam', 'unspam');
+        // Collect selected item IDs
+        $ids = array();
         if (isset($this->data['__action'])) {
             foreach ($this->data[$this->modelClass]['id'] as $id => $checked) {
                 if (intval($checked) === 1) {
-                    $this->{$this->modelClass}->id = intval($id);
-                    switch ($this->data['__action']) {
-                        case 'delete':
-                            $this->{$this->modelClass}->delete($id);
-                            break;
-                        case 'publish':
-                            $this->{$this->modelClass}->publish($id);
-                            break;
-                        case 'unpublish':
-                            $this->{$this->modelClass}->draft($id);
-                            break;
-                        case 'approve':
-                            $this->{$this->modelClass}->approve($id);
-                            break;
-                        case 'unapprove':
-                            $this->{$this->modelClass}->unapprove($id);
-                            break;                        
-                        case 'spam':
-                            $this->{$this->modelClass}->spam($id);
-                            break;                        
-                        case 'unspam':
-                            $this->{$this->modelClass}->unspam($id);
-                            break;
-                    }
+                    $ids[] = intval($id);
                 }
             }
-            unset($this->{$this->modelClass}->id);
         }
-        
+        // If the action is recognized execute it
+        if (in_array($this->data['__action'], $availActions, true)) {
+            $result = $this->{$this->modelClass}->{$this->data['__action']}($ids);
+        }
+
     	$redirect = am($this->params['named'], array('action' => 'wf_index'));
         $this->redirect($this->referer($redirect));
     }
@@ -180,11 +188,11 @@ class AppController extends Controller {
      *
      * @param string $query Search term, encoded by Javascript's encodeURI()
      */
-    function wf_search($query = '') {
+    function admin_search($query = '') {
         $query = urldecode($query);
-        $results = $this->{$this->modelClass}->search($query);
+        $results = $this->doSearch($query);
         $this->set('results', $results);
-        $this->render('/wild_dashboards/wf_search');
+        $this->render('/dashboards/wf_search');
     }
 	
 	/**
@@ -215,8 +223,8 @@ class AppController extends Controller {
      * The name convencions is unserscored class that you want to plug into with "_callback"
      * suffix. Examples:
      *    
-     *    - wild_pages_controller_callback.php
-     *    - wild_comments_controller_callback.php
+     *    - pages_controller_callback.php
+     *    - comments_controller_callback.php
      *    - wildflower_app_controller_callback.php
      *
      * @param string $when Launch <code>before</code> or <code>after</code> current action
@@ -248,7 +256,8 @@ class AppController extends Controller {
     /**
      * Before rendering
      * 
-     * Set nice SEO titles.
+	 * Set nice SEO titles.
+	 * Set canonical url if not set.
      */
     function beforeRender() {
         parent::beforeRender();
@@ -278,15 +287,40 @@ class AppController extends Controller {
         );
         $this->params['Wildflower']['view'] = $params;
     	$this->set($params);
-
-		//if(Configure::read('themes.public')) $this->theme = Configure::read('themes.public');
     	
     	// User ID for views
 		$this->set('loggedUserId', $this->Auth->user('id'));
 
-		// canonical
-		$this->set('canonical', ($this->canonical == '') ? $this->here : $this->canonical);
-    }
+		// canonical - checks shorts all the time
+		if(array_key_exists('rel', $this->canonical))	{
+			$this->canonical['rel'] = ($this->canonical['rel']) ? $this->canonical['rel'] : $this->here;
+			$this->canonical['rev'] = ClassRegistry::init('Short')->checkurl($this->canonical['rel']);
+			$this->canonical['rel'] = Configure::read('Wildflower.puburl') . $this->canonical['rel'];
+			$this->set('canonical', $this->canonical);
+		}
+        
+        // subtemplates with oocss
+        if($this->templateSwitch)    {
+            $this->set('templateSwitch', $this->templateSwitch);
+        } else {
+            $this->set('templateSwitch', false);
+        }
+
+        // a class set in controller to be used as contact of body tag
+        if($this->bdyClass)    {
+            $this->set('bdyClass', $this->bdyClass);
+        } 
+
+		if($this->here == '/status/')	{
+			$this->layout = 'status';
+		}
+
+		$this->_setErrorLayout();
+	}
+
+	function preprocessWidgets() {
+		//$this->viewVars['page'];
+	}
 
 	function do404() {
 		$this->pageTitle = 'Page not found';
@@ -305,7 +339,7 @@ class AppController extends Controller {
 	 *
 	 * @return void
 	 */
-	function wf_create_preview() {
+	function admin_create_preview() {
         $cacheDir = Configure::read('Wildflower.previewCache') . DS;
         
         // Create a unique file name
@@ -334,10 +368,10 @@ class AppController extends Controller {
      * @return bool
      */
     function isAdminAction() {
-        $adminRoute = Configure::read('Routing.admin');
-        $wfPrefix = Configure::read('Wildflower.prefix');
-        if (isset($this->params[$adminRoute]) && $this->params[$adminRoute] === $wfPrefix) return true;
-        return (isset($this->params['prefix']) && $this->params['prefix'] === $wfPrefix);
+        if (isset($this->params[Configure::read('Routing.admin')]) and $this->params[Configure::read('Routing.admin')]) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -492,4 +526,11 @@ class AppController extends Controller {
         pr($output);
         die();
     }
+
+	function _setErrorLayout() {  
+		if($this->name == 'CakeError') {  
+			$this->layout = 'error';  
+		}
+	}
+
 }

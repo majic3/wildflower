@@ -141,7 +141,6 @@ class SecurityComponentTest extends CakeTestCase {
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Security =& $this->Controller->TestSecurity;
 		$this->Controller->Security->blackHoleCallback = 'fail';
-
 		$this->oldSalt = Configure::read('Security.salt');
 		Configure::write('Security.salt', 'foo!');
 	}
@@ -152,10 +151,11 @@ class SecurityComponentTest extends CakeTestCase {
  * @return void
  */
 	function tearDown() {
+		Configure::write('Security.salt', $this->oldSalt);
+		$this->Controller->Session->del('_Token');
 		unset($this->Controller->Security);
 		unset($this->Controller->Component);
 		unset($this->Controller);
-		Configure::write('Security.salt', $this->oldSalt);
 	}
 /**
  * testStartup method
@@ -363,6 +363,14 @@ class SecurityComponentTest extends CakeTestCase {
  * @return void
  */
 	function testDigestAuth() {
+		$skip = $this->skipIf((version_compare(PHP_VERSION, '5.1') == -1) XOR (!function_exists('apache_request_headers')),
+			"%s Cannot run Digest Auth test for PHP versions < 5.1"
+		);
+
+		if ($skip) {
+			return;
+		}
+
 		$this->Controller->action = 'posted';
 		$_SERVER['PHP_AUTH_DIGEST'] = $digest = <<<DIGEST
 		Digest username="Mufasa",

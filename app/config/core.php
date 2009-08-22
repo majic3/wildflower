@@ -64,7 +64,7 @@
  * 'admin' 		-> admin_index() and /admin/controller/index
  * 'superuser' -> superuser_index() and /superuser/controller/index
  */
-	//Configure::write('Routing.admin', 'admin');
+	Configure::write('Routing.admin', 'admin');
 
 /**
  * Turn off all caching application-wide.
@@ -80,7 +80,7 @@
  * or in each action using $this->cacheAction = true.
  *
  */
-	Configure::write('Cache.check', false);
+	Configure::write('Cache.check', true);
 /**
  * Defines the default error type when using the log() function. Used for
  * differentiating error logging and debugging. Currently PHP supports LOG_DEBUG.
@@ -99,7 +99,7 @@
  * To use database sessions, execute the SQL file found at /app/config/sql/sessions.sql.
  *
  */
-	Configure::write('Session.save', 'cake');
+	Configure::write('Session.save', 'php');
 /**
  * The name of the table used to store CakePHP database sessions.
  *
@@ -224,11 +224,4 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
-
-	
-//die(APP . 'tmp' . DS . 'min');
-/*	minify filter	cache store, js filter & css filter */
-Configure::write('Asset.filter.cache', APP . 'tmp' . DS . 'cache' . DS . 'min');
-Configure::write('Asset.filter.css', 'min.php');
-Configure::write('Asset.filter.js', 'min.php');
 ?>

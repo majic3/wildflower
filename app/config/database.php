@@ -87,83 +87,8 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'icing',
+		'database' => 'wildflower',
 	    'port' => 3306
-	);
-	
-	/**
-	 * This is the configuration for wf.klevo.sk
-	 *
-	 * @var array
-	 */
-	public $production = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'icing',
-	    'domain' => 'icing.ss29'
-	);
-	
-	/**
-	 * This is the configuration for tesla
-	 *
-	 * @var array
-	 */
-	public $tesla = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'icing_tesla',
-	    'domain' => 'tesla.icing.ss29'
-	);
-	
-	/**
-	 * This is the configuration for escher
-	 *
-	 * @var array
-	 */
-	public $escher = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'icing_escher',
-	    'domain' => 'escher.icing.ss29'
-	);	
-	
-	/**
-	 * This is the configuration for escher
-	 *
-	 * @var array
-	 */
-	public $darwin = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'icing_darwin',
-	    'domain' => 'darwin.icing.ss29'
-	);
-	
-	/**
-	 * This is the configuration for dev.wf.klevo.sk
-	 *
-	 * @var array
-	 */
-	public $production_dev = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'icing_dev',
-	    'domain' => 'dev.icing.ss29'
 	);
 	
 	/**

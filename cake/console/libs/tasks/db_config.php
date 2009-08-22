@@ -240,7 +240,7 @@ class DbConfigTask extends Shell {
 		$this->hr();
 		$looksGood = $this->in('Look okay?', array('y', 'n'), 'y');
 
-		if (low($looksGood) == 'y' || low($looksGood) == 'yes') {
+		if (strtolower($looksGood) == 'y' || strtolower($looksGood) == 'yes') {
 			return $config;
 		}
 		return false;
@@ -281,7 +281,7 @@ class DbConfigTask extends Shell {
 				if ($info['persistent'] === false) {
 					$info['persistent'] = 'false';
 				} else {
-					$info['persistent'] = 'false';
+					$info['persistent'] = ($info['persistent'] == true) ? 'true' : 'false';
 				}
 
 				$oldConfigs[] = array(

@@ -524,6 +524,7 @@ class RequestHandlerComponent extends Object {
 			return $this->ext;
 		}
 
+		$types = $type;
 		if (is_string($type)) {
 			$types = array($type);
 		}
@@ -550,7 +551,11 @@ class RequestHandlerComponent extends Object {
             return $accepts[0];
 		}
 
-		$accepts = array_intersect($this->__acceptTypes, $accepts);
+		$acceptedTypes = array();
+		foreach ($this->__acceptTypes as $type) {
+			$acceptedTypes[] = $this->mapType($type);
+		}
+		$accepts = array_intersect($acceptedTypes, $accepts);
 		return $accepts[0];
 	}
 /**
@@ -580,7 +585,7 @@ class RequestHandlerComponent extends Object {
 		if (empty($this->__renderType)) {
 			$controller->viewPath .= '/' . $type;
 		} else {
-			$remove = preg_replace("/(?:\/{$type})$/", '/' . $type, $controller->viewPath);
+			$remove = preg_replace("/(?:\/{$this->__renderType})$/", '/' . $type, $controller->viewPath);
 			$controller->viewPath = $remove;
 		}
 		$this->__renderType = $type;

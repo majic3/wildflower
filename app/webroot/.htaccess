@@ -5,26 +5,42 @@
     RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 </IfModule>
 
-## tweaking for yslow improvements - uncomment for prod
-## <IfModule mod_deflate.c>
-##   # compress content with type html, text, and css
-##   AddOutputFilterByType DEFLATE text/css text/javascript application/x-javascript text/js
-##   <IfModule mod_headers.c>
-##     # properly handle requests coming from behind proxies
-##     Header append Vary User-Agent
-##   </IfModule>
-## </IfModule>
 
-## <IfModule mod_expires.c> 
-##   ExpiresActive On
-##   ExpiresByType text/css "access plus 10 years"
-##   ExpiresByType text/js "access plus 10 years"
-##   ExpiresByType text/javascript "access plus 10 years"
-##   ExpiresByType application/x-javascript "access plus 10 years"
-##   ExpiresByType image/png "access plus 10 years"
-##   ExpiresByType image/gif "access plus 10 years"
-##   ExpiresByType image/jpeg "access plus 10 years"
-## </IfModule>
+# tweaking for yslow improvements - uncomment for prod
+<IfModule mod_deflate.c>
+  # compress content with type html, text, and css
+  AddOutputFilterByType DEFLATE text/css text/javascript application/x-javascript text/js
+  <IfModule mod_headers.c>
+    # properly handle requests coming from behind proxies
+    Header append Vary User-Agent
+  </IfModule>
+</IfModule>
+<IfModule mod_deflate.c>
+  # place filter 'DEFLATE' on all outgoing content
+  SetOutputFilter DEFLATE
+  # exclude uncompressible content via file type
+  SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|rar|zip)$ no-gzip
+  <IfModule mod_headers.c>
+    # properly handle requests coming from behind proxies
+    Header append Vary User-Agent
+  </IfModule>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+<IfModule mod_expires.c>
+	# htaccesselite.com/d/use-htaccess-to-speed-up-your-site-discussion-vt67.html
+	ExpiresActive On
+	ExpiresDefault A604800
+	ExpiresByType image/x-icon A2592000
+	ExpiresByType application/x-javascript A2592000
+	ExpiresByType text/css A2592000
+	ExpiresByType text/html A2592000
+</IfModule>
 
 ## FileETag none 
 # tweaking for yslow improvements - uncomment for prod
@@ -37,7 +53,7 @@
    </IfModule>
 </IfModule>
 
-<FilesMatch "^\/(cjs|ccss)">
+<FilesMatch "\.(js|css)$">
 # set expires causes 500 error on some systems
 #Header set Expires "Thu, 15 Apr 2012 20:00:00 GMT"
 # etag ~  causes 500 error on some systems

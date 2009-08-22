@@ -3,12 +3,10 @@ Wildflower CMS main stylesheet
  
 Colors
 ======
-#000 - Ligter Black - Main type color
+#000 - Black - Main type color
 #e2e2e2 - Light Grey - Non-content background 
 #0033CC - Link Blue - Hyperlinks
 #eefaff - Ligh Blue - Sidebar highlight background
-
-todo: some tweaking after other stuff done minor, but a tidy up to might find more worth doing
 */
 
 html,
@@ -44,10 +42,14 @@ img {
     border: none;
 }
 
+hr {
+    display: none;
+}
+
 #wrap,
 #footer,
 #header-wrap {
-    padding: 0 30px;
+    padding: 0 20px;
 }
 
 #wrap {
@@ -57,7 +59,7 @@ img {
 
 #footer {
     margin: 0;
-    padding: 0 40px 14px;
+    padding: 0 30px 14px;
     font-size: 10px;
 }
 
@@ -65,12 +67,15 @@ img {
         color: #686868;
         text-decoration: none;
     }
+    
 
-#header,
-#editor_mode_header {
-    background: #1b3b53;
+/* Header */
+
+#header {
+    background: #092439;
     overflow: hidden;
     color: #feffc2;
+    padding: 0 15px;
 }
 
 #editor_mode_header {
@@ -95,24 +100,30 @@ img {
     }
 
     #header a {
-        color: #feffc2;
+        color: #fff;
     }
     
     #header a:hover,
     #editor_mode_header a:hover {
-        background-color: #d0e4f8;
-        color: #000;
+        background: #3b3b3b;
+        color: #fff;
     }
 
 #header-wrap {
     position: relative;
 }
 
+#site_title ,
 #site-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: normal;
     margin: 0;
     letter-spacing: 0.5px;
+    text-decoration: none;
+    padding: 17px 10px;
+    display: block;
+    float: left;
+    color: #eade51;
 }
 
     #site-title a {
@@ -121,6 +132,13 @@ img {
         display: block;
         float: left;
     }
+    
+#site_index {
+    float: left;
+    display: block;
+    padding: 3px 5px;
+    margin: 18px 0 0 -3px;
+}
     
 #nav {
     list-style: none;
@@ -135,41 +153,45 @@ img {
         float: left;
     }
     
+    #nav .nav_item_on_right {
+        float: right;
+    }
+    
     #nav a {
         display: block;
         height: 13px;
         margin: 0 3px 0 0;
-        padding: 4px 9px 9px 9px;
-        background-color: #446076;
+        padding: 4px 9px 8px 9px;
+        background: #1f3b52;
         color: #fff;
         text-decoration: none;
     }
     
-        #nav .current a,
-        #nav .current a:hover {
-            color: #1d1d1d;
-            background-color: #e2e2e2;
-            font-weight: bold;
-        }
-        
-        #nav .current a {
-            color: #008720;
-        }
+    #nav .current,
+    #nav .current:hover {
+        color: #008720;
+        background-color: #e2e2e2;
+        font-weight: bold;
+    }
+    
+    #nav .current {
+        color: #008720;
+    }
         
     #nav a:hover {
         color: #fff;
-        background-color: #597d99;
+        background-color: #282828;
     }
 
-#login-info {
+#login_info {
     position: absolute;
-    top: 0px;
-    right: 32px;
+    top: 5px;
+    right: 20px;
 }
 
     #login-info a {
         display: inline-block;
-        padding: 6px;
+        padding: 3px 5px;
     }
 
 #content {
@@ -288,12 +310,12 @@ h2 {
 }
 
 .section {
-    margin: -20px -25px 14px;
-    padding: 15px 25px;
+    margin: -20px -20px 14px;
+    padding: 13px 20px;
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
-    background: #eef5fb url(img/page_top.png) left bottom repeat-x;
+    background: #d2eafc url(img/page_top.png) left bottom repeat-x;
 }
 
     .section h2 {
@@ -360,8 +382,8 @@ select {
     margin: 0;
 }
 
-#WildPostCreatedYear,
-#WildPageCreatedYear {
+#PostCreatedYear,
+#PageCreatedYear {
     margin-right: 10px;
 }
 
@@ -476,9 +498,9 @@ select {
 
 #flashMessage {
     color: #fff;
-    background: #3b8f30;
+    background: #40a65f;
     border: 1px solid #62e350;
-    padding: 5px;
+    padding: 5px 10px;
     margin: 0 0 14px 0;
 }
 
@@ -607,23 +629,19 @@ select {
     line-height: 17px;
 }    
 
-    /* Sidebar search */
+/* Sidebar search */
 
-        #sidebar .search .input {
-            margin-bottom: 0;
-        }
-        
-        #sidebar .search label {
-            font-weight: bold;
-        }
-        
-        #sidebar .search input {
-            width: 99%;
-            margin: 2px 0 0 0;
-            display: block;
-            font-size: 14px;
-            padding: 2px;
-        }
+#sidebar .search .input {
+    margin-bottom: 0;
+}
+
+#sidebar .search input {
+    width: 99%;
+    margin: 2px 0 0 0;
+    display: block;
+    font-size: 14px;
+    padding: 2px;
+}
 
 #sidebar-search-results {
     list-style: none;
@@ -650,6 +668,8 @@ select {
     padding: 4px 6px;
     background-color: #fffde0;
     border: 1px solid #fffcbd;
+    border-bottom: 1px dashed #ff9000;
+    border-top: 1px dashed #ff9000;
     display: none; /* JS shows/hide this */
 }
 
@@ -663,7 +683,7 @@ select {
         text-align: right;
         float: right;
         position: relative;
-        top: -16px;
+        top: -1px;
     }
     
         .select-actions span a,
@@ -771,7 +791,6 @@ select {
     }
 
 .post-categories,
-.link-categories,
 .post-comments {
     color: #535353;
     margin: 0;
@@ -810,10 +829,8 @@ select {
         background-position: 12px 5px;
     }
 
- /* pagination */
-
 .paginator {
-    margin: 50px 2em 0 1em;
+    margin: 2em 0 1em;
 }
 
 .paginator li{
@@ -895,6 +912,10 @@ text-decoration:none;
     margin-right: 6px;
 }
 
+#save-preview {
+    display: none; /* Disabled until preview is functional */
+}
+
     #save-draft input,
     #save-publish input,
     #save-preview input,
@@ -914,10 +935,16 @@ text-decoration:none;
     a.cancel,
     a.cancel:hover,
     .rename_title,
-    #authMessage {
+    #authMessage,
+    .delete {
         color: #d80019;
         background-color: transparent;
     }
+    
+.delete:hover {
+    background-color: #d80019;
+    color: #fff;
+}
     
 #post-categories,
 #post-options,
@@ -1012,8 +1039,6 @@ text-decoration:none;
     list-style: none;
     margin: 0;
     padding: 0;
-    position: relative;
-    left: -5px;
     font-size: 14px;
     line-height: 20px;
 }
@@ -1045,18 +1070,12 @@ text-decoration:none;
             margin: 16px 0 0 10px;
             font-size: 13px;
         }
-
-/*	links & feeds	*/
-
-#show-links	{float: right; width: 150px; margin-top: 5px;}
-
-.list-of-links	li.link-row	{
-	display: inline; float: left; width: 40%; margin-left: 3%; margin-right: 5%;
-}
-
+        
+        
 /* Image browser (image insert) */
 
-    #image-browser h4 {
+    #image-browser h4,
+    .sidebar_heading {
         background: #eefaff;
         padding: 3px 6px;
         margin: 0 0 5px;
@@ -1113,6 +1132,11 @@ text-decoration:none;
     padding: 10px;
     background-color: #ebebeb;
 }
+
+    #resize_image h5 {
+        margin: 0 0 1em;
+        font-size: 12px;
+    }
 
 .sidebar-box .paginator {
     font-size: 11px;
@@ -1261,6 +1285,23 @@ text-decoration:none;
         font-size: 20px;
         font-weight: bold;
     }
+    
+.texy_table {
+    border-collapse: collapse;
+}    
+    
+.texy_table td {
+    padding: 6px 8px;
+    border: 1px solid #eee;
+}
+
+.texy_table tr > td:first-child {
+    background-color: #eee;
+}
+
+.texy_table td * {
+    margin: 0;
+}
 
 #page_inserts {
     margin: -20px -25px 16px; 
@@ -1307,8 +1348,8 @@ text-decoration:none;
     
 #edit-buttons {
     overflow: hidden;
-    margin: 10px -25px -22px;
-    background: #eee;
+    margin: 10px -20px -22px;
+    background: #ceffb0;
     padding: 10px 25px;
     position: relative;
 }
@@ -1732,10 +1773,144 @@ button.positive, .buttons a.positive{
     padding: 2px;
     margin: 2px 0;
     cursor: pointer;
-    display: none;
     background: #eee;
 }
 
     .drop_zone:hover {
         background-color: #fff;
     }
+    
+#comments_index li {
+    padding: 10px !important;
+    background: #eee;
+    border: 2px solid #ddd;
+    margin: 10px 0;
+}
+
+.view_comment_post {
+    float: right;
+    line-height: 12px;
+    font-size: 11px;    
+    position: relative;
+    bottom: -2px;
+}
+
+.comment_entry {
+    margin: 0 0 0 30px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.comment_meta {
+    padding: 0 0 0 30px;
+    font-size: 11px;
+    color: #3b3b3b;
+}
+
+.right_menu {
+}
+
+    .right_menu a {
+        display: block;
+        padding: 8px 10px;
+        margin: 0 0 5px 0;
+        position: relative;
+        left: -16px;
+        z-index: 3;
+        -webkit-border-radius: 0 6px 6px 0;    /* for Safari */
+        -moz-border-radius: 0 6px 6px 0;
+    }
+    
+    .right_menu a.current {
+        background: #474747;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    
+/* Settings form */
+
+.settings_form label,
+.settings_form p {
+    display: block;
+    font-size: 11px;
+    color: #474747;
+    margin: 2px 0;
+}
+
+.settings_form .input input,
+.settings_form .input textarea {
+    font-size: 13px;
+    padding: 4px;
+    font-family: "Lucida Console", sans-serif;
+}
+
+#setting-google_analytics_code textarea {
+    width: 98%;
+    height: 160px;
+}
+
+#setting-wordpress_api_key input {
+    width: 100px;
+}
+
+
+/* Menu editing */
+
+.menu_items {
+    margin: 1em 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .menu_items li {
+        margin: 0 0 4px 0;
+        padding: 4px;
+        background: #eee;
+        overflow: hidden;
+    }
+    
+.menu_item_label,
+.menu_item_url {
+    float: left;
+    padding: 0 10px 0 5px;
+}
+
+    .menu_items label {
+        padding: 0 5px 0 0;
+    }
+    
+    .menu_items .delete {
+        font-size: 11px;
+        position: relative;
+        top: 2px;
+        display: block;
+        float: left;
+    }
+    
+    .add_menu_item_p {
+        text-align: right;
+    }
+    
+.move {
+    background: url(img/move_cursor.png) 0 0 no-repeat;
+    width: 15px;
+    height: 15px;
+    display: block;
+    float: right;
+    margin: 5px 5px 0 0;
+    cursor: move;
+}
+
+.move:hover {
+    background-color: transparent;
+}
+
+    .move span {
+        display: none;
+    }
+    
+.drop_here {
+    height: 30px;
+    background: #fff74c !important;
+}
