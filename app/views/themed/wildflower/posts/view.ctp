@@ -16,7 +16,7 @@
 				</div>
 				
 				<?php echo $this->element('edit_this', array('id' => $post['Post']['id'])) ?>
-			<p><?php echo $html->link('Back to all posts', '/' . Configure::read('flower.blogIndex')) ?></p>
+			<p><?php echo $html->link('Back to all posts', '/' . Configure::read('Wildflower.blogIndex')) ?></p>
 			</div>
 		</div>
 

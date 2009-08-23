@@ -40,7 +40,7 @@
 		<?php } ?>
 		<div class="line">
 			<div class="unit size1of1">
-				<?php echo $this->element('wf_pagination') ?>
+				<?php echo $this->element('admin_pagination') ?>
 			</div>
 		</div>
 		

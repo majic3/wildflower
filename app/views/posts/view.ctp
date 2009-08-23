@@ -11,7 +11,7 @@
 	<?php echo $this->element('edit_this', array('id' => $post['Post']['id'])) ?>
 </div>
 
-<p><?php echo $html->link('Back to all posts', '/blog') ?></p>
+<p><?php echo $html->link('Back to all ' . Configure::read('Wildflower.blogName'), '/' . Configure::read('Wildflower.blogIndex')) ?></p>
 
 <?php if (!empty($post['Comment'])) { ?>
 <h3>Comments</h3>
