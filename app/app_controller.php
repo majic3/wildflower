@@ -32,7 +32,7 @@ class AppController extends Controller {
 	    'Tree', 
 	    'Text',
 	    'Time',
-	    //majic
+	    // majic
 		'Asset.Asset'
 	);
 	public $homePageId;
@@ -43,7 +43,7 @@ class AppController extends Controller {
     //majic
 	public $view = 'Theme';
     //majic
-	///public $theme = 'wildflower';
+	public $theme = 'wildflower';
 	
 	// canonical urls
     public $canonical = Array('rel' => false, 'rev' => false);
@@ -498,7 +498,7 @@ class AppController extends Controller {
         return low($string);
     }
     
-    function wf_get_fields() {
+    function admin_get_fields() {
         if (Configure::read('debug') < 1) {
             return;
         }
