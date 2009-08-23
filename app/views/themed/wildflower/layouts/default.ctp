@@ -65,7 +65,7 @@
 
 <div class="wildflower">
 	<div id="hd" class="hd">
-		<img class="logo" alt="A CMS made with CakePHP" src="/img/wildflower/wildorb.png" />
+		<img class="logo" alt="A CMS made with CakePHP" src="/wildflower/img/logo-orb.png" />
 		<div id="skipto"><a href="#bd">skip to content</a></div>
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 	</div>
@@ -80,12 +80,16 @@
 	</div>
 
 	<div id="ft" class="ft">
-		<p>Powered by <?php echo $html->link('Wildflower', 'http://wf.klevo.sk/'); ?>. <?php echo $this->element('admin_link'); ?></p>
-
-		<div class="nv">
-			<?php echo $menu; ?>
+		<div class="leftCol">
+			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>Wildflower Logo designed by <a href="http://www.olivertreend.com/">Oliver Treend</a></p>
 		</div>
-		<?php echo $this->element('debug_notice'); ?>
+		<div class="main">
+			<div class="nv">
+				<?php echo $menu; ?>
+			</div>
+			<?php echo $this->element('admin_link'); ?>
+			<?php echo $this->element('debug_notice'); ?>
+		</div>
 	</div>
 </div>
 <?php //echo $asset->scripts_for_layout('footer'); ?>

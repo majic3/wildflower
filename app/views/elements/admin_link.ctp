@@ -1,7 +1,7 @@
 <?php 
 if ($isLogged) {
-    echo '<span class="admin-link">',
+    echo '<div class="adm-link"><p>',
          $html->link('Site admin', '/' . Configure::read('Routing.admin')),
-         '</span>';	
+         '</p></div>';	
 }
 ?>

@@ -1,6 +1,6 @@
-body{font-family:"Segoe UI",tahoma, Arial, sans-serif; font-size: 12px; max-width: 100%; }
+body{font-family:Arial,Helvetica,Verdana,Sans-serif; font-size: 16px; max-width: 100%; color:#444EFB; font-size:16px;background:#FFFEFB url(/css/majic3/bdy-bkgd.gif) repeat-x scroll 0 0; }
 /*	uncomment the following to test vertical rhythm	*/
-/**/ .hd, .bd, .ft {	background: url(oo/baseline_18px.png);	} /**/
+/**/ .debug .hd, .debug .bd, .debug .ft {	background: url(/css/oo/baseline_24px.png);	} /* */
 
 
 /*sam@majic3.com - added this for vertical-rhythm - but padding also need adjustin - to 0 next stage to adjust it back*/
@@ -30,19 +30,20 @@ p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
 .wildflower		{width:100%;margin: 0; }
 .wildflower	#hd.hd	{width:100%;margin: 0; }
 .wildflower	.nv	{width:100%;margin: 0; }
-.wildflower	#bd.bd	{width:1050px !important;margin: .5em auto}
+.wildflower	#bd.bd	{width:92%; margin: 1.614em auto}
 
 /* HEADER */
-#hd.hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #222; }
+#hd.hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #1F8C16; }
 #hd.hd #skipto		{	padding: 0; margin: 0 1.6em 0 0; text-align: right; width: auto;	}
 	#skipto	a	{	margin-right: 10px;	}
 #hd.hd a:link,
 #hd.hd a:active,
 #hd.hd a:visited	{	color: #000;	}
 #hd.hd a:hover		{	color: #000;	}
-#hd.hd h1 { padding: 0 0 0 1.3em; margin: 0.2em; }
+#hd.hd h1 { padding: 0 0 0 1.3em; margin: 0.614em 0.2em 1.421em 0.2em; }
 #hd.hd h1	a { padding: 0; margin: 0;  }
 #hd.hd p	{ padding: 0 0 0 2.6em; margin: 0.2em; }
+#hd.hd .logo	{ float: left; margin: 0.5em; }
 #hd.hd a	{ display: block; width: 100%; height: 100%;  }
 #hd #searchrss 	{	float: right; width: 237px; height: 31px; margin: -3.2em 1.8em 0 0; 	}
 #hd #searchrss 	#searchBox	{
@@ -85,7 +86,8 @@ ul.tabs:after { content: "."; display: block; height: 0; clear: both; visibility
 ul.tabs, ul.tabs li ul { display: block; }
 
 
-#nv { width: 100%; margin: 0; padding: 0; background: #ddd; border-bottom: 2px solid #bbb; }
+#nv { width: 100%; margin: 0; padding: 0; background: #79DA65; border-bottom: 2px solid #ABABAB; }
+#nv .tabs {	padding: 0 0 0 1.614em;	}
 #nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
 #nv .tabs a:hover { background: #bbb; color: #333; }
 .nv	{}
@@ -101,15 +103,69 @@ ul.tabs, ul.tabs li ul { display: block; }
 		margin-right: .2em;
 	}
 
+	#bd .edit-this	{
+		margin-top: 1em;
+		width: 100%;
+	}
+/* BODY */
+#bd.bd { width: 960px; margin: 1.614em auto; padding: 0; }
+	#bd .main .pageHeader	{
+		margin: 0.75em 0 1.5em 0;
+	}
+	#bd .main p	{
+		margin-left: .35em;
+		margin-right: .2em;
+	}
+
+	#bd .edit-this	{
+		margin-top: 1em;
+		width: 100%;
+	}
+
+	/*	muffin research / apaptive path flex */
+	.flexit	{
+		width: 98%;
+		margin: 0 auto;
+	}
+
+	.flexit .main	{
+		width:70%;
+	}
+
+	/*	flexit shows either 1 or the other of these up to you to set this in code	*/
+	.flexit .rightCol,
+	.flexit .leftCol	{
+		width:27%;
+	}
+
+	.flexit3 .main	{
+		width:68%;
+	}
+
+	.flexit3 .rightCol,
+	.flexit3 .leftCol	{
+		width:13%;
+	}
+
 /* FOOTER */
 #ft.ft { margin: .2em .6em; border-top: 1px solid #eee; }
+#ft.ft .rightCol,
+#ft.ft .leftCol	{ width: 40%; }
 #ft.ft .tabs { padding: 10px; font-size: 13px; width: auto; float: right; }
 #ft.ft .tabs li { margin-right: 20px; }
-#ft.ft .tabs a { color: #999; text-decoration: none; }
+#ft.ft a { color: #999; }
+#ft.ft .tabs a { text-decoration: none; }
 #ft.ft p.quiet { color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
-#ft.ft img { border: 0; vertical-align: bottom; }
+#ft.ft p { color: #ccc; width: auto; float: left; padding-top: 1.164em; margin-top: 0; margin-bottom: 0; }
+#ft.ft img { border: 0; margin: 0; vertical-align: bottom; }
+#ft.ft a[href^='http://wf.klevo.sk']	{
+	margin-top: 1em; margin-left: 2em; display: inline;
+}
+	#ft.ft a[href^='http://wf.klevo.sk'] img	{
+		margin: 5px 5px 0px 2.324em; display: block;
+	}
 
-/* widflower:admin bar */
+/* widflower:admin bar & admin link */
 #admin-bar {
     background: #000;
     color: #c3c3c3;
@@ -133,6 +189,11 @@ ul.tabs, ul.tabs li ul { display: block; }
         color: #fff;
         background-color: transparent;
     }
+
+	#ft.ft	.adm-link,
+	#ft.ft	.debug	{
+		clear: right; float: right; margin-right: 1.9em;
+	}
 
 /* PAGINATION */
 
@@ -284,4 +345,37 @@ button.positive, .buttons a.positive	{	color:#529214;	}
 	background-color:#529214;
 	border:1px solid #529214;
 	color:#fff;
+}
+
+
+small.post-date	{
+	
+}
+
+div.post-date	{
+	background-color:#AEAEAE;
+	float:right;
+	margin-left:10px;
+	padding:45px 5px 0;
+	position:relative;
+}
+
+.post-date	span.day	{
+	font-size:45px;
+	left:5px;
+	line-height:45px;
+	position:absolute;
+	top:0;
+}
+
+.post-date	span.month	{
+	font-size:25px;
+	text-transform:uppercase;
+}
+
+.post-date	span.year	{
+	display:block;
+	position:absolute; right:-5px; top:15px;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg); 
 }

@@ -33,15 +33,14 @@
 		);
 		
 	echo $html->css($styles, 'stylesheet', Array('media' => 'screen')); ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
 </head>
-<?php echo $wild->bodyTagWithClass(isset($bdyClass) ? $bdyClass : false); ?>
+<body class="error">
 
 <div class="wildflower">
 	<div id="hd" class="hd">
-		<img class="logo" alt="A CMS made with CakePHP" src="/wildflower/img/logo-orb.png" />
+		<img class="logo" alt="A CMS made with CakePHP" src="/img/wildflower/wildorb.png" />
 		<div id="skipto"><a href="#bd">skip to content</a></div>
         <h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 	</div>
@@ -57,7 +56,7 @@
 
 	<div id="ft" class="ft">
 		<div class="leftCol">
-			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?> Wildflower Logo designed by <a href="http://www.olivertreend.com/">Oliver Treend</a></p>
+			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>.</p>
 		</div>
 		<div class="main">
 			<div class="nv">
@@ -66,7 +65,7 @@
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>
 		</div>
-    </div>
+	</div>
     
 </div>
 <?php echo $this->element('google_analytics'); ?>
