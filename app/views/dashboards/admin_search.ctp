@@ -1,7 +1,7 @@
 <h2>Find in pages</h2>
 
 <?php 
-    echo $form->create('Dashboard', array('action' => 'search'));
+    echo $form->create('Dashboard', array('action' => 'admin_search'));
     echo $form->input('query');
     echo $form->submit('Search');
     echo $form->end();

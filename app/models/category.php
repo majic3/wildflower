@@ -4,7 +4,7 @@ class Category extends AppModel {
     public $actsAs = array(
         'Containable',
         'Tree', 
-        'Slug' => array('label' => 'title')
+        'Sluggable' => array('label' => 'title')
     );
     public $validate = array(
         'title' => VALID_NOT_EMPTY

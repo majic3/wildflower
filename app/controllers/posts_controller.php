@@ -163,11 +163,13 @@ class PostsController extends AppController {
         unset($this->data['__save']);
         
         if (isset($this->data[$this->modelClass]['slug'])) {
-            $this->data[$this->modelClass]['slug'] = AppHelper::slug($this->data[$this->modelClass]['slug']);
+			$this->data[$this->modelClass]['slug'] = $this->slug($this->data[$this->modelClass]['slug']);
+            // $this->data[$this->modelClass]['slug'] = AppHelper::slug($this->data[$this->modelClass]['slug']);
         }
         
         $this->Post->create($this->data);
-        
+		//Configure::write('debug', 2);echo $this->modelClass;debug($this->data);die();
+
         if (!$this->Post->exists()) return $this->cakeError('object_not_found');
         
         if (isset($this->data[$this->modelClass]['categories_can_be_empty']) && !isset($this->data['Category'])) {

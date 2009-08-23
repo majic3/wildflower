@@ -109,7 +109,7 @@ hr {
         color: #fff;
     }
 
-#header-wrap {
+#header-wrap{
     position: relative;
 }
 
@@ -132,7 +132,7 @@ hr {
     padding: 3px 5px;
 	padding:3px 5px;
 	position:absolute;
-	top:0;
+	top:15px;
 	left: 170px
 }
 

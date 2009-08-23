@@ -3,7 +3,7 @@ class Page extends AppModel {
 
 	public $actsAs = array(
 	   'Containable',
-	   'Slug' => array('separator' => '-', 'overwrite' => false, 'label' => 'title'), 
+	   'Sluggable' => array('separator' => '-', 'overwrite' => false, 'label' => 'title'), 
 	   'Tree',
 	   'Versionable' => array('title', 'content', 'description_meta_tag', 'keywords_meta_tag')
     );

@@ -143,7 +143,7 @@ class AssetsController extends AppController {
         $javascripts = Cache::read('admin_jlm'); 
         if (empty($javascripts) or Configure::read('debug') > 0) {
             $javascripts = $this->JlmPackager->concate();
-            Cache::write('admin_jlm', $javascripts);
+			// this makes the debugkit work with wf
 			Configure::write('debug', 0);
 			die($javascripts);
         }

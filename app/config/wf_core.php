@@ -68,7 +68,7 @@ Configure::write(array('Wildflower' => array(
 
     // version number of wildflower codebase
     'version' => '1.3b-b2c',
-    'debug' => array('admin' => true, 'public' => true), // this is handy and seems fine; but I do wonder
+    'debug' => array('admin' => false, 'public' => false), // this is handy and seems fine; but I do wonder
 )));
 
 // cake plugins

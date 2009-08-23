@@ -48,7 +48,7 @@ echo $html->doctype('xhtml-strict') ?>
         });
 
 		//	only load mce when theres content to edit -perhaps.  Add Googlie speller 
-		if($.jlm.config.action == 'edit')
+		//if($.jlm.config.action == 'edit')
 			tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
@@ -58,11 +58,11 @@ echo $html->doctype('xhtml-strict') ?>
     </script>
     
 </head>
-<body class="<?php if (isset($editorMode)) echo 'editor_mode'; echo	str_replace('wild_', ' ', $this->params['controller']); ?>">
+<body class="<?php if (isset($editorMode)) echo 'editor_mode'; echo	$this->params['controller']; ?>">
 
 <div id="header">
 	<div id="header-wrap">
-<?php if (!isset($editorMode)): ?>    
+<?php /*editor mode never gets set */ if (!isset($editorMode)): ?>    
 	    <h1 id="site_title"><?php echo hsc($siteName); ?></h1>
 	    <?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
 	    

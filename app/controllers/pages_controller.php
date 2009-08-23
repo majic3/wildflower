@@ -37,6 +37,7 @@ class PagesController extends AppController {
         $this->data[$this->modelClass]['content'] = '';
         $this->Page->create($this->data);
         $this->Page->save();
+		//Configure::write('debug', 2);echo($this->Page->id);debug($this->Page);debug($this->data[$this->modelClass]);die();
         $this->redirect(array('action' => 'edit', $this->Page->id));
     }
 

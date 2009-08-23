@@ -3,7 +3,7 @@ class Post extends AppModel {
     
 	public $actsAs = array(
 	   'Containable',
-	   'Slug' => array('separator' => '-', 'overwrite' => false, 'label' => 'title'),
+	   'Sluggable' => array('separator' => '-', 'overwrite' => false, 'label' => 'title'),
 	   'Versionable' => array('title', 'content', 'description_meta_tag', 'keywords_meta_tag')
 	);
 	public $belongsTo = array('User');
