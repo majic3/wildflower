@@ -1,4 +1,9 @@
-<?php echo $html->doctype('xhtml-strict') ?>
+<?php
+// at one stage the asset plugin required the following
+// Configure::write('Asset.filter.cache', false);
+// Configure::write('Asset.filter.css', false);
+// Configure::write('Asset.filter.js', false);
+echo $html->doctype('xhtml-strict') ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <?php echo $html->charset(); ?>
@@ -13,7 +18,8 @@
         echo
         // Load your CSS files here
         $html->css(array(
-            '/wildflower/css/wf.main',
+           // '/css/ui/jquery-ui-1.7.1',
+            '/wildflower/css/wf.main'
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?
@@ -40,8 +46,10 @@
                 wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
             }
         });
-        
-        tinyMCE.init($.jlm.components.tinyMce.getConfig());
+
+		//	only load mce when theres content to edit -perhaps.  Add Googlie speller 
+		if($.jlm.config.action == 'edit')
+			tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
            $.jlm.dispatch(); 
@@ -50,29 +58,39 @@
     </script>
     
 </head>
-<body>
- 
-<div id="header">
-    <h1 id="site_title"><?php echo hsc($siteName); ?></h1>
-    <?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
-    
-    <div id="login_info">
-        <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
-    </div>
+<body class="<?php if (isset($editorMode)) echo 'editor_mode'; echo	str_replace('wild_', ' ', $this->params['controller']); ?>">
 
-    <ul id="nav">
-        <li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
-        <li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Posts', true), array('controller' => 'posts', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Categories', true), array('controller' => 'categories', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
-        <li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
-        <li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
-    </ul>
-</div>
+<div id="header">
+	<div id="header-wrap">
+<?php if (!isset($editorMode)): ?>    
+	    <h1 id="site_title"><?php echo hsc($siteName); ?></h1>
+	    <?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
+	    
+	    <div id="login_info">
+	        <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?> | <a href="#fulleditor" class="fulleditor">full</a>
+	    </div>
+	
+	    <ul id="nav">
+	        <li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
+	        <li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
+	        <li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
+	        <li><?php echo $htmla->link(__('Posts', true), array('controller' => 'posts', 'action' => 'index')); ?></li>
+	        <li><?php echo $htmla->link(__('Categories', true), array('controller' => 'categories', 'action' => 'index')); ?></li>
+	        <li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
+	        <li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
+	        <li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
+	        <li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
+	        <li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
+	    </ul>
+<?php else: ?>
+		<ul id="editor_mode_header">
+			<li><?php echo $html->link('Go to all pages', array('action' => 'index')); ?></li>
+			<li><small>(Published at: <?php if (isset($publishedLink)) echo $publishedLink; ?>)</small></li>
+			<li><a href="#fulleditor" class="fulleditor">full</a></li>
+		</ul>
+<?php endif; ?>
+	</div>
+</div><!-- /header-wrap -->
 
 <div id="wrap">
     <div id="content">

@@ -118,27 +118,31 @@ hr {
     font-size: 20px;
     font-weight: normal;
     margin: 0;
-    letter-spacing: 0.5px;
     text-decoration: none;
     padding: 17px 10px;
     display: block;
     float: left;
     color: #eade51;
 }
+    
+#site_index,
+#site-index {
+    float: left;
+    display: block;
+    padding: 3px 5px;
+	padding:3px 5px;
+	position:absolute;
+	top:0;
+	left: 170px
+}
 
+    #site_title a,
     #site-title a {
         text-decoration: none;
         padding: 20px 10px;
         display: block;
         float: left;
     }
-    
-#site_index {
-    float: left;
-    display: block;
-    padding: 3px 5px;
-    margin: 18px 0 0 -3px;
-}
     
 #nav {
     list-style: none;
@@ -167,16 +171,16 @@ hr {
         text-decoration: none;
     }
     
-    #nav .current,
-    #nav .current:hover {
-        color: #008720;
-        background-color: #e2e2e2;
-        font-weight: bold;
-    }
-    
-    #nav .current {
-        color: #008720;
-    }
+        #nav .current a,
+        #nav .current a:hover {
+            color: #008720;
+            background-color: #e2e2e2;
+            font-weight: bold;
+        }
+        
+        #nav .current a {
+            color: #008720;
+        }
         
     #nav a:hover {
         color: #fff;
@@ -227,24 +231,24 @@ hr {
 }
 
 #content_pad {
-    padding: 20px 25px 20px;
+    padding: 20px 20px 20px;
 	background-position: top right;
 	background-repeat: no-repeat;
 	background-color: transparent;
 	min-height: 300px;
 }
 
-body.dashboards	#content-pad {	background-image: url(/wildflower/css/img/bright/dashboards.png);	}
-body.pages		#content-pad {	background-image: url(/wildflower/css/img/bright/pages.png);	}
-body.posts		#content-pad {	background-image: url(/wildflower/css/img/bright/posts.png);	}
-body.assets		#content-pad {	background-image: url(/wildflower/css/img/bright/assets.png);	}
-body.messages	#content-pad {	background-image: url(/wildflower/css/img/bright/messages.png);	}
-body.galleries	#content-pad {	background-image: url(/wildflower/css/img/bright/galleries.png);	}
-body.stats		#content-pad {	background-image: url(/wildflower/css/img/bright/stats.png);	}
-body.links		#content-pad {	background-image: url(/wildflower/css/img/bright/links.png);	}
-body.settings	#content-pad {	background-image: url(/wildflower/css/img/bright/settings.png);	}
-body.users		#content-pad {	background-image: url(/wildflower/css/img/bright/users.png);	}
-body.utilities	#content-pad {	background-image: url(/wildflower/css/img/bright/utilities.png);	}
+body.dashboards	#content_pad {	background-image: url(/wildflower/css/img/bright/dashboards.png);	}
+body.pages		#content_pad {	background-image: url(/wildflower/css/img/bright/pages.png);	}
+body.posts		#content_pad {	background-image: url(/wildflower/css/img/bright/posts.png);	}
+body.assets		#content_pad {	background-image: url(/wildflower/css/img/bright/assets.png);	}
+body.messages	#content_pad {	background-image: url(/wildflower/css/img/bright/messages.png);	}
+body.galleries	#content_pad {	background-image: url(/wildflower/css/img/bright/galleries.png);	}
+body.stats		#content_pad {	background-image: url(/wildflower/css/img/bright/stats.png);	}
+body.links		#content_pad {	background-image: url(/wildflower/css/img/bright/links.png);	}
+body.settings	#content_pad {	background-image: url(/wildflower/css/img/bright/settings.png);	}
+body.users		#content_pad {	background-image: url(/wildflower/css/img/bright/users.png);	}
+body.utilities	#content_pad {	background-image: url(/wildflower/css/img/bright/utilities.png);	}
 
 .cleaner {
     clear: both;
@@ -288,6 +292,10 @@ body.utilities	#content-pad {	background-image: url(/wildflower/css/img/bright/u
     #sidebar a.add + a.add {
         margin-top: 7px;
     }
+
+	#sidebar .right_menu .add {
+		margin-left: 25px; margin-top: 10px;
+	}
 
 
 .button {
@@ -532,7 +540,7 @@ select {
         padding: 8px 0;
     }
     
-    #sidebar > ul > li:last-child {
+    #sidebar > ul > li:last {
         border-bottom: none;
     }
 
@@ -596,7 +604,7 @@ select {
         margin: 8px 0 6px 10px !important;
     }
 
-    #sidebar .sidebar-box:last-child {
+    #sidebar .sidebar-box:last {
         border-bottom: 2px solid #c0c0c0;
     }
 
@@ -732,7 +740,7 @@ select {
         position: relative;
     }
     
-    .list-of-posts li:first-child {
+    .list-of-posts li:first {
         border-top: 1px solid #eee;
     }
     
@@ -1017,7 +1025,7 @@ text-decoration:none;
         border-right: 1px solid #dadada;
     }
     
-    .edit-sections li:last-child a {
+    .edit-sections li:last a {
         border-right: none;
     }
     
@@ -1295,7 +1303,7 @@ text-decoration:none;
     border: 1px solid #eee;
 }
 
-.texy_table tr > td:first-child {
+.texy_table tr > td:first {
     background-color: #eee;
 }
 
@@ -1367,8 +1375,8 @@ text-decoration:none;
 
 /*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
 .tabs	{	background: transparent !important;	margin-bottom: 30px;}
-body.dashboards	#content-pad	.tabs,
-body	#content-pad	.list	{	margin-right: 155px;	}	
+body.dashboards	#content_pad	.tabs,
+body	#content_pad	.list	{	margin-right: 155px;	}	
 .demoHeaders { margin-top: 2em; }
 #dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 #dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
@@ -1419,7 +1427,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
     padding:5px 10px 5px 7px; /* Firefox */
     line-height:17px; /* Safari */
 }
-*:first-child+html button[type]{
+*:first+html button[type]{
     padding:4px 10px 3px 7px; /* IE7 */
 }
 .buttons button img, .buttons a img{
@@ -1611,83 +1619,6 @@ button.positive, .buttons a.positive{
         border-bottom: 3px solid #ddd;
     }
 
-.ui-slider {
-	text-decoration:none !important;
-}
-.ui-slider .ui-slider-handle {
-	overflow:visible !important;
-}
-.ui-slider .ui-slider-tooltip {
-	display:none;
-}
-.ui-slider .ui-state-active .ui-slider-tooltip, .ui-slider .ui-state-focus .ui-slider-tooltip, .ui-slider .ui-state-hover .ui-slider-tooltip {
-	display:block;
-	font-size:0.9em;
-	margin-left:-4em;
-	padding:0.2em;
-	position:absolute;
-	text-align:center;
-	top:-25px;
-	width:8em;
-}
-.ui-slider a {
-	text-decoration:none;
-}
-.ui-slider ol, .ui-slider li, .ui-slider dl, .ui-slider dd, .ui-slider dt {
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-	margin:0;
-	padding:0;
-}
-.ui-slider ol, .ui-slider dl {
-	position:relative;
-	top:1.3em;
-	width:100%;
-}
-.ui-slider dt {
-	border-bottom:1px dotted #DDDDDD;
-	color:#999999;
-	height:0.7em;
-	padding-top:0.2em;
-	position:absolute;
-	text-align:center;
-	top:1.5em;
-}
-.ui-slider dt span {
-	background:#FFFFFF none repeat scroll 0 0;
-	padding:0 0.5em;
-}
-.ui-slider li, .ui-slider dd {
-	color:#666666;
-	overflow:visible;
-	position:absolute;
-}
-.ui-slider span.ui-slider-label {
-	position:absolute;
-}
-.ui-slider li span.ui-slider-label, .ui-slider dd span.ui-slider-label {
-	display:none;
-}
-.ui-slider li span.ui-slider-label-show, .ui-slider dd span.ui-slider-label-show {
-	display:block;
-}
-.ui-slider span.ui-slider-tic {
-	height:0.8em;
-	left:0;
-	position:absolute;
-	top:-1.3em;
-}
-.ui-slider li span.ui-widget-content, .ui-slider dd span.ui-widget-content {
-	border-bottom:0 none;
-	border-right:0 none;
-	border-style:none none none solid;
-	border-top:0 none;
-	border-width:0 0 0 1px;
-}
-.ui-slider .first .ui-slider-tic, .ui-slider .last .ui-slider-tic {
-	display:none;
-}
     
     
 /* Dashboard */
@@ -1854,6 +1785,17 @@ button.positive, .buttons a.positive{
     width: 100px;
 }
 
+.full #header #nav,
+.full #sidebar,
+.full label[for="PageTitle"],
+.full label[for="PostTitle"]
+.full #PageTitle,
+.full #PostTitle {
+    display: none;
+}
+.full #content {
+    width: 100%;
+}
 
 /* Menu editing */
 
