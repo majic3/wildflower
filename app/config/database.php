@@ -86,33 +86,9 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => 'majic',
-		'database' => 'wildflower_majic',
-	    'port' => 3306,
-	    'domain' => 'majic.wildflower.ss29'
-	);
-	
-	public $majic = array(
-		'driver' => 'mysql',
-	    'encoding' => 'utf8',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'majic',
-		'database' => 'wildflower_majic',
-	    'port' => 3306,
-	    'domain' => 'majic.wildflower.ss29'
-	);
-	public $wmajic = array(
-		'driver' => 'mysql',
-	    'encoding' => 'utf8',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'majic',
-		'database' => 'wildflower_majic',
-	    'port' => 3306,
-	    'domain' => 'www.majic.wildflower.ss29'
+		'password' => '',
+		'database' => 'wildflower',
+	    'port' => 3306
 	);
 	/**
 	 * This is for unit tests
