@@ -113,7 +113,7 @@ hr {
     position: relative;
 }
 
-#site_title ,
+#site_title,
 #site-title {
     font-size: 20px;
     font-weight: normal;
@@ -238,17 +238,17 @@ hr {
 	min-height: 300px;
 }
 
-body.dashboards	#content_pad {	background-image: url(/wildflower/css/img/bright/dashboards.png);	}
-body.pages		#content_pad {	background-image: url(/wildflower/css/img/bright/pages.png);	}
-body.posts		#content_pad {	background-image: url(/wildflower/css/img/bright/posts.png);	}
-body.assets		#content_pad {	background-image: url(/wildflower/css/img/bright/assets.png);	}
-body.messages	#content_pad {	background-image: url(/wildflower/css/img/bright/messages.png);	}
-body.galleries	#content_pad {	background-image: url(/wildflower/css/img/bright/galleries.png);	}
-body.stats		#content_pad {	background-image: url(/wildflower/css/img/bright/stats.png);	}
-body.links		#content_pad {	background-image: url(/wildflower/css/img/bright/links.png);	}
-body.settings	#content_pad {	background-image: url(/wildflower/css/img/bright/settings.png);	}
-body.users		#content_pad {	background-image: url(/wildflower/css/img/bright/users.png);	}
-body.utilities	#content_pad {	background-image: url(/wildflower/css/img/bright/utilities.png);	}
+body.dashboards	#content_pad {	background-image: url(img/bright/dashboards.png);	}
+body.pages		#content_pad {	background-image: url(img/bright/pages.png);	}
+body.posts		#content_pad {	background-image: url(img/bright/posts.png);	}
+body.assets		#content_pad {	background-image: url(img/bright/assets.png);	}
+body.messages	#content_pad {	background-image: url(img/bright/messages.png);	}
+body.galleries	#content_pad {	background-image: url(img/bright/galleries.png);	}
+body.stats		#content_pad {	background-image: url(img/bright/stats.png);	}
+body.links		#content_pad {	background-image: url(img/bright/links.png);	}
+body.settings	#content_pad {	background-image: url(img/bright/settings.png);	}
+body.users		#content_pad {	background-image: url(img/bright/users.png);	}
+body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
 
 .cleaner {
     clear: both;
@@ -1244,7 +1244,7 @@ text-decoration:none;
 
 
 /**	users password strength meter made by Tane Piper	**/
-.is0{background:url(/wildflower/css/img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
+.is0{background:url(img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
 .is10{background-position:0 -7px;}
 .is20{background-position:0 -14px;}
 .is30{background-position:0 -21px;}
@@ -1374,25 +1374,61 @@ text-decoration:none;
 
 
 /*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
-.tabs	{	background: transparent !important;	margin-bottom: 30px;}
+.tabs	{
+	background: transparent !important;	margin-bottom: 30px;
+}
+
 body.dashboards	#content_pad	.tabs,
-body	#content_pad	.list	{	margin-right: 155px;	}	
-.demoHeaders { margin-top: 2em; }
-#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
-#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
-ul#icons {margin: 0; padding: 0;}
-ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
-ul#icons span.ui-icon {float: left; margin: 0 4px;}
-.ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none; outline: none; background: transparent; }
-.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; background: transparent;  }
-.ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; background: transparent; }
-.ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; background: transparent; }
+body	#content_pad	.list	{
+	margin-right: 155px;
+}
+
+.demoHeaders {
+	margin-top: 2em;
+}
+
+#dialog_link {
+	padding: .4em 1em .4em 20px;text-decoration: none;position: relative;
+}
+	
+	#dialog_link span.ui-icon {
+		margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;
+	}
+
+ul#icons {
+	margin: 0; padding: 0;
+}
+	ul#icons li {
+		margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;
+	}
+	ul#icons span.ui-icon {
+		float: left; margin: 0 4px;
+	}
+
+.ui-state-hover a, .ui-state-hover a:hover {
+	color: #212121; text-decoration: none; outline: none; background: transparent;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {
+	padding: 0; background: transparent;
+}
+.ui-datepicker-rtl .ui-datepicker-prev:hover {
+	right: 1px; left: auto; background: transparent;
+}
+.ui-datepicker-rtl .ui-datepicker-next:hover {
+	left: 1px; right: auto; background: transparent;
+}
 
 /*	jquery ui flash messages	*/
-.ui-widget	p {	padding-left: 15px; padding-right: 15px;	}
-.ui-widget	p span.ui-icon	{	float: left; padding: 1px;	}
+.ui-widget	p {
+	padding-left: 15px; padding-right: 15px;
+}
+	.ui-widget	p span.ui-icon	{
+		float: left; padding: 1px;
+	}
 
-#jqueryui		{	float: right; background: #fff; margin: -10px 0 0 0; 	}
+#jqueryui		{
+	float: right; background: #fff; margin: -10px 0 0 0;
+	}
 
 
 
@@ -1418,19 +1454,22 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
     cursor:pointer;
     padding:5px 10px 6px 7px; /* Links */
 }
-.buttons button{
+
+.buttons button	{
     width:auto;
     overflow:visible;
     padding:4px 10px 3px 7px; /* IE6 */
 }
-.buttons button[type]{
+
+.buttons button[type]	{
     padding:5px 10px 5px 7px; /* Firefox */
     line-height:17px; /* Safari */
 }
-*:first+html button[type]{
+
+*:first+html button[type]	{
     padding:4px 10px 3px 7px; /* IE7 */
 }
-.buttons button img, .buttons a img{
+.buttons button img, .buttons a img	{
     margin:0 3px -3px 0 !important;
     padding:0;
     border:none;
@@ -1439,13 +1478,12 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 }
 
 button.positive, .buttons a.positive,
-.buttons a.positive:hover,
-button.positive:hover{
+.buttons a.positive:hover, button.positive:hover	{
     background-color:#E6EFC2;
     border:1px solid #C6D880;
     color:#529214;
 }
-.buttons a.positive:active{
+.buttons a.positive:active	{
     background-color:#529214;
     border:1px solid #529214;
     color:#fff;
@@ -1453,12 +1491,12 @@ button.positive:hover{
 
 /* STANDARD */
 
-button:hover, .buttons a:hover	{
+button:hover, .buttons a:hover{
     background-color:#dff4ff;
     border:1px solid #c2e1ef;
     color:#336699;
 }
-.buttons a:active	{
+.buttons a:active{
     background-color:#6299c5;
     border:1px solid #6299c5;
     color:#fff;
@@ -1469,14 +1507,12 @@ button:hover, .buttons a:hover	{
 button.positive, .buttons a.positive	{
     color:#529214;
 }
-
 .buttons a.positive:hover, button.positive:hover	{
     background-color:#E6EFC2;
     border:1px solid #C6D880;
     color:#529214;
 }
-
-.buttons a.positive:active{
+.buttons a.positive:active	{
     background-color:#529214;
     border:1px solid #529214;
     color:#fff;
@@ -1485,13 +1521,10 @@ button.positive, .buttons a.positive	{
 
 /* NEGATIVE */
 
-.buttons a.negative,
-button.negative{
+.buttons a.negative, button.negative	{
     color:#d12f19;
 }
-
-.buttons a.negative:hover,
-button.negative:hover	{
+.buttons a.negative:hover, button.negative:hover	{
     background:#fbe3e4;
     border:1px solid #fbc2c4;
     color:#d12f19;
