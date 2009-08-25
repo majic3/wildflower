@@ -26,7 +26,12 @@ require_once(APP . DS . 'config' . DS . 'wf_core.php');
  * @package default
  */
 class ResetPassTask extends Shell {
-	//public $uses = array('WildUser');
+	public $uses = array('User');
+
+	function initialize() {
+        parent::initialize();
+    }
+
 
 /**
  * reset pass for user by id or login
@@ -36,13 +41,11 @@ class ResetPassTask extends Shell {
  * @access public
  */
 	function execute() {
-		//$this->out(json_encode($this->WildUser));die();
 		$user = false;
-        $action = trim($this->args[0]);
-        $pass = trim($this->args[1]);
-        $uid = trim($this->args[2]);
+        $pass = trim($this->args[0]);
+        $uid = trim($this->args[1]);
 
-		$this->out("action:		" . $action);
+		// $this->out("action:		" . $action);
 		$this->out("uid:		" . $uid);
 		$this->out("password:	" . $pass);
 
@@ -54,14 +57,15 @@ class ResetPassTask extends Shell {
 		$this->out("user identifier:	" . $uid);
 		$this->out("bytype:				" . $bytype);
 
+		$this->User->recursive = -1;
+
 		if($bytype == 'Id')	{
-			App::Import('Model', 'User');
-			ClassRegistry::init('User')->recursive = -1;
-			$user = ClassRegistry::init('User')->findById($uid);
+			$this->User->id = $uid;
 		} else {
-			ClassRegistry::init('User')->recursive = -1;
-			$user = ClassRegistry::init('User')->findByLogin($uid);
+			$this->User->id = $uid;
 		}
+		
+		$user = $this->User->saveField('password', $epass);
 
 		$this->out(json_encode($user));
 	}

@@ -81,14 +81,15 @@ class DATABASE_CONFIG {
      * @var array
      */
 	public $default = array(
-		'driver' => 'mysqli',
+		'driver' => 'mysql',
 	    'encoding' => 'utf8',
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
-		'database' => 'wildflower',
-	    'port' => 3306
+		'password' => 'majic',
+		'database' => 'wildflower_majic',
+	    'port' => 3306,
+	    'domain' => 'majic.wildflower.ss29'
 	);
 	
 	public $majic = array(

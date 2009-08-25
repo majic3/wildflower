@@ -2,12 +2,12 @@
 App::import(array('Model', 'AppModel', 'File', 'Security'));
 
 class WildflowerShell extends Shell {
-	public $uses = array('WildUser');
+	public $uses = array('User');
 	// install? big ambition upgrade
 	var $tasks = array('ClearCache', 'ShowCache', 'ResetPass');
 
 	function initialize() {
-        // empty
+        parent::initialize();
     }
 
     function main() {
@@ -23,6 +23,9 @@ class WildflowerShell extends Shell {
 			if(array_key_exists(1, $this->args))	{
 				$var = $this->args[1];
 			}
+
+			$this->out($action);
+			$this->out($var);
 
 			if($action == 'p')	{
 				$this->hash();
