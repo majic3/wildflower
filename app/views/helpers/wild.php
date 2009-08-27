@@ -199,7 +199,6 @@ class WildHelper extends AppHelper {
     }
     
     function subPageNav() {
-        $html = '<ul>';
         $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
         $Page = ClassRegistry::init('Page');
         $Page->recursive = -1;
@@ -212,10 +211,57 @@ class WildHelper extends AppHelper {
         if (empty($pages)) {
             return '';
         }
+        $html = '<ul>';
         
         // Build HTML
         foreach ($pages as $page) {
             $html .= '<li>' . $this->Htmla->link($page['Page']['title'], $page['Page']['url'], array('strict' => true)) . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+    
+    function latestCommentsList() {
+		// select c.id, c.name && c.content, p.slug from comments as c, posts as p where c.approved 1 and c.spam 0 recurive 1 
+        $Comment = ClassRegistry::init('Comment');
+        $Comment->recursive = -1;
+        
+        // TODO: Get the cats belonging to a cat by curren cat if selected be able to go deep
+        //$url = $this->params['url']['url'];
+        $slug = array_shift(explode('/', $url));
+        $comments = $Comment->find('all');
+
+        if (empty($comments)) {
+            return '';
+        }
+        $html = '<ul>';
+        
+        // Build HTML
+        foreach ($comments as $comment) {
+            $html .= '<li>' . $this->Htmla->link($comment['Comment']['content'], '/' . Configure::read('Wildflower.postsParent') . $comment['Post']['slug'] . $comment['Comment']['id'], array('strict' => true)) . '<span>'.$comment['Comment']['name'].'</span>' . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+    
+    function catsNav() {
+//        $catSlug = end(array_filter(explode('/', $this->params['url']['url'])));
+        $Category = ClassRegistry::init('Category');
+        $Category->recursive = -1;
+        
+        // TODO: Get the cats belonging to a cat by curren cat if selected be able to go deep
+        //$url = $this->params['url']['url'];
+  //      $slug = array_shift(explode('/', $url));
+        $categories = $Category->find('all');
+
+        if (empty($categories)) {
+            return '';
+        }
+        $html = '<ul>';
+        
+        // Build HTML
+        foreach ($categories as $category) {
+            $html .= '<li>' . $this->Htmla->link($category['Category']['title'], $category['Category']['slug'], array('strict' => true)) . '</li>';
         }
         $html .= '</ul>';
         return $html;

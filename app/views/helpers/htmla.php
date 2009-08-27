@@ -41,6 +41,7 @@ class HtmlaHelper extends HtmlHelper {
                 $htmlAttributes['class'] = 'current';
             }
         }        
+		// zap the strict attribute which makes output invalid currently
         return parent::link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
     }
     
