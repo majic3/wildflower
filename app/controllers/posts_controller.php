@@ -235,7 +235,7 @@ class PostsController extends AppController {
      *
      */
     function rss() {
-        $this->layout = 'rss/default';
+       // $this->layout = 'rss/default';
         $posts = $this->Post->find('all', array(
              'order' => 'Post.created DESC',
              'contain' => 'User',

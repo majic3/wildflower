@@ -3,14 +3,14 @@
 <head>
     <?php echo $html->charset(); ?>
     
-    <title><?php echo $title_for_layout; if(Configure::read('debug'))	echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) echo " theme: " . $this->theme;	echo " Wildflower: " . Configure::read('Wildflower.version') . ";";	?></title>
+    <title><?php echo $title_for_layout; if(Configure::read('debug'))	{	echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) echo " theme: " . $this->theme;	echo " Wildflower: " . Configure::read('Wildflower.version') . ";";	}	?></title>
     
     <meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
 	<meta name="keywords" content="<?php echo isset($keywordsMetaTag) ? $keywordsMetaTag : '' ?>" />
 	<!-- theme/wildflower default/layout -->
     
     <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/' . Configure::read('Wildflower.blogIndex') . '/rss'); ?>" />
+    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/feed.rss'); ?>" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
@@ -49,7 +49,7 @@
 			'plugins/jquery.tipsy', 
 			'plugins/jquery.gatracker', 
 			'plugins/jquery.form', 
-			'ajax-comments', 
+			'plugins/retweet', 
 			'common'
 		);
 		//	$asset->extras('gapi', array('http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js','http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js','http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js'));

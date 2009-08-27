@@ -17,9 +17,9 @@
 			<div class="unit size1of1">
 				<div class="header">
 					<h2><?php echo $html->link($post['Post']['title'], Post::getUrl($post['Post']['slug'])); ?></h2>
-					<p class="quiet">
-						<small class="post-date">Posted <?php echo $time->nice($post['Post']['created']) ?></small>
-						<small class="comment-count">Comments 99</small>
+					<p class="small">
+						Posted by <small class="posted-by"><?php echo $post['User']['name'];?></small> on <small class="post-date"><?php echo $time->nice($post['Post']['created']); ?></small>
+						<small class="comment-count">Comments <?php echo $post['Post']['comment_count']; ?></small>
 					</p>
 					
 					<?php if (!empty($post['Category'])): ?>
@@ -46,9 +46,9 @@
 		
 	</div>
 	<div id="postsSidebar" class="sidebar lastUnit size1of5">
-		<p>sidebar should have automated menu of cats</p>
-		<?php	
-			//echo $wild->processElements("[e:posts-cats cats=\"$categories\"]");
+		<?php
+				echo $wild->catsNav(),
+				$wild->latestCommentsList();
 		?>
 	</div>
 </div>

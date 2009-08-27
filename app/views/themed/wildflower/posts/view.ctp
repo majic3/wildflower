@@ -4,7 +4,7 @@
 			<div class="post lastUnit" id="post-<?php echo $post['Post']['id']; ?>">
 				<div class="header">
 					<h2><?php echo $post['Post']['title']; ?></h2>
-					<small class="post-date">Posted <?php echo $time->nice($post['Post']['created']); ?></small>
+						Posted by <small class="posted-by"><?php echo $post['User']['name'];?></small> on <small class="post-date"><?php echo $time->nice($post['Post']['created']) ?></small>
 				</div>
 				
 				<div class="section entry"><?php echo $post['Post']['content']; ?></div>
@@ -75,9 +75,8 @@
 		</div>
 		<div class="size1of5 lastUnit">
 			<?php	
-				$title = "a title with a space";
-				$cats = "<li>one</li><li>second cat</li>";
-				//echo $wild->processElements("[e:posts-cats cats=\"$categories\"]");
+				echo $wild->postsFromCategory($post['Post']['id']),
+				$wild->latestCommentsList();
 			?>
 		</div>
 </div>

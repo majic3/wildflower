@@ -10,11 +10,11 @@ Router::connect('/', array('controller' => 'pages', 'action' => 'view'));
 Router::connect('/app/webroot/', array('controller' => 'pages', 'action' => 'view'));
 
 // Posts section
-Router::connect('/rss', array('controller' => 'posts', 'action' => 'rss'));
+Router::connect('/feed', array('controller' => 'posts', 'action' => 'rss'));
 Router::connect('/' . Configure::read('Wildflower.blogIndex'), array('controller' => 'posts', 'action' => 'index'));
 Router::connect('/' . Configure::read('Wildflower.blogIndex') . '/*', array('controller' => 'posts', 'action' => 'index'));
 Router::connect('/' . Configure::read('Wildflower.postsParent') . '/:slug', array('controller' => 'posts', 'action' => 'view'));
-Router::connect('/c/:slug', array('controller' => 'posts', 'action' => 'category'));
+Router::connect('/' . Configure::read('Wildflower.catergoryParent') . '/:slug', array('controller' => 'posts', 'action' => 'category'));
 
 // short urls
 $short = Configure::read('Wildflower.shorturl');
