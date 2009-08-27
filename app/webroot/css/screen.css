@@ -208,7 +208,7 @@ ul.tabs, ul.tabs li ul { display: block; }
 	margin-right:2px;
 }
 .paging a{
-	border:solid 1px #9aafe5
+	border:solid 1px #ABABAB;
 	margin-right:2px;
 }
 .paging .previous.disabled,
@@ -227,7 +227,7 @@ ul.tabs, ul.tabs li ul { display: block; }
 	border:solid 1px #fff;
 }
 .paging .current	{
-	background:#2e6ab1;
+	background:#79DA65;
 	color:#FFFFFF;
 	font-weight:bold;
 	display:block;
@@ -236,7 +236,7 @@ ul.tabs, ul.tabs li ul { display: block; }
 }
 .paging a:link,
 .paging a:visited {
-	color:#0e509e
+	color:#0e509e;
 	display:block;
 	float:left;
 	padding:3px 6px;
@@ -245,7 +245,7 @@ ul.tabs, ul.tabs li ul { display: block; }
 }
 .paging a:hover{
 	border:solid 1px #fff;
-	background-color: #EAF1F7;
+	background-color: #79DA65;
 	color: #777;
 }
 
@@ -347,35 +347,38 @@ button.positive, .buttons a.positive	{	color:#529214;	}
 	color:#fff;
 }
 
+/*	posts	*/
+#posts	#postsSidebar .mod	{	margin: 2.682em .2em 1.614em .2em; 	}
+#posts	#postsSidebar .mod:first-child	{	margin-top: 0 !important;	}
 
-small.post-date	{
+#posts	.post		{	margin: 2.682em .2em 1.614em .2em; padding: .2em;	}
+#posts	.post:first-child	{	margin-top: 0 !important;	}
+
+#posts	.post	.header	{
 	
 }
 
-div.post-date	{
-	background-color:#AEAEAE;
-	float:right;
-	margin-left:10px;
-	padding:45px 5px 0;
-	position:relative;
+#posts	.post	h2	{
+	
 }
 
-.post-date	span.day	{
-	font-size:45px;
-	left:5px;
-	line-height:45px;
-	position:absolute;
-	top:0;
+#posts	.post	.small	{
+	
 }
 
-.post-date	span.month	{
-	font-size:25px;
-	text-transform:uppercase;
+
+#posts	.post	.posted-by,
+#posts	.post	.post-date,
+#posts	.post	.comment-count,
+#posts	.post	.postmeta	{
+	
 }
 
-.post-date	span.year	{
-	display:block;
-	position:absolute; right:-5px; top:15px;
-	-webkit-transform: rotate(-90deg);
-	-moz-transform: rotate(-90deg); 
+#posts	.post	.social	{
+	
 }
+
+#posts	.post	.section.excerpt	{
+	
+}
+/*	/posts	*/
