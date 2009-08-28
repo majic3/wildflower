@@ -17,11 +17,13 @@
 ?>
 <div class="leftCol">
     <div class="nv vert">
+	<h5>page sub nav</h5>
        <?php echo $wild->subPageNav(); ?>
     </div>
+	<p>sidebar items</p>
 <?php	
 	if(!empty($page['Sidebar'])):
-	echo $page['Sidebar'];
+	echo $wild->processSidebar($page['Sidebar']);
 	endif; ?>
 </div><?php
 

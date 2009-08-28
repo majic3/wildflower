@@ -26,7 +26,17 @@
 						<?php endif; ?>.
 					</p>
 					
-					<p class="social"><?php		echo $this->element('title' => $post['Post']['title'], 'social-buttons', array('href' => Configure::read('Wildflower.puburl') . '/' . Configure::read('Wildflower.postsParent') . '/' . $post['Post']['slug']));	?></p>
+					<p class="social">
+						<?php
+							echo $this->element(
+								'social-buttons', 
+								array(
+									'title' => $post['Post']['title'], 
+									'href' => Configure::read('Wildflower.puburl') . '/' . Configure::read('Wildflower.postsParent') . '/' . $post['Post']['slug']
+								)
+							);
+						?>
+					</p>
 				</div>
 				
 				<div class="section excerpt">

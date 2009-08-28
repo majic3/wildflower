@@ -14,6 +14,9 @@ h6, .h6 {	margin: 0;	font-size: 1.1666666666666667em;	line-height: 1.28571428571
 p.small {	margin: 0;	font-size: 0.8333333333333334em;	line-height: 1.8em;	margin-bottom: 1.8em; color: #828282;	}
 table {	border-collapse: collapse;	margin-bottom: 1.5em;	}
 
+.right	{float: right}
+.left	{float: left}
+
 p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
 #bd.bd .main	{	padding-left: 2.2em; padding-right: 1.5em;	}
 #bd.bd .rightCol,
@@ -108,6 +111,7 @@ ul.tabs, ul.tabs li ul { display: block; }
 		margin-top: 1em;
 		width: 100%;
 	}
+
 /* BODY */
 #bd.bd { width: 960px; margin: 1.614em auto; padding: 0; }
 	#bd .main .pageHeader	{
@@ -149,7 +153,7 @@ ul.tabs, ul.tabs li ul { display: block; }
 	}
 
 /* FOOTER */
-#ft.ft { margin: .2em .6em; border-top: 1px solid #eee; }
+#ft.ft { margin: .2em .6em; border-top: 1px solid #eee; clear: both; }
 #ft.ft .rightCol,
 #ft.ft .leftCol	{ width: 40%; }
 #ft.ft .tabs { padding: 10px; font-size: 13px; width: auto; float: right; }
@@ -352,7 +356,7 @@ button.positive, .buttons a.positive	{	color:#529214;	}
 #posts	#postsSidebar .mod	{	margin: 2.682em .2em 1.614em .2em; 	}
 #posts	#postsSidebar .mod:first-child	{	margin-top: 0 !important;	}
 
-#posts	.post		{	margin: 2.682em .2em 1.614em .2em; padding: .2em;	}
+#posts	.post		{	margin: 2.682em 1.614em 1.614em .2em; padding: .2em;	}
 #posts	.post:first-child	{	margin-top: 0 !important;	}
 
 .post	.header	{
