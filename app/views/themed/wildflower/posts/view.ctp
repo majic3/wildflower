@@ -4,16 +4,17 @@
 			<div class="post lastUnit" id="post-<?php echo $post['Post']['id']; ?>">
 				<div class="header">
 					<h2><?php echo $post['Post']['title']; ?></h2>
-						<p class="small">Posted by <small class="posted-by"><?php echo $post['User']['name'];?></small> on <small class="post-date"><?php echo $time->nice($post['Post']['created']) ?></small></p>
+
+						<p class="postmeta">Posted by <span class="posted-by"><?php echo $post['User']['name'];?></span> on <span class="post-date"><?php echo $time->nice($post['Post']['created']) ?></span>
+
+						<?php if (!empty($post['Category'])) { ?> in <?php echo $category->getList($post['Category']); ?>
+						<?php } ?>.
+						</p>
+
+						<p class="social"><?php		echo $this->element('social-buttons', array('title' => $post['Post']['title'], 'href' => Configure::read('Wildflower.puburl') . '/' . Configure::read('Wildflower.postsParent') . '/' . $post['Post']['slug']));	?></p>
 				</div>
 				
 				<div class="section entry"><?php echo $post['Post']['content']; ?></div>
-				
-				<div>
-				<?php if (!empty($post['Category'])) { ?>
-				   <p class="postmeta">Posted in <?php echo $category->getList($post['Category']); ?>.</p>
-				<?php } ?>
-				</div>
 				
 				<?php echo $this->element('edit_this', array('id' => $post['Post']['id'])) ?>
 			<p><?php echo $html->link('Back to all posts', '/' . Configure::read('Wildflower.blogIndex')) ?></p>

@@ -90,7 +90,8 @@ ul.tabs, ul.tabs li ul { display: block; }
 #nv .tabs {	padding: 0 0 0 1.614em;	}
 #nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
 #nv .tabs a:hover { background: #bbb; color: #333; }
-.nv	{}
+
+.nv	{margin: 0; padding: 0; }
 .nv.vert	{}
 
 /* BODY */
@@ -155,14 +156,14 @@ ul.tabs, ul.tabs li ul { display: block; }
 #ft.ft .tabs li { margin-right: 20px; }
 #ft.ft a { color: #999; }
 #ft.ft .tabs a { text-decoration: none; }
-#ft.ft p.quiet { color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
+#ft.ft p.quiet { font-size: .75em; color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
 #ft.ft p { color: #ccc; width: auto; float: left; padding-top: 1.164em; margin-top: 0; margin-bottom: 0; }
 #ft.ft img { border: 0; margin: 0; vertical-align: bottom; }
 #ft.ft a[href^='http://wf.klevo.sk']	{
 	margin-top: 1em; margin-left: 2em; display: inline;
 }
 	#ft.ft a[href^='http://wf.klevo.sk'] img	{
-		margin: 5px 5px 0px 2.324em; display: block;
+		margin: .125em 1.614em 0 2.324em; display: block;
 	}
 
 /* widflower:admin bar & admin link */
@@ -197,9 +198,9 @@ ul.tabs, ul.tabs li ul { display: block; }
 
 /* PAGINATION */
 
-.paginate-counter	{	float: right; 	}
+.paginate-counter	{	float: right; margin-right: 2.684em; 	}
 
-.paging	{	float: left; width: 60em; margin-top: -4px;	}
+.paging	{	float: left; width: 60%; margin-left: 2.684em; margin-top: -4px;	}
 
 .paging li{
 	border:0; margin:0; padding:0;
@@ -354,31 +355,51 @@ button.positive, .buttons a.positive	{	color:#529214;	}
 #posts	.post		{	margin: 2.682em .2em 1.614em .2em; padding: .2em;	}
 #posts	.post:first-child	{	margin-top: 0 !important;	}
 
-#posts	.post	.header	{
+.post	.header	{
+	padding: 0 1.614em 0 .2em;
+}
+
+.post	h2	{
 	
 }
 
-#posts	.post	h2	{
-	
-}
-
-#posts	.post	.small	{
-	
+.post	.small	{
+	font-size: .8em;
+	line-height: 1.2em;
 }
 
 
-#posts	.post	.posted-by,
-#posts	.post	.post-date,
-#posts	.post	.comment-count,
-#posts	.post	.postmeta	{
+.post	.header .posted-by,
+.post	.header .post-date,
+.post	.header .comment-count,
+.post	.header .postmeta	{
 	
 }
 
-#posts	.post	.social	{
-	
+.post	.header .social	{
+	width: 252px;
 }
 
-#posts	.post	.section.excerpt	{
+	.post	.header .social	a	{
+		margin: 0;
+	}
+
+	.post	.header .social	img	{
+		margin: 1px 2px;
+	}
+
+.post	.section.excerpt,
+.post	.section.entry	{
+	clear: left;
+	padding: 0 1.614em 1.614em 0;
 	
 }
 /*	/posts	*/
+
+
+.tipsy { padding: 5px; font-size: 10px; opacity: 0.8; filter: alpha(opacity=80); background-repeat: no-repeat; }
+  .tipsy-inner { padding: 4px 5px; background-color: black; color: white; max-width: 200px; text-align: center; }
+  .tipsy-north { background-image: url(/css/img/tipsy/tipsy-north.gif); background-position: top center; }
+  .tipsy-south { background-image: url(/css/img/tipsy/tipsy-south.gif); background-position: bottom center; }
+  .tipsy-east { background-image: url(/css/img/tipsy/tipsy-east.gif); background-position: right center; }
+  .tipsy-west { background-image: url(/css/img/tipsy/tipsy-west.gif); background-position: left center; }

@@ -18,15 +18,15 @@
 				<div class="header">
 					<h2><?php echo $html->link($post['Post']['title'], Post::getUrl($post['Post']['slug'])); ?></h2>
 					<p class="small">
-						Posted by <small class="posted-by"><?php echo $post['User']['name'];?></small> on <small class="post-date"><?php echo $time->nice($post['Post']['created']); ?></small>
-						<small class="comment-count">Comments <?php echo $post['Post']['comment_count']; ?></small>
+						Posted by <span class="posted-by"><?php echo $post['User']['name'];?></span> on <span class="post-date"><?php echo $time->nice($post['Post']['created']); ?></small>
+						<span class="comment-count">Comments <?php echo $post['Post']['comment_count']; ?></span>
+					
+						<?php if (!empty($post['Category'])): ?>
+						  in <?php echo $category->getList($post['Category']); ?>
+						<?php endif; ?>.
 					</p>
 					
-					<?php if (!empty($post['Category'])): ?>
-					<p class="postmeta">Posted in <?php echo $category->getList($post['Category']); ?>.</p>
-					<?php endif; ?>
-					
-					<p class="scoial">social links eg digg, facebook, tweetme etc</p>
+					<p class="social"><?php		echo $this->element('title' => $post['Post']['title'], 'social-buttons', array('href' => Configure::read('Wildflower.puburl') . '/' . Configure::read('Wildflower.postsParent') . '/' . $post['Post']['slug']));	?></p>
 				</div>
 				
 				<div class="section excerpt">

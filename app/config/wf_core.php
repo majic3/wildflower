@@ -32,6 +32,7 @@ Configure::write(array('Wildflower' => array(
     'thumbnailsCache' => CACHE . 'wf_thumbnails',
     'blogName' => 'Posts',
     'postsParent' => 'p',
+    'catsParent' => 'c',
     'blogIndex' => 'posts',
     'blogExerpt' => 'exerpt', // classname that wraps content of posts for display on index
 
