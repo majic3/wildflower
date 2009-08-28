@@ -236,6 +236,7 @@ hr {
 	background-repeat: no-repeat;
 	background-color: transparent;
 	min-height: 300px;
+	position:relative;
 }
 
 body.dashboards	#content_pad {	background-image: url(img/bright/dashboards.png);	}
@@ -1895,3 +1896,16 @@ button.positive, .buttons a.positive	{
     height: 30px;
     background: #fff74c !important;
 }
+
+
+/*	.scoialWeb	*/
+
+#socialWeb	{
+	width: 355px; position: absolute; display: block; top: 0; right: 10px;
+}
+	#socialWeb	.short	{
+		margin-top: 39px;
+	}
+	#socialWeb	.chatcatcher	{
+		margin-top: 39px;
+	}

@@ -27,35 +27,49 @@
 
 <?php 
     echo 
-    $form->end();
-
+    $form->end(); ?>
+<div id="socialWeb">
+	<h3>Scoial Web</h3>
+	<div class="short">
+		<h4>Short Url</h4>
+<?php
     echo 
     $form->create('Short', array('url' => $html->url(array('controller' => 'shorts', 'action' => 'update', 'base' => false)), 'class' => 'horizontal-form')),
     '<div><p>',
 	$this->data['Page']['url'],'</p>',
     $form->hidden('url', Array('value' => $this->data['Page']['url'])),
-    $form->hidden('slug', Array('value' => str_replace('/' . Configure::read('Wildflower.shorturl'), '', $short['slug']))),
+    $form->hidden('slug', Array('value' => str_replace(array('/' . Configure::read('Wildflower.shorturl'), '/'), '', $short['slug']))),
     $form->hidden('id', Array('value' => $short['id'])),
     $form->hidden('modelID', Array('value' => $this->data['Page']['id'])),
     $form->hidden('modelName', Array('value' => 'Page')),
     '</div>';
 	
 	if(isset($short['id']))
-	echo "<p>" . $html->link('short', Configure::read('Wildflower.shorturl') . "/{$short['slug']}") . "</p>";
+	echo '<p class="short-url">' . $html->link('short', Configure::read('Wildflower.shorturl') . "/{$short['slug']}") . "</p>";
 ?>
 
-<div class="horizontal-form-buttons">
-	<div class="submit save-section">
-		<input type="submit" value="<?php __('Save options'); ?>" />
+	<div class="horizontal-form-buttons">
+		<?php	if(isset($short['id'])):	?>
+		<div class="cancel-short"><?php echo $html->link(__('clear short', true), '/'.Configure::read('Routing.admin').'/shorts/delete/' . $short['id'], Array('class' => 'clearshort')); ?></div>
+		<?php	else:	?>
+		<div class="submit save-section">
+			<input type="submit" value="<?php __('Save options'); ?>" />
+		</div>
+		<?php	endif;	?>
 	</div>
-	<?php	if(isset($short['id'])):	?>
-    <div class="cancel-short"> <?php __('or'); ?> <?php echo $html->link(__('clear short', true), '/'.Configure::read('Routing.admin').'/shorts/delete/' . $short['id'], Array('class' => 'clearshort')); ?></div>
-	<?php	endif;	?>
-</div>
 <?php 
     echo 
     $form->end();
-?>
+	?>
+	</div>
+	<div class="chatcatcher">
+		<h4>Chatcatcher</h4>
+		<div><p>pingback</p></div>
+		<div><p>pingback</p></div>
+		<div><p>pingback</p></div>
+		<div><p>pingback</p></div>
+	</div>
+</div>
 
 
 <?php $partialLayout->blockStart('sidebar'); ?>

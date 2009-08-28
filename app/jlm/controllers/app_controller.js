@@ -28,8 +28,9 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 		//console.info("clearing short: " + this.href);
 		$.post(this.href, 
 		function(data){
-			//console.info("Data Loaded: ");
-			//console.debug(data);
+			$('.cancel-short').fadeOut('fast');
+			$('.short-url').fadeOut('fast');
+			$('.horizontal-form-buttons').html('<div class="submit save-section"><input type="submit" value="set short" /></div>');
 		}, "json");
 		event.preventDefault();
 	});
