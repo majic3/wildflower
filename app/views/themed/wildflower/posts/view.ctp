@@ -4,7 +4,7 @@
 			<div class="post lastUnit" id="post-<?php echo $post['Post']['id']; ?>">
 				<div class="header">
 					<h2><?php echo $post['Post']['title']; ?></h2>
-						Posted by <small class="posted-by"><?php echo $post['User']['name'];?></small> on <small class="post-date"><?php echo $time->nice($post['Post']['created']) ?></small>
+						<p class="small">Posted by <small class="posted-by"><?php echo $post['User']['name'];?></small> on <small class="post-date"><?php echo $time->nice($post['Post']['created']) ?></small></p>
 				</div>
 				
 				<div class="section entry"><?php echo $post['Post']['content']; ?></div>
@@ -32,7 +32,7 @@
 					<h3>Comments</h3>
 					<?php
 						foreach($post['Comment'] as $comment):
-							?><div class="comment line<?php	echo ($class);	?>">
+							?><div id="comment-<?php	echo ($comment['id']);	?>" class="comment line<?php	echo ($class);	?>">
 								<div class="authorMedta">
 									<p><?php echo $gravatar->image($comment['email']); ?><!-- span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span --></p>
 								</div>

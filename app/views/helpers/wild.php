@@ -211,7 +211,7 @@ class WildHelper extends AppHelper {
         if (empty($pages)) {
             return '';
         }
-        $html = '<ul>';
+        $html = '<ul class="nv vert">';
         
         // Build HTML
         foreach ($pages as $page) {
@@ -224,21 +224,18 @@ class WildHelper extends AppHelper {
     function latestCommentsList() {
 		// select c.id, c.name && c.content, p.slug from comments as c, posts as p where c.approved 1 and c.spam 0 recurive 1 
         $Comment = ClassRegistry::init('Comment');
-        $Comment->recursive = -1;
-        
-        // TODO: Get the cats belonging to a cat by curren cat if selected be able to go deep
-        //$url = $this->params['url']['url'];
-        $slug = array_shift(explode('/', $url));
+        $Comment->recursive = 1;
+
         $comments = $Comment->find('all');
 
         if (empty($comments)) {
             return '';
         }
-        $html = '<ul>';
+        $html = '<ul class="nv vert">';
         
         // Build HTML
         foreach ($comments as $comment) {
-            $html .= '<li>' . $this->Htmla->link($comment['Comment']['content'], '/' . Configure::read('Wildflower.postsParent') . $comment['Post']['slug'] . $comment['Comment']['id'], array('strict' => true)) . '<span>'.$comment['Comment']['name'].'</span>' . '</li>';
+            $html .= '<li>' . $this->Htmla->link($comment['Comment']['content'], '/' . Configure::read('Wildflower.postsParent') . '/' . $comment['Post']['slug'] . '#comment-' .  $comment['Comment']['id'], array('strict' => true)) . '<span>'.$comment['Comment']['name'].'</span>' . '</li>';
         }
         $html .= '</ul>';
         return $html;
@@ -252,16 +249,16 @@ class WildHelper extends AppHelper {
         // TODO: Get the cats belonging to a cat by curren cat if selected be able to go deep
         //$url = $this->params['url']['url'];
   //      $slug = array_shift(explode('/', $url));
-        $categories = $Category->find('all');
+        $categories = $Category->find('all', array('order' => 'lft ASC'));
 
         if (empty($categories)) {
             return '';
         }
-        $html = '<ul>';
+        $html = '<ul class="nv vert">';
         
         // Build HTML
         foreach ($categories as $category) {
-            $html .= '<li>' . $this->Htmla->link($category['Category']['title'], $category['Category']['slug'], array('strict' => true)) . '</li>';
+            $html .= '<li>' . $this->Htmla->link($category['Category']['title'], '/' . Configure::read('Wildflower.catsParent') . '/' . $category['Category']['slug'], array('strict' => true)) . '</li>';
         }
         $html .= '</ul>';
         return $html;
