@@ -177,6 +177,7 @@ class Page extends AppModel {
      * @return array
      */
     function findAllForSidebar($fields = array('id', 'title')) {
+		//todo:findAll
     	return $this->findAll(null, $fields, "{$this->name}.title ASC", null, 1);
     }
     
@@ -203,8 +204,8 @@ class Page extends AppModel {
      * @deprecated: Use Cake's TreeBehavior::genera...
      * @param int $skipId id to skip
      */
-    function getListThreaded($skipId = null, $alias = 'title') {
-        $parentPages = $this->findAll(null, null, "{$this->name}.lft ASC", null, 1, 0);
+    function getListThreaded($skipId = null, $alias = 'title', $asArray = false) {
+		$parentPages = $this->find('all', Array('order' => $this->name . '.lft ASC', 'recusive' => 0));
         
         // Array for form::select
         $selectBoxData = array();
@@ -237,7 +238,7 @@ class Page extends AppModel {
                    && $page[$this->name]['rght'] < $skipRight)) {
                        $alias = hsc($page[$this->name]['title']);
                        if (!empty($dashes)) $alias = "$dashes $alias";
-                       $selectBoxData[$page[$this->name]['id']] = $alias;
+                       $selectBoxData[$page[$this->name]['id']] = ($asArray) ? $page[$this->name] : $alias;
                        
                 }
             }
@@ -273,10 +274,12 @@ class Page extends AppModel {
     function search($query) {
         $query = Sanitize::escape($query);
     	$fields = null;
+		//todo:findAll
     	$titleResults = $this->findAll("{$this->name}.title LIKE '%$query%'", $fields, null, null, 1);
     	$contentResults = array();
     	if (empty($titleResults)) {
     		$titleResults = array();
+			//todo:findAll
 			$contentResults = $this->findAll("MATCH ({$this->name}.content) AGAINST ('$query')", $fields, null, null, 1);
     	} else {
     		$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.' . $this->name . '.id'));
@@ -284,6 +287,7 @@ class Page extends AppModel {
     		if (!empty($alredyFoundIds)) {
     			$notInQueryPart = " AND {$this->name}.id NOT IN ($alredyFoundIds)";
     		}
+			//todo:findAll
     		$contentResults = $this->findAll("MATCH ({$this->name}.content) AGAINST ('$query')$notInQueryPart", $fields, null, null, 1);
     	}
     	

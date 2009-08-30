@@ -114,7 +114,8 @@ class UsersController extends AppController {
      * 
      */
     function admin_index() {
-        $users = $this->User->findAll();
+		//todo:findAll
+        $users = $this->User->find('all');
         $this->set(compact('users'));
     }
     

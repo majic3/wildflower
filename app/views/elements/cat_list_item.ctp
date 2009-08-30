@@ -1,0 +1,1 @@
+<?php echo $html->link($data['Category']['title'], $data['Category']['slug'], array(), false, false);	?>

@@ -15,13 +15,15 @@
 	possible with adhoc code from bakery
 */
 ?>
-<div class="rightCol">
+<div class="leftCol">
     <div class="nv vert">
-       <?php echo $wild->subPageNav(); ?>
+	<h5>page sub nav</h5>
+       <?php debug($wild->subPageNav(true)); ?>
     </div>
+	<p>sidebar items</p>
 <?php	
 	if(!empty($page['Sidebar'])):
-	echo $page['Sidebar'];
+	echo $wild->processSidebar($page['Sidebar']);
 	endif; ?>
 </div>
 

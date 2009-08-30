@@ -37,8 +37,9 @@
 			'oo/grids',
 			'oo/content',
 			//'oo/grids_debug',
+			'oo/mod',
 			//'oo/mod_debug',
-			//'oo/mod_skins',
+			'oo/mod_skins',
 			'formy',
 			'screen'
 		);

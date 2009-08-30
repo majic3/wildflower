@@ -198,26 +198,45 @@ class WildHelper extends AppHelper {
         return $html;
     }
     
-    function subPageNav() {
+    function subPageNav($tree = false) {
         $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
         $Page = ClassRegistry::init('Page');
         $Page->recursive = -1;
-        
-        // Get the parent page slug
-        $url = $this->params['url']['url'];
-        $slug = array_shift(explode('/', $url));
-        $pages = $Page->findAllBySlugWithChildren($slug);
 
-        if (empty($pages)) {
-            return '';
-        }
-        $html = '<ul class="nv vert">';
-        
-        // Build HTML
-        foreach ($pages as $page) {
-            $html .= '<li>' . $this->Htmla->link($page['Page']['title'], $page['Page']['url'], array('strict' => true)) . '</li>';
-        }
-        $html .= '</ul>';
+		if($tree)	{
+			//	nested tree - be able to skip to id & set extra data to be returned
+			$pages = $Page->getListThreaded(null, 'title', true);
+			if (empty($pages)) {
+				return '';
+			}
+			return $pages;
+			$html = '<ul class="nv vert">';
+			
+			// Build HTML
+			foreach ($pages as $page) {
+				if($page)
+
+				$html .= '<li>' . $this->Htmla->link($page['title'], $page['url'], array('strict' => true)) . '</li>';
+			}
+			$html .= '</ul>';
+		} else {
+			// Get the parent page slug
+			$url = $this->params['url']['url'];
+			$slug = array_shift(explode('/', $url));
+			$pages = $Page->findAllBySlugWithChildren($slug);
+
+			if (empty($pages)) {
+				return '';
+			}
+			$html = '<ul class="nv vert">';
+			
+			// Build HTML
+			foreach ($pages as $page) {
+				$html .= '<li>' . $this->Htmla->link($page['Page']['title'], $page['Page']['url'], array('strict' => true)) . '</li>';
+			}
+			$html .= '</ul>';
+		}
+
         return $html;
     }
     

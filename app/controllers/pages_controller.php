@@ -187,8 +187,8 @@ class PagesController extends AppController {
     }
     
     /**
-     * Insert link dialog
-     *
+     * Insert link dialog debunked
+     * another way to do this??
      */
     function admin_link() {
         $this->autoLayout = false;
@@ -243,7 +243,7 @@ class PagesController extends AppController {
      * Maintenance function.
      */
     function admin_setUrlFields() {
-    	$pages = $this->Page->findAll();
+    	$pages = $this->Page->find('all');
     	
     	// Resave each page
     	$success = true;
@@ -317,6 +317,16 @@ class PagesController extends AppController {
 		$argsCountBeforeFilter = count($args);
 		$args = array_filter($args);
 		$url = '/' . $this->params['url']['url'];
+
+		// Inserted code: //
+		$urlParts=explode('/',$url);
+		$url='';
+		foreach($urlParts as $urlPart) {
+			if(!empty($urlPart) && strpos($urlPart,':')===false) {
+				$url.='/'.$urlPart;
+			}
+		}
+		// /inserted fix for urls with trailing slash //
 		
 		// Redirect if the entered URL is not correct
 		if (count($args) !== $argsCountBeforeFilter) {
