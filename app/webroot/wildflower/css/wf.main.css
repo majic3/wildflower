@@ -1217,7 +1217,18 @@ select {
         margin: 0;
     }
 
-
+#genPassword	{
+	position: relative;
+	padding: 0;
+	margin: 0;
+	width: 240px;
+	height: auto;
+}
+#genPassword .new.password		{
+	position: absolute;
+	top: .5em;
+	right: 2em;
+}
 
 /**	users password strength meter made by Tane Piper	**/
 .is0{background:url(img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
