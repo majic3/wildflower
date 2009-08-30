@@ -318,12 +318,14 @@ class PagesController extends AppController {
 		$args = array_filter($args);
 		$url = '/' . $this->params['url']['url'];
 
-		// Inserted code: //
-		$urlParts=explode('/',$url);
-		$url='';
-		foreach($urlParts as $urlPart) {
-			if(!empty($urlPart) && strpos($urlPart,':')===false) {
-				$url.='/'.$urlPart;
+		// Inserted code: // -- maybe a better way?
+		if($url !== '//')	{
+			$urlParts=explode('/',$url);
+			$url='';
+			foreach($urlParts as $urlPart) {
+				if(!empty($urlPart) && strpos($urlPart,':')===false) {
+					$url.='/'.$urlPart;
+				}
 			}
 		}
 		// /inserted fix for urls with trailing slash //
@@ -359,7 +361,7 @@ class PagesController extends AppController {
 		// Give 404 if no page found or requesting a parents page without a parent in the url
 		$isChildWithoutParent = (!$this->isHome and ($page[$this->modelClass]['url'] !== $url));
 		if (empty($page) or $isChildWithoutParent) {
-			return $this->do404();
+//			return $this->do404();
 		}
 
 		$this->canonical['rel'] = (Configure::read('Wildflower.settings.home_page_id') == $page[$this->modelClass]['id']) ? '/' : $page[$this->modelClass]['url'];

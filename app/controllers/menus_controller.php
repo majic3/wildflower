@@ -1,6 +1,7 @@
 <?php
 class MenusController extends AppController {
     
+	public $components = array('RequestHandler');
     public $pageTitle = 'Navigation';
     
     function admin_add() {
@@ -26,6 +27,35 @@ class MenusController extends AppController {
             $this->Menu->contain(array('MenuItem' => array('order' => 'MenuItem.order ASC')));
             $this->data = $this->Menu->findById($id);
         }
+    }
+    
+    function admin_tree($modelName = 'Page') {
+		$this->helpers[] = 'tree';
+		$params['modelName'] = $modelName;
+		if($modelName == 'Page')	{
+			$params = array('model'=> 'Page', 'element'=> 'list_item', 'alias'=> 'title');
+			$Page = ClassRegistry::init('Page');
+			$Page->recursive = -1;
+			$pages = $Page->find('all', array('fields' => array('title', 'url', 'lft', 'rght'), 'order' => 'lft ASC'));
+			if (empty($pages)) {
+				// error!! Danger Will Robinson
+			}
+			$data = $pages;
+		} else {
+			$params = array('model'=> 'Category', 'element'=> 'cat_list_item', 'alias'=> 'title');
+			$Category = ClassRegistry::init('Category');
+			$Category->recursive = -1;
+			$categories = $Category->find('all', array('fields' => array('title', 'slug', 'lft', 'rght'), 'order' => 'lft ASC'));
+			if (empty($categories)) {
+				// error 
+			}
+			$data = $categories;
+		}
+
+		$this->layout = 'xml';
+		Configure::write('debug', 0);
+		header('content-type: application/json');
+		$this->set(compact('data', 'params'));
     }
     
     private function _addOrderToItems() {

@@ -76,7 +76,7 @@ class PostsController extends AppController {
      */
     function admin_index() {
     	$posts = $this->paginate($this->modelClass);
-        $this->set('posts', $posts);
+        $this->set(compact('posts'));
     }
 
     /**
@@ -441,6 +441,16 @@ class PostsController extends AppController {
 
             $this->redirect($this->data['Post']['permalink'] . '#comment-' . $this->Post->Comment->id);
         }
+    }
+    
+    /**
+     * to allow pingback for chatcatcher - this may be a nul avenue
+     *
+     * @return void
+     */
+    public function pingback() {
+		// Import the app/vendor/xmlrpc.php library
+		App::import('Vendor', 'xmlrpc'); 
     }
     
 }

@@ -4,7 +4,7 @@ $.jlm.bind('app_controller.beforeFilter', function () {
     
     $.jlm.components.tinyMce.startup();
 
-	// iphone switcher hoped this could be applied to for items automajicaklly but no
+	// use another one that cabe applied to checkboxes only if overhead is low this idea may be ot get filament group custom inpputs working
 	$('.switch').iphoneSwitch("off", 
 		function() {
 			alert("Ooo you're turning me on.");
@@ -22,6 +22,15 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 		}
 	);
 
+	$('.submitBtn').hover(
+		// mouseover
+		function(){ $(this).addClass('submitBtnHover'); },
+		
+		// mouseout
+		function(){ $(this).removeClass('submitBtnHover'); }
+	);
+
+	$('input').customInput();
 
 	// clear a short
 	$('.clearshort').click(function(event)	{

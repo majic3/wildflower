@@ -57,7 +57,7 @@
 	</div>
 	<div id="postsSidebar" class="sidebar lastUnit size1of5">
 		<?php
-				echo $wild->catsNav(),
+				echo '<div class="nv vert">', $wild->catTree(), '</div>',
 				$wild->latestCommentsList();
 		?>
 	</div>

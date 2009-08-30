@@ -145,6 +145,7 @@ class AssetsController extends AppController {
             $javascripts = $this->JlmPackager->concate();
 			// this makes the debugkit work with wf
 			Configure::write('debug', 0);
+        $this->RequestHandler->respondAs('application/javascript');
 			die($javascripts);
         }
         

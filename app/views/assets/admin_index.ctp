@@ -25,6 +25,8 @@
     	    </a>
     	    
             <h3><?php echo $html->link($label, array('action' => 'edit', $file['Asset']['id'])); ?></h3>
+
+			<p>actual width &amp; height: <?php debug($wild->getAssetSize($file['Asset']['name'])); ?></p>
             
             <span class="row-actions"><?php echo $html->link(__('View', true), Asset::getUploadUrl($file['Asset']['name']), array('class' => '', 'rel' => 'permalink', 'title' => __('View or download this file.', true))); ?></span>
             

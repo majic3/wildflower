@@ -1,5 +1,23 @@
 
+$.jlm.bind('posts.admin_index', function() {
+
+	$('.datePick').daterangepicker({
+			specificDate: 'Pick Post Date',
+			onChange: function()	{
+				// 
+				$(this).text('change the world');
+				console.info('change the  world');
+			},
+			onClose: function()	{
+				// 
+				$(this).text('hello world');
+				console.info('hello world');
+			}
+		});
+	});
+
 $.jlm.bind('posts.admin_categorize', function() {
+
     
     // Add new category box AJAX form
     var buttonEl = $('#add-category-box .submit input');

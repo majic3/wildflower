@@ -22,44 +22,84 @@ $.jlm.addComponent('tinyMce', {
 	},
 	
 	getConfig: function() {
-	    var stylesheetUrl = $.jlm.base + '/wildflower/css/wf.mce.css';
-        var fullBaseUrl = window.location.protocol + "//" + window.location.host + '/';
-	    return {
-            mode: "none",
-            theme: "advanced",
-            // @TODO cleanup unneeded plugins
-            plugins: "wildflower,bramus_cssextras,noneditable,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
-            doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+		var stylesheetUrl = $.jlm.base + '/wildflower/css/wf.mce.css';
+		var fullBaseUrl = window.location.protocol + "//" + window.location.host + '/';
+		return {
+			mode: "none",
+			theme: "advanced",
+			// @TODO cleanup unneeded plugins
+			plugins: "wildflower,bramus_cssextras,noneditable,advimagescale,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
+			doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 
-            // Theme options
-            theme_advanced_buttons1: "undo,redo,copy,paste,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,wfdivwrapper,wfinsertimage,wfinsertgrid,wfinsertwidget,wfinserteblock,wfinsertlink,unlink,|,charmap,code,fullscreen,|,bramus_cssextras_classes,bramus_cssextras_ids",
-            theme_advanced_styles : "Align left=left;Align right=right",
-    		theme_advanced_buttons2: "",
-    		theme_advanced_buttons3: "",
-            theme_advanced_toolbar_location: "top",
-            theme_advanced_toolbar_align: "left",
-            theme_advanced_statusbar_location: "bottom",
+			// Theme options
+			theme_advanced_buttons1: "undo,redo,copy,paste,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,wfdivwrapper,wfinsertimage,wfinsertgrid,wfinsertwidget,wfinserteblock,wfinsertlink,unlink,|,charmap,code,fullscreen,|,bramus_cssextras_classes,bramus_cssextras_ids",
+			theme_advanced_styles : "Align left=left;Align right=right",
+			theme_advanced_buttons2: "",
+			theme_advanced_buttons3: "",
+			theme_advanced_toolbar_location: "top",
+			theme_advanced_toolbar_align: "left",
+			theme_advanced_statusbar_location: "bottom",
 			theme_advanced_blockformats : "div,p,h1,h2,h3,h4,h5,h6,blockquote,dt,dd,code,samp",
-            theme_advanced_resizing: false,
-            theme_advanced_resize_horizontal: false,
-    		theme_advanced_path: true,
-            width: '100%',
+			theme_advanced_resizing: false,
+			theme_advanced_resize_horizontal: false,
+			theme_advanced_path: true,
+			width: '100%',
+
+			// advanced image resizing
+			advimagescale_maintain_aspect_ratio: true, /* this is the default behavior */
+			advimagescale_fix_border_glitch: true, /* also the default behavior */
+			advimagescale_noresize_all: false, /* set to true to prevent all resizing on images */
+			advimagescale_append_to_url: false,
+			//advimagescale_filter_class: 'wf_image', /* class of images managed by plugin - not external images nor widget place holders */
+			advimagescale_url_width_key: 'w',
+			advimagescale_url_height_key: 'h',
+			advimagescale_max_height: 200,
+			advimagescale_max_width:  200,
+			advimagescale_min_height: 20, 
+			advimagescale_min_width:  20,
+			advimagescale_loading_callback: function(imgNode) {
+				alert(imgNode.src + ' is loading');
+			},
+			advimagescale_loaded_callback: function(imgNode) {
+				alert(imgNode.src + ' is loaded');
+			},
+			advimagescale_resize_callback: function(editorInstance, imgNode) {
+				console.info('resized to ' + imgNode.width + 'x' + imgNode.height);
+				var imgSource = '', imgHtml = '', imgClass = '', imgAlt = '';
+
+				var regex = '\/wildflower\/thumbnail\/([a-zA-Z0-9\-_]*)\.(png|gif|jpg)\/([0-9]*)\/([0-9]*)\/([0-9]*)';
+				var cImUrl = imgNode;//, re = new RegExp(regex, "g");
+
+				console.info(imgNode);
+				imgSource = $('img', imgNode).attr('src');
+				imgClass = $('img', imgNode).attr('class');
+				imgAlt = $('img', imgNode).attr('alt');
+				imgTitle = $('img', imgNode).attr('title');
+				console.info(imgClass);
+				console.info(imgAlt);
+				console.info(imgSource);
+
+				imgNode.src = '/wildflower/thumbnail/' + imgSource[1] + '.' + imgSource[2] + '/' + imgNode.width + '/' + imgNode.height + '/' + imgSource[5] + '/';
+				imgHtml = '<img class="' + imgNode.class + '" src="'+imgNode.src+'" width="'+imgNode.width+'" height="'+imgNode.height+'" alt="' + imgNode.alt + '" />';
+				editorInstance.execCommand('mceInsertContent', 0, imgHtml);
+			},
 
 			// non editable content regions (these are edited as separate instances)
 			noneditable_leave_contenteditable : true,
 			noneditable_noneditable_class : 'block',
 
 
-            // URLs
-            relative_urls: false,
-            remove_script_host: false,
-            document_base_url: fullBaseUrl,
-            convert_urls: false,
-            
-            content_css: stylesheetUrl,
-            
-            init_instance_callback: $.jlm.components.tinyMce.onReady
-        };
+			// URLs
+			relative_urls: false,
+			remove_script_host: false,
+			document_base_url: fullBaseUrl,
+			convert_urls: false,
+			cleanup_on_startup: true,
+			
+			content_css: stylesheetUrl,
+			
+			init_instance_callback: $.jlm.components.tinyMce.onReady
+		};
 	},
 	
 	focus: function() {
@@ -111,13 +151,13 @@ $.jlm.addComponent('tinyMce', {
                     imgUrl = $.jlm.base + '/wildflower/thumbnail/' + imgNameEscaped + '/' + resizeWidth + '/' + resizeHeight + '/' + crop;
                 }
 
-				var imgAlt = $('#alt_txt', imageSidebarEl).val(), imgWH = '';
+				var imgAlt = $('#alt_txt', imageSidebarEl).val(), imgClass = $('#format_class', imageSidebarEl).val(), imgWH = '';
 
 				if(imgAlt != '') imgName = imgAlt;
 				if(resizeWidth && resizeHeight) imgWH =  ' width="' + resizeWidth + '" height="' + resizeHeight +'"';
 
     			// Image HTML
-    			var imgHtml = '<img '+imgWH+'alt="' + imgName + '" src="' + imgUrl + '" />';
+    			var imgHtml = '<img class="wf_image'+imgClass+'" '+imgWH+'alt="' + imgName + '" src="' + imgUrl + '" />';
 
     			$.jlm.components.tinyMce.editor.execCommand('mceInsertContent', 0, imgHtml);
 
@@ -137,6 +177,77 @@ $.jlm.addComponent('tinyMce', {
                 $.jlm.components.tinyMce.loadInsertImageContent(url);
                 return false;
             });
+			
+			$('#assetCtrlTabs').tabs({ values: [10,20,30,40,50,60,70,80,90,100] });
+			
+			$('.imSize').click(function()	{	console.info('imSize')	});
+			$('.imSize.advimg').click(function()	{
+				var imgSize = $(this).text(), imSize = imgSize.split('x');
+				$('#resize_x').val(imSize[0]);
+				$('#resize_y').val(imSize[1]);
+				$('#resize_image').data('origW', imSize[0]);
+				$('#resize_image').data('origH', imSize[1]);
+				$('#imSlider').slider({min: (imSize[0]*0.10), max: imSize[0], callback: function()	{
+					
+				}});
+				$('#resize_crop').val('0');
+				$('.imSize.reset').fadeIn('fast');
+				$('#assetCtrlTabs').tabs('enable', [2]).tabs('select', [2]);
+			});
+			$('.imSize.small').click(function()	{
+					var x = $('#resize_x').val(), y = $('#resize_y').val();
+					if(x < 125)	{
+						x = (x/100)*45;
+					console.info('small: ' + $('#resize_x').val(x));
+						y = Math.round(y*0.45);
+					} else {
+						x = x/100;
+					console.info('large: ' + $('#resize_x').val());
+						y = Math.round((y*x)/100);
+						x = 125;
+					}
+					$('#resize_x').val(x); $('#resize_y').val(y);
+					console.info('small: ' + $('#resize_x').val());
+					console.info('small: ' +  $('#resize_y').val());
+					$('.imSize.reset').fadeIn('fast');
+			});
+			$('.imSize.medium').click(function()	{
+					var x = $('#resize_x').val(), y = $('#resize_y').val();
+					if(x < 275)	{
+						x = (x/100)*45;
+						y = Math.round(y*0.45);
+					} else {
+						x = x/100;
+					console.info('medium: ' + $('#resize_x').val());
+						y = Math.round((y*x)/100);
+						x = 275;
+					}
+					$('#resize_x').val(x); $('#resize_y').val(y);
+					console.info('medium: ' + $('#resize_x').val());
+					console.info('medium: ' +  $('#resize_y').val());
+					$('.imSize.reset').fadeIn('fast');
+			});
+			$('.imSize.large').click(function()	{
+					var x = $('#resize_x').val(), y = $('#resize_y').val();
+					if(x < 450)	{
+						x = (x/100)*65;
+					console.info('large: ' + $('#resize_x').val());
+						y = Math.round(y*0.65);
+					} else {
+						x = x/100;
+					console.info('large: ' + $('#resize_x').val());
+						y = Math.round((y*x)/100);
+						x = 450;
+					}
+					$('#resize_x').val(x); $('#resize_y').val(y);
+					console.info('large: ' + $('#resize_x').val());
+					console.info('large: ' +  $('#resize_y').val());
+					$('.imSize.reset').fadeIn('fast');
+			});
+			$('.imSize.reset').click(function()	{
+					$('#resize_x').val($('#resize_image').data('origW')); $('#resize_y').val($('#resize_image').data('origH'));
+				$(this).fadeOut('fast');
+			});
 		});
 	},
 	

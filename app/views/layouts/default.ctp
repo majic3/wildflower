@@ -52,7 +52,8 @@
 
 
 	<div id="bd" class="bd">
-        <?php echo $content_for_layout; ?>
+		<!-- a name="bd"></a -->
+		<?php echo $content_for_layout; ?>
 	</div>
 
 	<div id="ft" class="ft">

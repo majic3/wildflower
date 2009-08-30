@@ -3,7 +3,7 @@ App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
 class WildHelper extends AppHelper {
 	
-	public $helpers = array('Html', 'Textile', 'Htmla');
+	public $helpers = array('Html', 'Textile', 'Htmla', 'Tree');
 	private $_isFirstChild = true;
 	private $itemCssClassPrefix;
 	
@@ -51,6 +51,30 @@ class WildHelper extends AppHelper {
 	    }
 	    
 	    return $default;
+	}
+	
+	/**
+	 * return the image width & height of asset
+	 *
+	 * @param string $ImageName
+	 * @return array of getimagesize
+	 */
+	function getAssetSize($ImageName) {
+
+		/*
+		    * Asset
+          o id18
+          o name1251391654322.png
+          o title1251391654322
+          o mimeimage/png
+          o created2009-08-29 01:16:26
+          o updated2009-08-29 01:16:26
+
+		*/
+
+		$filename = Configure::read('Wildflower.uploadDirectory') . DS . $ImageName;
+
+		return getimagesize($filename);
 	}
 	
 	/**
@@ -198,6 +222,34 @@ class WildHelper extends AppHelper {
         return $html;
     }
     
+    function subPageTree($id) {
+        //$pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
+        $Page = ClassRegistry::init('Page');
+        $Page->recursive = -1;
+		//	nested tree - be able to skip to id & set extra data to be returned
+		$pages = $Page->find('all', array('conditions' => array('Page.draft' => '0'),'fields' => array('title', 'url', 'lft', 'rght'), 'order' => 'lft ASC'));
+		//$pages = $Page->findAllThreaded(null, array('title', 'url', 'rght', 'lft'), array('title', 'url'));
+		if (empty($pages)) {
+			return '';
+		}
+		// debug($pages);
+		return $this->Tree->generate ($pages, array('model'=> 'Page', 'element'=> 'list_item', 'alias'=> 'title', 'class' => 'tabs'));
+    }
+    
+    function catTree() {
+		//Configure::write('debug', 2);
+        $Category = ClassRegistry::init('Category');
+        $Category->recursive = -1;
+		//	nested tree - be able to skip to id & set extra data to be returned
+		$categories = $Category->find('all', array('fields' => array('title', 'slug', 'lft', 'rght'), 'order' => 'lft ASC'));
+		//$pages = $Page->findAllThreaded(null, array('title', 'url', 'rght', 'lft'), array('title', 'url'));
+		if (empty($categories)) {
+			return '';
+		}
+		// debug($pages);
+		return $this->Tree->generate ($categories, array('model'=> 'Category', 'element'=> 'cat_list_item', 'alias'=> 'title', 'class' => 'tabs'));
+    }
+    
     function subPageNav($tree = false) {
         $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
         $Page = ClassRegistry::init('Page');
@@ -210,7 +262,7 @@ class WildHelper extends AppHelper {
 				return '';
 			}
 			return $pages;
-			$html = '<ul class="nv vert">';
+			$html = '<ul class="tabs">';
 			
 			// Build HTML
 			foreach ($pages as $page) {
@@ -228,7 +280,7 @@ class WildHelper extends AppHelper {
 			if (empty($pages)) {
 				return '';
 			}
-			$html = '<ul class="nv vert">';
+			$html = '<ul class="tabs">';
 			
 			// Build HTML
 			foreach ($pages as $page) {
@@ -250,7 +302,7 @@ class WildHelper extends AppHelper {
         if (empty($comments)) {
             return '';
         }
-        $html = '<ul class="nv vert">';
+        $html = '<ul class="comments">';
         
         // Build HTML
         foreach ($comments as $comment) {
@@ -344,6 +396,9 @@ class WildHelper extends AppHelper {
     }
     
     function extractContent($content, $class) {
+		//$class = Configure::read('Wildflower.blogExerpt');
+		//if(preg_match("/class\=\"(\b$class\b|$class\b|\b$class)\"/i", $content)) return $content;
+
 		App::import('Vendor', 'phpQueryObject', Array('file' => 'phpQuery.php'));
 		$pq = phpQuery::newDocumentXHTML($content);
         return pq('div.' . $class, $pq)->html();

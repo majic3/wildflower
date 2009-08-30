@@ -77,6 +77,7 @@
 
 
 	<div id="bd" class="bd">
+		<a name="bd"></a>
 		<?php echo $content_for_layout; ?>
 	</div>
 

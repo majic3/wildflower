@@ -18,7 +18,7 @@ echo $html->doctype('xhtml-strict') ?>
         echo
         // Load your CSS files here
         $html->css(array(
-           // '/css/ui/jquery-ui-1.7.1',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css',
             '/wildflower/css/wf.main'
         )),
         // TinyMCE 
@@ -33,6 +33,9 @@ echo $html->doctype('xhtml-strict') ?>
     ?>
     <![endif]-->
     
+    <!-- JQuery & UI GApi (lighter Jlm) -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
     <!-- JQuery Light MVC -->
     <script type="text/javascript" src="<?php echo $html->url('/' . Configure::read('Routing.admin') . '/assets/jlm'); ?>"></script>
     <script type="text/javascript">

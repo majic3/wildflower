@@ -46,6 +46,19 @@
 					?>
 				</div>
 				<?php
+				}
+					
+				if (!empty($post['Pingback'])) { 
+					$i = 0;	
+
+					$class = null;
+					
+					$class = ($i++ % 2 == 0) ? $class = ' even' : ' odd';
+				?>
+				<div id="pinkbacks" class="size2of3 unit">
+					<h3>Pingbacks</h3>
+				</div>
+				<?php
 				} ?>
 
 				<?php /* handle closed comments? */ if ($post['Post']['comments_allowed'] && !$post['Post']['comments_closed']) { ?>
@@ -77,6 +90,7 @@
 		<div class="size1of5 lastUnit">
 			<?php	
 				echo $wild->postsFromCategory($post['Post']['id']),
+				$wild->catTree(),
 				$wild->latestCommentsList();
 			?>
 		</div>

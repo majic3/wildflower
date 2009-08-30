@@ -1,24 +1,15 @@
-body {
-	font: 14px/18px "Lucida Grande", Verdana, Geneva, Arial, Helvetica, sans-serif;
-	padding: 0 6px;
+body { font:1em/1.625em "lucida grande","lucida sans unicode", sans-serif; background-color:#FFFEF0 !important;  
+font-size-adjust:none;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
 }
 
+p { padding:0; color:#111 !important; font-weight:300;}
 
-/* Widgets */
+p + p { text-indent:1.625em;}
 
-.wf_widget {
-    background: #eee;
-    padding: 20px;
-    border: 1px solid #ddd;
-}
-
-
-
-a { color:  #1B3B53 !important; text-decoration: underline }
-a:hover { color:  #1B3B53 !important; text-decoration: none }
-p { padding:0 0  0.8125em 0; color:#111; font-weight:300;}
-
-p.first:first-letter{ float:left;font-family: "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;font-size:3em;font-weight:700;line-height:1em;margin-bottom:-0.2em;padding:0.2em 0.1em 0 0; }
+p.first:first-letter{ float:left;font-family: baskerville,"palatino linotype",serif;font-size:3em;font-weight:700;line-height:1em;margin-bottom:-0.2em;padding:0.2em 0.1em 0 0; }
 p img       { float: left; margin: 0.5em 0.8125em 0.8125em 0; padding: 0; }
 p img.right { float: right; margin: 0.5em  0 0.8125em 0.8125em }
 
@@ -45,9 +36,9 @@ dl { margin: 0 0 1.625em 0; }
 dl dt { font-weight: bold; }
 dl dd { margin-left: 1.625em; }
 
-a { color:#005AF2; text-decoration:none; }
-a:hover { text-decoration: underline; }
-
+a { color:  #1B3B53 !important; text-decoration: underline }
+a:hover { color:  #1B3B53 !important; text-decoration: none }
+p { padding:0 0  0.8125em 0; color:#111; font-weight:300;}
 
 table { margin-bottom:1.625em; border-collapse: collapse; }
 th { font-weight:bold; }
@@ -58,11 +49,11 @@ caption { text-align:center; font-family:Georgia, serif; }
 
 abbr, acronym { border-bottom:1px dotted #000; }
 address { margin-top:1.625em; font-style: italic; }
-del {color:#000;}
+del {color:#000 !important;}
 
 
 blockquote { padding:1em 1em 1.625em 1em; font-family:georgia,serif;font-style: italic;  }
-blockquote:before { content:"\201C";font-size:3em;margin-left:-.625em; font-family:georgia,serif;color:#aaa;line-height:0;}/* From Tripoli  */
+blockquote:before { content:"\201C";font-size:3em;margin-left:-.625em; font-family:georgia,serif;color:#aaa !important;line-height:0;}/* From Tripoli  */
 blockquote > p {padding:0; margin:0; }
 
 strong { font-weight: bold; }
@@ -72,6 +63,24 @@ pre, code { margin: 1.625em 0; white-space: pre; }
 pre, code, tt { font: 1em monospace; line-height: 1.5; } 
 tt { display: block; margin: 1.625em 0; }
 hr { margin-bottom:1.625em; }
+
+
+
+
+/* Wildflower System Classes */
+
+img.wf_widget {
+    background: #eee;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+img.wf_image	{}
+
+div.wf_block	{}
+
+
+/*	classname used in site	*/
 
 h4.exerpt,
 p.exerpt,

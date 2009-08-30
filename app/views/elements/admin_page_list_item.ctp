@@ -1,4 +1,4 @@
-<div class="actions-handle">
+<div class="<?php echo ($data['Page']['draft']) ? 'draft ' : ''; ?>actions-handle">
     <span class="row-check"><?php echo $form->checkbox('id.' . $data['Page']['id']) ?></span>
     <?php
         $tree->addItemAttribute('id', 'page-' . $data['Page']['id']);

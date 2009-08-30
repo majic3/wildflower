@@ -11,7 +11,9 @@
 
 <h3>Menu items</h3>
 <ul class="menu_items">
-    <?php foreach ($this->data['MenuItem'] as $i => $item): ?>
+    <?php 
+	if(!empty($this->data['MenuItem'])):
+	foreach ($this->data['MenuItem'] as $i => $item): ?>
     <li>
         <?php echo $form->input("MenuItem.$i.label", array('div' => array('class' => 'menu_item_label'))); ?>
         <?php echo $form->input("MenuItem.$i.url", array('div' => array('class' => 'menu_item_url'))); ?>
@@ -19,7 +21,17 @@
         <?php echo $html->link(__('Remove', true), array('action' => 'delete', 'controller' => 'menu_items', $item['id']), array('class' => 'delete')); ?>
         <a class="move" href="#DragAndDropItem"><span>Move</span></a>
     </li>
-    <?php endforeach; ?>
+    <?php endforeach;
+	else: 
+	?>
+    <li>
+        <?php echo $form->input("MenuItem.0.label", array('div' => array('class' => 'menu_item_label', 'value' => 'New Menu Item'))); ?>
+        <?php echo $form->input("MenuItem.0.url", array('div' => array('class' => 'menu_item_url', 'value' => 'New Url'))); ?>
+        <?php echo $form->input("MenuItem.0.id", array('type' => 'hidden')); ?>
+        <a class="move" href="#DragAndDropItem"><span>Move</span></a>
+    </li><?php
+	endif;
+	?>
 </ul>
     
 <p class="add_menu_item_p"><?php echo $html->link(__('Add item', true), '#AddMenuItem', array('id' => 'add_menu_item')); ?></p>

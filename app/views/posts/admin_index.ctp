@@ -19,7 +19,7 @@
 
 <ul class="list-of-posts list">
     <?php foreach ($posts as $post): ?>
-        <li class="post-row actions-handle">
+        <li class="<?php echo ($post['Post']['draft']) ? 'draft ' : ''; ?>post-row actions-handle">
             <span class="row-check"><?php echo $form->checkbox('id.' . $post['Post']['id']) ?></span>
             <?php
                 $draftStatus = '';
@@ -28,7 +28,8 @@
                 }
             ?>
             <span class="title-row"><?php echo $draftStatus, $html->link($post['Post']['title'], array('action' => 'admin_edit', $post['Post']['id']), array('title' => __('Edit this post.', true))) ?></span>
-            <span class="post-date"><?php echo $html->link($time->format('j M y', $post['Post']['created']), array('action' => 'options', $post['Post']['id']), array('title' => __('Change post options.', true))); ?></span>
+            <span class="post-date datePick" ttile="click to change the date of this post"><?php echo $time->format('j M y', $post['Post']['created']); ?></span>
+            <span class="post-options"><?php echo $html->link('options', array('action' => 'options', $post['Post']['id']), array('title' => __('Change post options.', true))); ?></span>
             <div class="post-categories">
             <?php
                 // Post categories list

@@ -172,6 +172,7 @@
 	 * @param {object} e is optional
 	 */
 	function prepareImage(ed, el) {
+
 		var dom = ed.dom;
 		var elId= dom.getAttrib(el, 'mce_advimageresize_id');
 

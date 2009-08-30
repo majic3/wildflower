@@ -61,8 +61,7 @@
         echo $form->input($name, $options);
     }
     
-    echo '<div class="switch"></div>', 
-    '<div id="edit-buttons">',
+    echo '<div id="edit-buttons">',
     $form->submit('Save changes', array('div' => array('class' => 'submit save-section'))),
     '</div>',
     '<div class="cleaner"></div>',

@@ -40,6 +40,12 @@ $.jlm.bind('menus.admin_add, menus.admin_edit', function() {
             update: renameNames
         });
     }
+
+    function listPages() {
+		// a menu system for all pages for making menus - like to be able to links to cats to
+		// or bypass all that and just enter straight link
+
+    }
     
     bindRemove();
     bindMove();
