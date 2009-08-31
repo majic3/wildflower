@@ -1,0 +1,31 @@
+legend { margin-bottom: 1.4em; }
+
+
+#bd.bd .main	{ display: block;	}
+#bd.bd .rightCol,
+#bd.bd .leftCol	{		}
+
+	/*	muffin research / apaptive path flex */
+	.flexit	{
+		width: 98%;
+		margin: 0 auto;
+	}
+
+	.flexit .main	{
+		width:70%;
+	}
+
+	/*	flexit shows either 1 or the other of these up to you to set this in code	*/
+	.flexit .rightCol,
+	.flexit .leftCol	{
+		width:27%;
+	}
+
+	.flexit3 .main	{
+		width:68%;
+	}
+
+	.flexit3 .rightCol,
+	.flexit3 .leftCol	{
+		width:13%;
+	}

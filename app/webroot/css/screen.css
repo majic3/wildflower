@@ -37,16 +37,16 @@ p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
 
 /* HEADER */
 #hd.hd { min-height: 65px; padding: 0; background: transparent; border-bottom: 2px solid #1F8C16; }
-#hd.hd #skipto		{	padding: 0; margin: 0 1.6em 0 0; text-align: right; width: auto;	}
-	#skipto	a	{	margin-right: 10px;	}
+#hd.hd #skipto		{	padding: 0; margin: 0 1.6em 0 0; text-align: right; width: auto; float: right;	}
+	#skipto	a	{	margin-right: 0.04em;	}
 #hd.hd a:link,
 #hd.hd a:active,
 #hd.hd a:visited	{	color: #000;	}
 #hd.hd a:hover		{	color: #000;	}
-#hd.hd h1 { padding: 0 0 0 1.3em; margin: 0.614em 0.2em 1.421em 0.2em; }
+#hd.hd h1 { padding: .8em 0 .3em 0; margin: 0 .2em .614em .2em; width: 78%;}
 #hd.hd h1	a { padding: 0; margin: 0;  }
 #hd.hd p	{ padding: 0 0 0 2.6em; margin: 0.2em; }
-#hd.hd .logo	{ float: left; margin: 0.5em; }
+#hd.hd .logo	{ float: left; margin: 0.5em; width: 55px; height: 55px; }
 #hd.hd a	{ display: block; width: 100%; height: 100%;  }
 #hd #searchrss 	{	float: right; width: 237px; height: 31px; margin: -3.2em 1.8em 0 0; 	}
 #hd #searchrss 	#searchBox	{
@@ -171,11 +171,11 @@ ul.tabs, ul.tabs li ul { display: block; }
 #ft.ft p.quiet { font-size: .75em; color: #ccc; width: auto; float: left; margin-top: 0; margin-bottom: 0; }
 #ft.ft p { color: #ccc; width: auto; float: left; padding-top: 1.164em; margin-top: 0; margin-bottom: 0; }
 #ft.ft img { border: 0; margin: 0; vertical-align: bottom; }
-#ft.ft a[href^='http://wf.klevo.sk']	{
-	margin-top: 1em; margin-left: 2em; display: inline;
+#ft.ft a.wildflower.logo	{
+	margin-top: 1em; display: inline;
 }
-	#ft.ft a[href^='http://wf.klevo.sk'] img	{
-		margin: .125em 1.614em 0 2.324em; display: block;
+	#ft.ft a.wildflower.logo img	{
+		margin: .275em 0.324em 0 1.614em; display: block;
 	}
 
 /* widflower:admin bar & admin link */

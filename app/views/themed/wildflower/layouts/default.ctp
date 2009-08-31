@@ -34,6 +34,7 @@
 		$styles = array(
 			'oo/libraries',
 			'oo/template',
+			//'oo/template_debug',
 			'oo/grids',
 			'oo/content',
 			//'oo/grids_debug',
@@ -41,7 +42,8 @@
 			//'oo/mod_debug',
 			'oo/mod_skins',
 			'formy',
-			'screen'
+			'screen',
+			//'screen_debug'
 		);
 	$html->css($styles, 'stylesheet', Array('media' => 'screen'), false);
 	$asset->extras('css_alt', Array('attribs' => array('media' => 'print'), 'rel' => 'stylesheet', 'css' => 'print'));
@@ -50,13 +52,13 @@
 			'plugins/jquery.tipsy', 
 			'plugins/jquery.gatracker', 
 			'plugins/jquery.form', 
-			//'plugins/retweet', 
+			'plugins/retweet', 
 			'common'
 		);
 		//	$asset->extras('gapi', array('http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js','http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js','http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js'));
 		$javascript->link($javascripts, false);
-		$asset->extras('css_fix', Array('attribs' => array('media' => 'screen'), 'condition' => 'if lte IE 7', 'rel' => 'stylesheet', 'css' => 'majic3_ie_lte7'));
-		$asset->extras('css_fix', Array('attribs' => array('media' => 'print'), 'condition' => 'if IE 5', 'rel' => 'stylesheet', 'css' => 'formy_ie'));
+		$asset->extras('css_fix', Array('attribs' => array('media' => 'screen'), 'condition' => 'if lte IE 7', 'rel' => 'stylesheet', 'css' => 'ie_lte7'));
+		$asset->extras('css_fix', Array('attribs' => array('media' => 'print'), 'condition' => 'if lte IE 5.5', 'rel' => 'stylesheet', 'css' => 'ie_5'));
 		//$asset->extras('js_fix', Array('attribs' => array('type' => 'script'), 'condition' => 'if lte IE 7', 'js' => 'plugins/dd-pngfix'));
 		// $asset->extras('js_fix', Array('attribs' => array('type' => 'script'), 'condition' => 'if IE', 'js' => 'plugins/html5'));
 		//$asset->extras('js_fix', Array('attribs' => array('type' => 'block'), 'condition' => 'if lte IE 7', 'js' => 'DD_belatedPNG.fix(\'.png\');'));
@@ -66,7 +68,7 @@
 
 <div class="wildflower">
 	<div id="hd" class="hd">
-		<img class="logo" alt="A CMS made with CakePHP" src="/wildflower/img/logo-orb.png" />
+		<img class="logo" alt="A CMS made with CakePHP" src="/wildflower/img/logo-orb.png" width="55" height="55" />
 		<div id="skipto"><a href="#bd">skip to content</a></div>
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 	</div>
@@ -80,7 +82,7 @@
 
 	<div id="ft" class="ft">
 		<div class="leftCol">
-			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>Wildflower Logo designed by <a href="http://www.olivertreend.com/">Oliver Treend</a></p>
+			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array('class' => 'wildflower logo'), false, false); ?>Wildflower Logo designed by <a href="http://www.olivertreend.com/">Oliver Treend</a></p>
 		</div>
 		<div class="main">
 			<div class="nv">

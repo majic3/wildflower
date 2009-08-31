@@ -1,0 +1,13 @@
+/*	ie_lte7	*/
+
+body .wildflower #hd.hd #skipto		{	padding: 0; margin: 0 1.6em 0 0; text-align: right; width: 16%; float: right;	}
+body .wildflower #hd.hd h1 { padding: .8em 0 .3em 0; margin: 0 .2em .614em .2em; width: 65%; text-align: left;float: left}
+body .wildflower #hd.hd h1	a { padding: 0; margin: 0;  }
+
+
+body .wildflower #bd.bd .main,
+body .wildflower #bd.bd .rightCol,
+body .wildflower #bd.bd .leftCol	{	text-align: left !important; padding-left: 0.6em; padding-right: 0.6em;	}
+
+body .wildflower #bd.bd .unit,
+body .wildflower #bd.bd .lastUnit	{	text-align: left !important;	}

@@ -4,3 +4,9 @@
 .main{background-color:yellow;}
 .leftCol{background-color:lime;}
 .rightCol{background-color:aqua;}
+h1	{background-color:teal;	}
+h2	{background-color:blue;	}
+h3	{background-color:lime;	}
+
+#hd	{	background: green !important	}
+#hd	div {	background: red!important	}
