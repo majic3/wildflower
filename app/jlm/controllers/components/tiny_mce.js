@@ -28,7 +28,7 @@ $.jlm.addComponent('tinyMce', {
 			mode: "none",
 			theme: "advanced",
 			// @TODO cleanup unneeded plugins
-			plugins: "wildflower,bramus_cssextras,noneditable,advimagescale,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
+			plugins: "wildflower,bramus_cssextras,noneditable,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
 			doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 
 			// Theme options
@@ -45,44 +45,44 @@ $.jlm.addComponent('tinyMce', {
 			theme_advanced_path: true,
 			width: '100%',
 
-			// advanced image resizing
-			advimagescale_maintain_aspect_ratio: true, /* this is the default behavior */
-			advimagescale_fix_border_glitch: true, /* also the default behavior */
-			advimagescale_noresize_all: false, /* set to true to prevent all resizing on images */
-			advimagescale_append_to_url: false,
+			// advanced image resizing - add advimagescale to the plugins
+			//advimagescale_maintain_aspect_ratio: true, /* this is the default behavior */
+			//advimagescale_fix_border_glitch: true, /* also the default behavior */
+			//advimagescale_noresize_all: false, /* set to true to prevent all resizing on images */
+			//advimagescale_append_to_url: false,
 			//advimagescale_filter_class: 'wf_image', /* class of images managed by plugin - not external images nor widget place holders */
-			advimagescale_url_width_key: 'w',
-			advimagescale_url_height_key: 'h',
-			advimagescale_max_height: 200,
-			advimagescale_max_width:  200,
-			advimagescale_min_height: 20, 
-			advimagescale_min_width:  20,
-			advimagescale_loading_callback: function(imgNode) {
-				alert(imgNode.src + ' is loading');
-			},
-			advimagescale_loaded_callback: function(imgNode) {
-				alert(imgNode.src + ' is loaded');
-			},
-			advimagescale_resize_callback: function(editorInstance, imgNode) {
-				console.info('resized to ' + imgNode.width + 'x' + imgNode.height);
-				var imgSource = '', imgHtml = '', imgClass = '', imgAlt = '';
+			//advimagescale_url_width_key: 'w',
+			//advimagescale_url_height_key: 'h',
+			//advimagescale_max_height: 200,
+			//advimagescale_max_width:  200,
+			//advimagescale_min_height: 20, 
+			//advimagescale_min_width:  20,
+			//advimagescale_loading_callback: function(imgNode) {
+			//	alert(imgNode.src + ' is loading');
+			//},
+			//advimagescale_loaded_callback: function(imgNode) {
+			//	alert(imgNode.src + ' is loaded');
+			//},
+			//advimagescale_resize_callback: function(editorInstance, imgNode) {
+			//	console.info('resized to ' + imgNode.width + 'x' + imgNode.height);
+			//	var imgSource = '', imgHtml = '', imgClass = '', imgAlt = '';
+			//
+			//	var regex = '\/wildflower\/thumbnail\/([a-zA-Z0-9\-_]*)\.(png|gif|jpg)\/([0-9]*)\/([0-9]*)\/([0-9]*)';
+			//	var cImUrl = imgNode;//, re = new RegExp(regex, "g");
+			//
+			//	console.info(imgNode);
+			//	imgSource = $('img', imgNode).attr('src');
+			//	imgClass = $('img', imgNode).attr('class');
+			//	imgAlt = $('img', imgNode).attr('alt');
+			//	imgTitle = $('img', imgNode).attr('title');
+			//	console.info(imgClass);
+			//	console.info(imgAlt);
+			//	console.info(imgSource);
 
-				var regex = '\/wildflower\/thumbnail\/([a-zA-Z0-9\-_]*)\.(png|gif|jpg)\/([0-9]*)\/([0-9]*)\/([0-9]*)';
-				var cImUrl = imgNode;//, re = new RegExp(regex, "g");
-
-				console.info(imgNode);
-				imgSource = $('img', imgNode).attr('src');
-				imgClass = $('img', imgNode).attr('class');
-				imgAlt = $('img', imgNode).attr('alt');
-				imgTitle = $('img', imgNode).attr('title');
-				console.info(imgClass);
-				console.info(imgAlt);
-				console.info(imgSource);
-
-				imgNode.src = '/wildflower/thumbnail/' + imgSource[1] + '.' + imgSource[2] + '/' + imgNode.width + '/' + imgNode.height + '/' + imgSource[5] + '/';
-				imgHtml = '<img class="' + imgNode.class + '" src="'+imgNode.src+'" width="'+imgNode.width+'" height="'+imgNode.height+'" alt="' + imgNode.alt + '" />';
-				editorInstance.execCommand('mceInsertContent', 0, imgHtml);
-			},
+			//	imgNode.src = '/wildflower/thumbnail/' + imgSource[1] + '.' + imgSource[2] + '/' + imgNode.width + '/' + imgNode.height + '/' + imgSource[5] + '/';
+			//	imgHtml = '<img class="' + imgNode.class + '" src="'+imgNode.src+'" width="'+imgNode.width+'" height="'+imgNode.height+'" alt="' + imgNode.alt + '" />';
+			//	editorInstance.execCommand('mceInsertContent', 0, imgHtml);
+			//},
 
 			// non editable content regions (these are edited as separate instances)
 			noneditable_leave_contenteditable : true,

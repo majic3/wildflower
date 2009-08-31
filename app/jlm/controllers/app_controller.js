@@ -30,8 +30,6 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 		function(){ $(this).removeClass('submitBtnHover'); }
 	);
 
-	$('input').customInput();
-
 	// clear a short
 	$('.clearshort').click(function(event)	{
 		//console.info("clearing short: " + this.href);
