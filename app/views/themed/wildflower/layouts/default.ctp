@@ -71,10 +71,7 @@
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 	</div>
 
-	<div id="nv">
-		<?php $menu = ''; echo $menu = $wild->menu('main_menu', false, 'tabs'); ?>
-	</div>
-
+	<?php echo $wild->menu('main_menu', false, 'tabs', '<div id="nv">%s</div>'); ?>
 
 	<div id="bd" class="bd">
 		<a name="bd"></a>
@@ -87,7 +84,7 @@
 		</div>
 		<div class="main">
 			<div class="nv">
-				<?php echo $menu; ?>
+				<?php echo $wild->menu('main_menu', false, 'tabs'), $wild->menu('Branches', false, 'tabs'); ?>
 			</div>
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>
