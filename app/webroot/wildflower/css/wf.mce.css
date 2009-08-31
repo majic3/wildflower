@@ -10,10 +10,8 @@ p { padding:0; color:#111 !important; font-weight:300;}
 p img       { float: left; margin: 0.5em 0.8125em 0.8125em 0; padding: 0; }
 p img.right { float: right; margin: 0.5em  0 0.8125em 0.8125em }
 
-
 h1,h2{ font-weight:normal; color: #333; font-family:Georgia, serif;  }
 h3,h4,h5,h6 { font-weight: normal; color: #333; font-family:Georgia, serif; }
-
 
 h1 { font-size: 2.125em; margin-bottom: 0.765em; }
 h2 { font-size: 1.9em;  margin-bottom: 0.855em; }
@@ -21,13 +19,10 @@ h3 { font-size: 1.7em;  margin-bottom: 0.956em; }
 h4 { font-size: 1.4em;  margin-bottom: 1.161em; }
 h5,h6 { font-size: 1.313em;  margin-bottom: 1.238em; }
 
-
-
 ul{list-style-position:outside;}
 li ul, 
 li ol  { margin:0 1.625em;  }
 ul, ol { margin: 0 0 1.625em 0; }
-
 
 dl { margin: 0 0 1.625em 0; }
 dl dt { font-weight: bold; }
@@ -61,11 +56,6 @@ pre, code, tt { font: 1em monospace; line-height: 1.5; }
 tt { display: block; margin: 1.625em 0; }
 hr { margin-bottom:1.625em; }
 
-
-
-
-/* Wildflower System Classes */
-
 img.wf_widget {
     background: #eee;
     padding: 20px;
@@ -76,31 +66,24 @@ img.wf_image	{}
 
 div.wf_block	{}
 
-
-/*	classname used in site	*/
-
 h4.exerpt,
 p.exerpt,
 img.exerpt	{
 	
 }
+
 div.exerpt	{
 	background: #FCEFEE !important
 }
 
-/* //Wildflower System Classes */
-
-
-/*	the classes you wish to be available in dropdown extras plugin of mce (leave rules void to not apply within editor)	*/
-
 .mod	{}
 
-/* numbered list */
-ol.simpleList li{list-style-type: decimal; margin-left:40px;}
-/* standard list */
-ul.simpleList li{list-style-type:disc; margin-left:40px;}
+ol.simpleList {margin-left:0.004em}
+ul.simpleList {margin-left:0.004em}
 
-/* **************** GRIDS ***************** */
+ol.simpleList li{list-style-type: decimal; margin-left:0.614em;}
+ul.simpleList li{list-style-type:disc; margin-left:0.614em;}
+
 .line, .lastUnit {overflow: hidden;_overflow:visible;_zoom:1; }
 .unit{float:left;_zoom:1;}
 .unitExt{float:right;}
@@ -115,8 +98,5 @@ ul.simpleList li{list-style-type:disc; margin-left:40px;}
 .size3of5{width:60%;}
 .size4of5{width:80%;}
 .lastUnit {float:none;_position:relative; _left:-3px; _margin-right: -3px;width:auto;}
-/* extending grids to allow a unit that takes the width of its content */
+
 .media{width:auto;}
-
-/*		*/
-

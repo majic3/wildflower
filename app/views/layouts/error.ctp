@@ -40,7 +40,7 @@
 
 <div class="wildflower">
 	<div id="hd" class="hd">
-		<img class="logo" alt="A CMS made with CakePHP" src="/img/wildflower/wildorb.png" />
+		<img class="logo" alt="A CMS made with CakePHP" src="/wildflower/img/logo-orb.png" width="55" height="55" />
 		<div id="skipto"><a href="#bd">skip to content</a></div>
         <h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 	</div>
