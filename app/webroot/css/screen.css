@@ -1,4 +1,4 @@
-body{font-family:Arial,Helvetica,Verdana,Sans-serif; font-size: 16px; max-width: 100%; color:#444EFB; font-size:16px;background:#FFFEFB url(/css/majic3/bdy-bkgd.gif) repeat-x scroll 0 0; }
+body{font-family:Arial,Helvetica,Verdana,Sans-serif; font-size: 16px; max-width: 100%; color:#444EFB; font-size:16px;background:#FFFEFB none repeat-x scroll 0 0; }
 /*	uncomment the following to test vertical rhythm	*/
 /**/ .debug .hd, .debug .bd, .debug .ft {	background: url(/css/oo/baseline_24px.png);	} /* */
 

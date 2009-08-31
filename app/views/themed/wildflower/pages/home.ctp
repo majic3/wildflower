@@ -9,7 +9,7 @@
  */
 if($page['Sidebar'] !== array()):	?>
 <div class="rightCol">
-	<?php echo $wild->processSidebar(join( "\n", $page['Sidebar'])); ?>
+	<?php echo $wild->menu('Branches', false, 'tabs', '<div class="nv vert">%s</div>'), $wild->processSidebar(join( "\n", $page['Sidebar'])); ?>
 </div>
 <?php endif; ?>
 <div class="main">
