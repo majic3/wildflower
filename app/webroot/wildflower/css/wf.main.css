@@ -232,7 +232,7 @@ hr {
 
 #content_pad {
     padding: 20px 20px 20px;
-	background-position: top right;
+	background-position: bottom right;
 	background-repeat: no-repeat;
 	background-color: transparent;
 	min-height: 300px;
@@ -841,7 +841,7 @@ select {
 	padding:3px 6px;
 	text-decoration:none;
 }
-.paginator a:hover{
+.paginator a:hover	{
 	text-decoration:none;
 }
 
