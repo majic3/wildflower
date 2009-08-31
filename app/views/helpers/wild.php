@@ -132,7 +132,7 @@ class WildHelper extends AppHelper {
 	 * @return string
 	 */
 	/* moved customised navigation here - be able to have class + customised output - if id is null id should be made from title of menu or menu id  */
-    function menu($slug, $id = null, $class = null) {
+    function menu($slug, $id = null, $class = null, $template = false) {
     	$items = $this->getMenuItems($slug);
     	if (empty($items)) {
     	    return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
@@ -161,7 +161,7 @@ class WildHelper extends AppHelper {
     	} else {
 			$class = '';
 		}
-    	return "<ul$id$class>\n$links\n</ul>\n";
+    	return (!$template) ? "<ul$id$class>\n$links\n</ul>\n" : sprintf($template, "<ul$id$class>\n$links\n</ul>\n");
     }
     
     function getMenuItems($slug) {

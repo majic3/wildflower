@@ -1030,11 +1030,6 @@ select {
 		margin-top: 2px;
     }
     
-    .pages-list a,
-    .list.pages-list .draft .draft-status	{
-		margin-left: 22px;
-    }
-    
     .pages-list.draft a	{
 		margin-left: 5px;
     }

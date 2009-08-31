@@ -49,13 +49,11 @@
         array('action' => 'add'),
         array('class' => 'add', 'escape' => false)); ?>
     </li>    
-    <?php if (Configure::read('debug') > 0): ?>
     <li><?php echo $html->link(
         '<span>' . __('Add a new menu', true) . '</span>',
         array('action' => 'add', 'controller' => 'menus'),
         array('class' => 'add', 'escape' => false)); ?>
     </li>
-    <?php endif; ?>
 <?php $partialLayout->blockEnd(); ?>
 
 

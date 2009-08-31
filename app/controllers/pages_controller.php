@@ -131,11 +131,11 @@ class PagesController extends AppController {
     	$this->set(compact('pages'));
     }
     
-    function admin_sidebar($id = null) {
+    function admin_sidebars($id = null) {
         $this->Page->contain('User');
         $this->data = $this->Page->findById($id);
         
-        if (empty($this->data)) return $this->cakeError('object_not_found');
+       if (empty($this->data)) return $this->cakeError('object_not_found');
         
         $this->pageTitle = $this->data[$this->modelClass]['title'];
     }

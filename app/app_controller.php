@@ -33,7 +33,8 @@ class AppController extends Controller {
 	    'Text',
 	    'Time',
 	    // majic
-		'Asset.Asset'
+		'Asset.Asset',
+		'AutoJavascript'
 	);
 	public $homePageId;
 	public $isAuthorized = false;

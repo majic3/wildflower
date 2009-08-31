@@ -25,14 +25,31 @@ class SettingsController extends AppController {
 	 * Site Settings
 	 * 
 	 */
-	function admin_index() {
-	    $this->pageTitle = 'Site settings';
-	    
-	    $homePageIdOptions = $this->Page->getListThreaded();
-	    
-	    $settings = $this->Setting->find('all', array('order' => 'order ASC'));
-	    
-	    $this->set(compact('settings', 'homePageIdOptions'));
+	function admin_index($section = false) {
+		if($section)	{
+			switch($section)	{
+				case 'navigation':
+					// navigation
+				break;
+				case 'seo':
+					// seo
+				break;
+				case 'advanced':
+					// advanced 
+				break;
+			}
+			$this->pageTitle = 'Site settings | ' . $section;
+			$this->render($section);
+		} else {
+			$this->pageTitle = 'Site settings | General';
+			
+			$homePageIdOptions = $this->Page->getListThreaded();
+			
+			$settings = $this->Setting->find('all', array('order' => 'order ASC'));
+			
+			$this->set(compact('settings', 'homePageIdOptions'));
+		}
+
 	}
 
 	/**
