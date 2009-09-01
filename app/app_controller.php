@@ -193,7 +193,7 @@ class AppController extends Controller {
         $query = urldecode($query);
         $results = $this->doSearch($query);
         $this->set('results', $results);
-        $this->render('/dashboards/wf_search');
+        $this->render('/dashboards/admin_search');
     }
 	
 	/**

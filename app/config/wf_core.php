@@ -68,7 +68,7 @@ Configure::write(array('Wildflower' => array(
 	'wfControllers' => array('pages', 'posts', 'dashboards', 'users', 'categories', 'comments', 'assets', 'messages', 'uploads', 'settings', 'utilities', 'widgets', 'shorts', 'sidebars', 'interactive', 'sitemaps', 'menus', 'menu_items'),
 
     // version number of wildflower codebase
-    'version' => '1.3b-b2c',
+    'version' => '1.3b-darwin-v1',
     'debug' => array('admin' => true, 'public' => false), // this is handy and seems fine; but I do wonder
 )));
 

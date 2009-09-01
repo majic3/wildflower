@@ -1814,6 +1814,8 @@ button.negative:hover	{
         -webkit-border-radius: 0 6px 6px 0;    /* for Safari */
         -moz-border-radius: 0 6px 6px 0;
     }
+
+	.right_menu .allPagesMenu
     
     .right_menu a.current {
         background: #474747;
@@ -2113,3 +2115,7 @@ body #wrap #content_pad	.draft	a:hover	{
 .ui-daterangepicker-arrows .ui-daterangepicker-next:focus {
 	padding: 0;
 }
+
+
+
+

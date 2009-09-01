@@ -32,7 +32,7 @@ $.jlm.addComponent('tinyMce', {
 			doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 
 			// Theme options
-			theme_advanced_buttons1: "undo,redo,copy,paste,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,wfmedia,wflinks,wfmodules,wfgrids,|,charmap,code,fullscreen,|,bramus_cssextras_classes,bramus_cssextras_ids",
+			theme_advanced_buttons1: "undo,redo,copy,paste,|,bold,italic,strikethrough,|,formatselect,|,bullist,numlist,|,outdent,indent,blockquote,|,wfmedia,wflinks,wfmodules,|,charmap,code,fullscreen,|,bramus_cssextras_classes,bramus_cssextras_ids",
 			theme_advanced_styles : "Align left=left;Align right=right",
 			theme_advanced_buttons2: "",
 			theme_advanced_buttons3: "",
@@ -87,7 +87,6 @@ $.jlm.addComponent('tinyMce', {
 			// non editable content regions (these are edited as separate instances)
 			noneditable_leave_contenteditable : true,
 			noneditable_noneditable_class : 'block',
-
 
 			// URLs
 			relative_urls: false,
@@ -388,5 +387,13 @@ $.jlm.addComponent('tinyMce', {
     
     insertLink: function() {
         log('INSERT LINK');
+    },
+    
+    insertRemoteLink: function() {
+        log('INSERT REMOTE LINK');
+    },
+    
+    insert: function() {
+        log('INSERT REMOTE LINK');
     }
 });

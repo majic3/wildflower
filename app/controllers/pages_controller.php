@@ -286,7 +286,7 @@ class PagesController extends AppController {
     }
     
     /**
-     * Get pages from branch
+     * Get pages from branch - this is the cake way is to set data to the controller
      *
      * @param int $left Parent tree left value
      * @param int $right Parent tree right value
