@@ -28,7 +28,7 @@ $.jlm.addComponent('tinyMce', {
 			mode: "none",
 			theme: "advanced",
 			// @TODO cleanup unneeded plugins
-			plugins: "wildflower,bramus_cssextras,noneditable,safari,style,paste,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen",
+			plugins: "wildflower,bramus_cssextras,noneditable,safari,style,directionality,visualchars,nonbreaking,xhtmlxtras,inlinepopups,fullscreen,wordcount",
 			doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 
 			// Theme options
@@ -271,8 +271,9 @@ $.jlm.addComponent('tinyMce', {
 	reloadInsertImageContent: function(url, attribs) {
 	},
 	
-	insertImage: function(editor) {
-	    $.jlm.components.tinyMce.editor = editor;
+	insertImage: function() {
+
+		$.jlm.components.tinyMce.editor = tinyMCE.get($.jlm.components.tinyMce.editorId);
 	    
 	    // Close if open
 	    if ($('.insert_image_sidebar').size() > 0) {
@@ -386,14 +387,40 @@ $.jlm.addComponent('tinyMce', {
 	},
     
     insertLink: function() {
-        log('INSERT LINK');
+        console.log('INSERT LINK');
     },
     
     insertRemoteLink: function() {
-        log('INSERT REMOTE LINK');
+        console.log('INSERT REMOTE LINK');
     },
     
-    insert: function() {
-        log('INSERT REMOTE LINK');
+    insertBlock: function() {
+        console.log('INSERT BLOCK');
+    },
+    
+    updateBlock: function() {
+        console.log('UPDATE BLOCK');
+    },
+    
+    removeBlock: function() {
+        console.log('REMOVE BLOCK');
+    },
+    
+    wrap: function() {
+        console.log('WRAP');
+    },
+    
+    unwrap: function() {
+        console.log('UNWRAP');
+    },
+    
+    insetModule: function(swf, Params) {
+        console.log('swf ' + swf);
+        console.log('Params ' + Params);
+    },
+    
+    hoax: function() {
+        console.log('hoax');
+		tinyMCE.get($.jlm.components.tinyMce.editorId).execCommand('Bold');
     }
 });

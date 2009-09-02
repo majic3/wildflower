@@ -8,10 +8,28 @@
 		init : function(ed, url) {
 			var t = this;
 			
+			// Insert image button
+			//ed.addButton('wfinsertimage', {});
+
+			// Insert image button
+			//ed.addButton('wfinsertgrid', {});
+			
+			// Insert Widget button
+			//ed.addButton('wfinsertwidget',  {});
+			
 			ed.onDblClick.add(function(ed, e) {
 				// here I want to check if the element is img.widget or img or noneditable block
 				$.jlm.components.widgets.edit(e.target);
 			});
+
+			//ed.addShortcut('ctrl+l', '??', 'wfinsertlink');
+			//ed.addShortcut('ctrl+l', '??', 'wfinsertimage');
+			//ed.addShortcut('ctrl+l', '??', 'wfinsertwidget');
+
+			// Insert Link button
+			//ed.addButton('wfinsertlink',  );
+
+			//ed.addButton('wfdivwrapper', );
 		},
 
 		createControl: function(n, cm) {
@@ -21,11 +39,7 @@
 				case 'wfmedia':
 					c = cm.createSplitButton('wfmedia', {
 						title : 'Insert Media',
-						image : $.jlm.base + '/wildflower/img/icons/images.png',
-						onclick : function() {
-							//	console.info(ed);
-							$.jlm.components.tinyMce.insertImage();
-						}
+						image : $.jlm.base + '/wildflower/img/icons/images.png'
 					});
 
 					c.onRenderMenu.add(function(c, m) {
@@ -58,10 +72,7 @@
 					c = cm.createSplitButton('wfmodules', {
 						title : 'Manage Modules',
 						'class' : 'mceIcon',
-						image : $.jlm.base + '/wildflower/img/icons/bricks.png', 
-						onclick : function() {
-							$.jlm.components.tinyMce.insertWidget();
-						}
+						image : $.jlm.base + '/wildflower/img/icons/bricks.png'
 					});
 
 					c.onRenderMenu.add(function(c, m) {
@@ -70,7 +81,7 @@
 						m.add({
 							title : '<img src="'+$.jlm.base + '/wildflower/img/icons/cog.png" class="mceIcon" />' + 'Insert Wildflower Widget', 
 							onclick : function() {
-								$.jlm.components.tinyMce.insertWidget();
+								//$.jlm.components.tinyMce.insertWidget(ed);
 							}
 						});
 
@@ -148,12 +159,7 @@
 					c = cm.createSplitButton('wflinks', {
 						title : 'Links insert, edit or remove',
 						'class' : 'mceIcon mce_link',
-						image : $.jlm.base + '/wildflower/img/icons/link.png',
-						onclick : function() {
-							//var se=ed.selection;
-							console.info('Insert Link Clicked.');
-							//$.jlm.components.tinyMce.insertLink(ed, se);
-						}
+						image : $.jlm.base + '/wildflower/img/icons/link.png'
 					});
 
 					c.onRenderMenu.add(function(c, m) {

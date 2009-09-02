@@ -22,7 +22,7 @@ echo $html->doctype('xhtml-strict') ?>
             '/wildflower/css/wf.main'
         )),
         // TinyMCE 
-        // @TODO load only on pages with editor?
+        // @TODO load only on pages with editor? - when your debugging plugins for mce or mce in general load tiny_mce_src
         $javascript->link('/wildflower/js/tiny_mce/tiny_mce');
     ?>
      
@@ -55,6 +55,7 @@ echo $html->doctype('xhtml-strict') ?>
 			tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
+			//console.info('hello world');
            $.jlm.dispatch(); 
         });
     //]]>
