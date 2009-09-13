@@ -41,6 +41,12 @@
 			'oo/mod',
 			//'oo/mod_debug',
 			'oo/mod_skins',
+			'oo/talk',
+			'oo/talk_skins',
+			//'oo/talk_debug',
+			'oo/navigation',
+			'oo/navigation_skins',
+			//'oo/navigation_debug',
 			'formy',
 			'screen',
 			//'screen_debug'
@@ -76,7 +82,6 @@
 	<?php echo $wild->menu('main_menu', false, 'tabs', '<div id="nv">%s</div>'); ?>
 
 	<div id="bd" class="bd">
-		<a name="bd"></a>
 		<?php echo $content_for_layout; ?>
 	</div>
 

@@ -39,14 +39,16 @@
 				<h3>Comments</h3>
 				<?php
 					foreach($post['Comment'] as $comment):
-						?><div id="comment-<?php	echo ($comment['id']);	?>" class="comment line<?php	echo ($class);	?>">
-							<div class="authorMedta">
-								<p><?php echo $gravatar->image($comment['email']); ?><!-- span class="author"><?php	echo ($html->link($comment['name'], $comment['url']));	?></span --></p>
-							</div>
-							<div class="commentBody">
-								<p><?php	echo $html->link(' <span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when"> ' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></p>
+						?><div id="comment-<?php	echo ($comment['id']);	?>" class="comment mod bubble bubbleBottom discuss<?php	echo ($class);	?>">
+							<b class="top"><b class="tl"></b><b class="tr"></b></b> 
+							<div class="inner">
 								<?php	echo "<p>", nl2br($comment['content']), "</p>";	?>
 							</div>
+							<b class="bottom"><b class="bl"></b><b class="br"></b></b> 
+						</div>
+						<div class="media attribution">
+							<?php echo $gravatar->image($comment['email']); ?>
+							<p><?php	echo $html->link(' <span class="author">' . $comment['name'] . '</span> ', $comment['url'], Array('rel' => 'nofollow'), false, false) . __('said') . ' <span class="when"> ' . $time->timeAgoInWords($comment['created']) . '</span>&#058; ';	?></p>
 						</div><?php
 					endforeach;
 				?>

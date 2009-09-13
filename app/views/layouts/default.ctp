@@ -23,19 +23,22 @@
 		$styles = array(
 			'oo/libraries',
 			'oo/template',
+			//'oo/template_debug',
 			'oo/grids',
 			'oo/content',
 			//'oo/grids_debug',
-			'oo/mod_debug',
+			'oo/mod',
+			//'oo/mod_debug',
 			'oo/mod_skins',
 			'oo/talk',
 			'oo/talk_skins',
 			//'oo/talk_debug',
-			//'oo/navigation',
-			//'oo/navigation_skins',
+			'oo/navigation',
+			'oo/navigation_skins',
 			//'oo/navigation_debug',
 			'formy',
-			'screen'
+			'screen',
+			//'screen_debug'
 		);
 		
 	echo $html->css($styles, 'stylesheet', Array('media' => 'screen')); ?>
