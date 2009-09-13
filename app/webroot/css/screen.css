@@ -72,24 +72,6 @@ p img {	float: left; margin: 0 3em 2.7em 0.5em;	}
 #hd #searchrss a	{	float: right; width: 31px; height: 31px; margin-top: -31px; margin-right: 0; background: transparent url(/css/img/bg_block.gif); text-align: center; 	}
 	#searchrss a img	{ display: block; padding-top: 8px; padding-left: 8px; }
 
-/* NAVIGATION & TABS */
-
-/* -------------------------------------------------------------- 
-   TABS - Starting point for turning lists into tabs.
--------------------------------------------------------------- */
-
-ul.tabs { margin: 0; padding: 0; }
-ul.tabs li ul { float: left; }
-ul.tabs li { float: left; list-style: none; margin: 0; padding: 0; }
-ul.tabs li a { float: left; display: block; }
-
-/* Clearing floats without extra markup  */
-ul.tabs { display: inline-block; }
-ul.tabs:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-* html ul.tabs { height: 1%; }
-ul.tabs, ul.tabs li ul { display: block; }
-
-
 #nv { width: 100%; margin: 0; padding: 0; background: #79DA65; border-bottom: 2px solid #ABABAB; }
 #nv .tabs {	padding: 0 0 0 1.614em;	}
 #nv .tabs a { padding: 5px 10px; color: #666; text-decoration: none; }
@@ -208,60 +190,6 @@ ul.tabs, ul.tabs li ul { display: block; }
 	#ft.ft	.debug	{
 		clear: right; float: right; margin-right: 1.9em;
 	}
-
-/* PAGINATION */
-
-.paginate-counter	{	float: right; margin-right: 2.684em; 	}
-
-.paging	{	float: left; width: 60%; margin-left: 2.684em; margin-top: -4px;	}
-
-.paging li{
-	border:0; margin:0; padding:0;
-	font-size:11px;
-	list-style:none;
-	margin-right:2px;
-}
-.paging a{
-	border:solid 1px #ABABAB;
-	margin-right:2px;
-}
-.paging .previous.disabled,
-.paging .next.disabled {
-	border:solid 1px #FFF;
-	color:#DEDEDE;
-	display:block;
-	float:left;
-	font-weight:bold;
-	margin-right:2px;
-	padding:3px 4px;
-}
-.paging .next a,
-.paging .previous a {
-	font-weight:bold;
-	border:solid 1px #fff;
-}
-.paging .current	{
-	background:#79DA65;
-	color:#FFFFFF;
-	font-weight:bold;
-	display:block;
-	float:left;
-	padding:4px 6px;
-}
-.paging a:link,
-.paging a:visited {
-	color:#0e509e;
-	display:block;
-	float:left;
-	padding:3px 6px;
-	text-decoration:none;
-	border:solid 1px #fff;
-}
-.paging a:hover{
-	border:solid 1px #fff;
-	background-color: #79DA65;
-	color: #777;
-}
 
 /* rework below */
 

@@ -1,0 +1,88 @@
+
+/* NAVIGATION & TABS */
+
+/* -------------------------------------------------------------- 
+   TABS - Starting point for turning lists into tabs.
+-------------------------------------------------------------- */
+
+.nv	{}
+
+ul.tabs { margin: 0; padding: 0; }
+ul.tabs li ul { float: left; }
+ul.tabs li { float: left; list-style: none; margin: 0; padding: 0; }
+ul.tabs li a { float: left; display: block; }
+
+/* Clearing floats without extra markup  */
+ul.tabs { display: inline-block; }
+ul.tabs:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+* html ul.tabs { height: 1%; }
+ul.tabs, ul.tabs li ul { display: block; }
+
+
+/* -------------------------------------------------------------- 
+   TREE - multi level listed navigation list.
+-------------------------------------------------------------- */
+
+/* -------------------------------------------------------------- 
+   Breadcrumb - breadcrumb links. 
+   http://veerle.duoh.com/blog/comments/simple_scalable_css_based_breadcrumbs/
+   http://www.alistapart.com/articles/taminglists/
+   http://www.fortysomething.ca/mt/etc/archives/006747.php
+-------------------------------------------------------------- */
+
+/* -------------------------------------------------------------- 
+   Pagination - forward, back & page links
+   http://woork.blogspot.com/2008/03/perfect-pagination-style-using-css.html
+-------------------------------------------------------------- */
+
+.paginate-counter	{	float: right; margin-right: 2.684em; 	}
+
+.paging	{	float: left; width: 60%; margin-left: 2.684em; margin-top: -4px;	}
+
+.paging li{
+	border:0; margin:0; padding:0;
+	font-size:11px;
+	list-style:none;
+	margin-right:2px;
+}
+.paging a{
+	border:solid 1px #ABABAB;
+	margin-right:2px;
+}
+.paging .previous.disabled,
+.paging .next.disabled {
+	border:solid 1px #FFF;
+	color:#DEDEDE;
+	display:block;
+	float:left;
+	font-weight:bold;
+	margin-right:2px;
+	padding:3px 4px;
+}
+.paging .next a,
+.paging .previous a {
+	font-weight:bold;
+	border:solid 1px #fff;
+}
+.paging .current	{
+	background:#79DA65;
+	color:#FFFFFF;
+	font-weight:bold;
+	display:block;
+	float:left;
+	padding:4px 6px;
+}
+.paging a:link,
+.paging a:visited {
+	color:#0e509e;
+	display:block;
+	float:left;
+	padding:3px 6px;
+	text-decoration:none;
+	border:solid 1px #fff;
+}
+.paging a:hover{
+	border:solid 1px #fff;
+	background-color: #79DA65;
+	color: #777;
+}

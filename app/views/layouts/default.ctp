@@ -26,8 +26,14 @@
 			'oo/grids',
 			'oo/content',
 			//'oo/grids_debug',
-			//'oo/mod_debug',
-			//'oo/mod_skins',
+			'oo/mod_debug',
+			'oo/mod_skins',
+			'oo/talk',
+			'oo/talk_skins',
+			//'oo/talk_debug',
+			//'oo/navigation',
+			//'oo/navigation_skins',
+			//'oo/navigation_debug',
 			'formy',
 			'screen'
 		);
