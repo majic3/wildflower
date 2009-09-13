@@ -1,4 +1,5 @@
 body{font-family:Arial,Helvetica,Verdana,Sans-serif; font-size: 16px; max-width: 100%; color:#444EFB; font-size:16px;background:#FFFEFB none repeat-x scroll 0 0; }
+body.page	{	width: 100%	}
 /*	uncomment the following to test vertical rhythm	*/
 /**/ .debug .hd, .debug .bd, .debug .ft {	background: url(/css/oo/baseline_24px.png);	} /* */
 
@@ -367,45 +368,51 @@ button.positive, .buttons a.positive	{	color:#529214;	}
 #posts	.post		{	margin: 2.682em 1.614em 1.614em .2em; padding: .2em;	}
 #posts	.post:first-child	{	margin-top: 0 !important;	}
 
-.post	.header	{
+.bd .post	.header	{
 	padding: 0 1.614em 0 .2em;
 }
 
-.post	h2	{
+.bd .post	h2	{
 	
 }
 
-.post	.small	{
+.bd .post	.small	{
 	font-size: .8em;
 	line-height: 1.2em;
 }
 
 
-.post	.header .posted-by,
-.post	.header .post-date,
-.post	.header .comment-count,
-.post	.header .postmeta	{
+.header .posted-by,
+.header .post-date,
+.header .comment-count,
+.header .postmeta	{
 	
 }
 
-.post	.header .social	{
+.bd .post .header .social	{
 	width: 252px;
 }
 
-	.post	.header .social	a	{
+	.bd .post .header .social	a	{
 		margin: 0;
 	}
 
-	.post	.header .social	img	{
+	.bd .post .header .social	img	{
 		margin: 1px 2px;
 	}
 
-.post	.section.exerpt,
-.post.lastUnit	.section.entry	{
+.bd .post .section.exerpt	{
 	clear: left;
 	padding: 0 1.614em 1.614em 0;
 	
-}
+	}
+
+.bd .post .section.exerpt	.more	{
+	clear: right;
+	padding: 0 1.614em 1.614em 0;
+	float: right;
+	
+	}
 
 /*	/posts	*/
 
