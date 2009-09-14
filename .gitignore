@@ -7,6 +7,9 @@ app/tmp/cache/models/cake_*
 app/tmp/cache/persistent/cake_*
 app/tmp/cache/views/*.php
 
+# cake sessions
+app/tmp/sessions/*
+
 # Cake logs
 app/tmp/logs/*.log
 
