@@ -17,7 +17,6 @@ app/tmp/logs/*.log
 app/tmp/cache/wf_previews/*.json
 app/tmp/cache/wf_root_pages
 app/tmp/cache/wf_thumbnails/*.jpg
-
 # Wildflower uploaded files
 app/webroot/uploads/*
 #asset cache dirs

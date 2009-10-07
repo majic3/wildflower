@@ -5,7 +5,7 @@
   Usage: php generate.php <migration name>
   Call with no arguments to see usage info.
 */
-
+error_reporting(E_ALL ^ E_DEPRECATED);
 
 define('RUCKUSING_BASE', realpath(dirname(__FILE__)));
 require_once RUCKUSING_BASE . '/config/config.inc.php';
@@ -85,10 +85,11 @@ function die_with_error($str) {
 
 function get_template($klass) {
 $template = <<<TPL
-<?php 
-class $klass extends Ruckusing_BaseMigration {\n\n\tfunction up() {\n\n\t}
-\n\tfunction down() {\n\n\t}
+<?php\n
+class $klass extends Ruckusing_BaseMigration {\n\n\tpublic function up() {\n\n\t}//up()
+\n\tpublic function down() {\n\n\t}//down()
 }
+?>
 TPL;
 return $template;
 }

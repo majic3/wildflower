@@ -97,4 +97,24 @@ class AppModel extends Model {
 		return $results;
 	}
 
+	/* 
+     * Format a timestamp to MySQL date format
+     *
+     * @param int $time
+     * @return string
+     */
+    function timeToDate($time) {
+        return date("Y-m-d", $time);
+    }
+    
+    /**
+     * Format a timestamp to MySQL datetime format
+     *
+     * @param int $time
+     * @return string
+     */
+    function timeToDatetime($time) {
+        return date("Y-m-d H:i:s", $time);
+    }
+
 }

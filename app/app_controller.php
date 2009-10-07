@@ -5,13 +5,12 @@
  * If you have a custom AppController in your application, you need to merge 
  * the functionality with this. It's essential for Wildflower's functionality.
  *
- * to enable extra features of the majic branch remove //majic
- *
  * WF AppController does:
  * - authentificate users
  * - set WF Configure settings
  * - load necessary Helpers and Components
- * - provides some generic controller actions
+ * - provides some global controller actions like delete (@TODO: this could be dangerous - revisit)
+ * - to enable extra features of the majic branch remove //majic
  */
 App::import('Sanitize');
 App::import('Core', 'l10n');
@@ -193,7 +192,7 @@ class AppController extends Controller {
         $query = urldecode($query);
         $results = $this->doSearch($query);
         $this->set('results', $results);
-        $this->render('/dashboards/admin_search');
+        $this->render('/dashboards/admin_search'); # - or this - $this->render('/dashboards/wf_search');
     }
 	
 	/**
@@ -533,5 +532,4 @@ class AppController extends Controller {
 			$this->layout = 'error';  
 		}
 	}
-
 }

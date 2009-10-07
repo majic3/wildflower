@@ -70,6 +70,16 @@ hr {
     
 
 /* Header */
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
+
+#header {
+    background: #092439;
+    overflow: hidden;
+    color: #feffc2;
+    padding: 0 15px;
+}
+=======
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 
 #header {
     background: #092439;
@@ -78,43 +88,30 @@ hr {
     padding: 0 15px;
 }
 
-#editor_mode_header {
-    padding: 0 40px;
-    margin: 0;
-    list-style: none;
-    overflow: hidden;
-}
-
-    #editor_mode_header li {
-        float: left;
-        padding: 6px;
-        margin: 0;
-    }
-    
-    #editor_mode_header small {
-        font-size: 11px;
-    }
-
-    #editor_mode_header a {
-        color: #fff;
-    }
-
     #header a {
         color: #fff;
     }
     
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
     #header a:hover,
     #editor_mode_header a:hover {
+=======
+    #header a:hover {
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
         background: #3b3b3b;
         color: #fff;
     }
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 #header-wrap{
     position: relative;
 }
 
 #site_title,
 #site-title {
+=======
+#site_title {
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
     font-size: 20px;
     font-weight: normal;
     margin: 0;
@@ -125,6 +122,7 @@ hr {
     color: #eade51;
 }
     
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 #site_index,
 #site-index {
     float: left;
@@ -143,6 +141,14 @@ hr {
         display: block;
         float: left;
     }
+=======
+#site_index {
+    float: left;
+    display: block;
+    padding: 3px 5px;
+    margin: 18px 0 0 -3px;
+}
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
     
 #nav {
     list-style: none;
@@ -171,6 +177,7 @@ hr {
         text-decoration: none;
     }
     
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
         #nav .current a,
         #nav .current a:hover {
             color: #008720;
@@ -181,6 +188,18 @@ hr {
         #nav .current a {
             color: #008720;
         }
+=======
+    #nav .current,
+    #nav .current:hover {
+        color: #008720;
+        background-color: #e2e2e2;
+        font-weight: bold;
+    }
+    
+    #nav .current {
+        color: #008720;
+    }
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
         
     #nav a:hover {
         color: #fff;
@@ -232,6 +251,7 @@ hr {
 
 #content_pad {
     padding: 20px 20px 20px;
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 	background-position: bottom right;
 	background-repeat: no-repeat;
 	background-color: transparent;
@@ -250,6 +270,10 @@ body.links		#content_pad {	background-image: url(img/bright/links.png);	}
 body.settings	#content_pad {	background-image: url(img/bright/settings.png);	}
 body.users		#content_pad {	background-image: url(img/bright/users.png);	}
 body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
+=======
+    min-height: 200px;
+}
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 
 .cleaner {
     clear: both;
@@ -282,7 +306,11 @@ h2 {
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
     background: #d2eafc url(img/page_top.png) left bottom repeat-x;
+=======
+    background: #d2eafc;
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 }
 
     .section h2 {
@@ -759,8 +787,12 @@ select {
     }
 
 .post-categories,
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 .post-comments,
 .post-options {
+=======
+.post-comments {
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
     color: #535353;
     margin: 0;
     padding: 4px 0 0 30px;
@@ -1124,9 +1156,6 @@ select {
 .sidebar-box button {
     font-size: 12px;
 }
-	
-/* gallery */
-#show-galleries	{	float: right; margin-top: 7px;	}
     
     
 /* Reorder list */
@@ -1212,6 +1241,7 @@ select {
         margin: 0;
     }
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 #genPassword	{
 	position: relative;
 	padding: 0;
@@ -1238,6 +1268,8 @@ select {
 .is90{background-position:0 -63px;}
 .is100{background-position:0 -70px;}
 
+=======
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 #admin_bar {
     background: #000;
     color: #c3c3c3;
@@ -1285,7 +1317,11 @@ select {
     border: 1px solid #eee;
 }
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 .texy_table tr > td:first {
+=======
+.texy_table tr > td:first-child {
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
     background-color: #eee;
 }
 
@@ -1355,6 +1391,7 @@ select {
 }
 
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 /*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
 .tabs	{
 	background: transparent !important;	margin-bottom: 30px;
@@ -1553,6 +1590,8 @@ button.negative:hover	{
     color:#fff;
 }
 
+=======
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 /* Widgets */
 
     #edit_widget_form .submit {
@@ -1798,6 +1837,7 @@ button.negative:hover	{
 .right_menu {
 }
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 	.right_menu a.add {
 		margin-top: 20px;
         padding: 0 10px 10px 0;
@@ -1805,6 +1845,9 @@ button.negative:hover	{
 	}
 
     .right_menu a:not(.add) {
+=======
+    .right_menu a {
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
         display: block;
         padding: 8px 10px;
         margin: 0 0 5px 0;
@@ -1814,8 +1857,11 @@ button.negative:hover	{
         -webkit-border-radius: 0 6px 6px 0;    /* for Safari */
         -moz-border-radius: 0 6px 6px 0;
     }
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 
 	.right_menu .allPagesMenu
+=======
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
     
     .right_menu a.current {
         background: #474747;
@@ -1850,6 +1896,7 @@ button.negative:hover	{
     width: 100px;
 }
 
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 .full #header #nav,
 .full #sidebar,
 .full label[for="PageTitle"],
@@ -1861,6 +1908,8 @@ button.negative:hover	{
 .full #content {
     width: 100%;
 }
+=======
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
 
 /* Menu editing */
 
@@ -1920,6 +1969,7 @@ button.negative:hover	{
 .drop_here {
     height: 30px;
     background: #fff74c !important;
+<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 }
 
 
@@ -2119,3 +2169,6 @@ body #wrap #content_pad	.draft	a:hover	{
 
 
 
+=======
+}
+>>>>>>> master:app/webroot/wildflower/css/wf.main.css
