@@ -559,7 +559,8 @@ class FormHelper extends AppHelper {
 /**
  * Generates a form input element complete with label and wrapper div
  *
- * Options - See each field type method for more information.
+ * Options - See each field type method for more information. Any options that are part of 
+ * $attributes or $options for the different type methods can be included in $options for input().
  *
  * - 'type' - Force the type of widget you want. e.g. ```type => 'select'```
  * - 'label' - control the label
@@ -848,11 +849,14 @@ class FormHelper extends AppHelper {
 		} elseif (!empty($value) && $value === $options['value']) {
 			$options['checked'] = 'checked';
 		}
-
-		$output = $this->hidden($fieldName, array(
+		$hiddenOptions = array(
 			'id' => $options['id'] . '_', 'name' => $options['name'],
 			'value' => '0', 'secure' => false
-		));
+		);
+		if (isset($options['disabled']) && $options['disabled'] == true) {
+			$hiddenOptions['disabled'] = 'disabled';
+		}
+		$output = $this->hidden($fieldName, $hiddenOptions);
 
 		return $this->output($output . sprintf(
 			$this->Html->tags['checkbox'],
@@ -931,7 +935,7 @@ class FormHelper extends AppHelper {
 
 		if (!isset($value) || $value === '') {
 			$hidden = $this->hidden($fieldName, array(
-				'id' => $attributes['id'] . '_', 'value' => ''
+				'id' => $attributes['id'] . '_', 'value' => '', 'name' => $attributes['name']
 			));
 		}
 		$out = $hidden . join($inbetween, $out);
@@ -1606,15 +1610,16 @@ class FormHelper extends AppHelper {
 			}
 			$opt = implode($separator, $selects);
 		}
-
+		if (!empty($interval) && $interval > 1 && !empty($min)) {
+			$min = round($min * (1 / $interval)) * $interval;
+		}
+		$selectMinuteAttr['interval'] = $interval;
 		switch ($timeFormat) {
 			case '24':
-				$selectMinuteAttr['interval'] = $interval;
 				$opt .= $this->hour($fieldName, true, $hour, $selectHourAttr, $showEmpty) . ':' .
 				$this->minute($fieldName, $min, $selectMinuteAttr, $showEmpty);
 			break;
 			case '12':
-				$selectMinuteAttr['interval'] = $interval;
 				$opt .= $this->hour($fieldName, false, $hour, $selectHourAttr, $showEmpty) . ':' .
 				$this->minute($fieldName, $min, $selectMinuteAttr, $showEmpty) . ' ' .
 				$this->meridian($fieldName, $meridian, $selectMeridianAttr, $showEmpty);

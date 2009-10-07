@@ -14,7 +14,6 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
-            '/css/ui/jquery-ui-1.7'
         )),
         // TinyMCE 
         // @TODO load only on pages with editor?
@@ -29,22 +28,19 @@
     <![endif]-->
     
     <!-- JQuery Light MVC -->
-	<script type="text/javascript" src="http://www.google.com/jsapi?key=<?php	echo Configure::read('Icing.gfeed.api');	?>"></script>
-    <script type="text/javascript" src="<?php echo $html->url('/' . Configure::read('Wildflower.prefix') . '/assets/jlm'); ?>"></script>
+    <script type="text/javascript" src="<?php echo $html->url('/' . Configure::read('Routing.admin') . '/assets/jlm'); ?>"></script>
     <script type="text/javascript">
     //<![CDATA[
         $.jlm.config({
             base: '<?php echo $this->base ?>',
             controller: '<?php echo $this->params['controller'] ?>',
             action: '<?php echo $this->params['action'] ?>', 
-            prefix: '<?php echo Configure::read('Wildflower.prefix') ?>',
+            prefix: '<?php echo Configure::read('Routing.admin') ?>',
             custom: {
                 wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
             }
         });
-
-		//	only load mce when theres content to edit -perhaps.  Add Googlie speller 
-		//	if($.jlm.config.action == 'edit')
+        
         tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
         $(function() {
@@ -54,55 +50,37 @@
     </script>
     
 </head>
-<body<?php if (isset($editorMode)) echo ' class="editor_mode"'; echo str_replace('wild_', '', $this->params['controller']); ?>>
-
-<?php if (!isset($editorMode)): ?>    
+<body>
+ 
 <div id="header">
-    <div id="header-wrap">
-        <h1 id="site-title"><?php echo $html->link($siteName, '/', array('title' => __('View homepage', true))); ?></h1>
-        
-        <div id="login-info">
-            <?php echo $htmla->link(__('Settings', true), array('controller' => 'wild_settings')); ?> | 
-            <?php echo $htmla->link(__('Users', true), array('controller' => 'wild_users')); ?> | 
-            <?php if($session->read('Auth.WildUser.login') == 'admin')	echo $htmla->link(__('Utilities', true), array('controller' => 'wild_utilities')) . ' | '; ?>
-            <?php echo $htmla->link(__('About', true), array('controller' => 'wild_pages', 'action' => 'about'), array('id' => 'aboutwf')); ?>
-            <?php echo $htmla->link(__('Logout', true), array('controller' => 'wild_users', 'action' => 'logout'), array('id' => 'logout')); ?>
-            
-        </div>
-
-        <?php 
-            echo $navigation->create(array(
-                __('Dashboard', true) => '/' . Configure::read('Wildflower.prefix'),
-                __('Pages', true) => array('controller' => 'wild_pages'),
-                __('Posts', true) => array('controller' => 'wild_posts'),
-                __('Categories', true) => array('controller' => 'wild_categories'),
-                __('Assets', true) => array('controller' => 'wild_assets'),
-                __('Messages', true) => array('controller' => 'wild_messages'),
-                //	__('Galleries', true) => array('controller' => 'wild_galleries'),
-                //	__('Statistics &amp; Data', true) => array('controller' => 'wild_stats'),
-                __('Links &amp; Feeds', true) => array('controller' => 'wild_links'),
-            ), array('id' => 'nav'));
-        ?>
+    <h1 id="site_title"><?php echo hsc($siteName); ?></h1>
+    <?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
+    
+    <div id="login_info">
+        <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
     </div>
+
+    <ul id="nav">
+        <li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
+        <li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Posts', true), array('controller' => 'posts', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Categories', true), array('controller' => 'categories', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
+        <li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
+        <li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
+    </ul>
 </div>
-<?php else: ?>
-<ul id="editor_mode_header">
-    <li><?php echo $html->link('Go to all pages', array('action' => 'index')); ?></li>
-    <li><small>(Published at: <?php if (isset($publishedLink)) echo $publishedLink; ?>)</small></li>
-</ul>
-<?php endif; ?>
 
 <div id="wrap">
     <div id="content">
-        <div id="co_top_shadow">
-        <div id="co_top_right_corner">
         <div id="co_bottom_shadow">
         <div id="co_right_shadow">
         <div id="co_right_bottom_corner">
-        <div id="content-pad">
+        <div id="content_pad">
             <?php echo $content_for_layout; ?>
-        </div>
-        </div>
         </div>
         </div>
         </div>
@@ -119,11 +97,6 @@
         
     <div class="cleaner"></div>
 </div>
-
-<p id="footer">
-    <?php echo $html->link(__('Powered by Wildflower', true), array('controller' => 'wild_pages', 'action' => 'wf_about')); ?>&nbsp;&nbsp;
-    <?php if (Configure::read('debug') > 0) echo __('Debug mode'), ' ', Configure::read('debug'); ?>
-</p>
 
 </body>
 </html>

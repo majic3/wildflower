@@ -5,7 +5,7 @@ $.jlm.addComponent('widgets', {
         
         // First make sure this is a widget el
         var jEl = $(e);
-        if (!jEl.hasClass('wf_widget')) {
+        if (!jEl.hasClass('admin_widget')) {
             return false;
         }
         
@@ -14,13 +14,13 @@ $.jlm.addComponent('widgets', {
         t.sidebarContent.hide();
         
         // Hide main content
-        t.contentPadEl = $('#content-pad');
+        t.contentPadEl = $('#content_pad');
         t.mainContent = t.contentPadEl.children();
         t.mainContent.hide();
         
         // Load the widget config action
         var widgetName = jEl.attr('id');
-        var widgetId = jEl.attr('class').replace('wf_widget wf_widget_id_', '');
+        var widgetId = jEl.attr('class').replace('admin_widget admin_widget_id_', '');
         var url = $.jlm.base + '/' + $.jlm.params.prefix + '/widgets/config/' + widgetName + '/' + widgetId;
         
         $.post(url, function(html) {
@@ -45,8 +45,8 @@ $.jlm.addComponent('widgets', {
 	addNewCell: function() {
 	    var newBlockEl = $('.slider_block:first').clone();
 	    var index = $('.slider_block').size();
-	    $('input:first', newBlockEl).val('').attr('name', 'data[WildWidget][items][' + index + '][label]');
-	    $('input:last', newBlockEl).val('').attr('name', 'data[WildWidget][items][' + index + '][url]');
+	    $('input:first', newBlockEl).val('').attr('name', 'data[Widget][items][' + index + '][label]');
+	    $('input:last', newBlockEl).val('').attr('name', 'data[Widget][items][' + index + '][url]');
         // newBlockEl = '<div class="slider_block">' + newBlockEl.html() + '</div>';
         
         // newBlockEl = newBlockEl.replace('0', index.toString());

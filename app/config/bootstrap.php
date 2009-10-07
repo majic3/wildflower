@@ -40,6 +40,18 @@
  * $controllerPaths = array('this path to controllers', 'second full path to controllers', 'etc...');
  *
  */
-
-// Include Wildflower bootsrap file
-require_once(APP . '..' . DS . 'wildflower' . DS . 'config' . DS . 'bootstrap.php');
+ 
+// Wildflower stuff below
+App::import('Vendor', 'wf_bootsrap', array('file' => 'wf_bootstrap.php'));
+App::import('Vendor', 'wf_core', array('file' => 'wf_core.php'));
+define('WILDFLOWER_DIR', APP . '..' . DS . 'wildflower' . DS);
+$viewPaths        = array(WILDFLOWER_DIR . 'views' . DS);
+$controllerPaths  = array(WILDFLOWER_DIR . 'controllers' . DS);
+$modelPaths       = array(WILDFLOWER_DIR . 'models' . DS);
+$helperPaths      = array(WILDFLOWER_DIR . 'views' . DS . 'helpers' . DS);
+$componentPaths   = array(WILDFLOWER_DIR . 'controllers' . DS . 'components' . DS);
+$behaviorPaths    = array(WILDFLOWER_DIR . 'models' . DS . 'behaviors' . DS);
+$pluginPaths      = array(WILDFLOWER_DIR . 'plugins' . DS);
+$vendorPaths      = array(WILDFLOWER_DIR . 'vendors' . DS);
+$localePaths      = array(WILDFLOWER_DIR . 'locale' . DS);
+$shellPaths       = array(WILDFLOWER_DIR . 'vendors' . DS . 'shells' . DS);

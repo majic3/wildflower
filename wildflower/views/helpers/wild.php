@@ -3,7 +3,7 @@ App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
 class WildHelper extends AppHelper {
 	
-	public $helpers = array('Html', 'Textile');
+	public $helpers = array('Html', 'Textile', 'Htmla');
 	private $_isFirstChild = true;
 	private $itemCssClassPrefix;
 	
@@ -20,7 +20,7 @@ class WildHelper extends AppHelper {
 				$route['controller'] = $this->params['controller'];
 			}
 			// Wf shortcut
-			$route['controller'] = str_replace('wild_', '', $route['controller']);
+			$route['controller'] = str_replace('', '', $route['controller']);
 			$_route = '/' . Configure::read('Wildflower.prefix') 
 				. '/' . $route['controller'];
 			if (isset($route['action'])) {
@@ -91,75 +91,37 @@ class WildHelper extends AppHelper {
         return $default;
     }
     
-    /**
-     * Generate HTML list menu from nodes. Valid values for each node
-     * are a string or a key value pair if you want to override the URL
-     * generation.
-     * 
-     * Use magic value CHILD_PAGES_PLEASE to generate nested lists of 
-     * subpages.
-     *
-     * Exaple:
-     * $cms->menu(array(
-     *      'About us' => CHILD_PAGES_PLEASE, 
-     *      'Our Work', 
-     *      'Read our blogs' => '/blog', 
-     *      'Contact'
-     * )); 
-     * 
-     * @param array $nodes
-     * @return string
-     * 
-     * @TODO: too much DB requests - optimize
-     */
-    function menu($nodes = array(), $cssId = '', $itemCssClassPrefix = '') {
-    	$this->itemCssClassPrefix = $itemCssClassPrefix;
-        $html = '';
-        
-        // Reset first child flag
-        $this->_isFirstChild = true;
-        
-        foreach ($nodes as $nodeKey => $nodeValue) {
-            if ($nodeValue === CHILD_PAGES_PLEASE) {
-                // Append all child pages
-                $slug = $this->_getMenuSlug($nodeKey);
-                $pages = $this->requestAction("/pages/getChildPagesForMenu/$slug");
-                $link = "/$slug";
-                $label = $nodeKey;
-                if (empty($pages)) {
-                    $html .= $this->_createListNode($label, $link);
-                    continue;
-                }
-                $html .= $this->_createListNode($label, $link, $pages);
-            } else if (is_integer($nodeKey) and is_string($nodeValue)) {
-        	    // Only have label, generate URL from it
-        	    $label = $nodeValue;
-        	    $link = $this->_getMenuSlug($label);
-        	    $link = "/$link";
-        	    $html .= $this->_createListNode($label, $link);
-        	} else if (is_string($nodeKey) and is_string($nodeValue)) {
-        	    $label = $nodeKey;
-        	    $html .= $this->_createListNode($label, $nodeValue);
-        	} else if (is_string($nodeKey) and is_array($nodeValue)) {
-        		// Parent link with nested links
-        		if (count($nodeValue) != 2) {
-        			continue;
-        		}
-        		$parentUrl = $nodeValue[0];
-        		$childNodes = $nodeValue[1];
-        		$label = $nodeKey;
-        		$link = $parentUrl;
-        		if ($link === null) {
-                    $link = $this->_getMenuSlug($label);
-        		}
-                //$link = "/$link";
-                $html .= $this->_createListNode($label, $link, $childNodes);
-        	}
-        }
-        
-        $ulAttr = $this->getIdAttr($cssId);
-        
-        return "<ul$ulAttr>$html</ul>\n";
+    function menu($slug, $id = null) {
+    	$items = $this->getMenuItems($slug);
+    	if (empty($items)) {
+    	    return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
+    	}
+    	$links = array();
+    	foreach ($items as $item) {
+    	    $label = hsc($item['label']);
+    	    $slug = self::slug($item['label']);
+    	    $classes = array('nav-' . $slug);
+    	    $isCurrent = ($this->here === $this->Html->url($item['url']));
+    	    if ($isCurrent) {
+    	        $classes[] = 'current';
+    	    }
+    	    $links[] = '<li class="' . join(' ', $classes) . '">' . $this->Html->link("<span>$label</span>", $item['url'], array('escape' => false)) . '</li>';
+    	}
+    	$links = join("\n", $links);
+    	if (is_null($id)) {
+    	    $id = "admin_$slug";
+    	}
+    	if (is_null($id)) {
+            $id = $slug;
+    	}
+    	return "<ul id=\"$id\">\n$links\n</ul>\n";
+    }
+    
+    function getMenuItems($slug) {
+        $Menu = ClassRegistry::init('Menu');
+        $Menu->contain(array('MenuItem' => array('order' => 'MenuItem.order ASC')));
+        $menu = $Menu->findBySlug($slug);
+        return $menu['MenuItem'];
     }
 
 	// added second param for option spans - particle tree styling better WO them
@@ -203,29 +165,19 @@ class WildHelper extends AppHelper {
         return "<li$liAttr>$node</li>\n";
     }
     
-    /**
-     * Create a slug from a label
-     *
-     * @param string $label
-     * @return string
-     */
-    private function _getMenuSlug($label) {
-        return WildflowerHelper::slug(low($label), '-');
-    }
-    
     function processWidgets($html) {
         // Find the widget element
-        $selector = '.wf_widget';
+        $selector = '.admin_widget';
         $dom = str_get_html($html);
         $widgets = $dom->find($selector);
-        $Widget = ClassRegistry::init('WildWidget');
+        $Widget = ClassRegistry::init('Widget');
         $view = ClassRegistry::getObject('view');
         foreach ($widgets as $widget) {
             $widgetId = $widget->id;
             $widgetClass = $widget->class;
-            $instanceId = intval(r('wf_widget wf_widget_id_', '', $widgetClass));
+            $instanceId = intval(r('admin_widget admin_widget_id_', '', $widgetClass));
             $data = $Widget->findById($instanceId);
-            $data = json_decode($data['WildWidget']['config'], true);
+            $data = json_decode($data['Widget']['config'], true);
             $replaceWith = $view->element('widgets/' . $widgetId, array('data' => $data));
             $replace = $widget->outertext;
             if ($widget->parent()->tag == 'p') {
@@ -240,29 +192,38 @@ class WildHelper extends AppHelper {
     function subPageNav() {
         $html = '<ul>';
         $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
-        $pages = ClassRegistry::init('WildPage')->findChildrenBySlug($pageSlug);
+        $Page = ClassRegistry::init('Page');
+        $Page->recursive = -1;
+        
+        // Get the parent page slug
+        $url = $this->params['url']['url'];
+        $slug = array_shift(explode('/', $url));
+        $pages = $Page->findAllBySlugWithChildren($slug);
+
         if (empty($pages)) {
             return '';
         }
+        
+        // Build HTML
         foreach ($pages as $page) {
-            $html .= '<li>' . $this->Html->link($page['WildPage']['title'], $page['WildPage']['url']) . '</li>';
+            $html .= '<li>' . $this->Htmla->link($page['Page']['title'], $page['Page']['url'], array('strict' => true)) . '</li>';
         }
         $html .= '</ul>';
         return $html;
     }
     
     function postsFromCategory($slug) {
-        $WildCategory = ClassRegistry::init('WildCategory');
-        $WildCategory->contain(array(
-            'WildPost' => array(
+        $Category = ClassRegistry::init('Category');
+        $Category->contain(array(
+            'Post' => array(
                 'conditions' => array(
                     'draft' => 0
                 )
             ),
-            'WildPost.WildUser'
+            'Post.User'
         ));
-        $category = $WildCategory->findBySlug($slug);
-        $posts = $category['WildPost'];
+        $category = $Category->findBySlug($slug);
+        $posts = $category['Post'];
         return $posts;
     }
 

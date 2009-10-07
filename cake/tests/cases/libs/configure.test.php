@@ -39,8 +39,10 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	function setUp() {
-		parent::setUp();
+		$this->_cacheDisable = Configure::read('Cache.disable');
 		Configure::write('Cache.disable', true);
+
+		$this->_debug = Configure::read('debug');
 	}
 /**
  * tearDown method
@@ -67,8 +69,8 @@ class ConfigureTest extends CakeTestCase {
 		if (file_exists(TMP . 'cache' . DS . 'persistent' . DS . 'test.php')) {
 			unlink(TMP . 'cache' . DS . 'persistent' . DS . 'test.php');
 		}
-		Configure::write('debug', 2);
-		parent::tearDown();
+		Configure::write('debug', $this->_debug);
+		Configure::write('Cache.disable', $this->_cacheDisable);
 	}
 /**
  * testListObjects method
@@ -160,7 +162,7 @@ class ConfigureTest extends CakeTestCase {
 
 		Configure::write('debug', 2);
 		$result = ini_get('error_reporting');
-		$this->assertEqual($result, E_ALL);
+		$this->assertEqual($result, E_ALL & ~E_DEPRECATED);
 
 		$result = ini_get('display_errors');
 		$this->assertEqual($result, 1);

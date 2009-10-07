@@ -3,12 +3,10 @@ Wildflower CMS main stylesheet
  
 Colors
 ======
-#000 - Ligter Black - Main type color
+#000 - Black - Main type color
 #e2e2e2 - Light Grey - Non-content background 
 #0033CC - Link Blue - Hyperlinks
 #eefaff - Ligh Blue - Sidebar highlight background
-
-todo: some tweaking after other stuff done minor, but a tidy up to might find more worth doing
 */
 
 html,
@@ -44,10 +42,14 @@ img {
     border: none;
 }
 
+hr {
+    display: none;
+}
+
 #wrap,
 #footer,
 #header-wrap {
-    padding: 0 30px;
+    padding: 0 20px;
 }
 
 #wrap {
@@ -57,7 +59,7 @@ img {
 
 #footer {
     margin: 0;
-    padding: 0 40px 14px;
+    padding: 0 30px 14px;
     font-size: 10px;
 }
 
@@ -65,62 +67,43 @@ img {
         color: #686868;
         text-decoration: none;
     }
+    
 
-#header,
-#editor_mode_header {
-    background: #1b3b53;
+/* Header */
+
+#header {
+    background: #092439;
     overflow: hidden;
     color: #feffc2;
+    padding: 0 15px;
 }
 
-#editor_mode_header {
-    padding: 0 40px;
-    margin: 0;
-    list-style: none;
-    overflow: hidden;
-}
-
-    #editor_mode_header li {
-        float: left;
-        padding: 6px;
-        margin: 0;
+    #header a {
+        color: #fff;
     }
     
-    #editor_mode_header small {
-        font-size: 11px;
-    }
-
-    #editor_mode_header a {
+    #header a:hover {
+        background: #3b3b3b;
         color: #fff;
     }
 
-    #header a {
-        color: #feffc2;
-    }
-    
-    #header a:hover,
-    #editor_mode_header a:hover {
-        background-color: #d0e4f8;
-        color: #000;
-    }
-
-#header-wrap {
-    position: relative;
-}
-
-#site-title {
-    font-size: 22px;
+#site_title {
+    font-size: 20px;
     font-weight: normal;
     margin: 0;
-    letter-spacing: 0.5px;
+    text-decoration: none;
+    padding: 17px 10px;
+    display: block;
+    float: left;
+    color: #eade51;
 }
-
-    #site-title a {
-        text-decoration: none;
-        padding: 20px 10px;
-        display: block;
-        float: left;
-    }
+    
+#site_index {
+    float: left;
+    display: block;
+    padding: 3px 5px;
+    margin: 18px 0 0 -3px;
+}
     
 #nav {
     list-style: none;
@@ -135,37 +118,45 @@ img {
         float: left;
     }
     
+    #nav .nav_item_on_right {
+        float: right;
+    }
+    
     #nav a {
         display: block;
-        height: 12px;
+        height: 13px;
         margin: 0 3px 0 0;
-        padding: 3px 9px 9px 9px;
-        background-color: #446076;
+        padding: 4px 9px 8px 9px;
+        background: #1f3b52;
         color: #fff;
         text-decoration: none;
     }
     
-        #nav .current a,
-        #nav .current a:hover {
-            color: #1d1d1d;
-            background-color: #e2e2e2;
-            font-weight: bold;
-        }
+    #nav .current,
+    #nav .current:hover {
+        color: #008720;
+        background-color: #e2e2e2;
+        font-weight: bold;
+    }
+    
+    #nav .current {
+        color: #008720;
+    }
         
     #nav a:hover {
         color: #fff;
-        background-color: #597d99;
+        background-color: #282828;
     }
 
-#login-info {
+#login_info {
     position: absolute;
-    top: 0px;
-    right: 32px;
+    top: 5px;
+    right: 20px;
 }
 
     #login-info a {
         display: inline-block;
-        padding: 6px;
+        padding: 3px 5px;
     }
 
 #content {
@@ -174,6 +165,7 @@ img {
     position: relative;
     margin: 0;
     background: #fff;
+    margin: 8px 0 0 0;
 }
 
 #co_right_shadow {
@@ -199,25 +191,10 @@ img {
     background: url(img/wrap_shadow_right_bottom_corner.png) right bottom no-repeat;
 }
 
-#content-pad {
-    padding: 20px 25px 20px;
-	background-position: top right;
-	background-repeat: no-repeat;
-	background-color: transparent;
-	min-height: 300px;
+#content_pad {
+    padding: 20px 20px 20px;
+    min-height: 200px;
 }
-
-body.dashboards	#content-pad {	background-image: url(/wildflower/css/img/bright/dashboards.png);	}
-body.pages		#content-pad {	background-image: url(/wildflower/css/img/bright/pages.png);	}
-body.posts		#content-pad {	background-image: url(/wildflower/css/img/bright/posts.png);	}
-body.assets		#content-pad {	background-image: url(/wildflower/css/img/bright/assets.png);	}
-body.messages	#content-pad {	background-image: url(/wildflower/css/img/bright/messages.png);	}
-body.galleries	#content-pad {	background-image: url(/wildflower/css/img/bright/galleries.png);	}
-body.stats		#content-pad {	background-image: url(/wildflower/css/img/bright/stats.png);	}
-body.links		#content-pad {	background-image: url(/wildflower/css/img/bright/links.png);	}
-body.settings	#content-pad {	background-image: url(/wildflower/css/img/bright/settings.png);	}
-body.users		#content-pad {	background-image: url(/wildflower/css/img/bright/users.png);	}
-body.utilities	#content-pad {	background-image: url(/wildflower/css/img/bright/utilities.png);	}
 
 .cleaner {
     clear: both;
@@ -283,12 +260,12 @@ h2 {
 }
 
 .section {
-    margin: -20px -25px 14px;
-    padding: 15px 25px;
+    margin: -20px -20px 14px;
+    padding: 13px 20px;
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
-    background: #eef5fb url(img/page_top.png) left bottom repeat-x;
+    background: #d2eafc;
 }
 
     .section h2 {
@@ -355,8 +332,8 @@ select {
     margin: 0;
 }
 
-#WildPostCreatedYear,
-#WildPageCreatedYear {
+#PostCreatedYear,
+#PageCreatedYear {
     margin-right: 10px;
 }
 
@@ -471,9 +448,9 @@ select {
 
 #flashMessage {
     color: #fff;
-    background: #3b8f30;
+    background: #40a65f;
     border: 1px solid #62e350;
-    padding: 5px;
+    padding: 5px 10px;
     margin: 0 0 14px 0;
 }
 
@@ -502,7 +479,7 @@ select {
 
     #sidebar > ul > li {
         margin: 0;
-        padding: 8px 14px;
+        padding: 8px 0;
     }
     
     #sidebar > ul > li:last-child {
@@ -602,23 +579,19 @@ select {
     line-height: 17px;
 }    
 
-    /* Sidebar search */
+/* Sidebar search */
 
-        #sidebar .search .input {
-            margin-bottom: 0;
-        }
-        
-        #sidebar .search label {
-            font-weight: bold;
-        }
-        
-        #sidebar .search input {
-            width: 99%;
-            margin: 2px 0 0 0;
-            display: block;
-            font-size: 14px;
-            padding: 2px;
-        }
+#sidebar .search .input {
+    margin-bottom: 0;
+}
+
+#sidebar .search input {
+    width: 99%;
+    margin: 2px 0 0 0;
+    display: block;
+    font-size: 14px;
+    padding: 2px;
+}
 
 #sidebar-search-results {
     list-style: none;
@@ -645,6 +618,8 @@ select {
     padding: 4px 6px;
     background-color: #fffde0;
     border: 1px solid #fffcbd;
+    border-bottom: 1px dashed #ff9000;
+    border-top: 1px dashed #ff9000;
     display: none; /* JS shows/hide this */
 }
 
@@ -658,7 +633,7 @@ select {
         text-align: right;
         float: right;
         position: relative;
-        top: -16px;
+        top: -1px;
     }
     
         .select-actions span a,
@@ -766,7 +741,6 @@ select {
     }
 
 .post-categories,
-.link-categories,
 .post-comments {
     color: #535353;
     margin: 0;
@@ -875,8 +849,10 @@ text-decoration:none;
     
 /* Post edit */
 
-#save-preview {
-    display: none; /* Preview does not work yet */
+#close_preview {
+    background: #eee;
+    margin: 10px -25px -20px -25px;
+    padding: 10px 25px;
 }
 
 #save-draft,
@@ -888,11 +864,16 @@ text-decoration:none;
     margin-right: 6px;
 }
 
+#save-preview {
+    display: none; /* Disabled until preview is functional */
+}
+
     #save-draft input,
     #save-publish input,
     #save-preview input,
     .save-section input,
-    .wf-form-button input {
+    .wf-form-button input,
+    #close_preview input {
         font-size: 13px;
     }
     
@@ -906,10 +887,16 @@ text-decoration:none;
     a.cancel,
     a.cancel:hover,
     .rename_title,
-    #authMessage {
+    #authMessage,
+    .delete {
         color: #d80019;
         background-color: transparent;
     }
+    
+.delete:hover {
+    background-color: #d80019;
+    color: #fff;
+}
     
 #post-categories,
 #post-options,
@@ -1004,8 +991,6 @@ text-decoration:none;
     list-style: none;
     margin: 0;
     padding: 0;
-    position: relative;
-    left: -5px;
     font-size: 14px;
     line-height: 20px;
 }
@@ -1037,18 +1022,12 @@ text-decoration:none;
             margin: 16px 0 0 10px;
             font-size: 13px;
         }
-
-/*	links & feeds	*/
-
-#show-links	{float: right; width: 150px; margin-top: 5px;}
-
-.list-of-links	li.link-row	{
-	display: inline; float: left; width: 40%; margin-left: 3%; margin-right: 5%;
-}
-
+        
+        
 /* Image browser (image insert) */
 
-    #image-browser h4 {
+    #image-browser h4,
+    .sidebar_heading {
         background: #eefaff;
         padding: 3px 6px;
         margin: 0 0 5px;
@@ -1106,6 +1085,11 @@ text-decoration:none;
     background-color: #ebebeb;
 }
 
+    #resize_image h5 {
+        margin: 0 0 1em;
+        font-size: 12px;
+    }
+
 .sidebar-box .paginator {
     font-size: 11px;
 }
@@ -1113,9 +1097,6 @@ text-decoration:none;
 .sidebar-box button {
     font-size: 12px;
 }
-	
-/* gallery */
-#show-galleries	{	float: right; margin-top: 7px;	}
     
     
 /* Reorder list */
@@ -1201,21 +1182,6 @@ text-decoration:none;
         margin: 0;
     }
 
-
-
-/**	users password strength meter made by Tane Piper	**/
-.is0{background:url(/wildflower/css/img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
-.is10{background-position:0 -7px;}
-.is20{background-position:0 -14px;}
-.is30{background-position:0 -21px;}
-.is40{background-position:0 -28px;}
-.is50{background-position:0 -35px;}
-.is60{background-position:0 -42px;}
-.is70{background-position:0 -49px;}
-.is80{background-position:0 -56px;}
-.is90{background-position:0 -63px;}
-.is100{background-position:0 -70px;}
-
 #admin_bar {
     background: #000;
     color: #c3c3c3;
@@ -1253,6 +1219,23 @@ text-decoration:none;
         font-size: 20px;
         font-weight: bold;
     }
+    
+.texy_table {
+    border-collapse: collapse;
+}    
+    
+.texy_table td {
+    padding: 6px 8px;
+    border: 1px solid #eee;
+}
+
+.texy_table tr > td:first-child {
+    background-color: #eee;
+}
+
+.texy_table td * {
+    margin: 0;
+}
 
 #page_inserts {
     margin: -20px -25px 16px; 
@@ -1299,9 +1282,9 @@ text-decoration:none;
     
 #edit-buttons {
     overflow: hidden;
-    margin-top: 1em;
-    background: #eee;
-    padding: 8px;
+    margin: 10px -20px -22px;
+    background: #ceffb0;
+    padding: 10px 25px;
     position: relative;
 }
 
@@ -1315,136 +1298,6 @@ text-decoration:none;
     display: none;
 }
 
-#sidebar_content {
-    background: #eee;
-    padding: 10px;
-    float: right;
-    width: 30%;
-}
-
-
-/*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
-.tabs	{	background: transparent !important;	margin-bottom: 30px;}
-body.dashboards	#content-pad	.tabs,
-body	#content-pad	.list	{	margin-right: 155px;	}	
-.demoHeaders { margin-top: 2em; }
-#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
-#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
-ul#icons {margin: 0; padding: 0;}
-ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
-ul#icons span.ui-icon {float: left; margin: 0 4px;}
-.ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none; outline: none; background: transparent; }
-.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; background: transparent;  }
-.ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; background: transparent; }
-.ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; background: transparent; }
-
-/*	jquery ui flash messages	*/
-.ui-widget	p {	padding-left: 15px; padding-right: 15px;	}
-.ui-widget	p span.ui-icon	{	float: left; padding: 1px;	}
-
-#jqueryui		{	float: right; background: #fff; margin: -10px 0 0 0; 	}
-
-
-
-
-	 /*	particle tree	*/
-
-	 /* BUTTONS */
-
-.buttons a, .submit button	{
-    display:block;
-    float:left;
-    margin:0 7px 0 0;
-    background-color:#f5f5f5;
-    border:1px solid #dedede;
-    border-top:1px solid #eee;
-    border-left:1px solid #eee;
-    font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-    font-size:100%;
-    line-height:130%;
-    text-decoration:none;
-    font-weight:bold;
-    color:#565656;
-    cursor:pointer;
-    padding:5px 10px 6px 7px; /* Links */
-}
-.buttons button{
-    width:auto;
-    overflow:visible;
-    padding:4px 10px 3px 7px; /* IE6 */
-}
-.buttons button[type]{
-    padding:5px 10px 5px 7px; /* Firefox */
-    line-height:17px; /* Safari */
-}
-*:first-child+html button[type]{
-    padding:4px 10px 3px 7px; /* IE7 */
-}
-.buttons button img, .buttons a img{
-    margin:0 3px -3px 0 !important;
-    padding:0;
-    border:none;
-    width:16px;
-    height:16px;
-}
-
-button.positive, .buttons a.positive{
-.buttons a.positive:hover, button.positive:hover{
-    background-color:#E6EFC2;
-    border:1px solid #C6D880;
-    color:#529214;
-}
-.buttons a.positive:active{
-    background-color:#529214;
-    border:1px solid #529214;
-    color:#fff;
-}
-
-/* STANDARD */
-
-button:hover, .buttons a:hover{
-    background-color:#dff4ff;
-    border:1px solid #c2e1ef;
-    color:#336699;
-}
-.buttons a:active{
-    background-color:#6299c5;
-    border:1px solid #6299c5;
-    color:#fff;
-}
-
-/* POSITIVE */
-
-button.positive, .buttons a.positive{
-    color:#529214;
-}
-.buttons a.positive:hover, button.positive:hover{
-    background-color:#E6EFC2;
-    border:1px solid #C6D880;
-    color:#529214;
-}
-.buttons a.positive:active{
-    background-color:#529214;
-    border:1px solid #529214;
-    color:#fff;
-}
-
-
-/* NEGATIVE */
-
-.buttons a.negative, button.negative{
-    color:#d12f19;
-}
-.buttons a.negative:hover, button.negative:hover{
-    background:#fbe3e4;
-    border:1px solid #fbc2c4;
-    color:#d12f19;
-}
-.buttons a.negative:active{
-    background-color:#d12f19;
-    border:1px solid #d12f19;
-    color:#fff;
-}
 
 /* Widgets */
 
@@ -1568,3 +1421,230 @@ button.positive, .buttons a.positive{
         padding: 10px 0 1px;
         border-bottom: 3px solid #ddd;
     }
+    
+    
+/* Dashboard */
+
+.recently_changed {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .recently_changed th {
+        text-align: right;
+        width: 65px;
+        background: #3e557f;
+        color: #fff;
+        font-weight: normal;
+        font-size: 11px;
+    }
+    
+    .recently_changed th,
+    .recently_changed td {
+        padding: 3px 6px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .recent_post th {
+        background-color: #2e9329;
+    }
+        
+    .recent_comment th {
+        background-color: #d26624;
+    }
+            
+    .recent_file th {
+        background-color: #515151;
+    }
+                
+    .recent_message th {
+        background-color: #8d2e83;
+    }
+    
+    td.recent_date {
+        color: #474747;
+        width: 160px;
+    }
+    
+    
+/* Preview */
+
+#preview_frame {
+    margin: 0 0 0 -6px;
+    width: 100%;
+    border: 6px solid #fff689;
+}
+
+
+/* Page reorder */
+
+.page_reorder_list {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+}
+
+    .page_reorder_list ul {
+        margin: 0;
+        padding: 0 0 0 30px;
+    }
+
+    .page_reorder_list li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+.drop_zone {
+    border: 1px dashed #ddd;
+    color: #474747;
+    font-size: 11px;
+    width: 150px;
+    text-align: center;
+    padding: 2px;
+    margin: 2px 0;
+    cursor: pointer;
+    background: #eee;
+}
+
+    .drop_zone:hover {
+        background-color: #fff;
+    }
+    
+#comments_index li {
+    padding: 10px !important;
+    background: #eee;
+    border: 2px solid #ddd;
+    margin: 10px 0;
+}
+
+.view_comment_post {
+    float: right;
+    line-height: 12px;
+    font-size: 11px;    
+    position: relative;
+    bottom: -2px;
+}
+
+.comment_entry {
+    margin: 0 0 0 30px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.comment_meta {
+    padding: 0 0 0 30px;
+    font-size: 11px;
+    color: #3b3b3b;
+}
+
+.right_menu {
+}
+
+    .right_menu a {
+        display: block;
+        padding: 8px 10px;
+        margin: 0 0 5px 0;
+        position: relative;
+        left: -16px;
+        z-index: 3;
+        -webkit-border-radius: 0 6px 6px 0;    /* for Safari */
+        -moz-border-radius: 0 6px 6px 0;
+    }
+    
+    .right_menu a.current {
+        background: #474747;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    
+/* Settings form */
+
+.settings_form label,
+.settings_form p {
+    display: block;
+    font-size: 11px;
+    color: #474747;
+    margin: 2px 0;
+}
+
+.settings_form .input input,
+.settings_form .input textarea {
+    font-size: 13px;
+    padding: 4px;
+    font-family: "Lucida Console", sans-serif;
+}
+
+#setting-google_analytics_code textarea {
+    width: 98%;
+    height: 160px;
+}
+
+#setting-wordpress_api_key input {
+    width: 100px;
+}
+
+
+/* Menu editing */
+
+.menu_items {
+    margin: 1em 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .menu_items li {
+        margin: 0 0 4px 0;
+        padding: 4px;
+        background: #eee;
+        overflow: hidden;
+    }
+    
+.menu_item_label,
+.menu_item_url {
+    float: left;
+    padding: 0 10px 0 5px;
+}
+
+    .menu_items label {
+        padding: 0 5px 0 0;
+    }
+    
+    .menu_items .delete {
+        font-size: 11px;
+        position: relative;
+        top: 2px;
+        display: block;
+        float: left;
+    }
+    
+    .add_menu_item_p {
+        text-align: right;
+    }
+    
+.move {
+    background: url(img/move_cursor.png) 0 0 no-repeat;
+    width: 15px;
+    height: 15px;
+    display: block;
+    float: right;
+    margin: 5px 5px 0 0;
+    cursor: move;
+}
+
+.move:hover {
+    background-color: transparent;
+}
+
+    .move span {
+        display: none;
+    }
+    
+.drop_here {
+    height: 30px;
+    background: #fff74c !important;
+}

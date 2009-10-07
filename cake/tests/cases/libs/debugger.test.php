@@ -91,7 +91,7 @@ class DebuggerTest extends CakeTestCase {
 		$return = Debugger::excerpt(__FILE__, 2, 2);
 		$this->assertTrue(is_array($return));
 		$this->assertEqual(count($return), 4);
-		$this->assertPattern('#/*&nbsp;SVN&nbsp;FILE:&nbsp;\$Id:&nbsp;debugger.test.php#', $return[1]);
+		$this->assertPattern('#/*&nbsp;SVN&nbsp;FILE:&nbsp;\$Id\$#', $return[1]);
 
 		$return = Debugger::excerpt('[internal]', 2, 2);
 		$this->assertTrue(empty($return));
@@ -218,15 +218,14 @@ class DebuggerTest extends CakeTestCase {
 
 		Debugger::log('cool');
 		$result = file_get_contents(LOGS . 'debug.log');
-		$this->assertPattern('/DebuggerTest::testLog/', $result);
+		$this->assertPattern('/DebuggerTest\:\:testLog/', $result);
 		$this->assertPattern('/"cool"/', $result);
 
 		unlink(TMP . 'logs' . DS . 'debug.log');
 
 		Debugger::log(array('whatever', 'here'));
 		$result = file_get_contents(TMP . 'logs' . DS . 'debug.log');
-
-		$this->assertPattern('/DebuggerTest::testLog/', $result);
+		$this->assertPattern('/DebuggerTest\:\:testLog/', $result);
 		$this->assertPattern('/array/', $result);
 		$this->assertPattern('/"whatever",/', $result);
 		$this->assertPattern('/"here"/', $result);

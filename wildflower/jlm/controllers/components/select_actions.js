@@ -3,7 +3,7 @@
  *
  * Used on lists with checkboxes. On checking some, action menus pop up.
  */
-$.jlm.component('SelectActions', 'wild_posts.wf_index, wild_posts.wf_comments, wild_pages.wf_index, wild_assets.wf_index, wild_users.wf_index, wild_links.wf_index, wild_stats.wf_index, wild_galleries.wf_index', function() {
+$.jlm.component('SelectActions', '*', function() {
      var selectActionsEl = $('.select-actions');
      var handledFormEl = $('form:first');
      
@@ -31,12 +31,50 @@ $.jlm.component('SelectActions', 'wild_posts.wf_index, wild_posts.wf_comments, w
 
      $('input[type=checkbox]', handledFormEl).click(selectionChanged);
      
+     function deleteChecked() {
+         var checkboxEl = $('input:checked');
+         $(checkboxEl).each(function() {
+             var commentEl = null;
+             var id = $(this).attr('name');
+             id = end(explode('][', id));
+             id = intval(str_replace(']', '', id));
+             commentEl = $('#comment-' + id);
+             commentEl.css('backgroundColor', 'red').fadeOut('slow');
+         });
+     }
+     
+     function spamChecked() {
+         var checkboxEl = $('input:checked');
+          $(checkboxEl).each(function() {
+              var commentEl = null;
+              var id = $(this).attr('name');
+              id = end(explode('][', id));
+              id = intval(str_replace(']', '', id));
+              commentEl = $('#comment-' + id);
+              commentEl
+                .css('backgroundColor', '#f1d6d6')
+                .hide("slide", { direction: "down" }, 1000);
+          });
+     }
+     
      // Bind main actions
      $('.select-actions > a', handledFormEl).click(function() {
-         // @TODO add AJAX submit
-         handledFormEl.
-            append('<input type="hidden" name="data[__action]" value="' + $(this).attr('rel') + '" />').
-            submit();
+         var rel = $(this).attr('rel');
+         var msg = 'Do you really want to ' + str_replace('!', '', rel) + ' selected items?';
+         var doContinue = confirm(msg);
+         if (doContinue) {
+             var url = handledFormEl.attr('action');
+             
+             var formAppend = '<input type="hidden" name="data[__action]" value="' + rel + '" />';
+             // @TODO add AJAX submit and UI refresh
+             handledFormEl.append(formAppend).submit();
+
+             if ('delete' == rel) {
+                 deleteChecked();
+             } else if ('spam!' == rel) {
+                 spamChecked();
+             }
+         }
          return false;
      });
      

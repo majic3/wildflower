@@ -417,6 +417,10 @@ class View extends Object {
  */
 	function renderLayout($content_for_layout, $layout = null) {
 		$layoutFileName = $this->_getLayoutFileName($layout);
+		if (empty($layoutFileName)) {
+			return $this->output;
+		}
+
 		$debug = '';
 
 		if (isset($this->viewVars['cakeDebug']) && Configure::read() > 2) {
@@ -800,15 +804,14 @@ class View extends Object {
 			}
 		}
 
-		$paths = $this->_paths($this->plugin);
-
-		foreach ($paths as $path) {
-			if (file_exists($path . $name . $this->ext)) {
-				return $path . $name . $this->ext;
-			} elseif (file_exists($path . $name . '.ctp')) {
-				return $path . $name . '.ctp';
-			} elseif (file_exists($path . $name . '.thtml')) {
-				return $path . $name . '.thtml';
+		$paths = $this->_paths(Inflector::underscore($this->plugin));
+		
+		$exts = array($this->ext, '.ctp', '.thtml');
+		foreach ($exts as $ext) {
+			foreach ($paths as $path) {
+				if (file_exists($path . $name . $ext)) {
+					return $path . $name . $ext;
+				}
 			}
 		}
 		$defaultPath = $paths[0];
@@ -840,12 +843,12 @@ class View extends Object {
 		if (!is_null($this->layoutPath)) {
 			$subDir = $this->layoutPath . DS;
 		}
-		$paths = $this->_paths($this->plugin);
+		$paths = $this->_paths(Inflector::underscore($this->plugin));
 		$file = 'layouts' . DS . $subDir . $name;
 
 		$exts = array($this->ext, '.ctp', '.thtml');
-		foreach ($paths as $path) {
-			foreach ($exts as $ext) {
+		foreach ($exts as $ext) {
+			foreach ($paths as $path) {
 				if (file_exists($path . $file . $ext)) {
 					return $path . $file . $ext;
 				}
@@ -891,11 +894,14 @@ class View extends Object {
 		}
 		$paths = array();
 		$viewPaths = Configure::read('viewPaths');
+		$corePaths = array_flip(Configure::corePaths('view'));
 
-		if ($plugin !== null) {
+		if (!empty($plugin)) {
 			$count = count($viewPaths);
 			for ($i = 0; $i < $count; $i++) {
-				$paths[] = $viewPaths[$i] . 'plugins' . DS . $plugin . DS;
+				if (!isset($corePaths[$viewPaths[$i]])) {
+					$paths[] = $viewPaths[$i] . 'plugins' . DS . $plugin . DS;
+				}
 			}
 			$pluginPaths = Configure::read('pluginPaths');
 			$count = count($pluginPaths);

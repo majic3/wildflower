@@ -33,20 +33,12 @@ App::import('Core', 'Inflector');
  */
 class InflectorTest extends CakeTestCase {
 /**
- * Inflector property
- *
- * @var mixed null
- * @access public
- */
-	var $Inflector = null;
-/**
  * setUp method
  *
  * @access public
  * @return void
  */
 	function setUp() {
-		$this->Inflector = Inflector::getInstance();
 	}
 /**
  * tearDown method
@@ -55,7 +47,6 @@ class InflectorTest extends CakeTestCase {
  * @return void
  */
 	function tearDown() {
-		unset($this->Inflector);
 	}
 /**
  * testInstantiation method
@@ -64,7 +55,10 @@ class InflectorTest extends CakeTestCase {
  * @return void
  */
 	function testInstantiation() {
-		$this->assertEqual(new Inflector(), $this->Inflector);
+		$this->skipUnless(strpos(Debugger::trace(), 'GroupTest') === false, '%s Cannot be run from within a group test');
+
+		$Instance = Inflector::getInstance();
+		$this->assertEqual(new Inflector(), $Instance);
 	}
 /**
  * testInflectingSingulars method
@@ -114,6 +108,7 @@ class InflectorTest extends CakeTestCase {
 		$this->assertEqual(Inflector::singularize('taxes'), 'tax');
 		$this->assertEqual(Inflector::singularize('faxes'), 'fax');
 		$this->assertEqual(Inflector::singularize('waxes'), 'wax');
+		$this->assertEqual(Inflector::singularize('waves'), 'wave');
 		$this->assertEqual(Inflector::singularize(''), '');
 	}
 /**
@@ -157,6 +152,7 @@ class InflectorTest extends CakeTestCase {
 		$this->assertEqual(Inflector::pluralize('people'), 'people');
 		$this->assertEqual(Inflector::pluralize('glove'), 'gloves');
 		$this->assertEqual(Inflector::pluralize('crisis'), 'crises');
+		$this->assertEqual(Inflector::pluralize('wave'), 'waves');
 		$this->assertEqual(Inflector::pluralize(''), '');
 	}
 /**

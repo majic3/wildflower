@@ -137,22 +137,23 @@ class CakeSession extends Object {
 		$this->time = time();
 
 		if ($start === true) {
-			$this->host = env('HTTP_HOST');
-
-			if (empty($base) || strpos($base, '?') === 0 || strpos($base, 'index.php') === 0) {
-				$this->path = '/';
-			} else {
+			if (!empty($base)) {
 				$this->path = $base;
+				if (strpos($base, 'index.php') !== false) {
+				   $this->path = str_replace('index.php', '', $base);
+				}
+				if (strpos($base, '?') !== false) {
+				   $this->path = str_replace('?', '', $base);
+				}
 			}
+			$this->host = env('HTTP_HOST');
 
 			if (strpos($this->host, ':') !== false) {
 				$this->host = substr($this->host, 0, strpos($this->host, ':'));
 			}
-
 			if (!class_exists('Security')) {
 				App::import('Core', 'Security');
 			}
-
 			$this->sessionTime = $this->time + (Security::inactiveMins() * Configure::read('Session.timeout'));
 			$this->security = Configure::read('Security.level');
 		}
@@ -510,7 +511,7 @@ class CakeSession extends Object {
 													array('Cache', 'read'),
 													array('Cache', 'write'),
 													array('Cache', 'delete'),
-													array('CakeSession', '__gc'));
+													array('Cache', 'gc'));
 			break;
 			default:
 				if (empty($_SESSION)) {

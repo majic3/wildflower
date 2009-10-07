@@ -81,74 +81,14 @@ class DATABASE_CONFIG {
      * @var array
      */
 	public $default = array(
-		'driver' => 'mysqli',
+		'driver' => 'mysql',
 	    'encoding' => 'utf8',
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
-		'database' => 'icing',
+		'password' => 'majic',
+		'database' => 'wildflower',
 	    'port' => 3306
-	);
-	
-	/**
-	 * This is the configuration for wf.klevo.sk
-	 *
-	 * @var array
-	 */
-	public $production = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'ss29db',
-		'password' => 'five',
-		'database' => 'icing',
-	    'domain' => 'icing.ss29'
-	);
-	
-	/**
-	 * This is the configuration for tesla
-	 *
-	 * @var array
-	 */
-	public $tesla = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'ss29db',
-		'password' => 'five',
-		'database' => 'icing_tesla',
-	    'domain' => 'tesla.icing.ss29'
-	);
-	
-	/**
-	 * This is the configuration for escher
-	 *
-	 * @var array
-	 */
-	public $escher = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'ss29db',
-		'password' => 'five',
-		'database' => 'icing_escher',
-	    'domain' => 'escher.icing.ss29'
-	);
-	
-	/**
-	 * This is the configuration for dev.wf.klevo.sk
-	 *
-	 * @var array
-	 */
-	public $production_dev = array(
-		'driver' => 'mysqli',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'ss29db',
-		'password' => 'five',
-		'database' => 'icing_dev',
-	    'domain' => 'dev.icing.ss29'
 	);
 	
 	/**
@@ -165,12 +105,6 @@ class DATABASE_CONFIG {
         'password' => '',
         'database' => 'test_wildflower',
 	    'port' => 3306
-	);
-
-	var $analytics = array(
-			'datasource' => 'google_analytics',
-			'user' => 'fruits.majic@googlemail.com',
-			'password' => 'one2wq12',
 	);
 	
     /**

@@ -36,6 +36,13 @@ Mock::generatePartial('RequestHandlerComponent', 'NoStopRequestHandler', array('
  */
 class RequestHandlerTestController extends Controller {
 /**
+ * name property
+ *
+ * @var string
+ * @access public
+ **/
+	var $name = 'RequestHandlerTest';
+/**
  * uses property
  *
  * @var mixed null
@@ -124,21 +131,32 @@ class RequestHandlerComponentTest extends CakeTestCase {
  */
 	var $RequestHandler;
 /**
- * setUp method
+ * startTest method
  *
  * @access public
  * @return void
  */
-	function setUp() {
+	function startTest() {
 		$this->_init();
 	}
 /**
- * tearDown method
+ * init method
+ *
+ * @access protected
+ * @return void
+ */
+	function _init() {
+		$this->Controller = new RequestHandlerTestController(array('components' => array('RequestHandler')));
+		$this->Controller->constructClasses();
+		$this->RequestHandler =& $this->Controller->RequestHandler;
+	}
+/**
+ * endTest method
  *
  * @access public
  * @return void
  */
-	function tearDown() {
+	function endTest() {
 		unset($this->RequestHandler);
 		unset($this->Controller);
 		if (!headers_sent()) {
@@ -240,6 +258,24 @@ class RequestHandlerComponentTest extends CakeTestCase {
 		$this->assertFalse(in_array('Xml', $this->Controller->helpers));
 		$this->RequestHandler->renderAs($this->Controller, 'xml');
 		$this->assertTrue(in_array('Xml', $this->Controller->helpers));
+	}
+/**
+ * test that calling renderAs() more than once continues to work.
+ *
+ * @link #6466
+ * @return void
+ **/
+	function testRenderAsCalledTwice() {
+		$this->RequestHandler->renderAs($this->Controller, 'xml');
+		$this->assertEqual($this->Controller->viewPath, 'request_handler_test/xml');
+		$this->assertEqual($this->Controller->layoutPath, 'xml');
+		
+		$this->assertTrue(in_array('Xml', $this->Controller->helpers));
+
+		$this->RequestHandler->renderAs($this->Controller, 'js');
+		$this->assertEqual($this->Controller->viewPath, 'request_handler_test/js');
+		$this->assertEqual($this->Controller->layoutPath, 'js');
+		$this->assertTrue(in_array('Js', $this->Controller->helpers));
 	}
 /**
  * testRequestClientTypes method
@@ -416,6 +452,7 @@ class RequestHandlerComponentTest extends CakeTestCase {
 		$this->RequestHandler->ext = 'rss';
 		$this->assertEqual($this->RequestHandler->prefers(), 'rss');
 		$this->assertFalse($this->RequestHandler->prefers('xml'));
+		$this->assertEqual($this->RequestHandler->prefers(array('js', 'xml', 'xhtml')), 'xml');
 		$this->assertTrue($this->RequestHandler->accepts('xml'));
 
 		$_SERVER['HTTP_ACCEPT'] = 'text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5';
@@ -500,17 +537,6 @@ class RequestHandlerComponentTest extends CakeTestCase {
 
 		Configure::write('viewPaths', $_paths);
 		unset($_SERVER['HTTP_X_REQUESTED_WITH']);
-	}
-/**
- * init method
- *
- * @access protected
- * @return void
- */
-	function _init() {
-		$this->Controller = new RequestHandlerTestController(array('components' => array('RequestHandler')));
-		$this->Controller->constructClasses();
-		$this->RequestHandler =& $this->Controller->RequestHandler;
 	}
 }
 ?>

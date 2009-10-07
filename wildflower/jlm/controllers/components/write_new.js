@@ -1,4 +1,4 @@
-$.jlm.component('WriteNew', 'wild_posts.wf_index, wild_posts.wf_edit, wild_pages.wf_index, wild_pages.wf_edit', function() {
+$.jlm.component('WriteNew', 'posts.admin_index, posts.admin_edit, pages.admin_index, pages.admin_edit', function() {
     
     $('#sidebar .add').click(function() {
         // if ($('.new-dialog').size() > 0) {
@@ -13,16 +13,16 @@ $.jlm.component('WriteNew', 'wild_posts.wf_index, wild_posts.wf_edit, wild_pages
         
         var templatePath = 'posts/new_post';
         var parentPageOptions = null;
-        if ($.jlm.params.controller == 'wild_pages') {
+        if ($.jlm.params.controller == 'pages') {
             templatePath = 'pages/new_page';
             parentPageOptions = $('.all-page-parents').html();
-            parentPageOptions = parentPageOptions.replace('[Page]', '[WildPage]');
+            parentPageOptions = parentPageOptions.replace('[Page]', '[Page]');
             parentPageOptions = parentPageOptions.replace('[parent_id_options]', '[parent_id]');
         }
         
         var dialogEl = $($.jlm.template(templatePath, { action: formAction, parentPageOptions: parentPageOptions }));
         
-        var contentEl = $('#content-pad');
+        var contentEl = $('#content_pad');
         
         contentEl.append(dialogEl);
         

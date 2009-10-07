@@ -373,6 +373,10 @@ class Model extends Overloadable {
 			$this->useTable = $table;
 		}
 
+		if ($ds !== null) {
+			$this->useDbConfig = $ds;
+		}
+
 		if (is_subclass_of($this, 'AppModel')) {
 			$appVars = get_class_vars('AppModel');
 			$merge = array('_findMethods');
@@ -815,13 +819,21 @@ class Model extends Overloadable {
  * @access public
  */
 	function deconstruct($field, $data) {
+		if (!is_array($data)) {
+			return $data;
+		}
+
 		$copy = $data;
 		$type = $this->getColumnType($field);
-		$db =& ConnectionManager::getDataSource($this->useDbConfig);
 
 		if (in_array($type, array('datetime', 'timestamp', 'date', 'time'))) {
-			$useNewDate = (isset($data['year']) || isset($data['month']) || isset($data['day']) || isset($data['hour']) || isset($data['minute']));
+			$useNewDate = (isset($data['year']) || isset($data['month']) ||
+				isset($data['day']) || isset($data['hour']) || isset($data['minute']));
+
 			$dateFields = array('Y' => 'year', 'm' => 'month', 'd' => 'day', 'H' => 'hour', 'i' => 'min', 's' => 'sec');
+			$timeFields = array('H' => 'hour', 'i' => 'min', 's' => 'sec');
+
+			$db =& ConnectionManager::getDataSource($this->useDbConfig);
 			$format = $db->columns[$type]['format'];
 			$date = array();
 
@@ -831,27 +843,42 @@ class Model extends Overloadable {
 			if (isset($data['hour']) && isset($data['meridian']) && $data['hour'] == 12 && 'am' == $data['meridian']) {
 				$data['hour'] = '00';
 			}
-
-			foreach ($dateFields as $key => $val) {
-				if (in_array($val, array('hour', 'min', 'sec'))) {
-					if (!isset($data[$val]) || $data[$val] === '0' || empty($data[$val])) {
+			if ($type == 'time') {
+				foreach ($timeFields as $key => $val) {
+					if (!isset($data[$val]) || $data[$val] === '0' || $data[$val] === '00') {
 						$data[$val] = '00';
+					} elseif ($data[$val] === '') {
+						$data[$val] = '';
 					} else {
 						$data[$val] = sprintf('%02d', $data[$val]);
 					}
+					if (!empty($data[$val])) {
+						$date[$key] = $data[$val];
+					} else {
+						return null;
+					}
 				}
-				if (in_array($type, array('datetime', 'timestamp', 'date')) && !isset($data[$val]) || isset($data[$val]) && (empty($data[$val]) || $data[$val][0] === '-')) {
-					return null;
-				} elseif (isset($data[$val]) && !empty($data[$val])) {
-					$date[$key] = $data[$val];
+			}
+
+			if ($type == 'datetime' || $type == 'timestamp' || $type == 'date') {
+				foreach ($dateFields as $key => $val) {
+					if ($val == 'hour' || $val == 'min' || $val == 'sec') {
+						if (!isset($data[$val]) || $data[$val] === '0' || $data[$val] === '00') {
+							$data[$val] = '00';
+						} else {
+							$data[$val] = sprintf('%02d', $data[$val]);
+						}
+					}
+					if (!isset($data[$val]) || isset($data[$val]) && (empty($data[$val]) || $data[$val][0] === '-')) {
+						return null;
+					}
+					if (isset($data[$val]) && !empty($data[$val])) {
+						$date[$key] = $data[$val];
+					}
 				}
 			}
 			$date = str_replace(array_keys($date), array_values($date), $format);
-			if ($type == 'time' && $date == '00:00:00') {
-				return null;
-			}
-
-			if ($useNewDate && (!empty($date))) {
+			if ($useNewDate && !empty($date)) {
 				return $date;
 			}
 		}
@@ -1010,7 +1037,10 @@ class Model extends Overloadable {
 		}
 
 		if ($id !== null && $id !== false) {
-			$this->data = $this->find(array($this->alias . '.' . $this->primaryKey => $id), $fields);
+			$this->data = $this->find('first', array(
+				'conditions' => array($this->alias . '.' . $this->primaryKey => $id),
+				'fields' => $fields
+			));
 			return $this->data;
 		} else {
 			return false;
@@ -1210,7 +1240,7 @@ class Model extends Overloadable {
 				foreach ($this->_schema as $field => $properties) {
 					if ($this->primaryKey === $field) {
 						$fInfo = $this->_schema[$field];
-						$isUUID = ($fInfo['length'] === 36 &&
+						$isUUID = ($fInfo['length'] == 36 &&
 							($fInfo['type'] === 'string' || $fInfo['type'] === 'binary')
 						);
 						if (empty($this->data[$this->alias][$this->primaryKey]) && $isUUID) {
@@ -1279,7 +1309,7 @@ class Model extends Overloadable {
 				));
 
 				$isUUID = !empty($this->{$join}->primaryKey) && (
-						$this->{$join}->_schema[$this->{$join}->primaryKey]['length'] === 36 && (
+						$this->{$join}->_schema[$this->{$join}->primaryKey]['length'] == 36 && (
 						$this->{$join}->_schema[$this->{$join}->primaryKey]['type'] === 'string' ||
 						$this->{$join}->_schema[$this->{$join}->primaryKey]['type'] === 'binary'
 					)
@@ -1313,7 +1343,7 @@ class Model extends Overloadable {
 						unset($values);
 					} elseif (isset($row[$this->hasAndBelongsToMany[$assoc]['associationForeignKey']])) {
 						$newData[] = $row;
-					} elseif (isset($row[$join][$this->hasAndBelongsToMany[$assoc]['associationForeignKey']])) {
+					} elseif (isset($row[$join]) && isset($row[$join][$this->hasAndBelongsToMany[$assoc]['associationForeignKey']])) {
 						$newData[] = $row[$join];
 					}
 				}
@@ -1374,16 +1404,15 @@ class Model extends Overloadable {
 				$conditions = ($recursive == 1) ? (array)$assoc['counterScope'] : array();
 
 				if (isset($keys['old'][$foreignKey])) {
-					if ($keys['old'][$foreignKey] == $keys[$foreignKey]) {
-						continue;
-					}
-					$conditions[$fkQuoted] = $keys['old'][$foreignKey];
-					$count = intval($this->find('count', compact('conditions', 'recursive')));
+					if ($keys['old'][$foreignKey] != $keys[$foreignKey]) {
+						$conditions[$fkQuoted] = $keys['old'][$foreignKey];
+						$count = intval($this->find('count', compact('conditions', 'recursive')));
 
-					$this->{$parent}->updateAll(
-						array($assoc['counterCache'] => $count),
-						array($this->{$parent}->escapeField() => $keys['old'][$foreignKey])
-					);
+						$this->{$parent}->updateAll(
+							array($assoc['counterCache'] => $count),
+							array($this->{$parent}->escapeField() => $keys['old'][$foreignKey])
+						);
+					}
 				}
 				$conditions[$fkQuoted] = $keys[$foreignKey];
 
@@ -1420,7 +1449,7 @@ class Model extends Overloadable {
 			return array();
 		}
 		$old = $this->find('first', array(
-			'conditions' => array('id' => $this->id),
+			'conditions' => array($this->primaryKey => $this->id),
 			'fields' => array_values($included),
 			'recursive' => -1
 		));
@@ -1464,7 +1493,7 @@ class Model extends Overloadable {
 		if (Set::numeric(array_keys($data))) {
 			while ($validates) {
 				foreach ($data as $key => $record) {
-					if (!$currentValidates = $this->__save($this, $record, $options)) {
+					if (!$currentValidates = $this->__save($record, $options)) {
 						$validationErrors[$key] = $this->validationErrors;
 					}
 
@@ -1517,7 +1546,7 @@ class Model extends Overloadable {
 				if (isset($associations[$association])) {
 					switch ($associations[$association]) {
 						case 'belongsTo':
-							if ($this->__save($this->{$association}, $values, $options)) {
+							if ($this->{$association}->__save($values, $options)) {
 								$data[$this->alias][$this->belongsTo[$association]['foreignKey']] = $this->{$association}->id;
 							} else {
 								$validationErrors[$association] = $this->{$association}->validationErrors;
@@ -1530,7 +1559,7 @@ class Model extends Overloadable {
 					}
 				}
 			}
-			if (!$this->__save($this, $data, $options)) {
+			if (!$this->__save($data, $options)) {
 				$validationErrors[$this->alias] = $this->validationErrors;
 				$validates = false;
 			}
@@ -1548,7 +1577,7 @@ class Model extends Overloadable {
 					switch ($type) {
 						case 'hasOne':
 							$values[$this->{$type}[$association]['foreignKey']] = $this->id;
-							if (!$this->__save($this->{$association}, $values, $options)) {
+							if (!$this->{$association}->__save($values, $options)) {
 								$validationErrors[$association] = $this->{$association}->validationErrors;
 								$validates = false;
 							}
@@ -1621,12 +1650,12 @@ class Model extends Overloadable {
  * @access private
  * @see Model::saveAll()
  */
-	function __save(&$model, $data, $options) {
+	function __save($data, $options) {
 		if ($options['validate'] === 'first' || $options['validate'] === 'only') {
-			if (!($model->create($data) && $model->validates($options))) {
+			if (!($this->create($data) && $this->validates($options))) {
 				return false;
 			}
-		} elseif (!($model->create(null) !== null && $model->save($data, $options))) {
+		} elseif (!($this->create(null) !== null && $this->save($data, $options))) {
 			return false;
 		}
 		return true;
@@ -1760,8 +1789,6 @@ class Model extends Overloadable {
  * @access protected
  */
 	function _deleteLinks($id) {
-		$db =& ConnectionManager::getDataSource($this->useDbConfig);
-
 		foreach ($this->hasAndBelongsToMany as $assoc => $data) {
 			$records = $this->{$data['with']}->find('all', array(
 				'conditions' => array_merge(array($this->{$data['with']}->escapeField($data['foreignKey']) => $id)),
@@ -1800,7 +1827,7 @@ class Model extends Overloadable {
 			);
 
 			if (empty($ids)) {
-				return false;
+				return true;
 			}
 
 			if ($callbacks) {
@@ -1853,7 +1880,7 @@ class Model extends Overloadable {
 		if ($this->getID() === false || $this->useTable === false) {
 			return false;
 		}
-		if ($this->__exists !== null && $reset !== true) {
+		if (!empty($this->__exists) && $reset !== true) {
 			return $this->__exists;
 		}
 		$conditions = array($this->alias . '.' . $this->primaryKey => $this->getID());
@@ -2459,8 +2486,8 @@ class Model extends Overloadable {
  * rule (in case of multiple validation for field) that was broken.
  *
  * @param string $field The name of the field to invalidate
- * @param mixed $value Name of validation rule that was not failed. If no validation key
- * 						is provided, defaults to true.
+ * @param mixed $value Name of validation rule that was not failed, or validation message to
+ *                     be returned. If no validation key is provided, defaults to true.
  * @access public
  */
 	function invalidate($field, $value = true) {
@@ -2737,7 +2764,7 @@ class Model extends Overloadable {
 	function afterSave($created) {
 	}
 /**
- * Called after every deletion operation.
+ * Called before every deletion operation.
  *
  * @param boolean $cascade If true records that depend on this record will also be deleted
  * @return boolean True if the operation should continue, false if it should abort

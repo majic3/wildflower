@@ -1,1 +1,0 @@
-<?php echo $html->link($this->data['WildLink']['name'], WildLink::getUrl($this->data['WildLink']['url'])); ?>

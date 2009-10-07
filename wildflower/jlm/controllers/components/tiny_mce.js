@@ -6,14 +6,15 @@ $.jlm.addComponent('tinyMce', {
         if (typeof(tinyMCE) == 'object') {
             $('textarea.tinymce').each(function() {
                 var textareaEl = $(this);
-                $.jlm.components.tinyMce.resizeToFillScreen(textareaEl);
-                
-                $(window).bind('resize', function() {
-                    var height = $.jlm.components.tinyMce.resizeToFillScreen(textareaEl);
-                    $('.mceLayout').height(height);
-                    $('.mceLayout iframe').height(height);
-                });
-                
+                if (textareaEl.hasClass('fill_screen')) {
+                    $.jlm.components.tinyMce.resizeToFillScreen(textareaEl);
+
+                    $(window).bind('resize', function() {
+                        var height = $.jlm.components.tinyMce.resizeToFillScreen(textareaEl);
+                        $('.mceLayout').height(height);
+                        $('.mceLayout iframe').height(height);
+                    });
+                }
                 $.jlm.components.tinyMce.editorId = textareaEl.attr('id');
                 tinyMCE.execCommand("mceAddControl", true, $.jlm.components.tinyMce.editorId);
             });
@@ -231,7 +232,7 @@ $.jlm.addComponent('tinyMce', {
 	            $.getJSON(url, function(json) {
 	                var instanceId = json.id;
 	                var src = $.jlm.base + '/wildflower/widgets/' + widgetId + '.png';
-    	            var widgetHtml = '<img id="' + widgetId + '" class="wf_widget wf_widget_id_' + instanceId + '" src="' + src + '" />';
+    	            var widgetHtml = '<img id="' + widgetId + '" class="admin_widget admin_widget_id_' + instanceId + '" src="' + src + '" />';
     	            editor.execCommand('mceInsertContent', 0, widgetHtml);
 	            });
 	            return false;

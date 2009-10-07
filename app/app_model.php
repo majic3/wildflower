@@ -46,35 +46,39 @@ class AppModel extends Model {
     function invalidate($field, $value = true) {
         return parent::invalidate($field, __($value, true));
     }
-
-	function doSearch($query)	{
-		/*	compatible with latest cake reused code & might be possible to work wit custom models in future	*/
-		if($this->name == 'WildPost')	{
-			$fields = array('id', 'title', 'slug');
-		} else {
-			$fields = null;
-		}
-		$titleResults = $this->find('all', Array('conditions' => Array("{$this->name}.title LIKE '%$query%'"), 'fields' => $fields));
-		$contentResults = array();
-		if (empty($titleResults)) {
-			$titleResults = array();
-			$contentResults = $this->find('all', Array('conditions' => Array("MATCH ({$this->name}.content) AGAINST '%$query%'"), 'fields' => $fields));
-		} else {
-			$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.WildPost.id'));
-			$notInQueryPart = '';
-			$conditions['AND'][] = "match ({$this->name}.content) AGAINST ('$query')";
-			if (!empty($alredyFoundIds)) {
-				$conditions['AND'][] = "{$this->name}.id NOT IN ($alredyFoundIds)";
-			}
-			$contentResults = $this->find('all', Array('conditions' => $conditions, 'fields' => $fields));
-		}
-
-		if (!is_array(($contentResults))) {
-			$contentResults = array();
-		}
-
-		$results = array_merge($titleResults, $contentResults);
-		return $results;
-	}
+    
+    /**
+     * Delete record(s)
+     *
+     * @param mixed $ids
+     * @return void
+     */
+    function mass_delete($ids) {
+        if (!is_array($ids)) {
+            $ids = array(intval($ids));
+        }
+        $ids = join(', ', $ids);
+        $this->query("DELETE FROM {$this->useTable} WHERE id IN ($ids)");
+    }
+    
+    /**
+     * Format a timestamp to MySQL date format
+     *
+     * @param int $time
+     * @return string
+     */
+    function timeToDate($time) {
+        return date("Y-m-d", $time);
+    }
+    
+    /**
+     * Format a timestamp to MySQL datetime format
+     *
+     * @param int $time
+     * @return string
+     */
+    function timeToDatetime($time) {
+        return date("Y-m-d H:i:s", $time);
+    }
 
 }

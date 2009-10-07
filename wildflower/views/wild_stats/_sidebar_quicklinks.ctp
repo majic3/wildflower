@@ -1,1 +1,0 @@
-<div><p>Stats quicklinks</p></div>

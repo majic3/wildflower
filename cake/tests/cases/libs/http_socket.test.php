@@ -399,12 +399,12 @@ class HttpSocketTest extends CakeTestCase {
 		$this->Socket->setReturnValue('read', false);
 		$this->Socket->_mock->_call_counts['read'] = 0;
 		$number = mt_rand(0, 9999999);
-		$serverResponse = "HTTP/1.x 200 OK\r\nDate: Mon, 16 Apr 2007 04:14:16 GMT\r\nServer: CakeHttp Server\r\nContent-Type: text/html\r\n\r\n<h1>Hello, your lucky number is ".$number."</h1>";
+		$serverResponse = "HTTP/1.x 200 OK\r\nDate: Mon, 16 Apr 2007 04:14:16 GMT\r\nServer: CakeHttp Server\r\nContent-Type: text/html\r\n\r\n<h1>Hello, your lucky number is " . $number . "</h1>";
 		$this->Socket->setReturnValueAt(0, 'read', $serverResponse);
 		$this->Socket->expect('write', array("GET / HTTP/1.1\r\nHost: www.cakephp.org\r\nConnection: close\r\nUser-Agent: CakePHP\r\n\r\n"));
 		$this->Socket->expectCallCount('read', 2);
 		$response = $this->Socket->request($request);
-		$this->assertIdentical($response, "<h1>Hello, your lucky number is ".$number."</h1>");
+		$this->assertIdentical($response, "<h1>Hello, your lucky number is " . $number . "</h1>");
 
 		$this->Socket->reset();
 		$serverResponse = "HTTP/1.x 200 OK\r\nSet-Cookie: foo=bar\r\nDate: Mon, 16 Apr 2007 04:14:16 GMT\r\nServer: CakeHttp Server\r\nContent-Type: text/html\r\n\r\n<h1>This is a cookie test!</h1>";
@@ -1156,7 +1156,8 @@ class HttpSocketTest extends CakeTestCase {
 		$header = array(
 			'Set-Cookie' => array(
 				'foo=bar',
-				'people=jim,jack,johnny";";Path=/accounts'
+				'people=jim,jack,johnny";";Path=/accounts',
+				'google=not=nice'
 			),
 			'Transfer-Encoding' => 'chunked',
 			'Date' => 'Sun, 18 Nov 2007 18:57:42 GMT',
@@ -1168,7 +1169,10 @@ class HttpSocketTest extends CakeTestCase {
 			),
 			'people' => array(
 				'value' => 'jim,jack,johnny";"',
-				'path' => '/accounts'
+				'path' => '/accounts',
+			),
+			'google' => array(
+				'value' => 'not=nice',
 			)
 		);
 		$this->assertEqual($cookies, $expected);
@@ -1179,7 +1183,7 @@ class HttpSocketTest extends CakeTestCase {
 		$this->assertEqual($cookies, $expected);
 
 		$header['Set-Cookie'] = 'foo=bar';
-		unset($expected['people'], $expected['cakephp']);
+		unset($expected['people'], $expected['cakephp'], $expected['google']);
 		$cookies = $this->Socket->parseCookies($header);
 		$this->assertEqual($cookies, $expected);
 	}

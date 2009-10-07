@@ -37,10 +37,9 @@ if (!class_exists('ShellDispatcher')) {
 	ob_end_clean();
 }
 
-Mock::generatePartial(
-				'ShellDispatcher', 'TestShellMockShellDispatcher',
-				array('getInput', 'stdout', 'stderr', '_stop', '_initEnvironment')
-				);
+Mock::generatePartial('ShellDispatcher', 'TestShellMockShellDispatcher', array(
+	'getInput', 'stdout', 'stderr', '_stop', '_initEnvironment'
+));
 /**
  * TestShell class
  *
@@ -48,6 +47,13 @@ Mock::generatePartial(
  * @subpackage    cake.tests.cases.console.libs
  */
 class TestShell extends Shell {
+/**
+ * Fixtures used in this test case
+ *
+ * @var name
+ * @access public
+ */	
+	var $name = 'TestShell';
 }
 /**
  * TestAppleTask class
@@ -78,7 +84,10 @@ class ShellTest extends CakeTestCase {
  * @var array
  * @access public
  */
-	var $fixtures = array('core.post', 'core.comment');
+	var $fixtures = array(
+		'core.post', 'core.comment', 'core.article', 'core.user',
+		'core.tag', 'core.articles_tag', 'core.attachment'
+	);
 /**
  * setUp method
  *

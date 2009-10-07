@@ -2,28 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <?php echo $html->charset(); ?>
-    
-    <title><?php echo $title_for_layout; ?></title>
-    
-    <meta name="description" content="" />
-    
-    <link rel="icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    
-    <?php echo $html->css(Array('login')); ?>
+	
+	<title><?php echo $title_for_layout; ?></title>
+	
+	<meta name="description" content="" />
+	
+    <link rel="shortcut icon" href="<?php echo $this->webroot; ?>favicon.ico" type="image/x-icon" />
+	
+	<?php 
+        echo
+        // Load your CSS files here
+        $html->css(array(
+            '/wildflower/css/wf.main',
+        )),
+        // TinyMCE 
+        // @TODO load only on pages with editor?
+        $javascript->link('/wildflower/js/tiny_mce/tiny_mce');
+    ?>
+     
+    <!--[if lte IE 7]>
+    <?php
+        // CSS file for Microsoft Internet Explorer 7 and lower
+        echo $html->css('/wildflower/css/wf.ie7');
+    ?>
+    <![endif]-->
     
 </head>
 <body>
 
-	<div id="floater"></div>
-	<div id="centered">
-		<?php echo $content_for_layout; ?>
-	</div>
-
-<p id="footer">
-    <?php echo $html->link('Powered by Wildflower', 'http://wf.klevo.sk/') ?> &#124; 
-    <?php echo $html->link('Silk Icons by Mark@Famfamfam', 'http://www.famfamfam.com/lab/icons/silk/') ?> &#124; 
-    <?php echo $html->link('Bright Icons by Min@Icon Eden', 'http://www.iconeden.com/icon/bright-free-stock-iconset.html') ?>
-</p>
+    <div id="login_box">
+        <?php echo $content_for_layout; ?>
+    </div>
+    
 </body>
 </html>

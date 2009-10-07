@@ -21,10 +21,7 @@ app/webroot/img/xml/*
 app/vendors/phpflickr/*
 app/vendors/Director/*
 
-app/webroot/amcharts/amcharts_key.txt
-app/webroot/amcharts/fonts/*.fla
-
-
+# ignore bak files
 *.*.bak
 
 # Wildflower uploaded files
@@ -33,4 +30,7 @@ app/webroot/uploads/*
 # Ruckusing log file
 vendors/ruckusing/logs/development.log
 
-.DS_Store
+# HTML webroot cache
+app/webroot/cache/*
+
+app/plugins/*
