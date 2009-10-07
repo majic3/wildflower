@@ -14,4 +14,5 @@ $.jlm.bind('pages.admin_edit', function() {
        $(this).text(origText);
        return false;
    });
+    
 });
