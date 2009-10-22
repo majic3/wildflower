@@ -81,7 +81,7 @@ class DATABASE_CONFIG {
      * @var array
      */
 	public $default = array(
-		'driver' => 'mysql',
+		'driver' => 'mysqli',
 	    'encoding' => 'utf8',
 		'persistent' => false,
 		'host' => 'localhost',
