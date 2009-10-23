@@ -408,10 +408,11 @@ class FormHelper extends AppHelper {
 			if (is_array($text) && is_numeric($error) && $error > 0) {
 				$error--;
 			}
-			if (is_array($text)) {
+			if (is_array($text) && isset($text[$error])) {
+				$text = $text[$error];
+			} elseif (is_array($text)) {
 				$options = array_merge($options, $text);
-				$text = isset($text[$error]) ? $text[$error] : null;
-				unset($options[$error]);
+				$text = null;
 			}
 
 			if ($text != null) {
