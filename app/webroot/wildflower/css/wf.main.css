@@ -727,18 +727,32 @@ select {
     float: left;
 }
 
-    .category_sidebar label {
-        background: #eefaff;
-        padding: 3px 6px;
-        margin: 0 0 7px;
-        display: block;
-        font-weight: bold;
-        font-size: 12px;
-    }
+.category_sidebar h4 {
+    margin: 0 0 5px 0;
+    padding: 6px;
+    background: #e2eaed;
+}
     
-    .category_sidebar select {
-        font-size: 12px;
-    }
+#assign_category_box {
+    border: 1px solid #ddd;
+    background: #eee;
+    padding: 6px;
+    margin-top: 5px;
+}
+
+#assign_category_box .input, #assign_category_box .submit {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+#assign_category_box .submit {
+    margin-left: 10px;
+}
+
+#assign_category_box input, #assign_category_box select {
+    font-size: 11px;
+}
 
 .post-categories,
 .post-comments {
