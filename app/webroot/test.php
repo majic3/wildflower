@@ -24,17 +24,6 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/opengroup.php The Open Group Test Suite License
  */
-<<<<<<< HEAD:app/webroot/test.php
-/**
- * PHP 5.3 compatibility
- */
-if (defined('E_DEPRECATED')) {
-    error_reporting(E_ALL ^ E_DEPRECATED); 
-} else {
-    error_reporting(E_ALL);
-}
-=======
->>>>>>> master:app/webroot/test.php
 set_time_limit(0);
 ini_set('memory_limit','128M');
 ini_set('display_errors', 1);
