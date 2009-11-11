@@ -1,9 +1,13 @@
+# ignore cake plugins
+app/plugins/*
+
 # Cake caches
 app/tmp/cache/cake_*
 app/tmp/cache/models/cake_*
 app/tmp/cache/persistent/cake_*
 app/tmp/cache/views/*.php
 
+# cake sessions
 app/tmp/sessions/*
 
 # Cake logs
@@ -13,19 +17,11 @@ app/tmp/logs/*.log
 app/tmp/cache/wf_previews/*.json
 app/tmp/cache/wf_root_pages
 app/tmp/cache/wf_thumbnails/*.jpg
-
-app/webroot/img/cms/*
-app/webroot/img/screenshots/*
-app/webroot/img/xml/*
-
-app/vendors/phpflickr/*
-app/vendors/Director/*
-
-# ignore bak files
-*.*.bak
-
 # Wildflower uploaded files
 app/webroot/uploads/*
+#asset cache dirs
+app/webroot/ccss
+app/webroot/cjs
 
 # Ruckusing log file
 vendors/ruckusing/logs/development.log
@@ -33,4 +29,5 @@ vendors/ruckusing/logs/development.log
 # HTML webroot cache
 app/webroot/cache/*
 
-app/plugins/*
+# .bak files
+*.bak

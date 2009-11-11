@@ -1,17 +1,38 @@
+#################################################################
+#	Wildflower htaccess					#
+#	php5 conf, short url settings,				#
+#	preferring a url for SEO & Optimization			#
+#	asset plugin change to your cache dir for these		#
+#################################################################
 # PHP version - on _some_ web hosts you enable PHP5 like this:
 # AddType x-mapp-php5 .php
+# AddHandler x-mapp-php5 .php
 
 <IfModule mod_rewrite.c>
    RewriteEngine on
+   #	RewriteBase /
 
-   # Maitenance mode: (uncoment following line)
+   #	Maitenance mode: (uncoment following line)
    # RewriteRule    ^(.*)$ app/webroot/offline.html    [L]
    
-   # HTML cache
+   #	HTML cache - would be great to be able to cache txt & xml here to in some cases
    RewriteCond %{REQUEST_METHOD} ^GET$
-   RewriteCond %{DOCUMENT_ROOT}/wildflower/app/webroot/cache/$1/index.html -f
+   RewriteCond %{DOCUMENT_ROOT}/app/webroot/cache/$1/index.html -f
    RewriteRule ^(.*)$ app/webroot/cache/$1/index.html [L]
 
+   #	rewrite urls accessing shorts
+   #RewriteCond %{HTTP_HOST}{REQUEST_URI} majic.wildflower\.ss29\/s\/([a-zA-Z0-9]{4})$ [NC]
+   #RewriteRule ^(.*)$ http://majic.wildflower.ss29/$1 [R=301,L]
+
+   #	rewrite urls accessing not accessing www. to use www.
+   #RewriteCond %{HTTP_HOST} ^majic\.wildflower\.ss29$ [NC]
+   #RewriteRule ^(.*)$ http://www.majic.wildflower.ss29/$1 [R=301,L]
+
+   #	asset cfg
+   #RewriteCond %{DOCUMENT_ROOT}/app/webroot/(ccss|cjs)/(.*) -f
+   #RewriteRule ^(ccss|cjs)/(.*)$ app/webroot/S1/$2 [L]
+
+   #	main cake
    RewriteRule    ^$ app/webroot/    [L]
    RewriteRule    (.*) app/webroot/$1 [L]
 </IfModule>

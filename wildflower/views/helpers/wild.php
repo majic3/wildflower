@@ -3,7 +3,7 @@ App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
 class WildHelper extends AppHelper {
 	
-	public $helpers = array('Html', 'Textile', 'Htmla');
+	public $helpers = array('Html', 'Textile', 'Htmla', 'Tree');
 	private $_isFirstChild = true;
 	private $itemCssClassPrefix;
 	
@@ -21,7 +21,7 @@ class WildHelper extends AppHelper {
 			}
 			// Wf shortcut
 			$route['controller'] = str_replace('', '', $route['controller']);
-			$_route = '/' . Configure::read('Wildflower.prefix') 
+			$_route = '/' . Configure::read('Routing.admin') 
 				. '/' . $route['controller'];
 			if (isset($route['action'])) {
 				$_route .= '/' . $route['action'];
@@ -54,12 +54,41 @@ class WildHelper extends AppHelper {
 	}
 	
 	/**
-	 * Generate <body> tag with class attribute. Values are
-	 * home-page, page-view, post-view.
+	 * return the image width & height of asset
 	 *
+	 * @param string $ImageName
+	 * @return array of getimagesize
+	 */
+	function getAssetSize($ImageName) {
+
+		/*
+		    * Asset
+          o id18
+          o name1251391654322.png
+          o title1251391654322
+          o mimeimage/png
+          o created2009-08-29 01:16:26
+          o updated2009-08-29 01:16:26
+
+		*/
+
+		$filename = Configure::read('Wildflower.uploadDirectory') . DS . $ImageName;
+
+		return getimagesize($filename);
+	}
+	
+	/**
+	 * Generate <body> tag with class attribute. Values are
+	 * home, page, post. customise this 
+	 *
+	 * @param string $class = null
+	 * @param string $id = null (TODO)
 	 * @return string
 	 */
-	function bodyTagWithClass() {
+	function bodyTagWithClass($class = null) {
+        
+        if($class)    {   return '<body class="'.$class.'">';    }
+
 		if (!isset($this->params['Wildflower']['view'])) {
 			return '<body>';
 		}
@@ -71,9 +100,12 @@ class WildHelper extends AppHelper {
 	    } else if ($isPage) {
 	       $pageSlug = '';
 	       if (isset($this->params['current']['slug'])) {
-              $pageSlug = ' ' . $this->params['current']['slug'] . '-page';           
+              $pageSlug = ' ' . $this->params['current']['slug'];           
 	       }
-	       $html .= ' class="page ' . $pageSlug . '"'; 
+           if ($this->params['controller'] == 'messages') {
+              $pageSlug = ' contact';           
+           }
+	       $html .= ' class="page' . $pageSlug . '"'; 
 	    } else if ($isPosts) { 
 	       $html .= ' class="' . (($this->action == 'view') ? 'post' : 'posts') . '"'; 
 	    } else if (isset($this->params['current']['body_class'])) {
@@ -91,7 +123,16 @@ class WildHelper extends AppHelper {
         return $default;
     }
     
-    function menu($slug, $id = null) {
+
+	/**
+	 * Generate <body> tag with class attribute. Values are
+	 * home-page, page-view, post-view. customise this 
+	 *
+	 * @param string $class = null
+	 * @return string
+	 */
+	/* moved customised navigation here - be able to have class + customised output - if id is null id should be made from title of menu or menu id  */
+    function menu($slug, $id = null, $class = null, $template = false) {
     	$items = $this->getMenuItems($slug);
     	if (empty($items)) {
     	    return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
@@ -108,13 +149,19 @@ class WildHelper extends AppHelper {
     	    $links[] = '<li class="' . join(' ', $classes) . '">' . $this->Html->link("<span>$label</span>", $item['url'], array('escape' => false)) . '</li>';
     	}
     	$links = join("\n", $links);
-    	if (is_null($id)) {
-    	    $id = "admin_$slug";
+		// slug is already set above so id of nav is always the last item (making it from slug might be great for seo but using classes avoids uniqueness of ids)
+		if($id === false)	{
+    	    $id = '';
+		}	elseif (is_null($id)) {
+    	    $id = ' id="' . $slug . '"';
     	}
-    	if (is_null($id)) {
-            $id = $slug;
-    	}
-    	return "<ul id=\"$id\">\n$links\n</ul>\n";
+    	if (!is_null($class)) {
+			// slug is already set above so id of nav is always the last item (making it from slug might be great for seo but using classes avoids uniqueness of ids)
+    	    $class = ' class="' . $class . '"';
+    	} else {
+			$class = '';
+		}
+    	return (!$template) ? "<ul$id$class>\n$links\n</ul>\n" : sprintf($template, "<ul$id$class>\n$links\n</ul>\n");
     }
     
     function getMenuItems($slug) {
@@ -123,26 +170,12 @@ class WildHelper extends AppHelper {
         $menu = $Menu->findBySlug($slug);
         return $menu['MenuItem'];
     }
-
-	// added second param for option spans - particle tree styling better WO them
-    function submit($label = 'Save', $spans = true) {
-        $button = $spans ? '<div class="submit"><button type="submit"><span class="bl1"><span class="bl2">' . $label . '</span></span></button></div>' : '<div class="submit"><button type="submit">$label</button></div>';
+    
+    function submit($label = 'Save') {
+        $button = '<div class="submit"><button type="submit"><span class="bl1"><span class="bl2">' . $label . '</span></span></button></div>';
         return $button;
     }
-
-	/*
-	 * ptbuttons - particle tree buttons
-	 @buttons - Array of buttons each item is array of url, class & label later make each of these optional except for label href defaults to # class to positive
-	 @wrapper - option div wrapper
-	 */ 
-    function ptbuttons($buttons, $wrapper = 'buttons') {
-		$ptbuttons = '';
-		foreach($buttons as $btn)	{
-			$ptbuttons.= $this->Html->link($btn['label'], $btn['url'], Array('class' => $btn['class']));
-		}
-		return ($wrapper) ? "<div class=\"$wrapper\">$ptbuttons</div>" : $ptbuttons;
-    }
-
+    
     private function _createListNode($label, $link, $childPages = null) {
         $slug = $this->_getMenuSlug($label);
         $label = hsc($label);
@@ -189,24 +222,114 @@ class WildHelper extends AppHelper {
         return $html;
     }
     
-    function subPageNav() {
-        $html = '<ul>';
+    function subPageTree($id) {
+        //$pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
+        $Page = ClassRegistry::init('Page');
+        $Page->recursive = -1;
+		//	nested tree - be able to skip to id & set extra data to be returned
+		$pages = $Page->find('all', array('conditions' => array('Page.draft' => '0'),'fields' => array('title', 'url', 'lft', 'rght'), 'order' => 'lft ASC'));
+		//$pages = $Page->findAllThreaded(null, array('title', 'url', 'rght', 'lft'), array('title', 'url'));
+		if (empty($pages)) {
+			return '';
+		}
+		// debug($pages);
+		return $this->Tree->generate ($pages, array('model'=> 'Page', 'element'=> 'list_item', 'alias'=> 'title', 'class' => 'tabs'));
+    }
+    
+    function catTree() {
+		//Configure::write('debug', 2);
+        $Category = ClassRegistry::init('Category');
+        $Category->recursive = -1;
+		//	nested tree - be able to skip to id & set extra data to be returned
+		$categories = $Category->find('all', array('fields' => array('title', 'slug', 'lft', 'rght'), 'order' => 'lft ASC'));
+		//$pages = $Page->findAllThreaded(null, array('title', 'url', 'rght', 'lft'), array('title', 'url'));
+		if (empty($categories)) {
+			return '';
+		}
+		// debug($pages);
+		return $this->Tree->generate ($categories, array('model'=> 'Category', 'element'=> 'cat_list_item', 'alias'=> 'title', 'class' => 'tabs'));
+    }
+    
+    function subPageNav($tree = false) {
         $pageSlug = end(array_filter(explode('/', $this->params['url']['url'])));
         $Page = ClassRegistry::init('Page');
         $Page->recursive = -1;
-        
-        // Get the parent page slug
-        $url = $this->params['url']['url'];
-        $slug = array_shift(explode('/', $url));
-        $pages = $Page->findAllBySlugWithChildren($slug);
 
-        if (empty($pages)) {
+		if($tree)	{
+			//	nested tree - be able to skip to id & set extra data to be returned
+			$pages = $Page->getListThreaded(null, 'title', true);
+			if (empty($pages)) {
+				return '';
+			}
+			return $pages;
+			$html = '<ul class="tabs">';
+			
+			// Build HTML
+			foreach ($pages as $page) {
+				if($page)
+
+				$html .= '<li>' . $this->Htmla->link($page['title'], $page['url'], array('strict' => true)) . '</li>';
+			}
+			$html .= '</ul>';
+		} else {
+			// Get the parent page slug
+			$url = $this->params['url']['url'];
+			$slug = array_shift(explode('/', $url));
+			$pages = $Page->findAllBySlugWithChildren($slug);
+
+			if (empty($pages)) {
+				return '';
+			}
+			$html = '<ul class="tabs">';
+			
+			// Build HTML
+			foreach ($pages as $page) {
+				$html .= '<li>' . $this->Htmla->link($page['Page']['title'], $page['Page']['url'], array('strict' => true)) . '</li>';
+			}
+			$html .= '</ul>';
+		}
+
+        return $html;
+    }
+    
+    function latestCommentsList() {
+		// select c.id, c.name && c.content, p.slug from comments as c, posts as p where c.approved 1 and c.spam 0 recurive 1 
+        $Comment = ClassRegistry::init('Comment');
+        $Comment->recursive = 1;
+
+        $comments = $Comment->find('all');
+
+        if (empty($comments)) {
             return '';
         }
+        $html = '<ul class="comments">';
         
         // Build HTML
-        foreach ($pages as $page) {
-            $html .= '<li>' . $this->Htmla->link($page['Page']['title'], $page['Page']['url'], array('strict' => true)) . '</li>';
+        foreach ($comments as $comment) {
+            $html .= '<li>' . $this->Htmla->link($comment['Comment']['content'], '/' . Configure::read('Wildflower.postsParent') . '/' . $comment['Post']['slug'] . '#comment-' .  $comment['Comment']['id'], array('strict' => true)) . '<span>'.$comment['Comment']['name'].'</span>' . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+    
+    function catsNav() {
+//        $catSlug = end(array_filter(explode('/', $this->params['url']['url'])));
+        $Category = ClassRegistry::init('Category');
+        $Category->recursive = -1;
+        
+        // TODO: Get the cats belonging to a cat by curren cat if selected be able to go deep
+        //$url = $this->params['url']['url'];
+  //      $slug = array_shift(explode('/', $url));
+        $categories = $Category->find('all', array('order' => 'lft ASC'));
+
+        if (empty($categories)) {
+            return '';
+        }
+        $html = '<ul class="nv vert">';
+        
+        // Build HTML
+        foreach ($categories as $category) {
+            $html .= '<li>' . $this->Htmla->link($category['Category']['title'], '/' . Configure::read('Wildflower.catsParent') . '/' . $category['Category']['slug'], array('strict' => true)) . '</li>';
         }
         $html .= '</ul>';
         return $html;
@@ -225,6 +348,60 @@ class WildHelper extends AppHelper {
         $category = $Category->findBySlug($slug);
         $posts = $category['Post'];
         return $posts;
+    }
+    
+	// process moudles or module
+    function processModule($ModContent) {
+		$params = Array(
+			'fancy' => false,
+			'title' => '',
+			'content' => '',
+			'foot' => '',
+			'fancy' => false,
+			'useTitle' => true
+		);
+		$return = '';
+
+		$View =& ClassRegistry::getObject('view');
+
+        ///debug($$ModContent);die();
+
+		if(is_array($ModContent))	{
+			foreach($ModContent as $item => $module)	{
+				//  if the mod has params decode & merge them 
+                if(array_key_exists('params', $module))    {
+                    $moduleParams = $this->decodeParams($module['params']);
+                    $moduleParams['content'] = $module['content'];
+                    $return.= $View->element('oo_css_module', am($params, $moduleParams));
+                } else {
+                    $moduleParams = $params;
+                    $moduleParams['content'] = $module['content'];
+                    $return.= $View->element('oo_css_module', $moduleParams);
+                }
+			}
+			return $return;
+		} else {
+			$moduleParams = $this->decodeParams($ModContent['params']);
+			$moduleParams['content'] = $ModContent['content'];
+			$return.= $View->element('oo_css_module', am($params, $moduleParams));
+		}
+		return $return;
+    }
+    
+	// processsidebar takes an array of sidebar items and processes (may reorder them later)
+    function processSidebar($sideBarArr) {
+		$content = "";
+		$content.= $this->processModule($sideBarArr);
+		return $this->processWidgets($content);
+    }
+    
+    function extractContent($content, $class) {
+		//$class = Configure::read('Wildflower.blogExerpt');
+		//if(preg_match("/class\=\"(\b$class\b|$class\b|\b$class)\"/i", $content)) return $content;
+
+		App::import('Vendor', 'phpQueryObject', Array('file' => 'phpQuery.php'));
+		$pq = phpQuery::newDocumentXHTML($content);
+        return pq('div.' . $class, $pq)->html();
     }
 
 }

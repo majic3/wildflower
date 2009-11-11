@@ -41,7 +41,15 @@ class HtmlaHelper extends HtmlHelper {
                 $htmlAttributes['class'] = 'current';
             }
         }        
+		if(isset($htmlAttributes['strict'])) unset($htmlAttributes['strict']);
+		// zap the strict attribute which makes output invalid currently
         return parent::link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
+    }
+    
+	/*
+		idea to make a wrapper oprimarily ensure that content is acessed via the non cookie domain. making sure that there is width & height nice to but might be able to do this in the editor better there
+	*/
+    function img($img, $params = Array()) {
     }
     
     function dateTimePicker($field, &$form) {

@@ -1,7 +1,7 @@
 <?php
 
 try {
-  $iter = new DirectoryIterator('/www/wildflower/app/views/');
+  $iter = new DirectoryIterator('j:/wildflower/majic/app/views/');
   print WalkDirectory($iter);
 }
 catch (Exception $e) {
@@ -28,7 +28,7 @@ function WalkDirectory(DirectoryIterator $iter, $depth = 0) {
 
       if (strpos($oldName, 'wf_') === 0) {
           $newFileName = str_replace('wf_', 'admin_', $node->getFilename());
-          $path = str_replace('/www/wildflower/', '', $node->getPathname());
+          $path = str_replace('j:/wildflower/majic/', '', $node->getPathname());
           $cmd = 'git mv ' . $path . ' ' . str_replace($oldName, $newFileName, $path) . "\n";
           $return .= $cmd;
           exec($cmd);

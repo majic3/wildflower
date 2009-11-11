@@ -90,7 +90,7 @@ class DATABASE_CONFIG {
 		'database' => 'wildflower_majic',
 	    'port' => 3306
 	);
-	
+
 	/**
 	 * This is for unit tests
 	 *

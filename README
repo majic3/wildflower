@@ -1,6 +1,20 @@
 Wildflower 1.3 Beta - A CakePHP CMS
 ***********************************
 
+Notes
+=====
+
+    * Using the back to conventions branch of klevo origin
+    * Set to work with debug kit installed (add it to the plugin directory)
+    * Seems as though the interactive plugin requires some adjustment to get it to work
+    * updated to cake1.2.4
+    * reworked wildflower shell
+    * a trial modification of Matt Currys asset plugin can be added to the plugin directory and enabled using the wildflower theme of this branch - clone the majic fork of the asset plugin
+    * updated to tiny mce 3.2.5
+      * using Bram Van Damme CSSExtras for mce
+      * Attempting to improve the read appearance and control of content in the editor (using Vladimir Carrers CSS Readability Project)
+      * began a wildflower plugin for mce - aim to group together wf editor controls and being able to do more with less effort - more expansive ideas planned nested blocks of sub-content controlled by noneditable plugin for mce
+
 Requirements
 ============
 

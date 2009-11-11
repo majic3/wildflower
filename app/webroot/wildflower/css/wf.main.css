@@ -70,7 +70,6 @@ hr {
     
 
 /* Header */
-
 #header {
     background: #092439;
     overflow: hidden;
@@ -81,11 +80,16 @@ hr {
     #header a {
         color: #fff;
     }
-    
-    #header a:hover {
+
+    #header a:hover,
+    #editor_mode_header a:hover {
         background: #3b3b3b;
         color: #fff;
     }
+
+#header-wrap{
+    position: relative;
+}
 
 #site_title {
     font-size: 20px;
@@ -102,8 +106,20 @@ hr {
     float: left;
     display: block;
     padding: 3px 5px;
+	position:relative;
+	top:15px;
+	left: 170px
+	
     margin: 18px 0 0 -3px;
 }
+
+    #site_title a,
+    #site-title a {
+        text-decoration: none;
+        padding: 20px 10px;
+        display: block;
+        float: left;
+    }
     
 #nav {
     list-style: none;
@@ -132,16 +148,16 @@ hr {
         text-decoration: none;
     }
     
-    #nav .current,
-    #nav .current:hover {
-        color: #008720;
-        background-color: #e2e2e2;
-        font-weight: bold;
-    }
-    
-    #nav .current {
-        color: #008720;
-    }
+        #nav .current a,
+        #nav .current a:hover {
+            color: #008720;
+            background-color: #e2e2e2;
+            font-weight: bold;
+        }
+        
+        #nav .current a {
+            color: #008720;
+        }
         
     #nav a:hover {
         color: #fff;
@@ -193,8 +209,24 @@ hr {
 
 #content_pad {
     padding: 20px 20px 20px;
-    min-height: 200px;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	min-height: 300px;
+	position:relative;
 }
+
+body.dashboards	#content_pad {	background-image: url(img/bright/dashboards.png);	}
+body.pages		#content_pad {	background-image: url(img/bright/pages.png);	}
+body.posts		#content_pad {	background-image: url(img/bright/posts.png);	}
+body.assets		#content_pad {	background-image: url(img/bright/assets.png);	}
+body.messages	#content_pad {	background-image: url(img/bright/messages.png);	}
+body.galleries	#content_pad {	background-image: url(img/bright/galleries.png);	}
+body.stats		#content_pad {	background-image: url(img/bright/stats.png);	}
+body.links		#content_pad {	background-image: url(img/bright/links.png);	}
+body.settings	#content_pad {	background-image: url(img/bright/settings.png);	}
+body.users		#content_pad {	background-image: url(img/bright/users.png);	}
+body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
 
 .cleaner {
     clear: both;
@@ -202,32 +234,6 @@ hr {
     margin-top: -1px;
     display: block;
 }
-    
-    #wrap a.add,
-    .button {
-        background: url(img/sidebar-button.png) 0 0 no-repeat;
-        height: 33px;
-        padding: 0 0 0 14px;
-        display: inline-block;
-        color: #000;
-        font-size: 13px;
-        font-weight: bold;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    
-        #wrap a.add span,
-        .button span {
-            padding: 8px 20px 12px 0;
-            margin: 0 0 0 20px;
-            display: block;
-            background: url(img/sidebar-button.png) top right no-repeat;
-        }
-        
-        #wrap a.add:hover,
-        .button:hover {
-            color: #2c4d66;
-        }
         
     #sidebar h4.add {
         background: url(img/add.png) center left no-repeat;
@@ -237,18 +243,6 @@ hr {
     
     #sidebar a.add + a.add {
         margin-top: 7px;
-    }
-
-
-.button {
-    color: red !important;
-    background-image: url(img/button_on_white.png);
-    padding: 0;
-    height: 35px;
-}
-
-    .button span {
-        background-image: url(img/button_on_white.png);
     }
         
 /* Headings */
@@ -265,7 +259,8 @@ h2 {
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
-    background: #d2eafc;
+    background: #d2eafc url(img/page_top.png) left bottom repeat-x;
+    xbackground: #d2eafc;
 }
 
     .section h2 {
@@ -482,7 +477,7 @@ select {
         padding: 8px 0;
     }
     
-    #sidebar > ul > li:last-child {
+    #sidebar > ul > li:last {
         border-bottom: none;
     }
 
@@ -546,7 +541,7 @@ select {
         margin: 8px 0 6px 10px !important;
     }
 
-    #sidebar .sidebar-box:last-child {
+    #sidebar .sidebar-box:last {
         border-bottom: 2px solid #c0c0c0;
     }
 
@@ -682,7 +677,7 @@ select {
         position: relative;
     }
     
-    .list-of-posts li:first-child {
+    .list-of-posts li:first {
         border-top: 1px solid #eee;
     }
     
@@ -702,6 +697,7 @@ select {
     font-size: 11px;
     font-weight: bold;
     border: none;
+	display: inline-block;
 }
 
 .row-actions {
@@ -755,7 +751,8 @@ select {
 }
 
 .post-categories,
-.post-comments {
+.post-comments,
+.post-options {
     color: #535353;
     margin: 0;
     padding: 4px 0 0 30px;
@@ -766,14 +763,16 @@ select {
 
     .post-date a,
     .post-categories a,
-    .post-comments a {
+    .post-comments a,
+    .post-options a {
         color: #535353;
         text-decoration: none;
     }
     
     .post-date a:hover,
     .post-categories a:hover,
-    .post-comments a:hover {
+    .post-comments a:hover,
+    .post-options a:hover {
         background-color: #535353;
         color: #fff;
     }
@@ -793,51 +792,49 @@ select {
         background-position: 12px 5px;
     }
 
- /* pagination */
-
 .paginator {
-    margin: 50px 2em 0 1em;
+    margin: 2em 0 1em;
 }
 
-.paginator li{
-border:0; margin:0; padding:0;
-font-size:11px;
-list-style:none;
+.paginator li	{
+	border:0; margin:0; padding:0;
+	font-size:11px;
+	list-style:none;
 }
-.paginator li, .paginator a{
-border:solid 1px #DEDEDE
-margin-right:2px;
+.paginator li, .paginator a	{
+	border:solid 1px #DEDEDE
+	margin-right:2px;
 }
 .paginator .paginate-prev.disabled,
 .paginator .paginate-next.disabled {
-color:#888888
-display:block;
-float:left;
-font-weight:bold;
-padding:3px 4px;
+	color:#888888
+	display:block;
+	float:left;
+	font-weight:bold;
+	padding:3px 4px;
 }
 .paginator .paginate-prev a,
 .paginator .paginate-next a {
-font-weight:bold;
-border:solid 1px #FFFFFF;
+	font-weight:bold;
+	border:solid 1px #FFFFFF;
 }
 .paginator .current{
-color:#00000
-font-weight:bold;
-display:block;
-float:left;
-padding:4px 6px;
+	color:#00000
+	font-weight:bold;
+	display:block;
+	float:left;
+	padding:4px 6px;
 }
 .paginator a:link,
 .paginator a:visited {
-color:#0033CC
-display:block;
-float:left;
-padding:3px 6px;
-text-decoration:none;
+	color:#0033CC
+	display:block;
+	float:left;
+	padding:3px 6px;
+	text-decoration:none;
 }
-.paginator a:hover{
-text-decoration:none;
+.paginator a:hover	{
+	text-decoration:none;
 }
 
 .paginate-counter {	float: right; margin-right: 70px;	}
@@ -983,7 +980,7 @@ text-decoration:none;
         border-right: 1px solid #dadada;
     }
     
-    .edit-sections li:last-child a {
+    .edit-sections li:last a {
         border-right: none;
     }
     
@@ -1019,6 +1016,14 @@ text-decoration:none;
         position: relative;
         border: none !important;
         padding: 0 !important;
+    }
+    
+    .pages-list input	{
+		margin-top: 2px;
+    }
+    
+    .pages-list.draft a	{
+		margin-left: 5px;
     }
     
 
@@ -1196,6 +1201,32 @@ text-decoration:none;
         margin: 0;
     }
 
+#genPassword	{
+	position: relative;
+	padding: 0;
+	margin: 0;
+	width: 240px;
+	height: auto;
+}
+#genPassword .new.password		{
+	position: absolute;
+	top: .5em;
+	right: 2em;
+}
+
+/**	users password strength meter made by Tane Piper	**/
+.is0{background:url(img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
+.is10{background-position:0 -7px;}
+.is20{background-position:0 -14px;}
+.is30{background-position:0 -21px;}
+.is40{background-position:0 -28px;}
+.is50{background-position:0 -35px;}
+.is60{background-position:0 -42px;}
+.is70{background-position:0 -49px;}
+.is80{background-position:0 -56px;}
+.is90{background-position:0 -63px;}
+.is100{background-position:0 -70px;}
+
 #admin_bar {
     background: #000;
     color: #c3c3c3;
@@ -1312,6 +1343,204 @@ text-decoration:none;
     display: none;
 }
 
+
+/*	UI Sweetner for cake - jquery ui overrides & others in mind but not yet	*/
+.tabs	{
+	background: transparent !important;	margin-bottom: 30px;
+}
+
+body.dashboards	#content_pad	.tabs,
+body	#content_pad	.list	{
+	margin-right: 155px;
+}
+
+.demoHeaders {
+	margin-top: 2em;
+}
+
+#dialog_link {
+	padding: .4em 1em .4em 20px;text-decoration: none;position: relative;
+}
+	
+	#dialog_link span.ui-icon {
+		margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;
+	}
+
+ul#icons {
+	margin: 0; padding: 0;
+}
+	ul#icons li {
+		margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;
+	}
+	ul#icons span.ui-icon {
+		float: left; margin: 0 4px;
+	}
+
+.ui-state-hover a, .ui-state-hover a:hover {
+	color: #212121; text-decoration: none; outline: none; background: transparent;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {
+	padding: 0; background: transparent;
+}
+.ui-datepicker-rtl .ui-datepicker-prev:hover {
+	right: 1px; left: auto; background: transparent;
+}
+.ui-datepicker-rtl .ui-datepicker-next:hover {
+	left: 1px; right: auto; background: transparent;
+}
+
+/*	jquery ui flash messages	*/
+.ui-widget	p {
+	padding-left: 15px; padding-right: 15px;
+}
+	.ui-widget	p span.ui-icon	{
+		float: left; padding: 1px;
+	}
+
+#jqueryui		{
+	float: right; background: #fff; margin: -10px 0 0 0;
+	}
+
+
+
+
+	 /*	particle tree	*/
+
+	 /* BUTTONS */
+/* REQUIRED BUTTON STYLES: */		
+button,
+.add { 
+	position: relative;
+	border: 0; 
+	padding: 0;
+	cursor: pointer;
+	overflow: visible; /* removes extra side padding in IE */
+}
+
+button::-moz-focus-inner,
+.add::-moz-focus-inner {
+	border: none;  /* overrides extra padding in Firefox */
+}
+
+button span,
+.add span { 
+	position: relative;
+	display: block; 
+	white-space: nowrap;	
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	/* Safari and Google Chrome only - fix margins */
+	button span,
+	.add span {
+		margin-top: -1px;
+	}
+}
+
+
+/* OPTIONAL BUTTON STYLES for applying custom look and feel: */		
+button.submitBtn,
+.add { 
+	padding: 0 15px 0 0; 
+	margin-right:5px; 
+	font-size:2em; 
+	text-align: center; 
+	background: transparent url(/wildflower/css/img/btn_blue_sprite.gif) no-repeat right -139px;
+
+	display:inline-block;
+	font-size:2em;
+	margin-right:5px;
+	padding:1px 15px 1px 0;
+	position:relative;
+	text-align:center;
+	text-decoration:none;
+	outline:none;
+}
+	
+button.submitBtn span,
+.add span {
+	padding: 13px 0 0 15px; 
+	height:37px; 
+	background: transparent url(/wildflower/css/img/btn_blue_sprite.gif) no-repeat scroll left top; 
+	color:#fff;
+	outline:none; 
+
+	
+	
+}
+	
+button.submitBtn:hover, 
+.add:hover, 
+button.submitBtnHover, 
+.add.submitBtnHover { /* the redundant class is used to apply the hover state with a script */
+	background-position: right -209px; 
+	outline:none;
+}
+	
+button.submitBtn:hover span,
+.add:hover span,
+button.submitBtnHover span,
+.add.submitBtnHover span {
+	background-position: 0 -70px;
+	outline:none;
+}
+
+
+/* STANDARD old might rework bring inline with the new updated ways above */
+
+button:hover,
+.buttons a:hover	{
+    background-color:#dff4ff;
+    border:1px solid #c2e1ef;
+    color:#336699;
+}
+
+.buttons a:active	{
+    background-color:#6299c5;
+    border:1px solid #6299c5;
+    color:#fff;
+}
+
+/* POSITIVE */
+
+button.positive, 
+.buttons a.positive	{
+    color:#529214;
+}
+
+.buttons a.positive:hover, 
+button.positive:hover	{
+    background-color:#E6EFC2;
+    border:1px solid #C6D880;
+    color:#529214;
+}
+
+.buttons a.positive:active	{
+    background-color:#529214;
+    border:1px solid #529214;
+    color:#fff;
+}
+
+
+/* NEGATIVE */
+
+.buttons a.negative,
+button.negative	{
+    color:#d12f19;
+}
+
+.buttons a.negative:hover,
+button.negative:hover	{
+    background:#fbe3e4;
+    border:1px solid #fbc2c4;
+    color:#d12f19;
+}
+
+.buttons a.negative:active	{
+    background-color:#d12f19;
+    border:1px solid #d12f19;
+    color:#fff;
+}
 
 /* Widgets */
 
@@ -1435,6 +1664,7 @@ text-decoration:none;
         padding: 10px 0 1px;
         border-bottom: 3px solid #ddd;
     }
+
     
     
 /* Dashboard */
@@ -1481,8 +1711,7 @@ text-decoration:none;
         color: #474747;
         width: 160px;
     }
-    
-    
+
 /* Preview */
 
 #preview_frame {
@@ -1558,7 +1787,13 @@ text-decoration:none;
 .right_menu {
 }
 
-    .right_menu a {
+	.right_menu a.add {
+		margin-top: 20px;
+        padding: 0 10px 10px 0;
+		background: transparent url(/wildflower/css/img/btn_blue_sprite.gif) no-repeat right -140px;
+	}
+
+    .right_menu a:not(.add) {
         display: block;
         padding: 8px 10px;
         margin: 0 0 5px 0;
@@ -1568,7 +1803,8 @@ text-decoration:none;
         -webkit-border-radius: 0 6px 6px 0;    /* for Safari */
         -moz-border-radius: 0 6px 6px 0;
     }
-    
+
+	.right_menu .allPagesMenu,
     .right_menu a.current {
         background: #474747;
         color: #fff;
@@ -1602,6 +1838,17 @@ text-decoration:none;
     width: 100px;
 }
 
+.full #header #nav,
+.full #sidebar,
+.full label[for="PageTitle"],
+.full label[for="PostTitle"],
+.full #PageTitle,
+.full #PostTitle {
+    display: none;
+}
+.full #content {
+    width: 100%;
+}
 
 /* Menu editing */
 
@@ -1661,4 +1908,198 @@ text-decoration:none;
 .drop_here {
     height: 30px;
     background: #fff74c !important;
+}
+
+
+/*	.scoialWeb	*/
+
+#socialWeb	{
+	width: 355px; position: absolute; display: block; top: 0; right: 10px;
+}
+	#socialWeb	.short	{
+		margin-top: 39px;
+	}
+	#socialWeb	.chatcatcher	{
+		margin-top: 39px;
+	}
+
+/*	custom inputs	*/
+
+/* wrapper divs */
+.custom-checkbox, .custom-radio { position: relative; }
+	
+/* input, label positioning */
+.custom-checkbox input, 
+.custom-radio input {
+	position: absolute;
+	left: 2px;
+	top: 3px;
+	margin: 0;
+	z-index: 0;
+}
+
+.custom-checkbox label, 
+.custom-radio label {
+	display: block;
+	position: relative;
+	z-index: 1;
+	font-size: 1.3em;
+	padding-right: 1em;
+	line-height: 1;
+	padding: .5em 0 .5em 30px;
+	margin: 0 0 .3em;
+	cursor: pointer;
+}
+.custom-checkbox label, .custom-radio label {
+	background-position: -10px -14px;
+}
+
+.custom-checkbox label.hover,
+.custom-checkbox label.focus,
+.custom-radio label.hover,
+.custom-radio label.focus {
+	background-position: -10px -114px;
+}
+
+.custom-checkbox label.checked, 
+.custom-radio label.checked {
+	background-position: -10px -214px;
+}
+
+.custom-checkbox label.checkedHover, 
+.custom-checkbox label.checkedFocus {
+	background-position: -10px -314px;
+}
+
+.custom-checkbox label.focus, 
+.custom-radio label.focus {
+	outline: 1px dotted #ccc;
+}
+
+/*	/custom inputs	*/
+
+
+body #wrap #content_pad	.draft	{
+	color: #555 !important;
+	background-color: #F2F2F2;
+	border-bottom: 1px dotted #252525 !important;
+}
+
+body #wrap #content_pad	.draft	a	{
+	color: #777 !important;
+}
+
+body #wrap #content_pad	.draft	a:hover	{
+	color: #B7B7B7 !important;
+}
+
+
+.datePick	{
+	cursor: pointer;
+}
+
+
+
+/*styles for jquery ui daterangepicker plugin */
+
+.ui-daterangepickercontain {
+	position: absolute;
+	z-index: 999;
+}
+.ui-daterangepickercontain .ui-daterangepicker {
+	float: left;
+	padding: 5px !important;
+	width: auto;
+	display: inline;
+	background-image: none !important;
+	clear: left;
+}
+.ui-daterangepicker ul, .ui-daterangepicker .ranges, .ui-daterangepicker .range-start, .ui-daterangepicker .range-end {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.ui-daterangepicker .ranges {
+	width: auto;
+	position: relative;
+	padding: 5px 5px 40px 0;
+	margin-left: 10px;
+}
+.ui-daterangepicker .range-start, .ui-daterangepicker .range-end {
+	margin-left: 5px;
+}
+.ui-daterangepicker button.btnDone {
+	margin: 0 5px 5px 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	clear: both;
+	cursor: pointer;
+	font-size: 1.1em;
+}
+.ui-daterangepicker ul {
+	width: 17.6em;
+	background: none;
+	border: 0;
+}
+.ui-daterangepicker li {
+	list-style: none;
+	padding: 1px;
+	cursor: pointer;
+	margin: 1px 0;
+}
+.ui-daterangepicker li.ui-state-hover, .ui-daterangepicker li.ui-state-active {
+	padding: 0;
+}
+.ui-daterangepicker li.preset_0 {
+	margin-top: 1.5em !important;
+}
+.ui-daterangepicker .ui-widget-content a {
+	text-decoration: none !important;
+}
+.ui-daterangepicker li a {
+	font-weight: normal;
+	margin: .3em .5em;
+	display: block;
+}
+.ui-daterangepicker li span {
+	float: right;
+	margin: .3em .2em;
+}
+.ui-daterangepicker .title-start, .ui-daterangepicker .title-end {
+	display: block;
+	margin: 0 0 .2em;
+	font-size: 1em;
+	padding: 0 4px 2px;
+}
+.ui-daterangepicker .ui-datepicker-inline {
+	font-size: 1em;
+}
+.ui-daterangepicker-arrows {
+	padding: 2px;
+	width: 204px;
+	position: relative;
+}
+.ui-daterangepicker-arrows input.ui-rangepicker-input {
+	width: 158px;
+	margin: 0 2px 0 20px;
+	padding: 2px;
+	height: 1.1em;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-prev, .ui-daterangepicker-arrows .ui-daterangepicker-next {
+	position: absolute;
+	top: 2px; 
+	padding: 1px;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-prev {
+	left: 2px;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-next {
+	right: 2px;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-prev:hover, 
+.ui-daterangepicker-arrows .ui-daterangepicker-next:hover,
+.ui-daterangepicker-arrows .ui-daterangepicker-prev:focus, 
+.ui-daterangepicker-arrows .ui-daterangepicker-next:focus {
+	padding: 0;
 }

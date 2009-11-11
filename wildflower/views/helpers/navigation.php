@@ -41,10 +41,61 @@ class NavigationHelper extends AppHelper {
 		                    <changefreq>%changefreq%</changefreq>
 		                    <priority>%priority%</priority>
 		                   </url>';
-    	
-    	$data = '';
-    	
-    	$this->Packager->gzip('sitemap.xml');
+
+        foreach($structure as $item)    {
+
+            $loc = $item['loc'];
+            $lastmod = $item['lastmod'];
+            $changefreq = $item['changefreq'];
+            $priority = $item['priority'];
+
+            $urlset.= str_replace(array('%loc%', '%lastmod', '%changefreq%', '%priority%'), array($loc, $lastmod, $changefreq, $priority), $urlTemplate);
+        }
+
+        return str_replace('%urlset%', $urlset, $xmlTemplate);
+    }
+    
+    
+    /**
+     * reformat dynamic & static data for deluxe sitemap
+     *
+     * @param array $structure of data for sitemap
+     */
+    function reformData($structure = array(), $static = true) {
+
+        // foreach item in structure
+        
+        ///debug( $structure); die();
+        
+       // debug($structure[$i]['data'][0][$model]);
+       
+       if($static) {
+        // process static
+            if(Set::check($structure, '0.url'))   {
+                for($i = 0; $i < count($structure); $i++)    {
+                    $structure[$i]['url'] = $structure[$i]['options']['url'];
+                }
+            }
+       } else {
+        // process dynamic
+        // build the array if not there 
+        if(!Set::check($structure, '0.data.0.url'))    {
+            $i = 0;
+            $model = $structure[$i]['model'];
+            $fields = $structure[$i]['options']['fields'];
+    
+            for($i = 0; $i < count($structure); $i++)    {
+                foreach($structure[$i]['data'] as $k => $v)   {
+                    $structure[$i]['data'][$k]['url'] = str_replace(
+                            '%' . strtoupper($fields['id']) . '%', 
+                            $v[$model][$fields['id']], 
+                            $structure[$i]['options']['childUrl']
+                    ); 
+                }
+            }
+        }
+       }
+       return $structure;
     }
     
     /**
@@ -93,7 +144,7 @@ class NavigationHelper extends AppHelper {
                 
                 // This is basically a hack to get a nice url in form of wf/controller-name/ instead of wf/controller-name/index
                 if (!isset($url['action']) || $url['action'] === 'wf_index') {
-                    $url = '/' . Configure::read('Wildflower.prefix') . '/' . str_replace('', '', $url['controller']);
+                    $url = '/' . Configure::write('Routing.admin') . '/' . $url['controller'];
                 }
                 
                 $url = $this->Html->url($url);

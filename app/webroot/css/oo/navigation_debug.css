@@ -1,0 +1,18 @@
+
+.nv	{background-color:#e2e2e2;}
+.tabs{background-color:pink;}
+.nv .tabs {background-color:red;}
+
+.nv .tabs li, 
+.nv .tree li{background-color:orange;}
+
+.nv .tree li ul{background-color: yellow;}
+.nv .tree li li{background-color:lime;}
+.nv .tree li li li{background-color:green;}
+
+.paging{background-color:aqua;}
+.paging li{background-color:blue;}
+.paging .current,
+.paging .next,
+.paging .prev{background-color:purple;}
+/* .size4of5{background-color:magenta;} */

@@ -2,11 +2,15 @@
 /**
  * Wildflower AppController
  *
+ * If you have a custom AppController in your application, you need to merge 
+ * the functionality with this. It's essential for Wildflower's functionality.
+ *
  * WF AppController does:
  * - authentificate users
  * - set WF Configure settings
  * - load necessary Helpers and Components
  * - provides some global controller actions like delete (@TODO: this could be dangerous - revisit)
+ * - to enable extra features of the majic branch remove //majic
  */
 App::import('Sanitize');
 App::import('Core', 'l10n');
@@ -26,14 +30,31 @@ class AppController extends Controller {
 	    'Textile', 
 	    'Tree', 
 	    'Text',
-	    'Time'
+	    'Time',
+	    // majic
+		'Asset.Asset',
+		'AutoJavascript'
 	);
 	public $homePageId;
 	public $isAuthorized = false;
     public $isHome = false;
-	private $_isDatabaseConnected = true;
 
-	public $canonical = Array();
+	// theme setting
+    //majic
+	public $view = 'Theme';
+    //majic
+	public $theme = 'wildflower';
+	
+	// canonical urls
+    public $canonical = Array('rel' => false, 'rev' => false);
+
+	// setting of the body class (allows page params to set class of html body)
+    public $bdyClass = false;
+
+	// setting of the templateSwitch class (allows page params to set class of division in template; layouts may also be switched)
+    public $templateSwitch = null;
+
+	private $_isDatabaseConnected = true;
 	
 	/**
 	 * Configure and initialize everything Wildflower needs
@@ -64,12 +85,16 @@ class AppController extends Controller {
         // Admin area requires authentification
 		if ($this->isAdminAction()) {
 			$this->layout = 'admin_default';
+			// might need this if using themes might not #
+			$this->theme = null;
+			if(!Configure::read('Wildflower.debug.admin'))	Configure::write('debug', 0);
 		} else {
 			$this->layout = 'default';
 			$this->Auth->allow('*');
+			//	if(!Configure::read('Wildflower.debug.public'))	Configure::write('debug', 0);
 		}
 		
-		// Internationalization
+		// Internationalization - check if multi lang settings are being used and use that
 		$this->L10n = new L10n();
         $this->L10n->get('eng');
         Configure::write('Config.language', 'en');
@@ -80,7 +105,8 @@ class AppController extends Controller {
 		// Set cookie defaults
 		$this->cookieName = Configure::read('Wildflower.cookie.name');
 		$this->cookieTime = Configure::read('Wildflower.cookie.expire');
-		$this->cookieDomain = '.' . getenv('SERVER_NAME');
+		// making this www or having images on a static domain if not using cdn is advised by ydn perhaps wf can be configured to handle this
+		$this->cookieDomain = (Configure::read('Wildflower.cookie.domain')) ? Configure::read('Wildflower.cookie.domain') : '.' . getenv('SERVER_NAME');
 
 		// Compress output to save bandwith / speed site up
 		if (!isset($this->params['requested']) && Configure::read('Wildflower.gzipOutput')) {
@@ -100,7 +126,8 @@ class AppController extends Controller {
      *
      * @param int $id
      */
-    function wf_delete($id = null) {
+    function admin_delete($id = null) {
+		Configure::write('debug', 0);
     	$id = intval($id);
     	$model = $this->modelClass;
     	
@@ -163,9 +190,9 @@ class AppController extends Controller {
      */
     function admin_search($query = '') {
         $query = urldecode($query);
-        $results = $this->{$this->modelClass}->search($query);
+        $results = $this->doSearch($query);
         $this->set('results', $results);
-        $this->render('/dashboards/wf_search');
+        $this->render('/dashboards/admin_search'); # - or this - $this->render('/dashboards/wf_search');
     }
 	
 	/**
@@ -229,7 +256,8 @@ class AppController extends Controller {
     /**
      * Before rendering
      * 
-     * Set nice SEO titles.
+	 * Set nice SEO titles.
+	 * Set canonical url if not set.
      */
     function beforeRender() {
         parent::beforeRender();
@@ -263,9 +291,36 @@ class AppController extends Controller {
     	// User ID for views
 		$this->set('loggedUserId', $this->Auth->user('id'));
 
-		// canonical
-		$this->set('canonical', ($this->canonical == '') ? $this->here : $this->canonical);
-    }
+		// canonical - checks shorts all the time
+		if(array_key_exists('rel', $this->canonical))	{
+			$this->canonical['rel'] = ($this->canonical['rel']) ? $this->canonical['rel'] : $this->here;
+			$this->canonical['rev'] = ClassRegistry::init('Short')->checkurl($this->canonical['rel']);
+			$this->canonical['rel'] = Configure::read('Wildflower.puburl') . $this->canonical['rel'];
+			$this->set('canonical', $this->canonical);
+		}
+        
+        // subtemplates with oocss
+        if($this->templateSwitch)    {
+            $this->set('templateSwitch', $this->templateSwitch);
+        } else {
+            $this->set('templateSwitch', false);
+        }
+
+        // a class set in controller to be used as contact of body tag
+        if($this->bdyClass)    {
+            $this->set('bdyClass', $this->bdyClass);
+        } 
+
+		if($this->here == '/status/')	{
+			$this->layout = 'status';
+		}
+
+		$this->_setErrorLayout();
+	}
+
+	function preprocessWidgets() {
+		//$this->viewVars['page'];
+	}
 
 	function do404() {
 		$this->pageTitle = 'Page not found';
@@ -443,7 +498,7 @@ class AppController extends Controller {
         return low($string);
     }
     
-    function wf_get_fields() {
+    function admin_get_fields() {
         if (Configure::read('debug') < 1) {
             return;
         }
@@ -471,5 +526,10 @@ class AppController extends Controller {
         pr($output);
         die();
     }
-	
+
+	function _setErrorLayout() {  
+		if($this->name == 'CakeError') {  
+			$this->layout = 'error';  
+		}
+	}
 }

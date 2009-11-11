@@ -1,47 +1,73 @@
--- MySQL dump 10.11
+-- phpMyAdmin SQL Dump
+-- version 3.1.4
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: wildflower
--- ------------------------------------------------------
--- Server version	5.0.83-log
+-- Host: localhost:3306
+-- Generation Time: Aug 25, 2009 at 03:49 AM
+-- Server version: 5.1.34
+-- PHP Version: 5.2.9-2
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Database: `wildflower_majic`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `assets`
 --
 
 DROP TABLE IF EXISTS `assets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `assets` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `title` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `mime` varchar(20) collate utf8_unicode_ci NOT NULL,
+CREATE TABLE IF NOT EXISTS `assets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mime` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `mime` (`mime`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `assets`
 --
 
-LOCK TABLES `assets` WRITE;
-/*!40000 ALTER TABLE `assets` DISABLE KEYS */;
-/*!40000 ALTER TABLE `assets` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `assets` (`id`, `name`, `title`, `mime`, `created`, `updated`) VALUES
+(15, 'full-logo.gif', 'full-logo', 'image/gif', '2009-08-10 12:35:38', '2009-08-10 12:35:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blocks`
+--
+
+DROP TABLE IF EXISTS `blocks`;
+CREATE TABLE IF NOT EXISTS `blocks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(125) COLLATE utf8_unicode_ci NOT NULL COMMENT 'internal description of block',
+  `headc` text COLLATE utf8_unicode_ci COMMENT 'content for the head of the document (might be css,js,keywords)',
+  `content` text COLLATE utf8_unicode_ci,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `blocks`
+--
+
+INSERT INTO `blocks` (`id`, `name`, `headc`, `content`, `created`, `updated`) VALUES
+(1, '', NULL, '<p>Lorem ipsum.</p>', '2009-05-17 07:03:29', '2009-08-07 01:16:25');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `categories`
@@ -68,8 +94,6 @@ CREATE TABLE `categories` (
 
 --
 -- Dumping data for table `categories`
---
-
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` VALUES (58,57,8,9,'sci-fi','Sci-fi',NULL),(59,57,10,11,'love-poetry','Love poetry',NULL),(54,53,2,3,'action','Action',NULL),(56,NULL,5,6,'cooking','Cooking',NULL),(57,NULL,7,12,'books','Books',NULL),(53,NULL,1,4,'movies','Movies',NULL);
@@ -93,8 +117,6 @@ CREATE TABLE `categories_posts` (
 --
 -- Dumping data for table `categories_posts`
 --
-
-LOCK TABLES `categories_posts` WRITE;
 /*!40000 ALTER TABLE `categories_posts` DISABLE KEYS */;
 INSERT INTO `categories_posts` VALUES (57,56),(59,49),(59,52);
 /*!40000 ALTER TABLE `categories_posts` ENABLE KEYS */;
@@ -105,24 +127,35 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comments` (
-  `id` int(11) NOT NULL auto_increment,
-  `post_id` int(11) default NULL,
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `email` char(80) collate utf8_unicode_ci NOT NULL,
-  `url` char(80) collate utf8_unicode_ci default NULL,
-  `content` text collate utf8_unicode_ci NOT NULL,
-  `spam` tinyint(1) NOT NULL default '0',
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` char(80) COLLATE utf8_unicode_ci NOT NULL,
+  `url` char(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `spam` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `approved` int(11) default '1',
-  PRIMARY KEY  (`id`),
+  `approved` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   KEY `spam` (`spam`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `post_id`, `name`, `email`, `url`, `content`, `spam`, `created`, `updated`, `approved`) VALUES
+(17, 64, 'sam', 'info@majic3.com', 'http://www.majic3.com', 'a cuddly bear is nice; but not all bears are friendly - beware', 0, '2009-08-06 17:59:08', '2009-08-06 17:59:08', 1),
+(19, 66, 'sammo hung', 'sammo.me@yahoo.co.uk', 'http://majic3.com', 'testing', 0, '2009-08-07 15:00:16', '2009-08-07 15:00:16', 1),
+(20, 68, 'testing', 'test@test.com', 'http://majic3.com', 'hmmmm', 0, '2009-08-07 15:03:28', '2009-08-07 15:03:28', 1),
+(21, 68, 'testing', 'test@test.com', 'http://majic3.com', 'hmmmm', 0, '2009-08-07 15:14:27', '2009-08-07 15:14:27', 1),
+(22, 66, 'me', 'info@majic3.com', 'http://majic3.com', 'test ajax', 0, '2009-08-07 17:12:02', '2009-08-07 17:12:02', 0),
+(23, 71, 'sam', 'info@majic3.com', 'http://majic3.com', 'testing posts', 0, '2009-08-23 06:43:11', '2009-08-23 06:43:11', 1);
+
+-- --------------------------------------------------------
 
 --
 -- Dumping data for table `comments`
@@ -187,9 +220,7 @@ UNLOCK TABLES;
 
 --
 -- Table structure for table `messages`
---
 
-DROP TABLE IF EXISTS `messages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `messages` (
@@ -208,8 +239,6 @@ CREATE TABLE `messages` (
 
 --
 -- Dumping data for table `messages`
---
-
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
@@ -275,17 +304,14 @@ CREATE TABLE `pages` (
   FULLTEXT KEY `content` (`content`)
 ) ENGINE=MyISAM AUTO_INCREMENT=215 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `pages`
 --
-
 LOCK TABLES `pages` WRITE;
 /*!40000 ALTER TABLE `pages` DISABLE KEYS */;
 INSERT INTO `pages` VALUES (211,NULL,3,4,0,'api','/api','API','<h2>WildHelper</h2>\n<h3>menu($slug, $id = null)</h3>\n<p>bla bla</p>',NULL,NULL,0,'2009-06-28 19:14:16','2009-06-28 19:16:08',NULL,1,NULL),(212,NULL,5,6,0,'documentation','/documentation','Documentation','',NULL,NULL,1,'2009-06-29 19:07:22','2009-06-29 19:07:22',NULL,NULL,NULL),(210,NULL,1,2,0,'home','/home','Wildflower is a CakePHP content management system','<p>The aim is to remove all unnecessary features of a modern CMS and provide the most effective and simple way to manage a website.</p>\n<p>The foundation of a rapid development framework CakePHP allows developers to build any features specific to their project quickly and effectively.</p>',NULL,NULL,0,'2009-06-28 18:15:30','2009-06-28 18:52:54',NULL,1,NULL);
 /*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Table structure for table `pages_sidebars`
 --
@@ -345,7 +371,6 @@ LOCK TABLES `posts` WRITE;
 INSERT INTO `posts` VALUES (60,'a-test-posts','A test posts','',1,NULL,NULL,'2009-06-29 18:44:28','2009-07-02 18:55:22',0,'755abcb0855fe16cc54f270e59a4efd6091783a9',0),(63,'test','test','<p>hello<span style=\"white-space: pre;\"> </span></p>',1,NULL,NULL,'2009-09-12 10:28:30','2009-09-12 10:28:36',0,'fd97449786d5a02c1bab84bd0cef2e2a2013f510',NULL);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Table structure for table `revisions`
 --
@@ -357,10 +382,10 @@ CREATE TABLE `revisions` (
   `id` int(11) NOT NULL auto_increment,
   `type` varchar(255) collate utf8_unicode_ci NOT NULL,
   `node_id` int(11) NOT NULL,
-  `content` text collate utf8_unicode_ci NOT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
   `revision_number` int(11) NOT NULL,
   `created` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `type` (`type`,`node_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=452 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -518,5 +543,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2009-09-14 18:55:31

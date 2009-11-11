@@ -1,0 +1,1 @@
+<?php echo $html->link($data['Category']['title'], '/' . Configure::read('Wildflower.catsParent') . '/' . $data['Category']['slug'], array(), false, false);	?>

@@ -144,7 +144,7 @@ class TableHelper extends AppHelper {
                 // Decide the correct view method
                 case  'posts':
                     $slug = $node[$settings['model']]['slug'];
-                    $viewPath =  '/' + WILDFLOWER_POSTS_INDEX + "/$slug";
+                    $viewPath =  '/' . Configure::read('Wildflower.postsParent') . "/$slug";
                     break;
                 case 'pages':
                     $viewPath = $node[$settings['model']]['url'];
