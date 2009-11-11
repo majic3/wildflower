@@ -42,9 +42,9 @@ class AppController extends Controller {
 
 	// theme setting
     //majic
-	public $view = 'Theme';
+	//public $view = 'Theme';
     //majic
-	public $theme = 'wildflower';
+	//public $theme = 'wildflower';
 	
 	// canonical urls
     public $canonical = Array('rel' => false, 'rev' => false);
