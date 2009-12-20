@@ -32,9 +32,16 @@
 
 <div class="wildflower page liquid">
 	<div id="hd" class="head">
-        <img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
+		<img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
+		
 		<div class="skipto"><a href="#bd">skip to content</a></div>
-        <h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
+		
+		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
+
+		<div id="search" class="search"><?php echo $form->create("Dashboard",array('action' => 'search'));
+			echo $form->input("query", array('label' => 'Search: '));
+			echo $form->end('');
+		?></div>
 
 		<div class="nv">
 			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu', false, 'tabs'); ?>
