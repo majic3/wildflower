@@ -16,14 +16,6 @@
 	
 	if(isset($canonical['rel']['url']))	echo '<link rel="canonical" href="' . $canonical['rel']['url'] . "\" />\n";
 	if(isset($canonical['rev']['id']))	echo '<link rev="canonical" href="' . $canonical['rev']['slug'] . "\" />\n";
-
-	//$asset->checkTs = true;
-	//$asset->md5FileName = true;
-	//$asset->debug = false;
-		$styles = array(
-			'screen',
-			//'screen_debug'
-		);
 		
 	echo $html->css($styles, 'stylesheet', Array('media' => 'screen')); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>

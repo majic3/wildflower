@@ -38,7 +38,7 @@ Router::connect('/sitemap', array('controller' => 'sitemaps', 'action' => 'index
 Router::connect('/sitemap/:action/*', array('controller' => 'sitemaps'));
 
 // sitemaps - robots optional
-Router::connect('/robots/:action/*', array('controller' => 'sitemaps', 'action' => 'robot'));
+Router::connect('/robots/:action/*', array('controller' => 'sitemaps', 'action' => 'robots'));
 
 Router::parseExtensions(); 
 

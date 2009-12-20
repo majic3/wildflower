@@ -1,5 +1,5 @@
 <?php
-class SitesController extends AppController {
+class SitemapsController extends AppController {
 	var $helpers = array('Time', 'Xml', 'Javascript', 'Navigation');
 	var $components = array('RequestHandler');
 	var $uses = array();
@@ -33,7 +33,7 @@ class SitesController extends AppController {
 			$this->RequestHandler->respondAs('html');
 		} elseif ($this->RequestHandler->accepts('xml')) {
 			$this->RequestHandler->respondAs('xml');
-		}        
+		}
 	}
 
 	/* 
@@ -84,7 +84,7 @@ class SitesController extends AppController {
 	function __get_data() {
 
 		// get all gen units from Wildflower Core
-		$genUnits = Configure::read('Wildflower.units.general');
+		$genUnits = Configure::read('Wildflower.sitemapData.units');
 		$pubUrl = Configure::read('Wildflower.puburl');
 
 	   // debug($genUnits);die();
@@ -117,7 +117,7 @@ class SitesController extends AppController {
 												'fields' => array('id' => 'slug'),
 												'changefreq' => 'daily',
 												'pr' => '1.0', 
-												'url' => array('controller' => 'wild_posts', 'action' => 'view'),
+												'url' => array('controller' => 'posts', 'action' => 'view'),
 												'parentUrl' => $pubUrl . '/' . $blogIndex, 
 												'childUrl' => $pubUrl . '/' . $postsParent . '/%SLUG%' 
 											   )
@@ -158,7 +158,7 @@ class SitesController extends AppController {
 						
 						$this->__add_static_section(
 											 $pdata['Page']['title'], 
-											 array('controller' => 'wild_pages', 'action' => 'view'), 
+											 array('controller' => 'pages', 'action' => 'view'), 
 												$settings
 										);
 					}
