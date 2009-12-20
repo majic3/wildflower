@@ -4,6 +4,7 @@ html{color:black;background:white;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 
 .head { position: relative; height: 159px;  }
 .head h1	{	color: green; position: absolute; left: 65px; top: .15em}
+.head .search	{	position: absolute; right: .3em; bottom: 5.6em; width: 32em; }
 .head .nv,
 .head .skipto { position: absolute; right: .5em;  }
 .head .skipto { top: .3em;   }
@@ -39,3 +40,5 @@ html{color:black;background:white;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 	float: right;
 	clear: right;
 }
+
+.home	.rightCol {	width: 26%;	}

@@ -34,7 +34,7 @@
 	<div id="hd" class="head">
 		<img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
 		
-		<div class="skipto"><a href="#bd">skip to content</a></div>
+		<div class="accessibility skipto"><a href="#bd">skip to content</a> &#124; <a href="/sitemap">sitemap</a></div>
 		
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 

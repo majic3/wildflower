@@ -72,15 +72,16 @@ class WildHelper extends AppHelper {
 	    extract($this->params['Wildflower']['view']);
 	    $html = '<body';
 	    if ($isHome) { 
-	       $html .= ' class="home-page"'; 
+	       $html .= ' class="home"'; 
 	    } else if ($isPage) {
 	       $pageSlug = '';
 	       if (isset($this->params['current']['slug'])) {
-              $pageSlug = ' ' . $this->params['current']['slug'] . '-page';           
+              $pageSlug = $this->params['current']['slug'];           
 	       }
-	       $html .= ' class="page-view' . $pageSlug . '"'; 
-	    } else if ($isPosts) { 
-	       $html .= ' class="post-view"'; 
+	       $html .= ' class="' . $pageSlug . '"'; 
+	    } else if ($isPosts) {
+			// check for index (posts) or view (post)
+	       $html .= ' class="post"'; 
 	    } else if (isset($this->params['current']['body_class'])) {
 	       $html .= " class=\"{$this->params['current']['body_class']}\"";
 	    }
