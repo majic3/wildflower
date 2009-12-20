@@ -251,6 +251,7 @@ class AppController extends Controller {
             'isPage' => false,
             'isPosts' => false,
             'isHome' => $this->isHome,
+            'bdyClass' => false,
             'homePageId' => $this->homePageId,
             // Here without base
             'here' => substr($this->here, strlen($this->base) - strlen($this->here)),

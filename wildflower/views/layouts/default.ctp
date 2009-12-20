@@ -28,7 +28,7 @@
 	echo $html->css($styles, 'stylesheet', Array('media' => 'screen')); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 </head>
-<?php echo $wild->bodyTagWithClass(isset($bdyClass) ? $bdyClass : false); ?>
+<?php echo ($wild) ? $wild->bodyTagWithClass($bdyClass) : '<body>'; ?>
 
 <div class="wildflower page liquid">
 	<div id="hd" class="head">
@@ -37,7 +37,7 @@
         <h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 
 		<div class="nv">
-			<?php $menu = ''; echo $menu = $wild->menu('main_menu', false, 'tabs'); ?>
+			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu', false, 'tabs'); ?>
 		</div>
 	</div>
 

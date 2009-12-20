@@ -3,6 +3,7 @@ html{color:black;background:white;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 .liquid { width: 96%; margin: .3em auto;  }
 
 .head { position: relative; height: 159px;  }
+.head h1	{	color: green; position: absolute; left: 65px; top: .15em}
 .head .nv,
 .head .skipto { position: absolute; right: .5em;  }
 .head .skipto { top: .3em;   }

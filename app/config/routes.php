@@ -29,6 +29,15 @@ Router::connect('/wildflower/thumbnail_by_id/*', array('controller' => 'assets',
 App::import('Vendor', 'WfRootPagesCache', array('file' => 'WfRootPagesCache.php'));
 WildflowerRootPagesCache::connect();
 
+// sitemaps
+Router::connect('/sitemap', array('controller' => 'sitemaps', 'action' => 'index'));
+Router::connect('/sitemap/:action/*', array('controller' => 'sitemaps'));
+
+// sitemaps - robots optional
+Router::connect('/robots/:action/*', array('controller' => 'sitemaps', 'action' => 'robot'));
+
+Router::parseExtensions(); 
+
 
 /**
  * Your routes here...
