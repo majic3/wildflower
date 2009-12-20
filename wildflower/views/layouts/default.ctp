@@ -69,8 +69,8 @@
 				<?php echo $html->image('cake.power.gif'); ?>
 			</div>
 		</div>
-    </div>
-    
+	</div>
+
 </div>
 <?php echo $this->element('google_analytics'); ?>
 </body>
