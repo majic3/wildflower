@@ -6,7 +6,7 @@
  */
 ?>
 <div class="rightCol">
-	<?php echo $this->element('latest_posts', array('categorySlug'=>'action','categoryLimit'=>4));  ?>
+    <?php echo $this->element('latest_posts');  ?>
 </div>
 <div class="main">
 	<h2><?php echo $page['Page']['title']; ?></h2>

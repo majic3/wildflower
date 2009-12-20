@@ -285,6 +285,7 @@ class PostsController extends AppController {
         ));
         $postsIds = Set::extract($posts, '{n}.CategoriesPost.post_id');
         
+		
         $this->paginate = array(
             'limit' => 10,
             'order' => array(
@@ -293,6 +294,7 @@ class PostsController extends AppController {
             'conditions' => array(
                 'Post.draft' => 0,
                 'Post.id' => $postsIds,
+				'Post.archive' => 0,
             ),
         );
         $posts = $this->paginate($this->modelClass);
@@ -334,7 +336,7 @@ class PostsController extends AppController {
                 'conditions' => array('spam' => 0, 'approved' => 1),
             ),
         ));
-        $post = $this->Post->findBySlugAndDraft($slug, 0);
+        $post = $this->Post->findBySlugAndDraftAndArchive($slug, 0, 0);
 
 		if (empty($post)) {
 			return $this->do404();
@@ -426,20 +428,7 @@ class PostsController extends AppController {
      * 
      * @return array
      */
-	public function latest($category = null, $limit = 5){
-		if(!empty($category)){
-			$this->Post->bindModel(array(
-				'hasOne' => array(
-					'CategoriesPost',
-					'FilterTag' => array(
-						'className' => 'Category',
-						'foreignKey' => false,
-						'conditions' => array('FilterTag.id = CategoriesPost.category_id')
-			))));
-			$posts = $this->Post->find('all', array('order' => 'Post.created DESC', 'conditions' => 'Post.draft = 0 and FilterTag.slug = "'.$category.'" ', 'limit' => $limit));
-		}else{
-			$posts = $this->Post->find('all', array('order' => 'Post.created DESC', 'conditions' => 'Post.draft = 0', 'limit' => $limit));
-		}
-	return $posts;
-	} 
+   public function latest(){
+	return $this->Post->find('all', array('order' => 'Post.created DESC', 'limit' => 10));
+   }
 }
