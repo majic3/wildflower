@@ -23,5 +23,10 @@ app/webroot/cache/*
 
 app/plugins/*
 
+<<<<<<< HEAD:.gitignore
 # ingnore majic3 database cfg
 app/config/database.*
+=======
+# Local db settings
+app/config/database.php.local
+>>>>>>> 41355fe... Modified credits to be editable in backend - Added description and keywords to the page html:.gitignore
