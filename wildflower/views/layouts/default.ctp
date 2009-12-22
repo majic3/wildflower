@@ -54,7 +54,10 @@
 
 	<div id="ft" class="foot">
 		<div class="leftCol">
-			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?> Wildflower Logo designed by <a href="http://www.olivertreend.com/">Oliver Treend</a></p>
+			<p><?php echo isset($credits)? $credits:'' ?> <?php echo $this->element('admin_link'); ?></p>
+
+			
+			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?></p>
 			
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>
@@ -68,7 +71,6 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 <?php echo $this->element('google_analytics'); ?>
 <script src="/js/LAB.js" type="text/javascript"></script>
