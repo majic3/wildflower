@@ -263,7 +263,8 @@ class AppController extends Controller {
 				'screen',
 				//'screen_debug',
 				'slickmap'
-				)
+				),
+			'credits' => $this->isHome ? Configure::read('AppSettings.credits') : false
 		);
 		$this->params['Wildflower']['view'] = $params;
 		$this->set($params);

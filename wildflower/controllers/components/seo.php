@@ -35,10 +35,6 @@ class SeoComponent extends Object {
     	
     	$description = hsc(Configure::read('AppSettings.description'));
 		$keywords = hsc(Configure::read('AppSettings.keywords'));
-
-		// this credit should'nt be in seo comp i think.
-		$credits = Configure::read('AppSettings.credits');
-
     	$nameAndDescription = hsc(Configure::read('AppSettings.site_name'));
     	if ($description) {
     	    $nameAndDescription = "$nameAndDescription - {$description}";
@@ -48,31 +44,7 @@ class SeoComponent extends Object {
 			$this->controller->pageTitle = $nameAndDescription;
 		} else {
 			$this->controller->pageTitle = "$pageTitle &#8226; $nameAndDescription";
-			// Uncomment below for homepage only credits
-			if($homepage_credits){
-				$credits = "";
-			}
 		}
-
-		$this->controller->set('page_title_for_layout', $pageTitle);
-		$this->controller->set('site_title_for_layout', $nameAndDescription);
-		$this->controller->set('descriptionMetaTag', $description);
-		$this->controller->set('keywordsMetaTag', $keywords);
-		$this->controller->set('credits', $credits);
-	}
-		if ($this->controller->isHome) {
-			$this->controller->pageTitle = $nameAndDescription;
-		} else {
-			$this->controller->pageTitle = "$pageTitle &#8226; $nameAndDescription";
-		// Uncomment below for homepage only credits
-		// $credits = "";
-		}
-		
-		$this->controller->set('page_title_for_layout', $pageTitle);
-		$this->controller->set('site_title_for_layout', $nameAndDescription);
-		$this->controller->set('descriptionMetaTag', $description);
-		$this->controller->set('keywordsMetaTag', $keywords);
-		$this->controller->set('credits', $credits);
     }
 	
 }
