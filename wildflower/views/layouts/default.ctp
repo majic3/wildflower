@@ -26,13 +26,19 @@
 	<div id="hd" class="head">
 		<img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
 		
-		<div class="accessibility skipto"><a href="#bd">skip to content</a> &#124; <a href="/sitemap">sitemap</a></div>
+		<div class="accessibility"><span class="skipto"><a href="#bd">skip to content</a></span> &#124; <a href="/sitemap">sitemap</a></div>
+
+		<div class="rss">
+			<a title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/' . Configure::read('Wildflower.blogIndex') . '/rss'); ?>"><img src="<?php e($html->url('/img/feed.png')); ?>" alt="Site Feed in RSS Format"  /></a>
+		</div>
 		
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 
 		<div id="search" class="search"><?php echo $form->create("Dashboard",array('action' => 'search'));
-			echo $form->input("query", array('label' => 'Search: '));
-			echo $form->end('');
+			echo $form->label("query", "search");
+			echo $form->text("query");
+			echo $form->submit("go.gif", array('id' => 'go', 'div' => false));
+			echo $form->end(null);
 		?></div>
 
 		<div class="nv">

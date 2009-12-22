@@ -5,18 +5,16 @@ html{color:black;background:white;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 .head { position: relative; height: 159px;  }
 .head h1	{	color: green; position: absolute; left: 65px; top: .15em}
 
-.head .search	{	position: absolute; right: .3em; bottom: 5.6em; width: 155px; }
-.head .search label	{	width: 100%; }
+.head .search	{	position: absolute; right: .3em; bottom: 6.64em; width: 175px; }
+.head .search label	{	width: auto; padding-right: 2px;margin-right: 0; line-height: 24px; font-size: 12px; margin-top: 0px; height: 28px; padding-right: 8px; }
+#DashboardQuery {	width: 95px; margin-top: 0px; margin-bottom: 0px; padding-bottom: 6px;	}
+#go	{	margin-top: 0px; padding-top: 0px; margin-bottom: -10px; margin-left: 5px;	}
 
-.head .search .input,
-.head .search .submit	{	float: left; display: inline; }
-.head .search .input,
-.head .search .input input	{	width: 100px; }
-.head .search .submit	{	width: 50px; }
+.head .rss	{	width: auto; height: auto; position: absolute; top: .3em; right: .3em;	}
 
 .head .nv,
-.head .skipto { position: absolute; right: .5em;  }
-.head .skipto { top: .3em;   }
+.head .accessibility { position: absolute; right: 2.5em;  }
+.head .accessibility { top: .3em;   }
 .head .nv { bottom: .3em; display: block; width: auto; }
 
 .head .nv,

@@ -25,8 +25,8 @@
     <li>
         <ul class="right_menu">
             <li><?php echo $htmla->link('Published', array('action' => 'index')); ?></li>
-            <li><?php echo $htmla->link('Awaiting approval', array('action' => 'awaiting')); ?></li>
-            <li><?php echo $htmla->link('Spam', array('action' => 'spam')); ?></li>
+            <li><?php echo $htmla->link('Awaiting approval', array('action' => 'index', 'awaiting')); ?></li>
+            <li><?php echo $htmla->link('Spam', array('action' => 'index', 'spam')); ?></li>
         </ul>
     </li>
 <?php $partialLayout->blockEnd(); ?>

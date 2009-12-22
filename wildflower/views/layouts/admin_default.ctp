@@ -59,6 +59,10 @@
     <div id="login_info">
         <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
     </div>
+    
+    <div id="extras">
+        <?php echo $htmla->link(__('Full', true), '#', array('id' => 'fullToggle')); ?>
+    </div>
 
     <ul id="nav">
         <li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
@@ -69,6 +73,7 @@
         <li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
         <li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
         <li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Utilities', true), array('controller' => 'utilities', 'action' => 'index')); ?></li>
         <li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
         <li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
     </ul>
