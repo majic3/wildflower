@@ -9,6 +9,7 @@ class PostsController extends AppController {
 	    'Tree', 
 	    'Time',
 	    'Paginator',
+		'Gravatar'
 	);
 	public $components = array('Email');
 	

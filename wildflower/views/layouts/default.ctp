@@ -3,7 +3,7 @@
 <head>
     <?php echo $html->charset(); ?>
     
-    <title><?php echo $title_for_layout; if(Configure::read('debug'))	{ echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) echo " theme: " . $this->theme;	echo " Wildflower: " . Configure::read('Wildflower.version') . ";"; }	?></title>
+    <title><?php echo $title_for_layout; if(Configure::read('debug'))	{ echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) { echo " theme: " . $this->theme; }	echo " Wildflower: " . Configure::read('Wildflower.version') . ";"; }	?></title>
     
     <meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
 	<meta name="keywords" content="<?php echo isset($keywordsMetaTag) ? $keywordsMetaTag : '' ?>" />
@@ -21,7 +21,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 </head>
 <?php echo ($wild) ? $wild->bodyTagWithClass($bdyClass) : '<body>'; ?>
-
+<p id="umsg" class="alert">setting up page</p>
 <div class="wildflower page liquid">
 	<div id="hd" class="head">
 		<img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
@@ -65,6 +65,19 @@
 
 </div>
 <?php echo $this->element('google_analytics'); ?>
+<script src="/js/LAB.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$LAB
+		.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js").wait(function ()	{
+			$('#umsg').removeClass('alert').addClass('notice').html('preparing page');
+		})
+		.script("/js/common.js").wait(function ()	{
+			init();
+		}).wait(function()	{
+			var $umsg = $('#umsg');
+			if($umsg.hasClass('success')) $umsg.fadeOut('slow').remove();
+		});
+</script>
 </body>
 </html>
 

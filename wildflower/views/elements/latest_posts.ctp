@@ -16,7 +16,7 @@
 		if(!empty($posts)):
 		foreach ($posts as $post) :
 		?>
-				<h2><?php echo $html->link($post['Post']['title'], Post::getUrl($post['Post']['slug'])); ?></h2>
+				<h3><?php echo $html->link($post['Post']['title'], Post::getUrl($post['Post']['slug'])); ?></h3>
 				<?php echo $html->link(' >>', Post::getUrl($post['Post']['slug']), array('class' => 'post_link'));      ?>
 				<small class="post-date">Posted <?php echo $time->niceShort($post['Post']['created']) ?></small>
 		<?php
