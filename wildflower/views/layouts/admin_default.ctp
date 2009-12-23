@@ -27,28 +27,6 @@
     ?>
     <![endif]-->
     
-    <!-- JQuery Light MVC -->
-    <script type="text/javascript" src="<?php echo $html->url('/' . Configure::read('Routing.admin') . '/assets/jlm'); ?>"></script>
-    <script type="text/javascript">
-    //<![CDATA[
-        $.jlm.config({
-            base: '<?php echo $this->base ?>',
-            controller: '<?php echo $this->params['controller'] ?>',
-            action: '<?php echo $this->params['action'] ?>', 
-            prefix: '<?php echo Configure::read('Routing.admin') ?>',
-            custom: {
-                wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
-            }
-        });
-        
-        tinyMCE.init($.jlm.components.tinyMce.getConfig());
-
-        $(function() {
-           $.jlm.dispatch(); 
-        });
-    //]]>
-    </script>
-    
 </head>
 <body>
  
@@ -102,6 +80,30 @@
         
     <div class="cleaner"></div>
 </div>
+    
+    <!-- JQuery Light MVC - using LABjs to load jquery & ui from google jlm from wf then init -->
+    <script type="text/javascript" src="/js/LAB.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js")
+		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
+		.script("/wildflower/js/admin_jlm.js").wait(function () {
+			$.jlm.config({
+				base: '<?php echo $this->base ?>',
+				controller: '<?php echo $this->params['controller'] ?>',
+				action: '<?php echo $this->params['action'] ?>', 
+				prefix: '<?php echo Configure::read('Routing.admin') ?>',
+				custom: {
+					wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
+				}
+			});
+
+			tinyMCE.init($.jlm.components.tinyMce.getConfig());
+
+			$.jlm.dispatch(); 
+		});
+    //]]>
+    </script>
 
 </body>
 </html>

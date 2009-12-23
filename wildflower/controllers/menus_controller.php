@@ -15,9 +15,11 @@ class MenusController extends AppController {
     }
     
     function admin_edit($id) {
+            debug($id);
+            debug($this->data);
         if (!empty($this->data)) {
             $this->_addOrderToItems();
-            //var_dump($this->data);die();
+            var_dump($this->data);
             if ($this->Menu->saveAll($this->data)) {
                 $this->Session->setFlash(__('Menu updated.', true));
                 return $this->redirect(array('action' => 'edit', $id));

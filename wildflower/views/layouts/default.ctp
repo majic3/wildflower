@@ -10,7 +10,7 @@
 	<!-- app/views default/layout -->
     
     <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/' . Configure::read('Wildflower.blogIndex') . '/rss'); ?>" />
+    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>" />
 
     <?php
 	
@@ -29,7 +29,7 @@
 		<div class="accessibility"><span class="skipto"><a href="#bd">skip to content</a></span> &#124; <a href="/sitemap">sitemap</a></div>
 
 		<div class="rss">
-			<a title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/' . Configure::read('Wildflower.blogIndex') . '/rss'); ?>"><img src="<?php e($html->url('/img/feed.png')); ?>" alt="Site Feed in RSS Format"  /></a>
+			<a title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>"><img src="<?php e($html->url('/img/feed.png')); ?>" alt="Site Feed in RSS Format"  /></a>
 		</div>
 		
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
@@ -54,10 +54,7 @@
 
 	<div id="ft" class="foot">
 		<div class="leftCol">
-			<p><?php echo isset($credits)? $credits:'' ?> <?php echo $this->element('admin_link'); ?></p>
-
-			
-			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?></p>
+			<?php echo $credits ? $this->element('credits', $credits):'' ?>
 			
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>
@@ -66,8 +63,16 @@
 			<div class="nv">
 				<?php echo $menu; ?>
 			</div>
-			<div class="cake">
-				<?php echo $html->image('cake.power.gif'); ?>
+			<div class="logos">
+				<div class="cake">
+					<?php echo $html->link($html->image('cake.power.gif', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
+				</div>
+				<div class="jquery">
+					<?php echo $html->link($html->image('jquery-icon.png', array('alt' => 'jquery writeless do more', 'width' => '80', 'height' => '18')), 'http://jquery.com/', array(), false, false); ?>
+				</div>
+				<div class="wildflower">
+					<?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -88,4 +93,3 @@
 </script>
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-<div id="primary-content">
+<div id="primary-content" class="rightCol">
 
     <?php
         $cssClasses = array('post');
@@ -29,4 +29,9 @@
     
     <?php echo $this->element('admin_pagination') ?>
     
+</div>
+
+<div class="main">
+	<?php	echo $wild->processWidgets($wfPostsSidebar['Sidebar']['content']);	?>
+	<?php	foreach($sidebarCategories as $cat) echo $html->link($cat['Category']['title'], '/c/' . $cat['Category']['slug']);	?>
 </div>

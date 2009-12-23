@@ -33,6 +33,8 @@ Router::connect('/wildflower/thumbnail_by_id/*', array('controller' => 'assets',
 App::import('Vendor', 'WfRootPagesCache', array('file' => 'WfRootPagesCache.php'));
 WildflowerRootPagesCache::connect();
 
+// Utilities - add for cache and other general bits and things
+
 // sitemaps
 Router::connect('/sitemap', array('controller' => 'sitemaps', 'action' => 'index'));
 Router::connect('/sitemap/:action/*', array('controller' => 'sitemaps'));

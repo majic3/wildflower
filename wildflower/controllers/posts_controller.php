@@ -243,7 +243,7 @@ class PostsController extends AppController {
     function index() {
         $this->cacheAction = true;
         
-        $this->pageTitle = 'Blog';
+        $this->pageTitle = Configure::read('Wildflower.blogName');
         
         $this->paginate = array(
             'limit' => 4,
@@ -275,7 +275,7 @@ class PostsController extends AppController {
     function category() {
         //$this->cacheAction = true;
         
-        $this->pageTitle = 'Blog';
+        $this->pageTitle = Configure::read('Wildflower.blogName');
         
         $this->Post->Category->recursive = -1;
         $category = $this->Post->Category->findBySlug($this->params['slug']);

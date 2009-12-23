@@ -52,7 +52,6 @@ class JlmPackagerComponent {
         
         // Append lib files in this order
         $libDir = $this->wfJlmDir . DS . 'lib' . DS;
-        $output .= $this->readFile($libDir . 'jquery.js');
         $output .= $this->readFile($libDir . 'functions.js');
         $output .= $this->readFile($libDir . 'trimpath-template.js');
         $output .= $this->readFile($libDir . 'jquery.jlm.js');

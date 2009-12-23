@@ -1,6 +1,5 @@
-<h2><?php echo $page['Page']['title']; ?></h2>
-<?php echo $page['Page']['content']; ?>
 
+<div class="rightCol">
 <?php $session->flash(); ?>
 
 <?php
@@ -16,5 +15,14 @@
     $form->submit('Send my message'),
     $form->end();
 ?>
+</div>
 
+<div class="main">
+<div class="entry">
+<h2><?php echo $page['Page']['title']; ?></h2>
+<?php echo $page['Page']['content']; ?>
 <?php echo $this->element('edit_this', array('controller' => 'pages', 'id' => $page['Page']['id'])) ?>
+</div>
+
+</div>
+

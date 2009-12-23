@@ -82,8 +82,8 @@ class WildHelper extends AppHelper {
 	    } else if ($isPosts) {
 			// check for index (posts) or view (post)
 	       $html .= ' class="post"'; 
-	    } else if (isset($this->params['current']['body_class'])) {
-	       $html .= " class=\"{$this->params['current']['body_class']}\"";
+	    } else	{
+			$html .= ' class="' . str_replace(array('/', '-'), array('', ''), $here) . '"';
 	    }
 	    $html .= '>';
         return $html;
@@ -97,7 +97,7 @@ class WildHelper extends AppHelper {
         return $default;
     }
     
-    function menu($slug, $id = null) {
+    function menu($slug, $id = false, $class = false) {
     	$items = $this->getMenuItems($slug);
     	if (empty($items)) {
     	    return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
@@ -114,13 +114,13 @@ class WildHelper extends AppHelper {
     	    $links[] = '<li class="' . join(' ', $classes) . '">' . $this->Html->link("<span>$label</span>", $item['url'], array('escape' => false)) . '</li>';
     	}
     	$links = join("\n", $links);
-    	if (is_null($id)) {
-    	    $id = "admin_$slug";
+    	if ($class) {
+    	    $class = " class=\"$class\"";
     	}
-    	if (is_null($id)) {
-            $id = $slug;
+    	if ($id) {
+            $id = " id=\"$id\"";
     	}
-    	return "<ul id=\"$id\">\n$links\n</ul>\n";
+    	return "<ul$id$class>\n$links\n</ul>\n";
     }
     
     function getMenuItems($slug) {
