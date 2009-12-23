@@ -14,6 +14,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*	needs updated	*/
 
 --
 -- Table structure for table `assets`
@@ -156,7 +157,7 @@ CREATE TABLE `menu_items` (
 
 LOCK TABLES `menu_items` WRITE;
 /*!40000 ALTER TABLE `menu_items` DISABLE KEYS */;
-INSERT INTO `menu_items` VALUES (1,1,'Download','/',0),(2,1,'News','/blog',1),(3,1,'Documentation','/documentation',2),(4,1,'API','/api',3),(5,1,'Source Code','http://github.com/klevo/wildflower/tree/master',4),(6,1,'Donate','/donate',5);
+INSERT INTO `menu_items` VALUES (1,1,'Download','/',0),(2,1,'News','/blog',1),(3,1,'Documentation','/documentation',2),(4,1,'API','/api',3),(5,1,'Source Code','http://github.com/klevo/wildflower/tree/master',4),(6,1,'Donate','/donate',5),(7,1,'Contact Us','/contact',6);
 /*!40000 ALTER TABLE `menu_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,7 +283,7 @@ CREATE TABLE `pages` (
 
 LOCK TABLES `pages` WRITE;
 /*!40000 ALTER TABLE `pages` DISABLE KEYS */;
-INSERT INTO `pages` VALUES (211,NULL,3,4,0,'api','/api','API','<h2>WildHelper</h2>\n<h3>menu($slug, $id = null)</h3>\n<p>bla bla</p>',NULL,NULL,0,'2009-06-28 19:14:16','2009-06-28 19:16:08',NULL,1,NULL),(212,NULL,5,6,0,'documentation','/documentation','Documentation','',NULL,NULL,1,'2009-06-29 19:07:22','2009-06-29 19:07:22',NULL,NULL,NULL),(210,NULL,1,2,0,'home','/home','Wildflower is a CakePHP content management system','<p>The aim is to remove all unnecessary features of a modern CMS and provide the most effective and simple way to manage a website.</p>\n<p>The foundation of a rapid development framework CakePHP allows developers to build any features specific to their project quickly and effectively.</p>',NULL,NULL,0,'2009-06-28 18:15:30','2009-06-28 18:52:54',NULL,1,NULL);
+INSERT INTO `pages` VALUES (211,NULL,3,4,0,'api','/api','API','<h2>WildHelper</h2>\n<h3>menu($slug, $id = null)</h3>\n<p>bla bla</p>',NULL,NULL,0,'2009-06-28 19:14:16','2009-06-28 19:16:08',NULL,1,NULL),(212,NULL,5,6,0,'documentation','/documentation','Documentation','',NULL,NULL,1,'2009-06-29 19:07:22','2009-06-29 19:07:22',NULL,NULL,NULL),(210,NULL,1,2,0,'home','/home','Wildflower is a CakePHP content management system','<p>The aim is to remove all unnecessary features of a modern CMS and provide the most effective and simple way to manage a website.</p>\n<p>The foundation of a rapid development framework CakePHP allows developers to build any features specific to their project quickly and effectively.</p>',NULL,NULL,0,'2009-06-28 18:15:30','2009-06-28 18:52:54',NULL,1,NULL), (213,NULL,7,8,0,'contact','/contact','Contact','',NULL,NULL,0,'2009-12-18 15:13:23','2009-12-18 15:13:32',NULL,1,NULL);
 /*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,6 +329,7 @@ CREATE TABLE `posts` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `draft` int(1) NOT NULL default '0',
+  `archive` tinyint(1) NOT NULL default '0',
   `uuid` varchar(255) collate utf8_unicode_ci NOT NULL,
   `comment_count` int(11) default NULL,
   PRIMARY KEY  (`id`),
@@ -342,7 +344,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (60,'a-test-posts','A test posts','',1,NULL,NULL,'2009-06-29 18:44:28','2009-07-02 18:55:22',0,'755abcb0855fe16cc54f270e59a4efd6091783a9',0),(63,'test','test','<p>hello<span style=\"white-space: pre;\"> </span></p>',1,NULL,NULL,'2009-09-12 10:28:30','2009-09-12 10:28:36',0,'fd97449786d5a02c1bab84bd0cef2e2a2013f510',NULL);
+INSERT INTO `posts` VALUES (60,'a-test-posts','A test posts','',1,NULL,NULL,'2009-06-29 18:44:28','2009-07-02 18:55:22',0, 0,'755abcb0855fe16cc54f270e59a4efd6091783a9',0);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,7 +424,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'site_name','Wildflower','','text',NULL,1),(2,'description','A CakePHP CMS','','textbox',NULL,2),(3,'home_page_id','210','Page that will be shown when visiting the site root.','select','Home page',3),(4,'contact_email','you@localhost','You`ll receive notifications when somebody posts a comment or uses the contact form on this email address.','text','Contact email address',4),(5,'google_analytics_code','','','textbox',NULL,10),(6,'wordpress_api_key','','','text',NULL,9),(7,'smtp_server','','','text',NULL,6),(8,'smtp_username','','','text',NULL,7),(9,'smtp_password','','','text',NULL,8),(11,'email_delivery','mail',NULL,'select',NULL,5),(12,'cache','off',NULL,'select','Page and post caching',11),(13,'approve_comments','1','','checkbox','Approve each comment before publishing it',12),(14,'theme','kruger',NULL,'select','Theme',14);
+INSERT INTO `settings` VALUES (1,'site_name','Wildflower','','text',NULL,1),(2,'description','A CakePHP CMS','','textbox',NULL,2),(3,'keywords','CakePHP, CMS, WildFlower','','textbox',NULL,3),(4,'home_page_id','210','Page that will be shown when visiting the site root.','select','Home page',4),(5,'contact_email','you@localhost','You`ll receive notifications when somebody posts a comment or uses the contact form on this email address.','text','Contact email address',5),(6,'email_delivery','mail',NULL,'select',NULL,6),(7,'smtp_server','','','text',NULL,7),(8,'smtp_username','','','text',NULL,8),(9,'smtp_password','','','text',NULL,9),(10,'wordpress_api_key','','','text',NULL,10),(11,'google_analytics_code','','','textbox',NULL,11),(12,'cache','off',NULL,'select','Page and post caching',12),(13,'approve_comments','1','','checkbox','Approve each comment before publishing it',13),(14, 'credits', 'Powered by <a href="http://wf.klevo.sk/">Wildflower</a>. Wildflower Logo designed by <a href="http://www.olivertreend.com/">Oliver Treend</a>.', 'Site credits (edit seo.php for homepage only)', 'textbox', NULL, 14);
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 

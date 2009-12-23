@@ -27,7 +27,8 @@ class AppController extends Controller {
 	    'Textile', 
 	    'Tree', 
 	    'Text',
-	    'Time'
+	    'Time',
+		'AutoJavascript'
 	);
 	public $homePageId;
 	public $isAuthorized = false;
@@ -138,7 +139,8 @@ class AppController extends Controller {
         if ($this->data['__action'] == 'delete') {
             $this->data['__action'] = 'mass_delete';
         }
-        $availActions = array('mass_delete', 'publish', 'unpublish', 'approve', 'unapprove', 'spam', 'unspam');
+		
+        $availActions = array('mass_delete', 'archive', 'unarchive', 'publish', 'unpublish', 'approve', 'unapprove', 'spam', 'unspam');
         // Collect selected item IDs
         $ids = array();
         if (isset($this->data['__action'])) {
@@ -150,7 +152,9 @@ class AppController extends Controller {
         }
         // If the action is recognized execute it
         if (in_array($this->data['__action'], $availActions, true)) {
-            $result = $this->{$this->modelClass}->{$this->data['__action']}($ids);
+        	foreach($ids as $id){
+            	$result = $this->{$this->modelClass}->{$this->data['__action']}($id);
+			}
         }
 
     	$redirect = am($this->params['named'], array('action' => 'wf_index'));
@@ -226,59 +230,65 @@ class AppController extends Controller {
             }
         }
     }
-    
-    /**
-     * Before rendering
-     * 
-     * Set nice SEO titles.
-     */
-    function beforeRender() {
-        parent::beforeRender();
-        
-        // // @TODO: Hmmmm?
-        // if (!$this->_isDatabaseConnected) {
-        //     return;
-        // }
 
-        $this->Seo->title();
-        
-    	/** @var $refeter string Convenient $referer var in all views **/
-    	$this->set('referer', $this->referer());
-    	
-    	// Set view parameters (CmsHelper uses some of these for example)
-        $params = array(
-            'siteName' => Configure::read('AppSettings.site_name'),
-            'siteDescription' => Configure::read('AppSettings.description'),
-            'isLogged' => $this->Auth->isAuthorized(),
-            'isAuthorized' => $this->Auth->isAuthorized(),
-            'isPage' => false,
-            'isPosts' => false,
-            'isHome' => $this->isHome,
-            'homePageId' => $this->homePageId,
-            // Here without base
-            'here' => substr($this->here, strlen($this->base) - strlen($this->here)),
-        );
-        $this->params['Wildflower']['view'] = $params;
-    	$this->set($params);
-    	
-    	// User ID for views
+	/**
+	 * Before rendering
+	 * 
+	 * Set nice SEO titles.
+	 */
+	function beforeRender() {
+		parent::beforeRender();
+
+		// // @TODO: Hmmmm?
+		// if (!$this->_isDatabaseConnected) {
+		//     return;
+		// }
+
+		$this->Seo->title();
+
+		/** @var $refeter string Convenient $referer var in all views **/
+		$this->set('referer', $this->referer());
+
+		// Set view parameters (CmsHelper uses some of these for example)
+		$params = array(
+			'siteName' => Configure::read('AppSettings.site_name'),
+			'siteDescription' => Configure::read('AppSettings.description'),
+			'isLogged' => $this->Auth->isAuthorized(),
+			'isAuthorized' => $this->Auth->isAuthorized(),
+			'isPage' => false,
+			'isPosts' => false,
+			'isHome' => $this->isHome,
+			'bdyClass' => false,
+			'homePageId' => $this->homePageId,
+			// Here without base
+			'here' => substr($this->here, strlen($this->base) - strlen($this->here)),
+			'styles' => array(
+				'screen',
+				//'screen_debug',
+				'slickmap'
+				),
+			'credits' => $this->isHome ? Configure::read('AppSettings.credits') : false
+		);
+		$this->params['Wildflower']['view'] = $params;
+		$this->set($params);
+		
+		// User ID for views
 		$this->set('loggedUserId', $this->Auth->user('id'));
-
 		// canonical
 		$this->set('canonical', ($this->canonical == '') ? $this->here : $this->canonical);
-    }
+	}
 
 	function do404() {
 		$this->pageTitle = 'Page not found';
-        
-        $this->cakeError('error404', array(array(
-                'message' => 'Requested page was not found.',
-                'base' => $this->base)));
+
+		$this->cakeError('error404', array(array(
+				'message' => 'Requested page was not found.',
+				'base' => $this->base)));
 	}
 	
-    function getLoggedInUserId() {
-        return $this->Auth->user('id');
-    }
+	function getLoggedInUserId() {
+		return $this->Auth->user('id');
+	}
 	
 	/**
 	 * Create a preview cache file
@@ -286,86 +296,86 @@ class AppController extends Controller {
 	 * @return void
 	 */
 	function admin_create_preview() {
-        $cacheDir = Configure::read('Wildflower.previewCache') . DS;
-        
-        // Create a unique file name
-        $fileName = time();
-        $path = $cacheDir . $fileName . '.json';
-        while (file_exists($path)) {
-            $fileName++;
-            $path = $cacheDir . $fileName . '.json';
-        }
-        
-        // Write POST data to preview file
-        $data = json_encode($this->data[$this->modelClass]);
-        file_put_contents($path, $data);
-        
-        // Garbage collector
-        $this->__previewCacheGC($cacheDir);
-        
-        $responce = array('previewFileName' => $fileName);
-        $this->set('data', $responce);
-        $this->render('/elements/json');
-    }
+		$cacheDir = Configure::read('Wildflower.previewCache') . DS;
+		
+		// Create a unique file name
+		$fileName = time();
+		$path = $cacheDir . $fileName . '.json';
+		while (file_exists($path)) {
+			$fileName++;
+			$path = $cacheDir . $fileName . '.json';
+		}
+		
+		// Write POST data to preview file
+		$data = json_encode($this->data[$this->modelClass]);
+		file_put_contents($path, $data);
+		
+		// Garbage collector
+		$this->__previewCacheGC($cacheDir);
+		
+		$responce = array('previewFileName' => $fileName);
+		$this->set('data', $responce);
+		$this->render('/elements/json');
+	}
 
-    /**
-     * Tell wheather the current action should be protected
-     *
-     * @return bool
-     */
-    function isAdminAction() {
-        if (isset($this->params[Configure::read('Routing.admin')]) and $this->params[Configure::read('Routing.admin')]) {
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * Tell wheather the current action should be protected
+	 *
+	 * @return bool
+	 */
+	function isAdminAction() {
+		if (isset($this->params[Configure::read('Routing.admin')]) and $this->params[Configure::read('Routing.admin')]) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Delete old files from preview cache
-     * 
-     * @link http://www.jonasjohn.de/snippets/php/delete-temporary-files.htm
-     *
-     * @param string $path
-     */
-    protected function __previewCacheGC($path) {
-        // Filetypes to check (you can also use *.*)
-        $fileTypes = '*.json';
-         
-        // Here you can define after how many
-        // minutes the files should get deleted
-        $expire_time = 120;
-         
-        // Find all files of the given file type
-        foreach (glob($path . $fileTypes) as $Filename) {
-            // Read file creation time
-            $FileCreationTime = filectime($Filename);
-            // Calculate file age in seconds
-            $FileAge = time() - $FileCreationTime; 
-            // Is the file older than the given time span?
-            if ($FileAge > ($expire_time * 60)) {
-                unlink($Filename);
-            }
-        }
-    }
-    
-     /**
-      * Read and decode data from preview cache
-      * 
-      * @param string $fileName
-      * @return array
-      */
-     protected function __readPreviewCache($fileName) {
-         $previewCachePath = Configure::read('Wildflower.previewCache') . DS . $fileName . '.json';
-         if (!file_exists($previewCachePath)) {
-             return trigger_error("Cache file $previewCachePath does not exist!");
-         }
+	/**
+	 * Delete old files from preview cache
+	 * 
+	 * @link http://www.jonasjohn.de/snippets/php/delete-temporary-files.htm
+	 *
+	 * @param string $path
+	 */
+	protected function __previewCacheGC($path) {
+		// Filetypes to check (you can also use *.*)
+		$fileTypes = '*.json';
+		 
+		// Here you can define after how many
+		// minutes the files should get deleted
+		$expire_time = 120;
+		 
+		// Find all files of the given file type
+		foreach (glob($path . $fileTypes) as $Filename) {
+			// Read file creation time
+			$FileCreationTime = filectime($Filename);
+			// Calculate file age in seconds
+			$FileAge = time() - $FileCreationTime; 
+			// Is the file older than the given time span?
+			if ($FileAge > ($expire_time * 60)) {
+				unlink($Filename);
+			}
+		}
+	}
 
-         $json = file_get_contents($previewCachePath);
-         $item[$this->modelClass] = json_decode($json, true);
+	 /**
+	  * Read and decode data from preview cache
+	  * 
+	  * @param string $fileName
+	  * @return array
+	  */
+	 protected function __readPreviewCache($fileName) {
+		 $previewCachePath = Configure::read('Wildflower.previewCache') . DS . $fileName . '.json';
+		 if (!file_exists($previewCachePath)) {
+			 return trigger_error("Cache file $previewCachePath does not exist!");
+		 }
 
-         return $item;
-     }
-	
+		 $json = file_get_contents($previewCachePath);
+		 $item[$this->modelClass] = json_decode($json, true);
+
+		 return $item;
+	 }
+
 	/**
 	 * Gzip output
 	 * 
@@ -382,28 +392,28 @@ class AppController extends Controller {
 			header($expireHeader);
 		}
 	}
-	
+
 	/**
 	 * Test if we have the connection to the database
 	 *
 	 * @return bool
 	 */
 	private function _assertDatabaseConnection() {
-	    if (Configure::read('debug') < 1) {
-	        return true;
-	    }
-	    
-	    $db = @ConnectionManager::getDataSource('default');
-	    if ($db->connected) {
-	        return true;
-	    }
-	    
-	    $this->_isDatabaseConnected = false;
-	    $this->set('database_config', $db->config);
-        $this->render('/errors/no_database', 'no_database');
-	    exit();
+		if (Configure::read('debug') < 1) {
+			return true;
+		}
+		
+		$db = @ConnectionManager::getDataSource('default');
+		if ($db->connected) {
+			return true;
+		}
+		
+		$this->_isDatabaseConnected = false;
+		$this->set('database_config', $db->config);
+		$this->render('/errors/no_database', 'no_database');
+		exit();
 	}
-	
+
 	/**
 	 * @TODO duplicate in AppHelper
 	 * Returns a string with all spaces converted to $replacement and non word characters removed.
@@ -413,64 +423,64 @@ class AppController extends Controller {
 	 * @return string
 	 * @static
 	 */
-    static function slug($string, $replacement = '-') {
-    	$string = trim($string);
-        $map = array(
-            '/à|á|å|â|ä/' => 'a',
-            '/è|é|ê|ẽ|ë/' => 'e',
-            '/ì|í|î/' => 'i',
-            '/ò|ó|ô|ø/' => 'o',
-            '/ù|ú|ů|û/' => 'u',
-            '/ç|č/' => 'c',
-            '/ñ|ň/' => 'n',
-            '/ľ/' => 'l',
-            '/ý/' => 'y',
-            '/ť/' => 't',
-            '/ž/' => 'z',
-            '/š/' => 's',
-            '/æ/' => 'ae',
-            '/ö/' => 'oe',
-            '/ü/' => 'ue',
-            '/Ä/' => 'Ae',
-            '/Ü/' => 'Ue',
-            '/Ö/' => 'Oe',
-            '/ß/' => 'ss',
-            '/[^\w\s]/' => ' ',
-            '/\\s+/' => $replacement,
-            String::insert('/^[:replacement]+|[:replacement]+$/', 
-            array('replacement' => preg_quote($replacement, '/'))) => '',
-        );
-        $string = preg_replace(array_keys($map), array_values($map), $string);
-        return low($string);
-    }
-    
-    function wf_get_fields() {
-        if (Configure::read('debug') < 1) {
-            return;
-        }
+	static function slug($string, $replacement = '-') {
+		$string = trim($string);
+		$map = array(
+			'/à|á|å|â|ä/' => 'a',
+			'/è|é|ê|ẽ|ë/' => 'e',
+			'/ì|í|î/' => 'i',
+			'/ò|ó|ô|ø/' => 'o',
+			'/ù|ú|ů|û/' => 'u',
+			'/ç|č/' => 'c',
+			'/ñ|ň/' => 'n',
+			'/ľ/' => 'l',
+			'/ý/' => 'y',
+			'/ť/' => 't',
+			'/ž/' => 'z',
+			'/š/' => 's',
+			'/æ/' => 'ae',
+			'/ö/' => 'oe',
+			'/ü/' => 'ue',
+			'/Ä/' => 'Ae',
+			'/Ü/' => 'Ue',
+			'/Ö/' => 'Oe',
+			'/ß/' => 'ss',
+			'/[^\w\s]/' => ' ',
+			'/\\s+/' => $replacement,
+			String::insert('/^[:replacement]+|[:replacement]+$/', 
+			array('replacement' => preg_quote($replacement, '/'))) => '',
+		);
+		$string = preg_replace(array_keys($map), array_values($map), $string);
+		return low($string);
+	}
 
-        $output = '';
-        foreach ($this->{$this->modelClass}->schema() as $name => $column) {
-            $output .= "'$name' => array(";
-            
-            // Fields
-            foreach ($column as $field => $value) {
-                if (is_null($value) or $value === '') {
-                    continue;
-                }
-                $output .= "'$field' => ";
-                $value = str_replace("'", "\'", $value);
-                if (!is_numeric($value)) {
-                    $value = "'$value'";
-                }
-                $output .= $value . ', ';
-            }
-            
-            $output .= "),\n";
-        }
-        
-        pr($output);
-        die();
-    }
-	
+	function wf_get_fields() {
+		if (Configure::read('debug') < 1) {
+			return;
+		}
+
+		$output = '';
+		foreach ($this->{$this->modelClass}->schema() as $name => $column) {
+			$output .= "'$name' => array(";
+			
+			// Fields
+			foreach ($column as $field => $value) {
+				if (is_null($value) or $value === '') {
+					continue;
+				}
+				$output .= "'$field' => ";
+				$value = str_replace("'", "\'", $value);
+				if (!is_numeric($value)) {
+					$value = "'$value'";
+				}
+				$output .= $value . ', ';
+			}
+			
+			$output .= "),\n";
+		}
+		
+		pr($output);
+		die();
+	}
+
 }

@@ -14,7 +14,7 @@
     ?>
     
     <div class="comment_meta">
-    <?
+    <?php
         echo 
         $html->link(
             $data['Comment']['name'], 
@@ -22,7 +22,9 @@
         ),
         __(' posted ', true),
         $time->niceShort($data['Comment']['created']);
-        
+
+		echo $gravatar->image($data['Comment']['email'], array('size' => 24));
+
         if (!empty($data['Comment']['url'])) {
             echo '&nbsp;&nbsp;&nbsp;&nbsp;', $html->link($data['Comment']['url'], $data['Comment']['url']);
         }

@@ -1,6 +1,6 @@
 <?php
 class CommentsController extends AppController {
-    public $helpers = array('Time', 'List');
+    public $helpers = array('Time', 'List', 'Gravatar');
     public $paginate = array(
         'limit' => 20,
         'order' => array(
@@ -36,7 +36,7 @@ class CommentsController extends AppController {
     }
 
     function admin_index() {
-        $comments = $this->paginate('Comment', 'Comment.spam = 0');
+        $comments = $this->paginate('Comment', 'Comment.spam = 0 AND Comment.approved = 0');
         $this->set('comments', $comments);
     }
     

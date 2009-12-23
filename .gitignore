@@ -34,3 +34,11 @@ vendors/ruckusing/logs/development.log
 app/webroot/cache/*
 
 app/plugins/*
+
+
+# ingnore majic3 database cfg
+app/config/database.*.php
+
+
+
+

@@ -27,28 +27,6 @@
     ?>
     <![endif]-->
     
-    <!-- JQuery Light MVC -->
-    <script type="text/javascript" src="<?php echo $html->url('/' . Configure::read('Routing.admin') . '/assets/jlm'); ?>"></script>
-    <script type="text/javascript">
-    //<![CDATA[
-        $.jlm.config({
-            base: '<?php echo $this->base ?>',
-            controller: '<?php echo $this->params['controller'] ?>',
-            action: '<?php echo $this->params['action'] ?>', 
-            prefix: '<?php echo Configure::read('Routing.admin') ?>',
-            custom: {
-                wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
-            }
-        });
-        
-        tinyMCE.init($.jlm.components.tinyMce.getConfig());
-
-        $(function() {
-           $.jlm.dispatch(); 
-        });
-    //]]>
-    </script>
-    
 </head>
 <body>
  
@@ -58,6 +36,10 @@
     
     <div id="login_info">
         <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
+    </div>
+    
+    <div id="extras">
+        <?php echo $htmla->link(__('Full', true), '#', array('id' => 'fullToggle')); ?>
     </div>
 
     <ul id="nav">
@@ -69,6 +51,7 @@
         <li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
         <li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
         <li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
+        <li><?php echo $htmla->link(__('Utilities', true), array('controller' => 'utilities', 'action' => 'index')); ?></li>
         <li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
         <li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
     </ul>
@@ -97,6 +80,30 @@
         
     <div class="cleaner"></div>
 </div>
+    
+    <!-- JQuery Light MVC - using LABjs to load jquery & ui from google jlm from wf then init -->
+    <script type="text/javascript" src="/js/LAB.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js")
+		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
+		.script("/wildflower/js/admin_jlm.js").wait(function () {
+			$.jlm.config({
+				base: '<?php echo $this->base ?>',
+				controller: '<?php echo $this->params['controller'] ?>',
+				action: '<?php echo $this->params['action'] ?>', 
+				prefix: '<?php echo Configure::read('Routing.admin') ?>',
+				custom: {
+					wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>'
+				}
+			});
+
+			tinyMCE.init($.jlm.components.tinyMce.getConfig());
+
+			$.jlm.dispatch(); 
+		});
+    //]]>
+    </script>
 
 </body>
 </html>

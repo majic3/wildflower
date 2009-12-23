@@ -1,5 +1,8 @@
+<div class="rightCol">
 <h2><?php echo $page['Page']['title']; ?></h2>
 <?php echo $page['Page']['content']; ?>
+</div>
+<div class="main">
 
 <?php $session->flash(); ?>
 
@@ -18,3 +21,5 @@
 ?>
 
 <?php echo $this->element('edit_this', array('controller' => 'pages', 'id' => $page['Page']['id'])) ?>
+
+</div>

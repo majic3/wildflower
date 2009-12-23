@@ -1,0 +1,1 @@
+<p id="credits"><?php	echo $credits;	?></p>

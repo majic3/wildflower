@@ -5,13 +5,16 @@
  * @package wildflower
  */
 ?>
-<div class="page">
-    <h2><?php echo $page['Page']['title']; ?></h2>
-    
-    <div class="entry">
-       <?php echo $page['Page']['content']; ?>
-    </div>
-    
-    <?php echo $this->element('edit_this', array('id' => $page['Page']['id'])) ?>
+<div class="rightCol">
+    <?php echo $this->element('latest_posts');  ?>
+</div>
+<div class="main">
+	<h2><?php echo $page['Page']['title']; ?></h2>
+
+	<div class="entry">
+	   <?php echo $page['Page']['content']; ?>
+	</div>
+
+	<?php echo $this->element('edit_this', array('id' => $page['Page']['id'])) ?>
 </div>
 

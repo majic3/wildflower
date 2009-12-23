@@ -1,6 +1,6 @@
 <?php 
     echo 
-    '<span class="admin_link">',
+    '<div class="admin">',
     $html->link('Site admin', '/' . Configure::read('Routing.admin')),
-    '</span>';
+    '</div>';
 ?>

@@ -9,6 +9,7 @@ class PostsController extends AppController {
 	    'Tree', 
 	    'Time',
 	    'Paginator',
+		'Gravatar'
 	);
 	public $components = array('Email');
 	
@@ -251,7 +252,7 @@ class PostsController extends AppController {
     function index() {
         $this->cacheAction = true;
         
-        $this->pageTitle = 'Blog';
+        $this->pageTitle = Configure::read('Wildflower.blogName');
         
         $this->paginate = array(
             'limit' => 4,
@@ -283,7 +284,7 @@ class PostsController extends AppController {
     function category() {
         //$this->cacheAction = true;
         
-        $this->pageTitle = 'Blog';
+        $this->pageTitle = Configure::read('Wildflower.blogName');
         
         $this->Post->Category->recursive = -1;
         $category = $this->Post->Category->findBySlug($this->params['slug']);
@@ -294,6 +295,7 @@ class PostsController extends AppController {
         ));
         $postsIds = Set::extract($posts, '{n}.CategoriesPost.post_id');
         
+		
         $this->paginate = array(
             'limit' => 10,
             'order' => array(
@@ -302,6 +304,7 @@ class PostsController extends AppController {
             'conditions' => array(
                 'Post.draft' => 0,
                 'Post.id' => $postsIds,
+				'Post.archive' => 0,
             ),
         );
         $posts = $this->paginate($this->modelClass);
@@ -343,7 +346,7 @@ class PostsController extends AppController {
                 'conditions' => array('spam' => 0, 'approved' => 1),
             ),
         ));
-        $post = $this->Post->findBySlugAndDraft($slug, 0);
+        $post = $this->Post->findBySlugAndDraftAndArchive($slug, 0, 0);
 
 		if (empty($post)) {
 			return $this->do404();
@@ -429,5 +432,13 @@ class PostsController extends AppController {
             $this->redirect($this->data['Post']['permalink'] . '#comment-' . $this->Post->Comment->id);
         }
     }
-    
+
+    /*
+     * Get all latest posts
+     * 
+     * @return array
+     */
+   public function latest(){
+	return $this->Post->find('all', array('order' => 'Post.created DESC', 'limit' => 10));
+   }
 }

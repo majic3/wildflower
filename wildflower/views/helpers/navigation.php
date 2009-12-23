@@ -421,4 +421,46 @@ class NavigationHelper extends AppHelper {
         );
     }
     
+    
+    /**
+     * reformat dynamic & static data for deluxe sitemap
+     *
+     * @param array $structure of data for sitemap
+     */
+    function reformData($structure = array(), $static = true) {
+
+        // foreach item in structure
+        
+        ///debug( $structure); die();
+        
+       // debug($structure[$i]['data'][0][$model]);
+       
+       if($static) {
+        // process static
+            if(Set::check($structure, '0.url'))   {
+                for($i = 0; $i < count($structure); $i++)    {
+                    $structure[$i]['url'] = $structure[$i]['options']['url'];
+                }
+            }
+       } else {
+        // process dynamic
+        // build the array if not there 
+        if(!Set::check($structure, '0.data.0.url'))    {
+            $i = 0;
+            $model = $structure[$i]['model'];
+            $fields = $structure[$i]['options']['fields'];
+    
+            for($i = 0; $i < count($structure); $i++)    {
+                foreach($structure[$i]['data'] as $k => $v)   {
+                    $structure[$i]['data'][$k]['url'] = str_replace(
+                            '%' . strtoupper($fields['id']) . '%', 
+                            $v[$model][$fields['id']], 
+                            $structure[$i]['options']['childUrl']
+                    ); 
+                }
+            }
+        }
+       }
+       return $structure;
+    }
 }

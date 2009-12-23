@@ -33,21 +33,18 @@ class SeoComponent extends Object {
     	   $pageTitle = ucwords($this->controller->params['controller']);
     	}
     	
-    	$description = Configure::read('AppSettings.description');
+    	$description = hsc(Configure::read('AppSettings.description'));
+		$keywords = hsc(Configure::read('AppSettings.keywords'));
     	$nameAndDescription = hsc(Configure::read('AppSettings.site_name'));
     	if ($description) {
-    	    $description = hsc($description);
     	    $nameAndDescription = "$nameAndDescription - {$description}";
     	}
-    	
-        if ($this->controller->isHome) {
-            $this->controller->pageTitle = $nameAndDescription;
-        } else {
-            $this->controller->pageTitle = "$pageTitle &#8226; $nameAndDescription";
-        }
-        
-        $this->controller->set('page_title_for_layout', $pageTitle);
-        $this->controller->set('site_title_for_layout', $nameAndDescription);
+
+		if ($this->controller->isHome) {
+			$this->controller->pageTitle = $nameAndDescription;
+		} else {
+			$this->controller->pageTitle = "$pageTitle &#8226; $nameAndDescription";
+		}
     }
 	
 }

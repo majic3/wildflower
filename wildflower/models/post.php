@@ -35,16 +35,6 @@ class Post extends AppModel {
         return $url;
     }
 
-    /**
-     * Mark a post as a draft
-     *
-     * @param int $id
-     */
-    function draft($id) {
-        $id = intval($id);
-		// savefield?
-        return $this->query("UPDATE {$this->useTable} SET draft = 1 WHERE id = $id");
-    }
     
     /**
      * 
@@ -83,6 +73,39 @@ class Post extends AppModel {
         $id = intval($id);
         return $this->query("UPDATE {$this->useTable} SET draft = 0 WHERE id = $id");
     }
+	
+	/**
+     * Mark a post as a draft
+     *
+     * @param int $id
+     */
+    function unpublish($id) {
+        $id = intval($id);
+		// savefield?
+        return $this->query("UPDATE {$this->useTable} SET draft = 1 WHERE id = $id");
+    }
+	
+	/**
+     * Mark a post as archived
+     *
+     * @param int $id
+     */
+    function archive($id) {
+        $id = intval($id);
+		// savefield?
+        return $this->query("UPDATE {$this->useTable} SET archive = 1 WHERE id = $id");
+    }
+	
+	/**
+     * Mark a post as not-archived
+     *
+     * @param int $id
+     */
+    function unarchive($id) {
+        $id = intval($id);
+		// savefield?
+        return $this->query("UPDATE {$this->useTable} SET archive = 0 WHERE id = $id");
+    }
     
 	/**
      * Search title and content fields
@@ -92,7 +115,7 @@ class Post extends AppModel {
      */
     function search($query) {
     	$fields = array('id', 'title', 'slug');
-    	$titleResults = $this->findAll("{$this->name}.title LIKE '%$query%'", $fields, null, null, 1);
+    	$titleResults = $this->findAll("{$this->name}.title LIKE '%$query%' and {$this->name}.draft=0 and {$this->name}.archive=0", $fields, null, null, 1);
     	$contentResults = array();
     	if (empty($titleResults)) {
     		$titleResults = array();
