@@ -125,11 +125,11 @@ body #umsg	{
 
 /**/
 
-.home	.rightCol,
-.post	.rightCol {	width: 26%;	}
+.home	.rightCol {	width: 26%;	}
 
 .about	.leftCol {	width: 21%;	}
 
-.post .leftCol { width: 73% }
+.post .leftCol, 
+.post .rightCol	{ width: 73% }
 
 .contact	.rightCol {	width: 44%;	}

@@ -71,4 +71,5 @@ Configure::write(array('Wildflower' => array(
 		),
         'units' => array('pages', 'posts', 'categories'),
 	),
+    'version' => '1.3b4-db4',
 )));
