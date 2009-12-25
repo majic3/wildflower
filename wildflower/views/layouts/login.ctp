@@ -13,11 +13,8 @@
         echo
         // Load your CSS files here
         $html->css(array(
-            '/wildflower/css/wf.main',
-        )),
-        // TinyMCE 
-        // @TODO load only on pages with editor?
-        $javascript->link('/wildflower/js/tiny_mce/tiny_mce');
+            'screen',
+        ));
     ?>
      
     <!--[if lte IE 7]>
@@ -30,9 +27,9 @@
 </head>
 <body>
 
-    <div id="login_box">
-        <?php echo $content_for_layout; ?>
-    </div>
-    
+	<div id="login_box">
+		<?php echo $content_for_layout; ?>
+	</div>
+
 </body>
 </html>

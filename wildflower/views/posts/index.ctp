@@ -27,7 +27,7 @@
     </div>
     <?php } ?>
     
-    <?php echo $this->element('admin_pagination') ?>
+    <?php echo $this->element('pagination') ?>
     
 </div>
 

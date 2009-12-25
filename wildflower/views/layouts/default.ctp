@@ -17,10 +17,10 @@
 	if(isset($canonical['rel']['url']))	echo '<link rel="canonical" href="' . $canonical['rel']['url'] . "\" />\n";
 	if(isset($canonical['rev']['id']))	echo '<link rev="canonical" href="' . $canonical['rev']['slug'] . "\" />\n";
 		
-	echo $html->css($styles, 'stylesheet', Array('media' => 'screen')); ?>
+	echo $html->css(array('screen'), 'stylesheet', Array('media' => 'screen')); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 </head>
-<?php echo ($wild) ? $wild->bodyTagWithClass($bdyClass) : '<body>'; ?>
+<?php echo ($wild && $bdyClass) ? $wild->bodyTagWithClass($bdyClass) : '<body>'; ?>
 <p id="umsg" class="alert">setting up page</p>
 <div class="wildflower page liquid">
 	<div id="hd" class="head">
@@ -65,7 +65,7 @@
 			</div>
 			<div class="logos">
 				<div class="cake">
-					<?php echo $html->link($html->image('cake.power.gif', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
+					<?php echo $html->link($html->image('cake.icon.png', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
 				</div>
 				<div class="jquery">
 					<?php echo $html->link($html->image('jquery-icon.png', array('alt' => 'jquery writeless do more', 'width' => '80', 'height' => '18')), 'http://jquery.com/', array(), false, false); ?>

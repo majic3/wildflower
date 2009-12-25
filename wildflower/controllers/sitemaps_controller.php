@@ -25,6 +25,7 @@ class SitemapsController extends AppController {
 	 * Our sitemap 
 	 */
 	function index(){
+		$this->bdyClass = 'sitemap';
 		   //Configure::write('debug', 0);        
 		$this->__get_data();
 		$this->set('dynamics', $this->array_dynamic);

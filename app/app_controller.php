@@ -14,7 +14,7 @@ App::import('Core', 'l10n');
 class AppController extends Controller {
 
 	// I use Cakephp debug_kit & Matt Curry's interactive plugins - but these are submodules; Its not obligatory but they are helpful :)
-	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo');// , 'DebugKit.Toolbar' => array('panels' => array('Interactive.interactive')));
+	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo', 'DebugKit.Toolbar' => array('panels' => array('Interactive.interactive')));
 	public $currentUserId;
 	public $helpers = array(
 	    'Html', 
@@ -32,7 +32,8 @@ class AppController extends Controller {
 	);
 	public $homePageId;
 	public $isAuthorized = false;
-    public $isHome = false;
+	public $isHome = false;
+	public $bdyClass = false;
 	private $_isDatabaseConnected = true;
 
 	public $canonical = Array();
@@ -258,15 +259,10 @@ class AppController extends Controller {
 			'isPage' => false,
 			'isPosts' => false,
 			'isHome' => $this->isHome,
-			'bdyClass' => false,
+			'bdyClass' => ($this->bdyClass) ? $this->bdyClass : false,
 			'homePageId' => $this->homePageId,
 			// Here without base
 			'here' => substr($this->here, strlen($this->base) - strlen($this->here)),
-			'styles' => array(
-				'screen',
-				//'screen_debug',
-				'slickmap'
-				),
 			'credits' => $this->isHome ? Configure::read('AppSettings.credits') : false
 		);
 		$this->params['Wildflower']['view'] = $params;
