@@ -28,6 +28,9 @@ Configure::write(array('Wildflower' => array(
     'rootPageCache' => CACHE . 'wf_root_pages',
     'previewCache' => CACHE . 'wf_previews',
     'thumbnailsCache' => CACHE . 'wf_thumbnails',
+    'cakeLogs' => CACHE . '..' . DS . 'logs',
+    'backups' => 'l:' .  DS . 'vhost-backups' .  DS . 'wildflower',
+	'staticCache' => APP . WEBROOT_DIR .  DS . 'cache',
     'postsParent' => 'p',	// view individual posts
     'blogName' => 'Posts',	// used in the route for the blog
     'blogIndex' => 'posts',	// the name of the blog
@@ -73,3 +76,6 @@ Configure::write(array('Wildflower' => array(
 	),
     'version' => '1.3b4-db4',
 )));
+
+
+Configure::write('debug', 0);

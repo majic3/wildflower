@@ -26,10 +26,10 @@ class SitemapsController extends AppController {
 	 */
 	function index(){
 		$this->bdyClass = 'sitemap';
-		   //Configure::write('debug', 0);        
+		   //Configure::write('debug', 0);
 		$this->__get_data();
 		$this->set('dynamics', $this->array_dynamic);
-		$this->set('statics', $this->array_static);        
+		$this->set('statics', $this->array_static);
 		if ($this->RequestHandler->accepts('html')) {
 			$this->RequestHandler->respondAs('html');
 		} elseif ($this->RequestHandler->accepts('xml')) {
