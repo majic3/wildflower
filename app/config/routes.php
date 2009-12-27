@@ -13,6 +13,11 @@ Router::connect('/app/webroot/', array('controller' => 'pages', 'action' => 'vie
 Router::connect('/contact', array('controller' => 'messages', 'action' => 'index'));
 Router::connect('/contact/create', array('controller' => 'messages', 'action' => 'create'));
 
+// Search, help & options
+Router::connect('/search', array('controller' => 'dashboards', 'action' => 'search'));
+Router::connect('/help', array('controller' => 'dashboards', 'action' => 'help'));
+Router::connect('/options', array('controller' => 'dashboards', 'action' => 'options'));
+
 // Posts section
 Router::connect('/rss', array('controller' => 'posts', 'action' => 'rss'));
 Router::connect('/' . Configure::read('Wildflower.blogIndex'), array('controller' => 'posts', 'action' => 'index'));
