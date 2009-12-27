@@ -4,6 +4,8 @@
 <IfModule mod_rewrite.c>
    RewriteEngine on
 
+   ##rewrites
+
    # Maitenance mode: (uncoment following line)
    # RewriteRule    ^(.*)$ app/webroot/offline.html    [L]
    
