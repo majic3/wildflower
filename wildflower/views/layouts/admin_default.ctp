@@ -38,11 +38,13 @@
         <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
     </div>
     
-    <div id="extras">
-        <?php echo $htmla->link(__('Full', true), '#', array('id' => 'fullToggle')); ?>
-    </div>
+	<div id="extras">
+		<?php echo $htmla->link(__('Full', true), '#', array('id' => 'fullToggle')); ?>
+		<?php echo $htmla->link(__('Help', true), '/admin/dashboards/help', array('id' => 'help')); ?>
+		<?php echo $htmla->link(__('Options', true), '/admin/dashboards/options', array('id' => 'options')); ?>
+	</div>
 
-    <ul id="nav">
+	<ul id="nav">
         <li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
         <li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
         <li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
