@@ -7,43 +7,62 @@
     
     <link rel="icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    
-    <?php 
-        echo $html->css(array('admin/main'));
+	
+	<?php 
+        echo
+        // Load your CSS files here
+        $html->css(array(
+            'screen',
+        ));
     ?>
-        
-    <!--[if lte IE 6]>
-    <?php echo $html->css('ie6'); ?>
-    <![endif]-->
+     
     <!--[if lte IE 7]>
-    <?php echo $html->css('ie67'); ?>
+    <?php
+        // CSS file for Microsoft Internet Explorer 7 and lower
+        echo $html->css('/wildflower/css/wf.ie7');
+    ?>
     <![endif]-->
+    
 </head>
 <body>
+<div class="wildflower page liquid">
+	<div id="hd" class="head">
+		<img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
+		
+		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
+	</div>
 
-<div id="header">
-    <div class="container">
-  
-    <h1><?php echo $html->link('Wildflower CMS', '/') ?></h1>
-    
-    <span class="cleaner"> </span>
-    
-    <hr />
-        
-    </div>
+
+	<div id="bd" class="body">
+		<!-- a name="bd"></a -->
+		<?php echo $content_for_layout; ?>
+	</div>
+
+	<div id="ft" class="foot">
+		<div class="leftCol">
+			<?php echo $credits ? $this->element('credits', compact('credits')):'' ?>
+			
+			<?php echo $this->element('admin_link'); ?>
+			<?php echo $this->element('debug_notice'); ?>
+		</div>
+		<div class="main">
+			<div class="nv">
+				<?php echo $menu; ?>
+			</div>
+			<div class="logos">
+				<div class="cake">
+					<?php echo $html->link($html->image('cake.icon.png', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
+				</div>
+				<div class="jquery">
+					<?php echo $html->link($html->image('jquery-icon.png', array('alt' => 'jquery writeless do more', 'width' => '80', 'height' => '18')), 'http://jquery.com/', array(), false, false); ?>
+				</div>
+				<div class="wildflower">
+					<?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-    
-
-<div id="wrap">
-        
-    <div id="ws"><div id="wsb"><div id="wsr"><div id="wslb"><div id="wsrt"><div id="wsrb">
-        <div id="content">
-            <?php echo $content_for_layout; ?>
-        </div>
-    </div></div></div></div></div></div>
-    
-</div>
-
 </body>
 </html>
 
