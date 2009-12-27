@@ -65,7 +65,7 @@
 			</div>
 			<div class="logos">
 				<div class="cake">
-					<?php echo $html->link($html->image('cake.icon.png', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
+					<?php echo $html->link($html->image('cake.power.gif', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
 				</div>
 				<div class="jquery">
 					<?php echo $html->link($html->image('jquery-icon.png', array('alt' => 'jquery writeless do more', 'width' => '80', 'height' => '18')), 'http://jquery.com/', array(), false, false); ?>
