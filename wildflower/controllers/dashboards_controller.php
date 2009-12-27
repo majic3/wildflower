@@ -3,7 +3,7 @@ class DashboardsController extends AppController {
 	
 	public $helpers = array('List', 'Time', 'Text');
 	public $pageTitle = 'Dashboard';
-	public $uses = array('Dashboard','Post', 'Page');
+	public $uses = array('Dashboard','Post', 'Page', 'Utility');
 	
 	function admin_index() {
         $items = $this->Dashboard->findRecentHappening();
@@ -25,6 +25,34 @@ class DashboardsController extends AppController {
     }
     
     /**
+     * Public Help @TODO
+     *
+     */
+    function help() {
+    }
+    
+    /**
+     * Public Options @TODO
+     *
+     */
+    function options() {
+    }
+    
+    /**
+     * Admin Help @TODO
+     *
+     */
+    function admin_help() {
+    }
+    
+    /**
+     * Admin Options @TODO
+     *
+     */
+    function admin_options() {
+    }
+    
+    /**
      * Public search @TODO
      *
      */
@@ -38,9 +66,8 @@ class DashboardsController extends AppController {
             } else {
                 return;
             }
-            
-            $postResults = $this->Post->search($query);
-	        $pageResults = $this->Page->search($query);
+			$postResults = $this->Post->search($query);
+			$pageResults = $this->Page->search($query);
 	        if (!is_array($postResults)) {
 	        	$postResults = array();
 	        }
@@ -54,6 +81,8 @@ class DashboardsController extends AppController {
                 $this->render('/elements/search_results');
             }
         }
+		$uoptions = Utility::$models;
+		$this->set(compact('uoptions'));
     }
 	
 }

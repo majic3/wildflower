@@ -7,6 +7,12 @@
 	    echo "<fieldset>\n";
 	    echo $form->input('query');
 	    echo $form->submit('Search');
+		echo $form->input('unit', array(
+			'type' => 'select',
+			'multiple'=>'true',
+			'options' => $uoptions,
+			'label' => 'Search within',
+		));
 	    echo "</fieldset>\n";
 	    echo $form->end();
 	?>
