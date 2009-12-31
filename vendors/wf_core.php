@@ -78,4 +78,4 @@ Configure::write(array('Wildflower' => array(
 )));
 
 
-Configure::write('debug', 1);
+Configure::write('debug', 0);
