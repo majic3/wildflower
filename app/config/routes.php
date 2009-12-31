@@ -2,6 +2,8 @@
 /**
  * Wildflower routes
  *
+ * Note: To add your custom routes, create file my_routes.php in this folder and add them there. When you update Wildflower you won't have to  merge this file with a new version.
+ *
  * Wildflower reservers these URL's:
  */
  
@@ -51,6 +53,10 @@ Router::parseExtensions();
 
 
 /**
- * Your routes here...
+ * Load my_routes.php if exists
  */
+$myRoutesPath = dirname(__FILE__) . DS . 'my_routes.php';
+if (file_exists($myRoutesPath)) {
+	require_once($myRoutesPath);
+}
 
