@@ -115,12 +115,10 @@ class WildHelper extends AppHelper {
     	}
     	$links = join("\n", $links);
 
-    	if ($class) {
+    	if (isset($options['class'])) {
     	    $class = " class=\"{$options['class']}\"";
     	}
-    	if ($id) {
-            $id = 
-    	}
+
 		$id = "$slug";
 		if (isset($options['id'])) {
 			$id = " id=\"{$options['id']}\"";

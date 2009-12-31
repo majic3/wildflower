@@ -47,7 +47,7 @@
 		?></div>
 
 		<div class="nv">
-			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu', false, 'tabs'); ?>
+			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu', array('class' => 'tabs')); ?>
 		</div>
 	</div>
 
