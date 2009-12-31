@@ -4,7 +4,7 @@
  *
  * Note: To add your custom routes, create file my_routes.php in this folder and add them there. When you update Wildflower you won't have to  merge this file with a new version.
  *
- * Wildflower reservers these URL's:
+ * Wildflower reserves these URL's:
  */
  
 // Home page
