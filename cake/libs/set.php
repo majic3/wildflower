@@ -413,7 +413,7 @@ class Set extends Object {
 					if (count($context['trace']) == 1) {
 						$context['trace'][] = $context['key'];
 					}
-					$parent = join('/', $context['trace']) . '/.';
+					$parent = implode('/', $context['trace']) . '/.';
 					$context['item'] = Set::extract($parent, $data);
 					$context['key'] = array_pop($context['trace']);
 					if (isset($context['trace'][1]) && $context['trace'][1] > 0) {
@@ -454,7 +454,7 @@ class Set extends Object {
 								$item = $items[$token];
 								$matches[] = array(
 									'trace' => array_merge($context['trace'], $ctext),
-									'key' => $key,
+									'key' => $token,
 									'item' => $item,
 								);
 								break;
@@ -1077,7 +1077,7 @@ class Set extends Object {
 			if (!is_null($key)) {
 				$id = $key;
 			}
-			if (is_array($r) && count($r)) {
+			if (is_array($r) && !empty($r)) {
 				$stack = array_merge($stack, Set::__flatten($r, $id));
 			} else {
 				$stack[] = array('id' => $id, 'value' => $r);

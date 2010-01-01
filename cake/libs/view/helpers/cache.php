@@ -49,13 +49,6 @@ class CacheHelper extends AppHelper {
  */
 	var $__match = array();
 /**
- * holds the View object passed in final call to CacheHelper::cache()
- *
- * @var View
- * @access public
- */
-	var $view;
-/**
  * cache action time
  *
  * @var object
@@ -74,25 +67,33 @@ class CacheHelper extends AppHelper {
 		$cacheTime = 0;
 		$useCallbacks = false;
 		if (is_array($this->cacheAction)) {
-			$contoller = Inflector::underscore($this->controllerName);
+			$controller = Inflector::underscore($this->controllerName);
+			$controllerAlternate = Inflector::variable($this->controllerName);
+
 			$check = str_replace('/', '_', $this->here);
-			$replace = str_replace('/', '_', $this->base);
+			$basePath = str_replace('/', '_', $this->base);
+
 			$match = str_replace($this->base, '', $this->here);
 			$match = str_replace('//', '/', $match);
-			$match = str_replace('/' . $contoller . '/', '', $match);
+			$match = str_replace('/' . $controller . '/', '', $match);
+			$match = str_replace('/' . $controllerAlternate . '/', '', $match);
 			$match = str_replace('/' . $this->controllerName . '/', '', $match);
-			$check = str_replace($replace, '', $check);
-			$check = str_replace('_' . $contoller . '_', '', $check);
+
+			$check = str_replace($basePath, '', $check);
+			$check = str_replace('_' . $controller . '_', '', $check);
 			$check = str_replace('_' . $this->controllerName . '_', '', $check);
+			$check = str_replace('_' . $controllerAlternate . '_', '', $match);
+
 			$check = Inflector::slug($check);
-			$check = preg_replace('/^_+/', '', $check);
+			$check = trim($check, '_');
+
 			$keys = str_replace('/', '_', array_keys($this->cacheAction));
 			$found = array_keys($this->cacheAction);
 			$index = null;
 			$count = 0;
 
 			foreach ($keys as $key => $value) {
-				if (strpos($check, $value) === 0) {
+				if (strpos($check, rtrim($value, '_')) === 0) {
 					$index = $found[$count];
 					break;
 				}
@@ -171,7 +172,6 @@ class CacheHelper extends AppHelper {
 			$outputResult = array_values($outputResult);
 		}
 
-
 		if (!empty($fileResult)) {
 			$i = 0;
 			foreach ($fileResult as $cacheBlock) {
@@ -193,24 +193,23 @@ class CacheHelper extends AppHelper {
 	function __parseOutput($cache) {
 		$count = 0;
 		if (!empty($this->__match)) {
-
 			foreach ($this->__match as $found) {
 				$original = $cache;
 				$length = strlen($found);
 				$position = 0;
 
-					for ($i = 1; $i <= 1; $i++) {
-						$position = strpos($cache, $found, $position);
+				for ($i = 1; $i <= 1; $i++) {
+					$position = strpos($cache, $found, $position);
 
-						if ($position !== false) {
-							$cache = substr($original, 0, $position);
-							$cache .= $this->__replace[$count];
-							$cache .= substr($original, $position + $length);
-						} else {
-							break;
-						}
+					if ($position !== false) {
+						$cache = substr($original, 0, $position);
+						$cache .= $this->__replace[$count];
+						$cache .= substr($original, $position + $length);
+					} else {
+						break;
 					}
-					$count++;
+				}
+				$count++;
 			}
 			return $cache;
 		}
@@ -291,5 +290,4 @@ class CacheHelper extends AppHelper {
 		return cache('views' . DS . $cache, $file, $timestamp);
 	}
 }
-
 ?>

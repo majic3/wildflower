@@ -763,6 +763,18 @@ class Post extends CakeTestModel {
  * @access public
  */
 	var $belongsTo = array('Author');
+
+	function beforeFind($queryData) {
+		if (isset($queryData['connection'])) {
+			$this->useDbConfig = $queryData['connection'];
+		}
+		return true;
+	}
+
+	function afterFind($results) {
+		$this->useDbConfig = 'test_suite';
+		return $results;
+	}
 }
 /**
  * Author class
@@ -1749,7 +1761,58 @@ class AssociationTest2 extends CakeTestModel {
  * @subpackage    cake.tests.cases.libs.model
  */
 class Callback extends CakeTestModel {
-	//
+	
+}
+/**
+ * CallbackPostTestModel class
+ *
+ * @package       cake
+ * @subpackage    cake.tests.cases.libs.model
+ */
+class CallbackPostTestModel extends CakeTestModel {
+	var $useTable = 'posts';
+/**
+ * variable to control return of beforeValidate
+ *
+ * @var string
+ */
+	var $beforeValidateReturn = true;
+/**
+ * variable to control return of beforeSave
+ *
+ * @var string
+ */
+	var $beforeSaveReturn = true;
+/**
+ * variable to control return of beforeDelete
+ *
+ * @var string
+ */
+	var $beforeDeleteReturn = true;
+/**
+ * beforeSave callback
+ *
+ * @return void
+ **/
+	function beforeSave($options) {
+		return $this->beforeSaveReturn;
+	}
+/**
+ * beforeValidate callback
+ *
+ * @return void
+ **/
+	function beforeValidate($options) {
+		return $this->beforeValidateReturn;
+	}
+/**
+ * beforeDelete callback
+ *
+ * @return void
+ **/
+	function beforeDelete($cascade = true) {
+		return $this->beforeDeleteReturn;
+	}
 }
 /**
  * Uuid class
@@ -2655,8 +2718,6 @@ class Uuiditem extends CakeTestModel {
  * @var array
  * @access public
  */
-	//var $hasAndBelongsToMany = array('Uuidportfolio' => array('unique' => true));
-//	var $hasAndBelongsToMany = array('Uuidportfolio' => array('with' => 'UuiditemsUuidportfolio'));
 	var $hasAndBelongsToMany = array('Uuidportfolio' => array('with' => 'UuiditemsUuidportfolioNumericid'));
 
 }

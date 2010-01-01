@@ -155,7 +155,7 @@ class ContainableBehavior extends ModelBehavior {
 							if (!$reset && empty($instance->__backOriginalAssociation)) {
 								$instance->__backOriginalAssociation = $backupBindings;
 							} else if ($reset) {
-								$instance->__backAssociation[$type] = $instance->{$type};
+								$instance->__backAssociation[$type] = $backupBindings[$type];
 							}
 							$instance->{$type}[$assoc] = array_merge($instance->{$type}[$assoc], $model['keep'][$assoc]);
 						}
@@ -283,7 +283,7 @@ class ContainableBehavior extends ModelBehavior {
 			if (strpos($name, '.') !== false) {
 				$chain = explode('.', $name);
 				$name = array_shift($chain);
-				$children = array(join('.', $chain) => $children);
+				$children = array(implode('.', $chain) => $children);
 			}
 
 			$children = (array)$children;

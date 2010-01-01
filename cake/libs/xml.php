@@ -110,7 +110,6 @@ class XmlNode extends Object {
 			$this->createTextNode($value);
 		}
 	}
-
 /**
  * Adds a namespace to the current node
  *
@@ -241,7 +240,7 @@ class XmlNode extends Object {
 		}
 
 		$n = $name;
-		if (!empty($chldObjs['_name_'])) {
+		if (isset($chldObjs['_name_'])) {
 			$n = null;
 			unset($chldObjs['_name_']);
 		}
@@ -566,7 +565,7 @@ class XmlNode extends Object {
  * @access public
  */
 	function hasChildren() {
-		if (is_array($this->children) && count($this->children) > 0) {
+		if (is_array($this->children) && !empty($this->children)) {
 			return true;
 		}
 		return false;
@@ -593,7 +592,7 @@ class XmlNode extends Object {
 			}
 
 			$d .= '<' . $this->name();
-			if (count($this->namespaces) > 0) {
+			if (!empty($this->namespaces) > 0) {
 				foreach ($this->namespaces as $key => $val) {
 					$val = str_replace('"', '\"', $val);
 					$d .= ' xmlns:' . $key . '="' . $val . '"';
@@ -601,14 +600,14 @@ class XmlNode extends Object {
 			}
 
 			$parent =& $this->parent();
-			if ($parent->name === '#document' && count($parent->namespaces) > 0) {
+			if ($parent->name === '#document' && !empty($parent->namespaces)) {
 				foreach ($parent->namespaces as $key => $val) {
 					$val = str_replace('"', '\"', $val);
 					$d .= ' xmlns:' . $key . '="' . $val . '"';
 				}
 			}
 
-			if (is_array($this->attributes) && count($this->attributes) > 0) {
+			if (is_array($this->attributes) && !empty($this->attributes)) {
 				foreach ($this->attributes as $key => $val) {
 					if (is_bool($val) && $val === false) {
 						$val = 0;
@@ -732,13 +731,13 @@ class XmlNode extends Object {
  * if given the $recursive parameter.
  *
  * @param boolean $recursive Recursively delete elements.
- * @access private
+ * @access protected
  */
-	function __killParent($recursive = true) {
+	function _killParent($recursive = true) {
 		unset($this->__parent, $this->_log);
 		if ($recursive && $this->hasChildren()) {
 			for ($i = 0; $i < count($this->children); $i++) {
-				$this->children[$i]->__killParent(true);
+				$this->children[$i]->_killParent(true);
 			}
 		}
 	}
@@ -1093,6 +1092,7 @@ class Xml extends XmlNode {
 		if (is_resource($this->__parser)) {
 			xml_parser_free($this->__parser);
 		}
+		$this->_killParent(true);
 	}
 /**
  * Adds a namespace to any XML documents generated or parsed

@@ -1,0 +1,9 @@
+[submodule "app/plugins/debug_kit"]
+	path = app/plugins/debug_kit
+	url = git://github.com/cakephp/debug_kit.git
+[submodule "app/plugins/interactive"]
+	path = app/plugins/interactive
+	url = git://github.com/mcurry/interactive.git
+[submodule "app/plugins/acl_plugin"]
+	path = app/plugins/acl_plugin
+	url = git://github.com/Jaciss/acl_plugin.git

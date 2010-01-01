@@ -202,6 +202,7 @@ class SecurityComponentTest extends CakeTestCase {
  * @return void
  */
 	function testRequireSecureFail() {
+		$_SERVER['HTTPS'] = 'off';
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$this->Controller->action = 'posted';
 		$this->Controller->Security->requireSecure('posted');
@@ -525,6 +526,31 @@ DIGEST;
 			'_Token' => compact('key', 'fields')
 		);
 		$this->assertTrue($this->Controller->Security->validatePost($this->Controller));
+	}
+/**
+ * test that validatePost fails if any of its required fields are missing.
+ *
+ * @return void
+ **/
+	function testValidatePostFormHacking() {
+		$this->Controller->Security->startup($this->Controller);
+		$key = $this->Controller->params['_Token']['key'];
+		$fields = 'a5475372b40f6e3ccbf9f8af191f20e1642fd877%3An%3A1%3A%7Bv%3A0%3B';
+		$fields .= 'f%3A11%3A%22Zbqry.inyvq%22%3B%7D';
+
+		$this->Controller->data = array(
+			'Model' => array('username' => 'nate', 'password' => 'foo', 'valid' => '0'),
+			'_Token' => compact('key')
+		);
+		$result = $this->Controller->Security->validatePost($this->Controller);
+		$this->assertFalse($result, 'validatePost passed when fields were missing. %s');
+
+		$this->Controller->data = array(
+			'Model' => array('username' => 'nate', 'password' => 'foo', 'valid' => '0'),
+			'_Token' => compact('fields')
+		);
+		$result = $this->Controller->Security->validatePost($this->Controller);
+		$this->assertFalse($result, 'validatePost passed when key was missing. %s');
 	}
 /**
  * Tests validation of checkbox arrays
@@ -1100,6 +1126,24 @@ DIGEST;
 		$expected = 'WWW-Authenticate: Basic realm="'.$realm.'"';
 		$this->assertEqual(count($this->Controller->testHeaders), 1);
 		$this->assertEqual(current($this->Controller->testHeaders), $expected);
+	}
+
+/**
+ * test that a requestAction's controller will have the _Token appended to
+ * the params.
+ *
+ * @return void
+ * @see http://cakephp.lighthouseapp.com/projects/42648/tickets/68
+ */
+	function testSettingTokenForRequestAction() {
+		$this->Controller->Security->startup($this->Controller);
+		$key = $this->Controller->params['_Token']['key'];
+
+		$this->Controller->params['requested'] = 1;
+		unset($this->Controller->params['_Token']);
+
+		$this->Controller->Security->startup($this->Controller);
+		$this->assertEqual($this->Controller->params['_Token']['key'], $key);
 	}
 }
 ?>
