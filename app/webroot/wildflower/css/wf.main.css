@@ -727,7 +727,6 @@ select {
     float: left;
 }
 
-<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
 .category_sidebar h4 {
     margin: 0 0 5px 0;
     padding: 6px;
@@ -741,19 +740,19 @@ select {
     margin-top: 5px;
 }
 
-#assign_category_box .input, #assign_category_box .submit {
-    margin: 0;
-    padding: 0;
-    display: inline;
+.sidebar_heading {
+    background: #eefaff;
+    padding: 3px 6px;
+    margin: 0 0 7px;
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
 }
 
-#assign_category_box .submit {
-    margin-left: 10px;
+.category_sidebar {
+	line-height: 1.3;
 }
 
-#assign_category_box input, #assign_category_box select {
-    font-size: 11px;
-=======
 .sidebar_heading {
     background: #eefaff;
     padding: 3px 6px;
@@ -769,7 +768,6 @@ select {
 
 .category_sidebar li li {
 	padding-left: 7px;
->>>>>>> 8dbcb24... Removed archive feature from GUI, ability to have form_for_layout, post edit screen with tree category checkboxes:app/webroot/wildflower/css/wf.main.css
 }
 
 .post-categories,
