@@ -60,6 +60,9 @@
 </div>
 
 <div id="wrap">
+	
+	<?php if (isset($form_for_layout)) echo $form_for_layout; ?>
+	
     <div id="content">
         <div id="co_bottom_shadow">
         <div id="co_right_shadow">
@@ -79,6 +82,8 @@
         </ul>
     </div>
     <?php endif; ?>
+
+	<?php if (isset($form_for_layout)) echo '</form>'; ?>
         
     <div class="cleaner"></div>
 </div>

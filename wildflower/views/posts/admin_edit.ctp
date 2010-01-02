@@ -3,8 +3,9 @@
         $session->flash();
     }
 
+	$partialLayout->setLayoutVar('form_for_layout', $form->create('Post', array('action' => 'update', 'class' => 'editor_form')));
+
     echo 
-    $form->create('Post', array('url' => $html->url(array('action' => 'admin_update', 'base' => false)), 'class' => 'editor_form')),
     $form->input('title', array(
         'label' => __('Post title', true)
     )),
@@ -27,9 +28,6 @@
     <?php echo $this->element('admin_edit_buttons'); ?>
 </div>
 
-<?php echo $form->end(); ?>
-    
-
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li class="main_sidebar">
         <?php echo $html->link(
@@ -38,24 +36,8 @@
             array('class' => 'add', 'escape' => false)); ?>
     </li>
     <li class="main_sidebar category_sidebar">
-        <h4><?php __('Category'); ?></h4>
-        <?php if (empty($this->data['Category'])): ?>
-            <span>Not assigned under any categories.</span>
-        <?php else: ?>
-        <ul>
-        <?php foreach ($this->data['Category'] as $category): ?>
-            <li><?php echo $category['name']; ?></li>
-        <?php endforeach; ?>
-        </ul>
-        <?php endif; ?>
-        
-        <div id="assign_category_box">
-        <?php 
-            echo $form->input('assign_category_id', array('type' => 'select', 'options' => $categories, 'label' => false, 'empty' => __('select a category...', true), 'value' => $categoryId)); 
-            echo $form->submit('Assign', array('name' => 'data[_assign_category]'));
-        ?>   
-        </div>
-
+		<h4 class="sidebar_heading"><?php __('Categories'); ?></h4>
+		<?php echo $tree->generate($categoriesForTree, array('model' => 'Category', 'class' => '', 'element' => '../categories/list_item', 'inCategories' => $inCategories)); ?>
     </li>
     <li class="main_sidebar">
         <ul class="sidebar-menu-alt edit-sections-menu">
