@@ -727,18 +727,6 @@ select {
     float: left;
 }
 
-.category_sidebar h4 {
-    margin: 0 0 5px 0;
-    padding: 6px;
-    background: #e2eaed;
-}
-    
-#assign_category_box {
-    border: 1px solid #ddd;
-    background: #eee;
-    padding: 6px;
-    margin-top: 5px;
-}
 
 .sidebar_heading {
     background: #eefaff;
@@ -752,6 +740,7 @@ select {
 .category_sidebar {
 	line-height: 1.3;
 }
+
 
 .sidebar_heading {
     background: #eefaff;
