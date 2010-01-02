@@ -35,8 +35,8 @@
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 
 		<div id="search" class="search"><?php echo $form->create("Dashboard",array('action' => 'search'));
-			echo $form->label("query", "search");
-			echo $form->text("query");
+			echo $form->label("q", "search");
+			echo $form->text("q");
 			echo $form->submit("go.gif", array('id' => 'go', 'div' => false));
 			echo $form->end(null);
 		?></div>

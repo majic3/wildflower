@@ -36,10 +36,6 @@ Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'ind
 Router::connect('/wildflower/thumbnail/*', array('controller' => 'assets', 'action' => 'thumbnail'));
 Router::connect('/wildflower/thumbnail_by_id/*', array('controller' => 'assets', 'action' => 'thumbnail_by_id'));
 
-// Connect root pages slugs
-App::import('Vendor', 'WfRootPagesCache', array('file' => 'WfRootPagesCache.php'));
-WildflowerRootPagesCache::connect();
-
 // Utilities - add for cache and other general bits and things
 
 // sitemaps
@@ -48,6 +44,10 @@ Router::connect('/sitemap/:action/*', array('controller' => 'sitemaps'));
 
 // sitemaps - robots optional
 Router::connect('/robots/:action/*', array('controller' => 'sitemaps', 'action' => 'robots'));
+
+// Connect root pages slugs
+App::import('Vendor', 'WfRootPagesCache', array('file' => 'WfRootPagesCache.php'));
+WildflowerRootPagesCache::connect();
 
 Router::parseExtensions(); 
 
