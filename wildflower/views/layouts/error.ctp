@@ -20,7 +20,7 @@
 	echo $html->css(array('screen'), 'stylesheet', Array('media' => 'screen')); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 </head>
-<body class="error">
+<body>
 
 <div class="wildflower">
 	<div id="hd" class="head">
@@ -40,10 +40,6 @@
 			echo $form->submit("go.gif", array('id' => 'go', 'div' => false));
 			echo $form->end(null);
 		?></div>
-
-		<div class="nv">
-			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu', array('class' => 'tabs')); ?>
-		</div>
 	</div>
 
 
