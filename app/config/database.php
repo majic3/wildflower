@@ -86,9 +86,9 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => 'majic',
-		'database' => 'wildflower_darwin',
-		'port' => 3306
+		'password' => '',
+		'database' => 'wildflower',
+	    'port' => 3306
 	);
 	
 	/**
