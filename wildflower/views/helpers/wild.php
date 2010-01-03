@@ -59,17 +59,18 @@ class WildHelper extends AppHelper {
 	 *
 	 * @return string
 	 */
-	function bodyTagWithClass($bdyClass = false) {
-
-		if($bdyClass)	{
-			return '<body class="'.$bdyClass.'">';
-		}
+	function bodyTagWithClass() {
 
 		if (!isset($this->params['Wildflower']['view'])) {
 			return '<body>';
 		}
 		
 	    extract($this->params['Wildflower']['view']);
+
+		if($bdyClass)	{
+			return '<body class="'.$bdyClass.'">';
+		}
+
 	    $html = '<body';
 	    if ($isHome) { 
 	       $html .= ' class="home"'; 

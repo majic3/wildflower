@@ -1605,7 +1605,7 @@ top:0.26em;}
 
 .head .search	{	position: absolute; right: .3em; bottom: 3.3em; width: 175px; }
 .head .search label	{	width: auto; padding-right: 2px;margin-right: 0; line-height: 24px; font-size: 12px; margin-top: 0px; height: 28px; padding-right: 8px; }
-#DashboardQuery {	width: 95px; margin-top: 0px; margin-bottom: 0px; padding-bottom: 6px;	}
+#DashboardQ {	width: 95px; margin-top: 0px; margin-bottom: 0px; padding-bottom: 6px;	}
 #go	{	margin-top: 0px; padding-top: 0px; margin-bottom: -10px; margin-left: 5px;	}
 
 .head .nv,
