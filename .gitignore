@@ -33,6 +33,13 @@ vendors/ruckusing/logs/development.log
 # HTML webroot cache
 app/webroot/cache/*
 
+# js/css src files && .gz
+app/webroot/css/*_src.css
+app/webroot/css/*.css.gz
+app/webroot/js/*_src.js
+app/webroot/js/*.js.gz
+
+# pluigins
 app/plugins/*
 !app/plugins/debug_kit
 !app/plugins/interactive
