@@ -272,6 +272,8 @@ class AppController extends Controller {
 		$this->set('loggedUserId', $this->Auth->user('id'));
 		// canonical
 		$this->set('canonical', ($this->canonical == '') ? $this->here : $this->canonical);
+
+		$this->_setErrorLayout();
 	}
 
 	function do404() {
@@ -477,6 +479,12 @@ class AppController extends Controller {
 		
 		pr($output);
 		die();
+	}
+
+	private function _setErrorLayout() {  
+		if($this->name == 'CakeError') {  
+			$this->layout = 'error';  
+		}
 	}
 
 }
