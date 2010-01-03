@@ -48,7 +48,6 @@
 
 
 	<div id="bd" class="body">
-		<!-- a name="bd"></a -->
 		<?php echo $content_for_layout; ?>
 	</div>
 
