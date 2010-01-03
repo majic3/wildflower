@@ -3,7 +3,7 @@
 	<h2>Search</h2>
 	
 	<?php 
-	    echo $form->create('Dashboard', array('action' => 'search'));
+	    echo $form->create('Dashboard', array('action' => 'search', 'type' => 'get'));
 	    echo "<fieldset>\n";
 	    echo $form->input('query');
 	    echo $form->submit('Search');
