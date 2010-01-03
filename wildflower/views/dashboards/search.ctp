@@ -27,7 +27,7 @@
 	        if (isset($item['Page'])) {
 	            $row = $html->link($item['Page']['title'], $item['Page']['url']); 
 	        } else if (isset($item['Post'])) {
-	            $row = $html->link($item['Post']['title'], "/p/{$item['Post']['slug']}");
+	            $row = $html->link($item['Post']['title'], "/".Configure::read('Wildflower.postsParent')."/{$item['Post']['slug']}");
 	        } else {
 	            continue;
 	        }
