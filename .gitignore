@@ -25,7 +25,6 @@ app/vendors/Director/*
 *.*.bak
 *.*.orig
 
-
 # Wildflower uploaded files
 app/webroot/uploads/*
 
