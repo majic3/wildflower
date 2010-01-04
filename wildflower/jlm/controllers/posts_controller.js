@@ -1,5 +1,7 @@
 
+
 $.jlm.bind('posts.admin_categorize', function() {
+    
     
     // Add new category box AJAX form
     var buttonEl = $('#add-category-box .submit input');
@@ -64,3 +66,4 @@ $.jlm.bind('posts.admin_categorize', function() {
     bindDeleteLinks();
     
 });
+

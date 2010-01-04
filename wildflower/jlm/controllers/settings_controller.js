@@ -13,4 +13,6 @@ $.jlm.bind('settings.admin_index', function() {
     showHideSmtpOptions();
 	$('#setting-email_delivery select').change(showHideSmtpOptions);
 	
+// whats this??	$('input').customInput();
+	
 });

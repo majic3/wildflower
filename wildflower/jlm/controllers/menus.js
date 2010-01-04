@@ -40,7 +40,7 @@ $.jlm.bind('menus.admin_add, menus.admin_edit', function() {
             update: renameNames
         });
     }
-    
+
     bindRemove();
     bindMove();
     
