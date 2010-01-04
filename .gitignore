@@ -23,6 +23,8 @@ app/vendors/Director/*
 
 # ignore bak files
 *.*.bak
+*.*.orig
+
 
 # Wildflower uploaded files
 app/webroot/uploads/*

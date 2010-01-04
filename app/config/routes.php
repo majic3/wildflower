@@ -1,8 +1,16 @@
 <?php
 /**
- * Wildflower routes
+ * Load my_routes.php first, so user routes have priority over Wildflower
  *
- * Note: To add your custom routes, create file my_routes.php in this folder and add them there. When you update Wildflower you won't have to  merge this file with a new version.
+ * To add your custom routes, create file my_routes.php in this folder and add them there. When you update Wildflower you won't have to  merge this file with a new version.
+ */
+$myRoutesPath = dirname(__FILE__) . DS . 'my_routes.php';
+if (file_exists($myRoutesPath)) {
+	require_once($myRoutesPath);
+}
+
+/**
+ * Wildflower routes
  *
  * Wildflower reserves these URL's:
  */
@@ -50,13 +58,3 @@ App::import('Vendor', 'WfRootPagesCache', array('file' => 'WfRootPagesCache.php'
 WildflowerRootPagesCache::connect();
 
 Router::parseExtensions(); 
-
-
-/**
- * Load my_routes.php if exists
- */
-$myRoutesPath = dirname(__FILE__) . DS . 'my_routes.php';
-if (file_exists($myRoutesPath)) {
-	require_once($myRoutesPath);
-}
-
