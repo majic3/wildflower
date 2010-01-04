@@ -1,5 +1,12 @@
-<h2 class="section"><?php __('Pages'); ?></h2>
 
+	<h2 class="section"><?php __('Pages'); ?></h2>
+	<ul id="displayOptions" class="tabs">
+		<li><a href="#tree">tree</a></li>
+		<li><a href="#icons">icons</a></li>
+		<li><a href="#details">details</a></li>
+	</ul>
+	<div class="panels">
+	<div id="tree" class="panel">
 <?php
 	echo 
 	$form->create('Page', array('action' => 'admin_mass_update'));
@@ -17,6 +24,19 @@
     $form->end();
 ?>
 
+	</div>
+	<div id="icons" class="panel">
+		<?php
+			print_r($pages);
+		?>
+	</div>
+	<div id="details" class="panel">
+		<?php
+			print_r($pages);
+		?>
+	</div>
+</div>
+
 
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li>
@@ -29,4 +49,3 @@
             array('class' => 'add', 'escape' => false)) ?>
     </li>
 <?php $partialLayout->blockEnd(); ?>
-
