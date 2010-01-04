@@ -1642,7 +1642,7 @@ text-decoration:none;
         background: #eee;
         overflow: hidden;
     }
-    
+
 .menu_item_label,
 .menu_item_url {
     float: left;
@@ -1688,6 +1688,92 @@ text-decoration:none;
     background: #fff74c !important;
 }
 
+
+/*	.scoialWeb	*/
+
+#socialWeb	{
+	width: 355px; position: absolute; display: block; top: 0; right: 10px;
+}
+	#socialWeb	.short	{
+		margin-top: 39px;
+	}
+	#socialWeb	.chatcatcher	{
+		margin-top: 39px;
+	}
+
+/*	custom inputs	*/
+
+/* wrapper divs */
+.custom-checkbox, .custom-radio { position: relative; }
+	
+/* input, label positioning */
+.custom-checkbox input, 
+.custom-radio input {
+	position: absolute;
+	left: 2px;
+	top: 3px;
+	margin: 0;
+	z-index: 0;
+}
+
+.custom-checkbox label, 
+.custom-radio label {
+	display: block;
+	position: relative;
+	z-index: 1;
+	font-size: 1.3em;
+	padding-right: 1em;
+	line-height: 1;
+	padding: .5em 0 .5em 30px;
+	margin: 0 0 .3em;
+	cursor: pointer;
+}
+.custom-checkbox label, .custom-radio label {
+	background-position: -10px -14px;
+}
+
+.custom-checkbox label.hover,
+.custom-checkbox label.focus,
+.custom-radio label.hover,
+.custom-radio label.focus {
+	background-position: -10px -114px;
+}
+
+.custom-checkbox label.checked, 
+.custom-radio label.checked {
+	background-position: -10px -214px;
+}
+
+.custom-checkbox label.checkedHover, 
+.custom-checkbox label.checkedFocus {
+	background-position: -10px -314px;
+}
+
+.custom-checkbox label.focus, 
+.custom-radio label.focus {
+	outline: 1px dotted #ccc;
+}
+
+/*	/custom inputs	*/
+body #wrap #content_pad	.draft	{
+	color: #555 !important;
+	background-color: #F2F2F2;
+	border-bottom: 1px dotted #252525 !important;
+}
+
+body #wrap #content_pad	.draft	a	{
+	color: #777 !important;
+}
+
+body #wrap #content_pad	.draft	a:hover	{
+	color: #B7B7B7 !important;
+}
+
+
+.datePick	{
+	cursor: pointer;
+}
+
 .remove {
 	font-size: 90%;
 	color: #e91414;
@@ -1696,4 +1782,54 @@ text-decoration:none;
 .remove:hover {
 	background-color: #e91414;
 	color: #fff;
+}
+
+#displayOptions {
+	float: right;
+	margin-top: -50px; margin-bottom: 0px;
+}
+	
+	#displayOptions li {
+		margin: 3px 5px;
+	}
+	#displayOptions a {
+		padding: 5px 8px;
+	}
+
+.paginator	p	{	margin: 0	}
+
+.error, .notice, .success {
+  border: 2px solid #DDDDDD;
+  margin-bottom: 1em;
+  padding: 0.8em;
+}
+
+.error {
+  background: #FBE3E4 none repeat scroll 0 0;
+  border-color: #FBC2C4;
+  color: #8A1F11;
+}
+
+.notice {
+  background: #FFF6BF none repeat scroll 0 0;
+  border-color: #FFD324;
+  color: #514721;
+}
+
+.success {
+  background: #E6EFC2 none repeat scroll 0 0;
+  border-color: #C6D880;
+  color: #264409;
+}
+
+.error a {
+  color: #8A1F11;
+}
+
+.notice a {
+  color: #514721;
+}
+
+.success a {
+  color: #264409;
 }
