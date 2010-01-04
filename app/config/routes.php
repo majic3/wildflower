@@ -43,7 +43,7 @@ Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'ind
 // @TODO shorten to '/i/*'
 $mprefix = Configure::read('Wildflower.mprefix');
 Router::connect('/' . $mprefix. '/thumbnail/*', array('controller' => 'assets', 'action' => 'thumbnail'));
-Router::connect('/' . $mprefix. '/wildflower/thumbnail_by_id/*', array('controller' => 'assets', 'action' => 'thumbnail_by_id'));
+Router::connect('/' . $mprefix. '/thumbnail_by_id/*', array('controller' => 'assets', 'action' => 'thumbnail_by_id'));
 
 // Utilities - add for cache and other general bits and things
 
