@@ -28,36 +28,38 @@
     <![endif]-->
     
 </head>
-<body>
+<body class="<?php echo	$this->params['controller']; ?>">
  
 <div id="header">
-    <h1 id="site_title"><?php echo hsc($siteName); ?></h1>
-    <?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
-    
-    <div id="login_info">
-        <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
-    </div>
-    
-	<div id="extras">
-		<?php echo $htmla->link(__('Full', true), '#', array('id' => 'fullToggle')); ?>
-		<?php echo $htmla->link(__('Help', true), '/admin/dashboards/help', array('id' => 'help')); ?>
-		<?php echo $htmla->link(__('Options', true), '/admin/dashboards/options', array('id' => 'options')); ?>
-	</div>
+	<div id="header-wrap">
+		<h1 id="site_title"><?php echo hsc($siteName); ?></h1>
+		<?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
+		
+		<div id="login_info">
+			<?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
+		</div>
+		
+		<div id="extras">
+			<?php echo $htmla->link(__('Full', true), '#fulleditor', array('id' => 'fullToggle', 'class' => 'fulleditor')); ?>
+			<?php echo $htmla->link(__('Help', true), '/admin/dashboards/help', array('id' => 'help')); ?>
+			<?php echo $htmla->link(__('Options', true), '/admin/dashboards/options', array('id' => 'options')); ?>
+		</div>
 
-	<ul id="nav">
-        <li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
-        <li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Posts', true), array('controller' => 'posts', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Categories', true), array('controller' => 'categories', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
-        <li><?php echo $htmla->link(__('Utilities', true), array('controller' => 'utilities', 'action' => 'index')); ?></li>
-        <li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
-        <li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
-    </ul>
-</div>
+		<ul id="nav">
+			<li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
+			<li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Posts', true), array('controller' => 'posts', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Categories', true), array('controller' => 'categories', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
+			<li><?php echo $htmla->link(__('Utilities', true), array('controller' => 'utilities', 'action' => 'index')); ?></li>
+			<li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
+			<li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
+		</ul>
+	</div>
+</div><!-- /header -->
 
 <div id="wrap">
 	

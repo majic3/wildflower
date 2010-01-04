@@ -47,8 +47,7 @@ hr {
 }
 
 #wrap,
-#footer,
-#header-wrap {
+#footer {
     padding: 0 20px;
 }
 
@@ -78,16 +77,44 @@ hr {
     padding: 0 15px;
 }
 
+#editor_mode_header {
+    padding: 0 40px;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+}
+
+    #editor_mode_header li {
+        float: left;
+        padding: 6px;
+        margin: 0;
+    }
+    
+    #editor_mode_header small {
+        font-size: 11px;
+    }
+
+    #editor_mode_header a {
+        color: #fff;
+    }
+
     #header a {
         color: #fff;
     }
     
-    #header a:hover {
+    #header a:hover,
+    #editor_mode_header a:hover {
         background: #3b3b3b;
         color: #fff;
     }
 
-#site_title {
+#header-wrap{
+    position: relative;
+	padding: 0;
+}
+
+#site_title,
+#site-title {
     font-size: 20px;
     font-weight: normal;
     margin: 0;
@@ -103,11 +130,23 @@ hr {
 	-moz-background-inline-policy: continuous;
 }
     
-#site_index {
+#site_index,
+#site-index {
     float: left;
     display: block;
     padding: 3px 5px;
-    margin: 18px 0 0 -3px;
+	padding:3px 5px;
+	position:absolute;
+	top:15px;
+	left: 170px
+}
+
+    #site_title a,
+    #site-title a {
+        text-decoration: none;
+        padding: 20px 10px;
+        display: block;
+        float: left;
 }
     
 #nav {
@@ -198,8 +237,24 @@ hr {
 
 #content_pad {
     padding: 20px 20px 20px;
-    min-height: 200px;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	min-height: 300px;
+	position:relative;
 }
+
+body.dashboards	#content_pad {	background-image: url(img/bright/dashboards.png);	}
+body.pages		#content_pad {	background-image: url(img/bright/pages.png);	}
+body.posts		#content_pad {	background-image: url(img/bright/posts.png);	}
+body.assets		#content_pad {	background-image: url(img/bright/assets.png);	}
+body.messages	#content_pad {	background-image: url(img/bright/messages.png);	}
+body.galleries	#content_pad {	background-image: url(img/bright/galleries.png);	}
+body.stats		#content_pad {	background-image: url(img/bright/stats.png);	}
+body.links		#content_pad {	background-image: url(img/bright/links.png);	}
+body.settings	#content_pad {	background-image: url(img/bright/settings.png);	}
+body.users		#content_pad {	background-image: url(img/bright/users.png);	}
+body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
 
 .cleaner {
     clear: both;
@@ -207,7 +262,7 @@ hr {
     margin-top: -1px;
     display: block;
 }
-    
+        
     #wrap a.add,
     .button {
         background: url(img/sidebar-button.png) 0 0 no-repeat;
@@ -270,7 +325,7 @@ h2 {
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
-    background: #d2eafc;
+    background: #d2eafc url(img/page_top.png) left bottom repeat-x;
 }
 
     .section h2 {
@@ -363,7 +418,7 @@ select {
         padding: 0;
     }
 
-    .editor_form #content label {
+    .editor_form label {
         font-size: 11px;
         height: 15px;
         text-transform: uppercase !important;
@@ -707,6 +762,8 @@ select {
     font-size: 11px;
     font-weight: bold;
     border: none;
+    /* display inline block by Majic3 in past here?? */
+	xdisplay: inline-block;
 }
 
 .row-actions {
@@ -766,6 +823,7 @@ select {
 
 .post-categories,
 .post-comments,
+.post-options,
 .post-archive {
     color: #535353;
     margin: 0;
@@ -777,14 +835,16 @@ select {
 
     .post-date a,
     .post-categories a,
-    .post-comments a {
+    .post-comments a,
+    .post-options a {
         color: #535353;
         text-decoration: none;
     }
     
     .post-date a:hover,
     .post-categories a:hover,
-    .post-comments a:hover {
+    .post-comments a:hover,
+    .post-options a:hover {
         background-color: #535353;
         color: #fff;
     }
@@ -792,6 +852,7 @@ select {
 .post-comments {
     background-image: url(img/comment.png);
 }
+/* might not need archives as such */
 .post-archive {
     background-image: url(img/archived.png);
     width: 30px;
@@ -815,10 +876,10 @@ select {
     margin: 50px 2em 0 1em;
 }
 
-.paginator li{
-border:0; margin:0; padding:0;
-font-size:11px;
-list-style:none;
+.paginator li	{
+	border:0; margin:0; padding:0;
+	font-size:11px;
+	list-style:none;
 }
 .paginator li, .paginator a{
 border:solid 1px #DEDEDE
@@ -1037,6 +1098,15 @@ text-decoration:none;
         padding: 0 !important;
     }
     
+    /* question this?? next two sets */
+    .pages-list input	{
+		margin-top: 2px;
+    }
+    
+    .pages-list.draft a	{
+		margin-left: 5px;
+    }
+    
 
 /* Assets */
 
@@ -1056,7 +1126,9 @@ text-decoration:none;
         
 /* Image browser (image insert) */
 
-    #image-browser h4 {
+     /* might just be first selector */
+    #image-browser h4,
+    .sidebar_heading {
         background: #eefaff;
         padding: 3px 6px;
         margin: 0 0 5px;
@@ -1126,6 +1198,9 @@ text-decoration:none;
 .sidebar-box button {
     font-size: 12px;
 }
+	
+/* gallery */
+#show-galleries	{	float: right; margin-top: 7px;	}
     
     
 /* Reorder list */
@@ -1210,6 +1285,32 @@ text-decoration:none;
         font-weight: normal;
         margin: 0;
     }
+
+#genPassword	{
+	position: relative;
+	padding: 0;
+	margin: 0;
+	width: 240px;
+	height: auto;
+}
+#genPassword .new.password		{
+	position: absolute;
+	top: .5em;
+	right: 2em;
+}
+
+/**	users password strength meter made by Tane Piper	**/
+.is0{background:url(img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
+.is10{background-position:0 -7px;}
+.is20{background-position:0 -14px;}
+.is30{background-position:0 -21px;}
+.is40{background-position:0 -28px;}
+.is50{background-position:0 -35px;}
+.is60{background-position:0 -42px;}
+.is70{background-position:0 -49px;}
+.is80{background-position:0 -56px;}
+.is90{background-position:0 -63px;}
+.is100{background-position:0 -70px;}
 
 #admin_bar {
     background: #000;
@@ -1325,6 +1426,17 @@ text-decoration:none;
 
 .sidebar_editor {
     display: none;
+}
+
+
+/* might be more to add from old darwin here */
+.tabs	{
+	background: transparent !important;	margin-bottom: 30px;
+}
+
+body.dashboards	#content_pad	.tabs,
+body	#content_pad	.list	{
+	margin-right: 155px;
 }
 
 
@@ -1470,7 +1582,8 @@ text-decoration:none;
 		margin-right: .3em
     }
     
-    
+  
+
 /* Dashboard */
 
 .recently_changed {
@@ -1515,7 +1628,7 @@ text-decoration:none;
         color: #474747;
         width: 160px;
     }
-    
+
     
 /* Preview */
 
@@ -1603,6 +1716,8 @@ text-decoration:none;
         -moz-border-radius: 0 6px 6px 0;
     }
     
+	
+    
     .right_menu a.current {
         background: #474747;
         color: #fff;
@@ -1636,6 +1751,17 @@ text-decoration:none;
     width: 100px;
 }
 
+.full #header #nav,
+.full #sidebar,
+.full label[for="PageTitle"],
+.full label[for="PostTitle"],
+.full #PageTitle,
+.full #PostTitle {
+    display: none;
+}
+.full #content {
+    width: 100%;
+}
 
 /* Menu editing */
 
@@ -1764,6 +1890,7 @@ text-decoration:none;
 }
 
 /*	/custom inputs	*/
+
 body #wrap #content_pad	.draft	{
 	color: #555 !important;
 	background-color: #F2F2F2;
@@ -1792,6 +1919,7 @@ body #wrap #content_pad	.draft	a:hover	{
 	background-color: #e91414;
 	color: #fff;
 }
+
 
 #displayOptions {
 	float: right;
@@ -1842,3 +1970,4 @@ body #wrap #content_pad	.draft	a:hover	{
 .success a {
   color: #264409;
 }
+
