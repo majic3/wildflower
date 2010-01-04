@@ -6,6 +6,7 @@ echo $navigation->create(array(
 ?>
 
 <h3>Change password for user <?php echo hsc($this->data['User']['name']) ?></h3>
+<div id="genPassword"></div>
 <?php echo 
     $form->create('User', array('url' => $html->url(array('action' => 'admin_update_password', 'base' => false)))),
     $form->input('password', array('between' => '<br />', 'label' => 'New password', 'tabindex' => '1')),
