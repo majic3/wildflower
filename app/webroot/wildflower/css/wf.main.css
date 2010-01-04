@@ -77,6 +77,10 @@ hr {
     padding: 0 15px;
 }
 
+#extras {
+	display: inline; top: 25px;
+}
+
 #editor_mode_header {
     padding: 0 40px;
     margin: 0;
@@ -149,7 +153,8 @@ hr {
         float: left;
 }
     
-#nav {
+#nav,
+.tabs {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -158,7 +163,8 @@ hr {
     clear: both;
 }
 
-    #nav li {
+    #nav li,
+	.tabs li {
         float: left;
     }
     
@@ -192,10 +198,14 @@ hr {
         background-color: #282828;
     }
 
-#login_info {
+#login_info,
+#extras {
     position: absolute;
+    right: 10px;
+}
+
+#login_info {
     top: 5px;
-    right: 20px;
 }
 
     #login-info a {
@@ -321,7 +331,7 @@ h2 {
 
 .section {
     margin: -20px -20px 14px;
-    padding: 13px 20px;
+    padding: 13px 260px 13px 20px;
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
@@ -1970,4 +1980,3 @@ body #wrap #content_pad	.draft	a:hover	{
 .success a {
   color: #264409;
 }
-
