@@ -41,7 +41,7 @@ Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'ind
 
 // Image thumbnails
 // @TODO shorten to '/i/*'
-$mprefix = Configure::read('Wildflower.mprefix');
+$mprefix = Configure::read('Wildflower.mediaRoute');
 Router::connect('/' . $mprefix. '/thumbnail/*', array('controller' => 'assets', 'action' => 'thumbnail'));
 Router::connect('/' . $mprefix. '/thumbnail_by_id/*', array('controller' => 'assets', 'action' => 'thumbnail_by_id'));
 

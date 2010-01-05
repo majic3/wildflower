@@ -15,7 +15,7 @@ define('SITE_DOMAINN', 'majic.wildflower.ss29');
 define('SITE_DOMAIN', 'www.' . SITE_DOMAINN);
 define('CDN_DOMAIN', 'http://' . SITE_DOMAINN); // later 
 
-/** Wildflower config. Access like Configure::read('Wildflower.mprefix'); */
+/** Wildflower config. Access like Configure::read('Wildflower.setting'); */
 Configure::write(array('Wildflower' => array(
     'cookie' => array(
         'name' => 'WildflowerUser',
@@ -39,7 +39,7 @@ Configure::write(array('Wildflower' => array(
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
     'disableRootPageCache' => false,
-	'mprefix' => 'i',
+	'mediaRoute' => 'i',
     // 60000% speed increase with pure HTML caching into the webroot
     // @TODO cache expire not implemented yet, so don't use if you can't get around it
 	'htmlCache' => false,

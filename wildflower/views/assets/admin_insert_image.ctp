@@ -9,7 +9,7 @@
         <?php
 
 		// media prefix set in wf_core.php
-		$mprefix = Configure::read('Wildflower.mprefix');
+		$mprefix = Configure::read('Wildflower.mediaRoute');
 		foreach ($images as $file): ?>
 
             <li id="file-<?php echo $file['Asset']['id']; ?>" class="actions-handle">
@@ -32,7 +32,12 @@
     
     <div id="resize_image">
         <h5>Resize</h5>
-        Width: <input type="text" id="resize_x" name="data[Resize][width]" size="4"> px&nbsp;&nbsp; Height: <input type="text" name="data[Resize][height]" id="resize_y" size="4"> px
+        Width: <input type="text" id="resize_x" name="data[Resize][width]" size="4"> px&nbsp;&nbsp; Height: <input type="text" name="data[Resize][height]" id="resize_y" size="4"> px&nbsp;&nbsp; Crop: <input type="text" name="data[Resize][crop]" id="crop" size="5" />
+    </div>
+    
+    <div id="image_options">
+        <h5>Image Options</h5>
+        Class: <input type="text" id="format_class" name="data[Options][class]" size="6"> &nbsp;&nbsp; Alt: <input type="text" name="data[Options][alt]" id="alt_txt" size="7">
     </div>
     
     <span class="cleaner"></span>

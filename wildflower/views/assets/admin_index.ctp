@@ -11,7 +11,7 @@
     <ul class="file-list list">
     <?php
 	// media prefix set in wf_core.php
-	$mprefix = Configure::read('Wildflower.mprefix');
+	$mprefix = Configure::read('Wildflower.mediaRoute');
 	foreach ($files as $file): ?>
 
         <li id="file-<?php echo $file['Asset']['id']; ?>" class="actions-handle">
