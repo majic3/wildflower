@@ -96,6 +96,11 @@ hr {
     display: block;
     float: left;
     color: #eade51;
+	background: transparent url(/wildflower/img/logo-orb-ns.png) no-repeat scroll left top;
+	padding-left: 65px;
+	-moz-background-clip: border;
+	-moz-background-origin: padding;
+	-moz-background-inline-policy: continuous;
 }
     
 #site_index {
