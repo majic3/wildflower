@@ -1449,16 +1449,25 @@ text-decoration:none;
 
 /* Comments */
 
-.comments_list {
+.comments-list {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-    .comments_list li {
+    .comments-list li {
         margin: 0;
         padding: 10px 0 1px;
         border-bottom: 3px solid #ddd;
+    }
+
+    .comments-list img,
+    .comments-list .edit-comment {
+		float: right
+    }
+
+    .comments-list .edit-comment {
+		margin-right: .3em
     }
     
     

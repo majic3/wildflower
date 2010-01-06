@@ -11,6 +11,8 @@
         if ($data['Comment']['spam']) {
             echo '<small class="draft-status">(', __('SPAM!', true), ')</small> ';
         }
+
+		//	echo $html->link('edit', '#', array('class' => 'edit-comment')); 
     ?>
     
     <div class="comment_meta">
@@ -28,6 +30,7 @@
         if (!empty($data['Comment']['url'])) {
             echo '&nbsp;&nbsp;&nbsp;&nbsp;', $html->link($data['Comment']['url'], $data['Comment']['url']);
         }
+
     ?>
     </div>
     
