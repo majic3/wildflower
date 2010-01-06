@@ -94,7 +94,7 @@
     //<![CDATA[
 		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js")
 		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
-		.script("/wildflower/js/admin_jlm.js").wait(function () {
+		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm").wait(function () {
 			$.jlm.config({
 				base: '<?php echo $this->base ?>',
 				controller: '<?php echo $this->params['controller'] ?>',
