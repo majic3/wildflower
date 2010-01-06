@@ -125,6 +125,7 @@ class Post extends AppModel {
     function search($query, $contain = array('Category')) {
     	$fields = array('id', 'title', 'slug');
 		$this->contain($contain);
+		// should this be find('all')?
     	$titleResults = $this->findAll("{$this->name}.title LIKE '%$query%' and {$this->name}.draft=0", $fields, null, null, 1);
     	$contentResults = array();
     	if (empty($titleResults)) {
