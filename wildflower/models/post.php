@@ -156,7 +156,8 @@ class Post extends AppModel {
 	 * @param array $options Check $this->findAllFromCategoryDefaults for available options
      * @return mixed
      */
-    function findAllFromCategory($idOrSlug, $options = array()) {
+
+    function findAllFromCategory($idOrSlug, $limit = null, $contain = array('User'), $draft = 0) {
 		$options = am($this->findAllFromCategoryDefaults, $options);
 		extract($options);
 		$postFields = $fields;
