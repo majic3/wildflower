@@ -30,7 +30,8 @@ class Post extends AppModel {
 		'draft' => 0,
 		// Find posts from children categories too?
 		'children' => false,
-		'order' => 'Post.created DESC'
+		'order' => 'Post.created DESC',
+		'fields' => null,
 	);
     
     /**
@@ -158,6 +159,7 @@ class Post extends AppModel {
     function findAllFromCategory($idOrSlug, $options = array()) {
 		$options = am($this->findAllFromCategoryDefaults, $options);
 		extract($options);
+		$postFields = $fields;
 	
 		$conditions = array(
             'id' => $idOrSlug,
@@ -201,7 +203,8 @@ class Post extends AppModel {
             ),
 			'limit' => $limit,
 			'contain' => $contain,
-			'order' => $order
+			'order' => $order,
+			'fields' => $postFields
         ));
 		
         return $posts;
