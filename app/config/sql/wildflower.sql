@@ -441,6 +441,7 @@ CREATE TABLE `sidebars` (
   `content` text collate utf8_unicode_ci,
   `created` datetime default NULL,
   `updated` datetime default NULL,
+  `reigion` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `on_posts` int(11) default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -452,7 +453,7 @@ CREATE TABLE `sidebars` (
 
 LOCK TABLES `sidebars` WRITE;
 /*!40000 ALTER TABLE `sidebars` DISABLE KEYS */;
-INSERT INTO `sidebars` VALUES (1,'Test sidebar','<p>Lorem ipsum.</p>','2009-05-17 07:03:29','2009-05-17 07:03:29',0);
+INSERT INTO `sidebars` VALUES (1,'Test sidebar','<p>Lorem ipsum.</p>','2009-05-17 07:03:29','2009-05-17 07:03:29', NULL,0);
 /*!40000 ALTER TABLE `sidebars` ENABLE KEYS */;
 UNLOCK TABLES;
 

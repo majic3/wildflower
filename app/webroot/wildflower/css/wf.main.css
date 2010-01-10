@@ -1729,9 +1729,7 @@ body	#content_pad	.list	{
         -webkit-border-radius: 0 6px 6px 0;    /* for Safari */
         -moz-border-radius: 0 6px 6px 0;
     }
-    
-	
-    
+
     .right_menu a.current {
         background: #474747;
         color: #fff;
@@ -1983,3 +1981,36 @@ body #wrap #content_pad	.draft	a:hover	{
 .success a {
   color: #264409;
 }
+
+
+
+
+
+.allPages,
+.allPosts	{
+	width:372px;
+	height:32px;
+}
+
+	.allPages strong,
+	.allPages select,
+	.allPosts strong,
+	.allPosts select	{
+		display: inline;
+    }
+
+	.allPages strong,
+	.allPosts strong	{
+		width: 17%
+	}
+
+	.allPages a,
+	.allPosts a	{
+		width: auto;
+		display: inline;
+	}
+
+	.allPages select,
+	.allPosts select	{
+		width: 77%
+	}
