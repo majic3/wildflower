@@ -364,6 +364,10 @@ class PagesController extends AppController {
         
         // Decode custom fields
         $page['Page']['custom_fields'] = json_decode($page['Page']['custom_fields'], true);
+
+		// group reigons
+
+		// build auto page menus
         
         // View variables
         $this->set(array(
@@ -376,7 +380,8 @@ class PagesController extends AppController {
             'descriptionMetaTag' => $page[$this->modelClass]['description_meta_tag'],
             'keywordsMetaTag' => $page[$this->modelClass]['keywords_meta_tag']
         );
-        $this->set($this->params['pageMeta']);
+		$pageMeta = $this->params['pageMeta'];
+        $this->set(compact('pageMeta', 'reigons'));
         // Parameters @TODO unify parameters
         $this->params['current'] = array(
             'type' => 'page', 
@@ -412,7 +417,7 @@ class PagesController extends AppController {
      *
      * @param int $id Page ID
      */
-    function admin_custom_fields($id) {
+    function admin_settings($id) {
         $page = $this->Page->findById($id);
         $customFields = $page[$this->modelClass]['custom_fields'];
         $customFields = json_decode($customFields, true);

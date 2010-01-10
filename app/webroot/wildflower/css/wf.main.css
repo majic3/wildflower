@@ -1121,6 +1121,20 @@ text-decoration:none;
 		margin-left: 5px;
     }
     
+	/*	page settings	*/
+	
+	#availableSettings,
+	#currentSettings	{
+		display:block;
+	}
+	#currentSettings	{
+		float:left;
+		width:75%;
+	}
+	#availableSettings	{
+		float:right;
+		width:22%;
+	}
 
 /* Assets */
 
@@ -2014,3 +2028,7 @@ body #wrap #content_pad	.draft	a:hover	{
 	.allPosts select	{
 		width: 77%
 	}
+
+
+.ui-tabs .ui-tabs-panel { display: block; border: 0; padding: 1em 1.4em; background: none; }
+.ui-tabs .ui-tabs-hide { display: none !important; }

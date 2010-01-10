@@ -8,9 +8,20 @@
 ?>
 
 <h2 class="section">Reigions for <?php echo $html->link($this->data['Page']['title'], array('action' => 'edit', $this->data['Page']['id'])); ?></h2>
+
+<div>
+<h3>Sidebars</h3>
 <?php
 
 ?>
+</div>
+
+<div>
+<h3>Menus</h3>
+<?php
+
+?>
+</div>
 
 <div>
     <div class="submit save-section">

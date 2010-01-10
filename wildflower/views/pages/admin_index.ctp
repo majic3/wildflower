@@ -1,11 +1,11 @@
 
 	<h2 class="section"><?php __('Pages'); ?></h2>
+	<div class="panels">
 	<ul id="displayOptions" class="tabs">
 		<li><a href="#tree">tree</a></li>
 		<li><a href="#icons">icons</a></li>
 		<li><a href="#details">details</a></li>
 	</ul>
-	<div class="panels">
 	<div id="tree" class="panel">
 <?php
 	echo 
@@ -26,14 +26,10 @@
 
 	</div>
 	<div id="icons" class="panel">
-		<?php
-			print_r($pages);
-		?>
+		<h3>Icons Reorderable</h3>
 	</div>
 	<div id="details" class="panel">
-		<?php
-			print_r($pages);
-		?>
+		<h3>Details Sortable</h3>
 	</div>
 </div>
 

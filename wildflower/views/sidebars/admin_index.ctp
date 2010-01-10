@@ -3,7 +3,7 @@
 	$form->create('Sidebar', array('action' => 'mass_update'));
 ?>
 
-<h2 class="section"><?php __('Modules'); ?></h2>
+<h2 class="section"><?php __('Modules : Manage Reigions, Menus'); ?></h2>
 
 <?php $session->flash(); ?>
 
