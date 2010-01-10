@@ -1,23 +1,24 @@
 <?php echo $html->doctype('xhtml-strict'); ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <?php echo $html->charset(); ?>
-    
-    <title><?php echo $title_for_layout; if(Configure::read('debug'))	{ echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) { echo " theme: " . $this->theme; }	echo " Wildflower: " . Configure::read('Wildflower.version') . ";"; }	?></title>
-    
-    <meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
+	<?php echo $html->charset(); ?>
+
+	<title><?php echo $title_for_layout; if(Configure::read('debug'))	{ echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) { echo " theme: " . $this->theme; }	echo " Wildflower: " . Configure::read('Wildflower.version') . ";"; }	?></title>
+
+	<meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
 	<meta name="keywords" content="<?php echo isset($keywordsMetaTag) ? $keywordsMetaTag : '' ?>" />
 	<!-- app/views default/layout -->
-    
-    <link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
-    <link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>" />
 
-    <?php
+	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>" />
+
+	<?php
 	
 	if(isset($canonical['rel']['url']))	echo '<link rel="canonical" href="' . $canonical['rel']['url'] . "\" />\n";
 	if(isset($canonical['rev']['id']))	echo '<link rev="canonical" href="' . $canonical['rev']['slug'] . "\" />\n";
 		
-	echo $html->css(array('screen'), 'stylesheet', Array('media' => 'screen')); ?>
+	echo $html->css(array('screen'), 'stylesheet', Array('media' => 'screen'));
+	?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 </head>
 <?php echo ($wild) ? $wild->bodyTagWithClass() : '<body>'; ?>
@@ -42,7 +43,7 @@
 		?></div>
 
 		<div class="nv">
-			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu', array('class' => 'tabs')); ?>
+			<?php $menu = ''; if($wild) echo $menu = $wild->menu('main_menu'); ?>
 		</div>
 	</div>
 
