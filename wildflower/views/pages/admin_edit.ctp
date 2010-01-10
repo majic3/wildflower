@@ -1,3 +1,4 @@
+<h2 class="section"><?php __('Editing sidebar'); ?></h2>
 <?php 
     if ($session->check('Message.flash')) {
         $session->flash();

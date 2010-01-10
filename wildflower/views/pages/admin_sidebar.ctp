@@ -7,16 +7,9 @@
     '</div>';
 ?>
 
-<h2 class="section">Sidebar for <?php echo $html->link($this->data['Page']['title'], array('action' => 'edit', $this->data['Page']['id'])); ?></h2>
+<h2 class="section">Reigions for <?php echo $html->link($this->data['Page']['title'], array('action' => 'edit', $this->data['Page']['id'])); ?></h2>
 <?php
-    echo 
-    $form->input('sidebar_content', array(
-        'type' => 'textarea',
-        'class' => 'tinymce',
-        'rows' => 25,
-        'cols' => 60,
-        'label' => false,
-        'div' => array('class' => 'input editor')));
+
 ?>
 
 <div>

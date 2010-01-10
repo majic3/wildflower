@@ -14,5 +14,15 @@ $.jlm.bind('pages.admin_edit', function() {
        $(this).text(origText);
        return false;
    });
+	console.info('just edit jumpMenu should trigger');
+});
+
+$.jlm.bind('pages.admin_edit, pages.admin_options, pages.admin_sidebar, posts.admin_edit, posts.admin_options, posts.admin_categorize, posts.admin_comments, posts.admin_sidebar', function() {
+    $.jlm.components.jumpMenu.startup();
+});
+
+
+
+$.jlm.bind('sidebars.admin_edit', function() {
     
 });

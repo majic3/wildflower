@@ -35,6 +35,11 @@
             array('action' => 'admin_create'),
             array('class' => 'add', 'escape' => false)); ?>
     </li>
+            <li class="allPosts">
+			<strong><?php echo $htmla->link('All Posts', array('action' => 'index'), array('strict' => true)); ?></strong>
+			<?php if(isset($jumpMenu)):
+				echo str_replace(array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), '', $form->select('jumpMenu', $jumpMenu, null, array('class' => 'jumpMenu')));
+			endif; ?></li>
     <li class="main_sidebar category_sidebar">
 		<h4 class="sidebar_heading"><?php __('Categories'); ?></h4>
 		<?php echo $tree->generate($categoriesForTree, array('model' => 'Category', 'class' => '', 'element' => '../categories/list_item', 'inCategories' => $inCategories)); ?>

@@ -90,7 +90,8 @@ class PagesController extends AppController {
         $newParentPageOptions = $this->Page->getListThreaded();
         $revisions = $this->Page->getRevisions($id, 10);
         $isDraft = ($page['Page']['draft']);
-        $this->set(compact('newParentPageOptions', 'revisions', 'isDraft'));
+	    $jumpMenu = $this->Page->getListThreaded();
+        $this->set(compact('newParentPageOptions', 'revisions', 'isDraft', 'jumpMenu'));
     }
     
     function admin_preview($id, $previewCacheFileName = null) {
@@ -116,7 +117,8 @@ class PagesController extends AppController {
         
         $this->pageTitle = $this->data[$this->modelClass]['title'];
         $parentPageOptions = $this->Page->getListThreaded($this->data['Page']['id']);
-        $this->set(compact('parentPageOptions'));
+	    $jumpMenu = $this->Page->getListThreaded();
+        $this->set(compact('parentPageOptions', 'jumpMenu'));
     }
     
     function admin_reorder() {
@@ -125,16 +127,23 @@ class PagesController extends AppController {
         $order = 'lft ASC';
         $fields = array('id', 'lft', 'rght', 'parent_id', 'title');
     	$pages = $this->Page->find('all', compact('order', 'fields'));
-    	$this->set(compact('pages'));
+    	$this->set(compact('pages', 'jumpMenu'));
     }
     
     function admin_sidebar($id = null) {
-        $this->Page->contain('User');
-        $this->data = $this->Page->findById($id);
+        $page = $this->Page->findById($id);
+        
+        $this->data = $page;
+        $this->pageTitle = $page[$this->modelClass]['title'];
         
         if (empty($this->data)) return $this->cakeError('object_not_found');
-        
-        $this->pageTitle = $this->data[$this->modelClass]['title'];
+
+		$sidebars = ClassRegistry::init('Sidebar')->find('all');
+		$menus = ClassRegistry::init('Menu')->find('all', array('recursive' => -1));
+
+	    $jumpMenu = $this->Page->getListThreaded();
+		$this->set(compact('sidebars', 'menus', 'jumpMenu'));
+
     }
     
     function admin_update() {

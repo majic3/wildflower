@@ -27,6 +27,11 @@
         <h4><?php __('Categorizing post...'); ?></h4>
         <?php echo $html->link($this->data['Post']['title'], array('action' => 'edit', $this->data['Post']['id']), array('class' => 'edited-item-link')); ?>
     </li>
+            <li class="allPosts">
+			<strong><?php echo $htmla->link('All Posts', array('action' => 'index'), array('strict' => true)); ?></strong>
+			<?php if(isset($jumpMenu)):
+				echo str_replace(array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), '', $form->select('jumpMenu', $jumpMenu, null, array('class' => 'jumpMenu')));
+			endif; ?></li>
     <li id="add-category-box" class="sidebar-box">
         <h4 class="add"><?php __('Add a new post category'); ?></h4>
         <?php

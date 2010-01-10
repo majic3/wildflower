@@ -105,8 +105,8 @@ class PostsController extends AppController {
         $inCategories = Set::extract($this->data['Category'], '{n}.id');
         $isDraft = ($this->data[$this->modelClass]['draft'] == 1) ? true : false;
         $categoriesForTree = $this->Post->Category->find('all', array('order' => 'lft ASC', 'recursive' => -1));
-        
-        $this->set(compact('isRevision', 'hasUser', 'isDraft', 'categoriesForTree', 'inCategories'));
+        $jumpMenu = $this->Post->find('list', array('recursive' => '-1', 'fields' => array('Post.id', 'Post.title')));
+        $this->set(compact('isRevision', 'hasUser', 'isDraft', 'categoriesForTree', 'inCategories', 'jumpMenu'));
         $this->pageTitle = $this->data[$this->modelClass]['title'];
     }
     
@@ -120,7 +120,8 @@ class PostsController extends AppController {
         $inCategories = Set::extract($this->data['Category'], '{n}.id');
         $isDraft = ($this->data[$this->modelClass]['draft'] == 1) ? true : false;
         $categoriesForTree = $this->Post->Category->find('all', array('order' => 'lft ASC', 'recursive' => -1));
-        $this->set(compact('categories', 'inCategories', 'isDraft', 'categoriesForTree'));
+        $jumpMenu = $this->Post->find('list', array('recursive' => '-1', 'fields' => array('Post.id', 'Post.title')));
+        $this->set(compact('categories', 'inCategories', 'isDraft', 'categoriesForTree', 'jumpMenu'));
         
         $this->pageTitle = $this->data[$this->modelClass]['title'];
     }
