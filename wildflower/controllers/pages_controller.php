@@ -6,7 +6,7 @@
  */
 class PagesController extends AppController {
 	
-	public $components = array('RequestHandler', 'Seo');
+	public $components = array('RequestHandler', 'Seo', 'Regions');
 	public $helpers = array('Form', 'Html', 'Text', 'Time', 'List', 'Tree');
     public $paginate = array(
         'limit' => 25,
@@ -366,6 +366,8 @@ class PagesController extends AppController {
         $page['Page']['custom_fields'] = json_decode($page['Page']['custom_fields'], true);
 
 		// group reigons
+		$this->Regions->buidlGroups();
+		$reigons = $this->Regions->getNames();
 
 		// build auto page menus
         

@@ -10,7 +10,7 @@
     
     $tree->generate($pages, array('model' => 'Page', 'class' => 'category-list checkbox-list', 'element' => '../sidebars/_tree_item')),
 
-    $form->input('reigion', array('disabled' => true)),
+    $form->input('region', array('disabled' => true)),
     
     $form->end('Create this sidebar');
 ?>

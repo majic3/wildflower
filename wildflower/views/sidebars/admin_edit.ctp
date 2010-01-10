@@ -11,10 +11,10 @@
     
     $tree->generate($pages, array('model' => 'Page', 'class' => 'category-list checkbox-list', 'element' => '../sidebars/_tree_item')),
 
-    $form->input('reigion', array('disabled' => true)),
-    
+    $form->input('region', array('disabled' => true)),
+
     $form->input('on_posts', array('type' => 'checkbox', 'label' => 'Blog & posts'));
-    
+
     // Custom associations
     $models = Configure::read('App.customSidebarAssociations');
     if (!empty($models)) {
@@ -29,6 +29,7 @@
 <div class="cancel-edit"> <?php __('or'); ?> <?php echo $html->link(__('Cancel', true), array('action' => 'index')); ?></div>
 
 <?php $partialLayout->blockStart('sidebar'); ?>
+    <?php echo $this->element('../sidebars/_sidebar_edit_right_menu'); ?>
     <li><?php echo $html->link(
         '<span>' . __('Add a new sidebar', true) . '</span>',
         array('action' => 'add'),

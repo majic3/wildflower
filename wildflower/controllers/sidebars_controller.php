@@ -47,7 +47,8 @@ class SidebarsController extends AppController {
             'recursive' => -1, 
         ));
         $inPages = Set::extract($this->data['Page'], '{n}.id');
-        $this->set(compact('pages', 'inPages'));
+		$jumpMenu = $this->Sidebar->getListThreaded();
+        $this->set(compact('pages', 'inPages', 'jumpMenu'));
     }
     
     private function _bindCustomModel() {
