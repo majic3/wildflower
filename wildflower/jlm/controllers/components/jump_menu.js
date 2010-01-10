@@ -13,7 +13,7 @@ $.jlm.addComponent('jumpMenu', {
 			var saction = $.jlm.params.action.replace(/admin_/gi, '')
 			var url = $.jlm.base + '/' + $.jlm.params.prefix + '/'+section+'/' + saction + '/';
 
-			console.info(selected.val());
+			//console.info(selected.val());
 
 			if(selected.val() != 0){
 				window.location.href = url + selected.val();
