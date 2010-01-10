@@ -6,9 +6,7 @@
     <?php else: ?>
 
         <ul class="file-list list">
-        <?php
-
-		// media prefix set in wf_core.php
+		<?php 
 		$mprefix = Configure::read('Wildflower.mediaRoute');
 		foreach ($images as $file): ?>
 

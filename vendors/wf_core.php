@@ -36,10 +36,10 @@ Configure::write(array('Wildflower' => array(
     'blogIndex' => 'posts',	// the name of the blog
     'shorturl' => CDN_DOMAIN . '/s', // without pref with out www. or a different subdomain if possible
     'puburl' => 'http://'.SITE_DOMAIN, // public url where main files are served
+    'mediaRoute' => 'i',	//	media route for wildflower thumbnails
     // Disabling the root page cache may be useful in debugging 
     // (the cache file won't be created, page routes load from the database)
     'disableRootPageCache' => false,
-	'mediaRoute' => 'i',
     // 60000% speed increase with pure HTML caching into the webroot
     // @TODO cache expire not implemented yet, so don't use if you can't get around it
 	'htmlCache' => false,

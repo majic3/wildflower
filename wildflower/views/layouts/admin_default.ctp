@@ -101,7 +101,7 @@
 				prefix: '<?php echo Configure::read('Routing.admin') ?>',
 				custom: {
 					wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>',
-					wildflowerMPrefix: '<?php echo Configure::read('Wildflower.mediaRoute'); ?>'
+					wildflowerMPreix: '<?php echo Configure::read('Wildflower.mediaRoute'); ?>'
 				}
 			});
 

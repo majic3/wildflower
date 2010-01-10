@@ -13,6 +13,8 @@
 	// media prefix set in wf_core.php
 	$mprefix = Configure::read('Wildflower.mediaRoute');
 	foreach ($files as $file): ?>
+		$mprefix = Configure::read('Wildflower.mediaRoute');
+		foreach ($files as $file): ?>
 
         <li id="file-<?php echo $file['Asset']['id']; ?>" class="actions-handle">
             <span class="row-check"><?php echo $form->checkbox('id.' . $file['Asset']['id']) ?></span>
