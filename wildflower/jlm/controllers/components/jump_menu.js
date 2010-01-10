@@ -1,7 +1,7 @@
 /**
- * Select Actions Component
+ * Jump Menu
  *
- * Used on lists with checkboxes. On checking some, action menus pop up.
+ * Jumps to a new Page/ Post and lands on current action of the new content
  */
 $.jlm.addComponent('jumpMenu', {
 	startup: function ()	{
