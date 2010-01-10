@@ -34,9 +34,9 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 	// might move this later after reorganising jlm - names don't really matter but want to use a logical break down, jlm might be finished
 	$('.fulleditor').toggle(function (event)	{
 		$('body').toggleClass('full');
-		$('.fulleditor').html('exit');
+		$('.fulleditor').html('Exit').attr('title', 'Click to return to full display', '');
 	}, function (event)	{
 		$('body').toggleClass('full');
-		$('.fulleditor').html('full');
-	})
+		$('.fulleditor').html('Full').attr('title', 'Click to maximise display area');
+	});
 });
