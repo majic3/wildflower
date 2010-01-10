@@ -99,36 +99,61 @@ class WildHelper extends AppHelper {
     }
     
     function menu($slug, $options = null) {
-    	$items = $this->getMenuItems($slug);
-    	if (empty($items)) {
-    	    return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
-    	}
-    	$links = array();
+		$id = "$slug";
+		$items = $this->getMenuItems($slug);
+
+		if (empty($items)) {
+			return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
+		}
+
+		$links = array();
 		$view = ClassRegistry::getObject('view');
-    	foreach ($items as $item) {
-    	    $label = hsc($item['label']);
-    	    $slug = self::slug($item['label']);
-    	    $classes = array('nav-' . $slug);
-    	    $isCurrent = (rtrim($this->here, '/') . '/' === rtrim($this->Html->url($item['url']), '/') . '/');
+
+		foreach ($items as $item) {
+			$liclass = '';
+			$label = hsc($item['label']);
+			$slug = self::slug($item['label']);
+
+			$classes = (isset($options['liclass']) && !is_null($options['liclass'])) ? array($options['liclass'] . $slug) : array();
 			
-	        if (isset($view->viewVars['current_link_for_layout']) && $view->viewVars['current_link_for_layout'] === $item['url']) {
+			$isCurrent = (rtrim($this->here, '/') . '/' === rtrim($this->Html->url($item['url']), '/') . '/');
+
+			if (isset($view->viewVars['current_link_for_layout']) && $view->viewVars['current_link_for_layout'] === $item['url']) {
 				$isCurrent = true;
 			}
 
-    	    if ($isCurrent) {
-    	        $classes[] = 'current';
-    	    }
-    	    $links[] = '<li class="' . join(' ', $classes) . '">' . $this->Html->link("<span>$label</span>", $item['url'], array('escape' => false)) . '</li>';
-    	}
-    	$links = join("\n", $links);
+			if ($isCurrent) {
+				$classes[] = 'current';
+			}
 
-    	if (isset($options['class'])) {
-    	    $class = " class=\"{$options['class']}\"";
-    	}
+			if($classes > array())	{
+				$liclass = ' class="' . join(' ', $classes) . '"';
+			}
 
-		$id = "$slug";
-		if (isset($options['id'])) {
-			$id = " id=\"{$options['id']}\"";
+			if(isset($options['hasSpan']))	{
+				$tag = ($options['hasSpan'] === true) ? 'span' : $options['hasSpan'];
+				$label = '<'.$tag.'>'.$label.'</'.$tag.'>';
+			}
+
+			$links[] = '<li' . $liclass . '>' . $this->Html->link("$label", $item['url'], array('escape' => false)) . '</li>';
+		}
+
+		$links = join("\n", $links);
+
+		if (isset($options['class']) && !is_null($options['class'])) {
+			$class = ($options['class'] && (trim($options['class']) !== "")) ? " class=\"{$options['class']}\"" : "";
+		} elseif (isset($options['class']) && is_null($options['class'])) {
+			$class = ($class !== "") ? " class=\"{$class}\"" : "";
+		} else {
+			$class = '';
+		}
+
+		if (isset($options['id']) && !is_null($options['id'])) {
+			$id = ($options['id'] && (trim($options['id']) !== "")) ? " id=\"{$options['id']}\"" : "";
+		} elseif (isset($options['id']) && is_null($options['id'])) {
+			$id = ($id !== "") ? " id=\"{$id}\"" : "";
+		} else {
+			$id = '';
 		}
     	return "<ul$id$class>\n$links\n</ul>\n";
     }
