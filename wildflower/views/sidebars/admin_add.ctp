@@ -9,6 +9,8 @@
     '<h4>Select pages where the sidebar would appear</h4>',
     
     $tree->generate($pages, array('model' => 'Page', 'class' => 'category-list checkbox-list', 'element' => '../sidebars/_tree_item')),
+
+    $form->input('reigion', array('disabled' => true)),
     
     $form->end('Create this sidebar');
 ?>
