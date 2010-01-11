@@ -4,9 +4,13 @@
  *
  * @package wildflower
  */
-?>
+if(isset($aside_for_layout)): ?><div class="leftCol"><?php
+	echo $aside_for_layout;
+	?></div><?php
+endif; ?>
 <div class="rightCol">
     <?php echo $this->element('latest_posts');  ?>
+    <?php echo $sidebar_for_layout;  ?>
 </div>
 <div class="main">
 	<h2><?php echo $page['Page']['title']; ?></h2>
