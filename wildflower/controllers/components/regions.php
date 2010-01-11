@@ -17,7 +17,7 @@ class RegionsComponent extends Object {
 	 *
 	 * @var array
 	 */
-	private $reigonNamesArray = array(
+	private $regionArray = array(
 		'sidebar' => false
 	);
 
@@ -30,7 +30,9 @@ class RegionsComponent extends Object {
 	 *
 	 * @param string $pageTitle Title of the current item/page/posts...
 	 */
-	function buidlGroups() {
+	function buildGroups($content, $options) {
+
+		$flag = false;
 		if (!is_object($this->controller)) {
 			return;
 		}
@@ -69,11 +71,11 @@ class RegionsComponent extends Object {
 	 * @param string $pageTitle Title of the current item/page/posts...
 	 */
 	function getNames() {
-		if ($this->reigonNamesArray == array()) {
+		if ($this->regionArray == array()) {
 			return false;
 		}
 
-		return $this->reigonNamesArray;
+		return array_keys($this->regionArray);
 	}
 	
 }

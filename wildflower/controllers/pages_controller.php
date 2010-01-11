@@ -361,29 +361,35 @@ class PagesController extends AppController {
         }
         
         $this->pageTitle = $page[$this->modelClass]['title'];
+
+		//	debug($page['Page']['custom_fields']);
         
         // Decode custom fields
-        $page['Page']['custom_fields'] = json_decode($page['Page']['custom_fields'], true);
+        $page['Page']['custom_fields'] = $this->_prepVars($page['Page']['custom_fields']);
+
+		//debug($page['Page']['custom_fields']); die();
 
 		// group reigons
-		$this->Regions->buidlGroups();
-		$reigons = $this->Regions->getNames();
+		$this->Regions->buildGroups($page['Sidebar'], (array_key_exists('regions', $page['Page']['custom_fields'])) ? $page['Page']['custom_fields']['regions'] : false);
+		$regions = $this->Regions->getNames();
+		$this->Regions->setGroups();
 
 		// build auto page menus
-        
+
         // View variables
         $this->set(array(
             'page' => $page,
             'currentPageId' => $page[$this->modelClass]['id'],
             'isPage' => true
         ));
-        
+
         $this->params['pageMeta'] = array(
             'descriptionMetaTag' => $page[$this->modelClass]['description_meta_tag'],
             'keywordsMetaTag' => $page[$this->modelClass]['keywords_meta_tag']
         );
+
 		$pageMeta = $this->params['pageMeta'];
-        $this->set(compact('pageMeta', 'reigons'));
+        $this->set(compact('pageMeta', 'regions'));
         // Parameters @TODO unify parameters
         $this->params['current'] = array(
             'type' => 'page', 
@@ -465,6 +471,23 @@ class PagesController extends AppController {
         
         $this->set(compact('parentPageOptions', 'revisions'));
         $this->pageTitle = 'Version of page ' . $this->data[$this->modelClass]['title'];
+    }
+    
+    /**
+     * Prepares page vars for use (puts them in a better structure)
+     *
+     * @param string $vars
+     */
+    private function _prepVars($vars) {
+		$return = array();
+		$vars = json_decode($vars, true);
+		foreach($vars as $var => $v)	{
+			$reutrn[$v['name']] = array(
+				'type' => $v['type'],
+				'value' => $v['value']
+			);
+		}
+        return $reutrn;
     }
     
     /**
