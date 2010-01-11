@@ -69,4 +69,5 @@ $.jlm.bind('pages.admin_settings', function() {
 
 
 $.jlm.bind('sidebars.admin_edit', function() {
+    $('.panels').tabs();
 });

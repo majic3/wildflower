@@ -1,15 +1,26 @@
 <h2 class="section"><?php __('Editing sidebar'); ?></h2>
-
+<?php 
+    echo $form->create('Sidebar', array('url' => $here, 'class' => 'editor_form')); ?>
+<div class="panels">
+	<ul id="displayOptions" class="tabs">
+		<li><a href="#scontent">content</a></li>
+		<li><a href="#pages">on pages</a></li>
+	</ul>
+	<div id="scontent" class="panel">
 <?php
     echo
-    $form->create('Sidebar', array('url' => $here, 'class' => 'generic_form')),
-    $form->hidden('id'),
+	$form->hidden('id'),
     $form->input('title'),
-    $form->input('content', array('class' => 'tinymce')),
+    $form->input('content', array('class' => 'tinymce'));
+    ?>
+	</div>
+	<div id="pages" class="panel">
+	<h4>
+<?php
     
-    '<h4>Select pages where the sidebar would appear</h4>',
+    __('Check to Enable this Region on associated Page'); ?></h4><?php
     
-    $tree->generate($pages, array('model' => 'Page', 'class' => 'category-list checkbox-list', 'element' => '../sidebars/_tree_item')),
+    echo $tree->generate($pages, array('model' => 'Page', 'class' => 'category-list checkbox-list', 'element' => '../sidebars/_tree_item')),
 
     $form->input('region', array('disabled' => true)),
 
@@ -22,7 +33,12 @@
             echo $this->element('../sidebars/_' . Inflector::pluralize(low($model)) .  '_tree');
         }
     }
-    
+    ?>
+	</div>
+
+<span class="cleaner"></span>
+</div>
+<?php
     echo $form->end('Save changes');
 ?>
 

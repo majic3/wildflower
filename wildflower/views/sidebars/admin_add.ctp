@@ -2,7 +2,7 @@
 
 <?php
     echo
-    $form->create('Sidebar', array('url' => $here, 'class' => 'generic_form')),
+    $form->create('Sidebar', array('url' => $here, 'class' => 'editor_form')),
     $form->input('title'),
     $form->input('content', array('class' => 'tinymce')),
     

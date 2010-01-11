@@ -2001,7 +2001,9 @@ body #wrap #content_pad	.draft	a:hover	{
 
 
 .allPages,
-.allPosts	{
+.allSidebars,
+.allPosts,
+.allUnits	{
 	width:372px;
 	height:32px;
 }
@@ -2009,26 +2011,36 @@ body #wrap #content_pad	.draft	a:hover	{
 	.allPages strong,
 	.allPages select,
 	.allPosts strong,
-	.allPosts select	{
+	.allPosts select
+	.allSidebars strong,
+	.allSidebars select
+	.allUnits strong,
+	.allUnits select	{
 		display: inline;
     }
 
 	.allPages strong,
-	.allPosts strong	{
+	.allPosts strong,
+	.allSidebars strong,
+	.allUnits strong	{
 		width: 17%
 	}
 
 	.allPages a,
-	.allPosts a	{
+	.allPosts a,
+	.allSidebars a,
+	.allUnits a	{
 		width: auto;
 		display: inline;
 	}
 
 	.allPages select,
-	.allPosts select	{
+	.allPosts select,
+	.allSidebars select,
+	.allUnits select	{
 		width: 77%
 	}
 
-
+.panels {	width: 100%;	}
 .ui-tabs .ui-tabs-panel { display: block; border: 0; padding: 1em 1.4em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }

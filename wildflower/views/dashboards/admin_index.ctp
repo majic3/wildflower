@@ -67,6 +67,9 @@
             $form->end();
         ?>
     </li>
+    <li class="editHome">
+		<strong>Edit Home Page <?php echo $htmla->link('Home Page', array('controller' => 'pages', 'action' => 'edit', 'id' => Configure::read('AppSettings.home_page_id')), array('strict' => true)); ?></strong>
+    </li>
     <!-- 
     <li class="main_sidebar category_sidebar">
         <h4 class="sidebar_heading">User activity</h4>
