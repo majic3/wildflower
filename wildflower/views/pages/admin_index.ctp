@@ -1,6 +1,6 @@
 
-	<h2 class="section"><?php __('Pages'); ?></h2>
-	<div class="panels">
+<h2 class="section"><?php __('Pages'); ?></h2>
+<div class="panels">
 	<ul id="displayOptions" class="tabs">
 		<li><a href="#tree">tree</a></li>
 		<li><a href="#icons">icons</a></li>
