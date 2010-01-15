@@ -52,9 +52,6 @@
 			<p><?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>.</p>
 		</div>
 		<div class="main">
-			<div class="nv">
-				<?php echo $menu; ?>
-			</div>
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>
 		</div>

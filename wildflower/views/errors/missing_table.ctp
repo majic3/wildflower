@@ -1,0 +1,1 @@
+<p class="error notice">missing_table</p>
