@@ -25,13 +25,12 @@
     <![endif]-->
     
 </head>
-<?php echo ($wild && $bdyClass) ? $wild->bodyTagWithClass($bdyClass) : '<body>'; ?>
-<p id="umsg" class="alert">setting up page</p>
+<?php echo ($wild) ? $wild->bodyTagWithClass() : '<body>'; ?>
 <div class="wildflower page liquid">
 	<div id="hd" class="head">
 		<img width="55" height="55" src="<?php e($html->url('/wildflower/img/logo-orb.png')); ?>" class="logo" alt="A CMS made with CakePHP"  />
 		
-		<div class="accessibility"><span class="skipto"><a href="#bd">skip to content</a></span> &#124; <a href="/sitemap">sitemap</a></div>
+		<div class="accessibility"><span class="skipto"><a href="#bd">skip to content</a></span> &#124; <a href="/sitemap">sitemap</a> &#124; <a href="/help">help</a> &#124; <a href="/options">options</a> &#124; <a href="/search">adv search</a></div>
 
 		<div class="rss">
 			<a title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>"><img src="<?php e($html->url('/img/feed.png')); ?>" alt="Site Feed in RSS Format"  /></a>
@@ -39,9 +38,9 @@
 		
 		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
 
-		<div id="search" class="search"><?php echo $form->create("Dashboard",array('action' => 'search'));
-			echo $form->label("query", "search");
-			echo $form->text("query");
+		<div id="search" class="search"><?php echo $form->create("Dashboard",array('action' => 'search', 'type' => 'get'));
+			echo $form->label("q", "search");
+			echo $form->text("q");
 			echo $form->submit("go.gif", array('id' => 'go', 'div' => false));
 			echo $form->end(null);
 		?></div>
