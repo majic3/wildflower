@@ -36,7 +36,7 @@
 			<a title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>"><img src="<?php e($html->url('/img/feed.png')); ?>" alt="Site Feed in RSS Format"  /></a>
 		</div>
 		
-		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', null, null, false) ?></h1>
+		<h1><?php echo $html->link("<span>$title_for_layout</span>", '/', array('escape' => false), null) ?></h1>
 
 		<div id="search" class="search"><?php echo $form->create("Dashboard",array('action' => 'search', 'type' => 'get'));
 			echo $form->label("q", "search");
@@ -69,13 +69,13 @@
 			</div>
 			<div class="logos">
 				<div class="cake">
-					<?php echo $html->link($html->image('cake.power.gif', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array(), false, false); ?>
+					<?php echo $html->link($html->image('cake.power.gif', array('alt' => 'the rapid development php framework', 'width' => '80', 'height' => '15')), 'http://cakephp.org/', array('escape' => false), false); ?>
 				</div>
 				<div class="jquery">
-					<?php echo $html->link($html->image('jquery-icon.png', array('alt' => 'jquery writeless do more', 'width' => '80', 'height' => '18')), 'http://jquery.com/', array(), false, false); ?>
+					<?php echo $html->link($html->image('jquery-icon.png', array('alt' => 'jquery writeless do more', 'width' => '80', 'height' => '18')), 'http://jquery.com/', array('escape' => false), false); ?>
 				</div>
 				<div class="wildflower">
-					<?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array(), false, false); ?>
+					<?php echo $html->link($html->image('wildflower.png', array('alt' => 'Powered by Wildflower CMS', 'width' => '80', 'height' => '15')), 'http://wf.klevo.sk/', array('escape' => false), false); ?>
 				</div>
 			</div>
 		</div>

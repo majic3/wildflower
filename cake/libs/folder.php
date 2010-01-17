@@ -1,34 +1,31 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * Convenience class for handling directories.
  *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @subpackage    cake.cake.libs
  * @since         CakePHP(tm) v 0.2.9
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
- * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 /**
  * Included libraries.
  *
  */
 if (!class_exists('Object')) {
-	uses('object');
+	require LIBS . 'object.php';
 }
+
 /**
  * Folder structure browser, lists folders and files.
  *
@@ -38,6 +35,7 @@ if (!class_exists('Object')) {
  * @subpackage    cake.cake.libs
  */
 class Folder extends Object {
+
 /**
  * Path to Folder.
  *
@@ -45,6 +43,7 @@ class Folder extends Object {
  * @access public
  */
 	var $path = null;
+
 /**
  * Sortedness.
  *
@@ -52,6 +51,7 @@ class Folder extends Object {
  * @access public
  */
 	var $sort = false;
+
 /**
  * mode to be used on create.
  *
@@ -59,6 +59,7 @@ class Folder extends Object {
  * @access public
  */
 	var $mode = 0755;
+
 /**
  * holds messages from last method.
  *
@@ -66,6 +67,7 @@ class Folder extends Object {
  * @access private
  */
 	var $__messages = array();
+
 /**
  * holds errors from last method.
  *
@@ -73,6 +75,7 @@ class Folder extends Object {
  * @access private
  */
 	var $__errors = false;
+
 /**
  * holds array of complete directory paths.
  *
@@ -80,6 +83,7 @@ class Folder extends Object {
  * @access private
  */
 	var $__directories;
+
 /**
  * holds array of complete file paths.
  *
@@ -87,6 +91,7 @@ class Folder extends Object {
  * @access private
  */
 	var $__files;
+
 /**
  * Constructor.
  *
@@ -113,6 +118,7 @@ class Folder extends Object {
 			$this->cd($path);
 		}
 	}
+
 /**
  * Return current path.
  *
@@ -122,6 +128,7 @@ class Folder extends Object {
 	function pwd() {
 		return $this->path;
 	}
+
 /**
  * Change directory to $path.
  *
@@ -136,6 +143,7 @@ class Folder extends Object {
 		}
 		return false;
 	}
+
 /**
  * Returns an array of the contents of the current directory.
  * The returned array holds two arrays: One of directories and one of files.
@@ -149,6 +157,9 @@ class Folder extends Object {
 	function read($sort = true, $exceptions = false, $fullPath = false) {
 		$dirs = $files = array();
 
+		if (!$this->pwd()) {
+			return array($dirs, $files);
+		}
 		if (is_array($exceptions)) {
 			$exceptions = array_flip($exceptions);
 		}
@@ -179,6 +190,7 @@ class Folder extends Object {
 		closedir($dir);
 		return array($dirs, $files);
 	}
+
 /**
  * Returns an array of all matching files in current directory.
  *
@@ -190,6 +202,7 @@ class Folder extends Object {
 		list($dirs, $files) = $this->read($sort);
 		return array_values(preg_grep('/^' . $regexpPattern . '$/i', $files)); ;
 	}
+
 /**
  * Returns an array of all matching files in and below current directory.
  *
@@ -198,11 +211,15 @@ class Folder extends Object {
  * @access public
  */
 	function findRecursive($pattern = '.*', $sort = false) {
+		if (!$this->pwd()) {
+			return array();
+		}
 		$startsOn = $this->path;
 		$out = $this->_findRecursive($pattern, $sort);
 		$this->cd($startsOn);
 		return $out;
 	}
+
 /**
  * Private helper function for findRecursive.
  *
@@ -227,6 +244,7 @@ class Folder extends Object {
 		}
 		return $found;
 	}
+
 /**
  * Returns true if given $path is a Windows path.
  *
@@ -241,6 +259,7 @@ class Folder extends Object {
 		}
 		return false;
 	}
+
 /**
  * Returns true if given $path is an absolute path.
  *
@@ -253,6 +272,7 @@ class Folder extends Object {
 		$match = preg_match('/^\\//', $path) || preg_match('/^[A-Z]:\\\\/i', $path);
 		return $match;
 	}
+
 /**
  * Returns a correct set of slashes for given $path. (\\ for Windows paths and / for other paths.)
  *
@@ -264,6 +284,7 @@ class Folder extends Object {
 	function normalizePath($path) {
 		return Folder::correctSlashFor($path);
 	}
+
 /**
  * Returns a correct set of slashes for given $path. (\\ for Windows paths and / for other paths.)
  *
@@ -278,6 +299,7 @@ class Folder extends Object {
 		}
 		return '/';
 	}
+
 /**
  * Returns $path with added terminating slash (corrected for Windows or other OS).
  *
@@ -292,6 +314,7 @@ class Folder extends Object {
 		}
 		return $path . Folder::correctSlashFor($path);
 	}
+
 /**
  * Returns $path with $element added, with correct slash in-between.
  *
@@ -304,6 +327,7 @@ class Folder extends Object {
 	function addPathElement($path, $element) {
 		return rtrim($path, DS) . DS . $element;
 	}
+
 /**
  * Returns true if the File is in a given CakePath.
  *
@@ -316,6 +340,7 @@ class Folder extends Object {
 
 		return $this->inPath($newdir);
 	}
+
 /**
  * Returns true if the File is in given path.
  *
@@ -337,6 +362,7 @@ class Folder extends Object {
 			return false;
 		}
 	}
+
 /**
  * Change the mode on a directory structure recursively. This includes changing the mode on files as well.
  *
@@ -388,6 +414,7 @@ class Folder extends Object {
 		}
 		return false;
 	}
+
 /**
  * Returns an array of nested directories and files in each directory
  *
@@ -423,6 +450,7 @@ class Folder extends Object {
 
 		return $this->__files;
 	}
+
 /**
  * Private method to list directories and files in each directory
  *
@@ -437,6 +465,7 @@ class Folder extends Object {
 			$this->__files = array_merge($this->__files, $files);
 		}
 	}
+
 /**
  * Create a directory structure recursively.
  *
@@ -476,6 +505,7 @@ class Folder extends Object {
 		}
 		return true;
 	}
+
 /**
  * Returns the size in bytes of this Folder.
  *
@@ -512,6 +542,7 @@ class Folder extends Object {
 		}
 		return $size;
 	}
+
 /**
  * Recursively Remove directories if system allow.
  *
@@ -522,6 +553,9 @@ class Folder extends Object {
 	function delete($path = null) {
 		if (!$path) {
 			$path = $this->pwd();
+		}
+		if (!$path) {
+			return null;
 		}
 		$path = Folder::slashTerm($path);
 		if (is_dir($path) === true) {
@@ -558,6 +592,7 @@ class Folder extends Object {
 		}
 		return true;
 	}
+
 /**
  * Recursive directory copy.
  *
@@ -566,6 +601,9 @@ class Folder extends Object {
  * @access public
  */
 	function copy($options = array()) {
+		if (!$this->pwd()) {
+			return false;
+		}
 		$to = null;
 		if (is_string($options)) {
 			$to = $options;
@@ -583,7 +621,7 @@ class Folder extends Object {
 		}
 
 		if (!is_dir($toDir)) {
-			$this->mkdir($toDir, $mode);
+			$this->create($toDir, $mode);
 		}
 
 		if (!is_writable($toDir)) {
@@ -633,6 +671,7 @@ class Folder extends Object {
 		}
 		return true;
 	}
+
 /**
  * Recursive directory move.
  *
@@ -655,6 +694,7 @@ class Folder extends Object {
 		}
 		return false;
 	}
+
 /**
  * get messages from latest method
  *
@@ -664,6 +704,7 @@ class Folder extends Object {
 	function messages() {
 		return $this->__messages;
 	}
+
 /**
  * get error from latest method
  *
@@ -673,51 +714,67 @@ class Folder extends Object {
 	function errors() {
 		return $this->__errors;
 	}
+
 /**
  * nix flavored alias
  *
  * @see read
+ * @deprecated use read
  * @access public
  */
 	function ls($sort = true, $exceptions = false) {
+		trigger_error('Deprecated method, use Folder::read instead', E_USER_WARNING);
 		return $this->read($sort, $exceptions);
 	}
+
 /**
  * nix flavored alias
  *
  * @see create
+ * @deprecated use create
  * @access public
  */
 	function mkdir($pathname, $mode = 0755) {
+		trigger_error('Deprecated method, use Folder::create instead', E_USER_WARNING);
 		return $this->create($pathname, $mode);
 	}
+
 /**
  * nix flavored alias
  *
  * @see copy
+ * @deprecated use copy
  * @access public
  */
 	function cp($options) {
+		trigger_error('Deprecated method, use Folder::copy instead', E_USER_WARNING);
 		return $this->copy($options);
 	}
+
 /**
  * nix flavored alias
  *
  * @see move
+ * @deprecated use move
  * @access public
  */
 	function mv($options) {
+		trigger_error('Deprecated method, use Folder::move instead', E_USER_WARNING);
 		return $this->move($options);
 	}
+
 /**
  * nix flavored alias
  *
  * @see delete
+ * @deprecated use delete
  * @access public
  */
 	function rm($path) {
+		trigger_error('Deprecated method, use Folder::delete instead', E_USER_WARNING);
 		return $this->delete($path);
 	}
+
 /**
  * Get the real path (taking ".." and such into account)
  *
@@ -757,6 +814,7 @@ class Folder extends Object {
 
 		return Folder::slashTerm($newpath);
 	}
+
 /**
  * Returns true if given $path ends in a slash (i.e. is slash-terminated).
  *

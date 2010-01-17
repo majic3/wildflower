@@ -98,7 +98,7 @@
 				base: '<?php echo $this->base ?>',
 				controller: '<?php echo $this->params['controller'] ?>',
 				action: '<?php echo $this->params['action'] ?>', 
-				prefix: '<?php echo Configure::read('Routing.admin') ?>',
+				prefix: '<?php echo Configure::read('Routing.prefixes.0') ?>',
 				custom: {
 					wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>',
 					wildflowerMPreix: '<?php echo Configure::read('Wildflower.mediaRoute'); ?>'

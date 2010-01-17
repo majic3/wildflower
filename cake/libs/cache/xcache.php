@@ -1,28 +1,23 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * Xcache storage engine for cache.
  *
- *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @subpackage    cake.cake.libs.cache
  * @since         CakePHP(tm) v 1.2.0.4947
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
- * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 /**
  * Xcache storage engine for cache
  *
@@ -31,15 +26,18 @@
  * @subpackage    cake.cake.libs.cache
  */
 class XcacheEngine extends CacheEngine {
+
 /**
- * settings
- * 		PHP_AUTH_USER = xcache.admin.user, default cake
- * 		PHP_AUTH_PW = xcache.admin.password, default cake
+ * Settings
+ *
+ *  - PHP_AUTH_USER = xcache.admin.user, default cake
+ *  - PHP_AUTH_PW = xcache.admin.password, default cake
  *
  * @var array
  * @access public
  */
 	var $settings = array();
+
 /**
  * Initialize the Cache Engine
  *
@@ -57,6 +55,7 @@ class XcacheEngine extends CacheEngine {
 		);
 		return function_exists('xcache_info');
 	}
+
 /**
  * Write data for key into cache
  *
@@ -68,9 +67,10 @@ class XcacheEngine extends CacheEngine {
  */
 	function write($key, &$value, $duration) {
 		$expires = time() + $duration;
-		xcache_set($key.'_expires', $expires, $duration);
+		xcache_set($key . '_expires', $expires, $duration);
 		return xcache_set($key, $value, $duration);
 	}
+
 /**
  * Read a key from the cache
  *
@@ -81,7 +81,7 @@ class XcacheEngine extends CacheEngine {
 	function read($key) {
 		if (xcache_isset($key)) {
 			$time = time();
-			$cachetime = intval(xcache_get($key.'_expires'));
+			$cachetime = intval(xcache_get($key . '_expires'));
 			if ($cachetime < $time || ($time + $this->settings['duration']) < $cachetime) {
 				return false;
 			}
@@ -89,6 +89,7 @@ class XcacheEngine extends CacheEngine {
 		}
 		return false;
 	}
+
 /**
  * Delete a key from the cache
  *
@@ -99,6 +100,7 @@ class XcacheEngine extends CacheEngine {
 	function delete($key) {
 		return xcache_unset($key);
 	}
+
 /**
  * Delete all keys from the cache
  *
@@ -114,6 +116,7 @@ class XcacheEngine extends CacheEngine {
 		$this->__auth(true);
 		return true;
 	}
+
 /**
  * Populates and reverses $_SERVER authentication values
  * Makes necessary changes (and reverting them back) in $_SERVER

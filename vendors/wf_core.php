@@ -80,3 +80,4 @@ Configure::write(array('Wildflower' => array(
 
 
 //Configure::write('debug', 1);
+//die('got me wf_core.php');

@@ -1,28 +1,21 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * Short description for file.
  *
- * Long description for file
- *
  * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @subpackage    cake.cake.libs.model.datasources
  * @since         CakePHP(tm) v 0.10.0.1076
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
- * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::import('Core', array('Set', 'String'));
 
@@ -35,42 +28,54 @@ App::import('Core', array('Set', 'String'));
  * @subpackage    cake.cake.libs.model.datasources
  */
 class DboSource extends DataSource {
+
 /**
  * Description string for this Database Data Source.
  *
- * @var unknown_type
+ * @var string
+ * @access public
  */
 	var $description = "Database Data Source";
+
 /**
  * index definition, standard cake, primary, index, unique
  *
  * @var array
  */
 	var $index = array('PRI' => 'primary', 'MUL' => 'index', 'UNI' => 'unique');
+
 /**
  * Database keyword used to assign aliases to identifiers.
  *
  * @var string
+ * @access public
  */
 	var $alias = 'AS ';
+
 /**
  * Caches fields quoted in DboSource::name()
  *
  * @var array
+ * @access public
  */
 	var $fieldCache = array();
+
 /**
  * Bypass automatic adding of joined fields/associations.
  *
  * @var boolean
+ * @access private
  */
 	var $__bypass = false;
+
 /**
  * The set of valid SQL operations usable in a WHERE statement
  *
  * @var array
+ * @access private
  */
 	var $__sqlOps = array('like', 'ilike', 'or', 'not', 'in', 'between', 'regexp', 'similar to');
+
 /**
  * Index of basic SQL commands
  *
@@ -82,8 +87,29 @@ class DboSource extends DataSource {
 		'commit' => 'COMMIT',
 		'rollback' => 'ROLLBACK'
 	);
+
+/**
+ * List of table engine specific parameters used on table creating
+ *
+ * @var array
+ * @access public
+ */
+	var $tableParameters = array();
+
+/**
+ * List of engine specific additional field parameters used on table creating
+ *
+ * @var array
+ * @access public
+ */
+	var $fieldParameters = array();
+
 /**
  * Constructor
+ * 
+ * @param array $config Array of configuration information for the Datasource.
+ * @param boolean $autoConnect Whether or not the datasource should automatically connect.
+ * @access public
  */
 	function __construct($config = null, $autoConnect = true) {
 		if (!isset($config['prefix'])) {
@@ -100,11 +126,13 @@ class DboSource extends DataSource {
 			return true;
 		}
 	}
+
 /**
  * Reconnects to database server with optional new settings
  *
  * @param array $config An array defining the new configuration settings
  * @return boolean True on success, false on failure
+ * @access public
  */
 	function reconnect($config = null) {
 		$this->disconnect();
@@ -113,6 +141,7 @@ class DboSource extends DataSource {
 
 		return $this->connect();
 	}
+
 /**
  * Prepares a value, or an array of values for database queries by quoting and escaping them.
  *
@@ -120,6 +149,7 @@ class DboSource extends DataSource {
  * @param string $column The column into which this data will be inserted
  * @param boolean $read Value to be used in READ or WRITE context
  * @return mixed Prepared value or array of values.
+ * @access public
  */
 	function value($data, $column = null, $read = true) {
 		if (is_array($data) && !empty($data)) {
@@ -139,11 +169,13 @@ class DboSource extends DataSource {
 			return null;
 		}
 	}
+
 /**
  * Returns an object to represent a database identifier in a query
  *
  * @param string $identifier
  * @return object An object representing a database identifier to be used in a query
+ * @access public
  */
 	function identifier($identifier) {
 		$obj = new stdClass();
@@ -151,11 +183,13 @@ class DboSource extends DataSource {
 		$obj->value = $identifier;
 		return $obj;
 	}
+
 /**
  * Returns an object to represent a database expression in a query
  *
  * @param string $expression
  * @return object An object representing a database expression to be used in a query
+ * @access public
  */
 	function expression($expression) {
 		$obj = new stdClass();
@@ -163,24 +197,34 @@ class DboSource extends DataSource {
 		$obj->value = $expression;
 		return $obj;
 	}
+
 /**
  * Executes given SQL statement.
  *
  * @param string $sql SQL statement
- * @return unknown
+ * @return boolean
+ * @access public
  */
 	function rawQuery($sql) {
 		$this->took = $this->error = $this->numRows = false;
 		return $this->execute($sql);
 	}
+
 /**
  * Queries the database with given SQL statement, and obtains some metadata about the result
  * (rows affected, timing, any errors, number of rows in resultset). The query is also logged.
- * If DEBUG is set, the log is shown all the time, else it is only shown on errors.
+ * If Configure::read('debug') is set, the log is shown all the time, else it is only shown on errors.
+ *
+ * ### Options
+ *
+ * - stats - Collect meta data stats for this query. Stats include time take, rows affected,
+ *   any errors, and number of rows returned. Defaults to `true`.
+ * - log - Whether or not the query should be logged to the memory log.
  *
  * @param string $sql
  * @param array $options
  * @return mixed Resource or object representing the result set, or false on failure
+ * @access public
  */
 	function execute($sql, $options = array()) {
 		$defaults = array('stats' => true, 'log' => $this->fullDebug);
@@ -205,10 +249,12 @@ class DboSource extends DataSource {
 		}
 		return $this->_result;
 	}
+
 /**
  * DataSource Query abstraction
  *
- * @return resource Result resource identifier
+ * @return resource Result resource identifier.
+ * @access public
  */
 	function query() {
 		$args	  = func_get_args();
@@ -300,10 +346,12 @@ class DboSource extends DataSource {
 			}
 		}
 	}
+
 /**
  * Returns a row from current resultset as an array
  *
  * @return array The fetched row as an array
+ * @access public
  */
 	function fetchRow($sql = null) {
 		if (!empty($sql) && is_string($sql) && strlen($sql) > 5) {
@@ -315,11 +363,15 @@ class DboSource extends DataSource {
 		if ($this->hasResult()) {
 			$this->resultSet($this->_result);
 			$resultRow = $this->fetchResult();
+			if (!empty($resultRow)) {
+				$this->fetchVirtualField($resultRow);
+			}
 			return $resultRow;
 		} else {
 			return null;
 		}
 	}
+
 /**
  * Returns an array of all result rows for a given SQL query.
  * Returns false if no rows matched.
@@ -327,6 +379,7 @@ class DboSource extends DataSource {
  * @param string $sql SQL statement
  * @param boolean $cache Enables returning/storing cached query results
  * @return array Array of resultset rows, or false if no rows matched
+ * @access public
  */
 	function fetchAll($sql, $cache = true, $modelName = null) {
 		if ($cache && isset($this->_queryCache[$sql])) {
@@ -343,6 +396,7 @@ class DboSource extends DataSource {
 				$out[] = $first;
 			}
 			while ($this->hasResult() && $item = $this->fetchResult()) {
+				$this->fetchVirtualField($item);
 				$out[] = $item;
 			}
 
@@ -351,34 +405,68 @@ class DboSource extends DataSource {
 					$this->_queryCache[$sql] = $out;
 				}
 			}
+			if (empty($out) && is_bool($this->_result)) {
+				return $this->_result;
+			}
 			return $out;
-
 		} else {
 			return false;
 		}
 	}
+
+/**
+ * Modifies $result array to place virtual fields in model entry where they belongs to
+ *
+ * @param array $resut REference to the fetched row
+ * @return void
+ */
+	function fetchVirtualField(&$result) {
+		if (isset($result[0]) && is_array($result[0])) {
+			foreach ($result[0] as $field => $value) {
+				if (strpos($field, '__') === false) {
+					continue;
+				}
+				list($alias, $virtual) = explode('__', $field);
+
+				if (!ClassRegistry::isKeySet($alias)) {
+					return;
+				}
+				$model = ClassRegistry::getObject($alias);
+				if ($model->isVirtualField($virtual)) {
+					$result[$alias][$virtual] = $value;
+					unset($result[0][$field]);
+				}
+			}
+			if (empty($result[0])) {
+				unset($result[0]);
+			}
+		}
+	}
+
 /**
  * Returns a single field of the first of query results for a given SQL query, or false if empty.
  *
  * @param string $name Name of the field
  * @param string $sql SQL query
- * @return unknown
+ * @return mixed Value of field read.
+ * @access public
  */
 	function field($name, $sql) {
 		$data = $this->fetchRow($sql);
-
 		if (!isset($data[$name]) || empty($data[$name])) {
 			return false;
 		} else {
 			return $data[$name];
 		}
 	}
+
 /**
  * Returns a quoted name of $data for use in an SQL statement.
  * Strips fields out of SQL functions before quoting.
  *
  * @param string $data
  * @return string SQL field
+ * @access public
  */
 	function name($data) {
 		if ($data == '*') {
@@ -439,59 +527,77 @@ class DboSource extends DataSource {
 		}
 		return (!$array) ? $data[0] : $data;
 	}
+
 /**
- * Checks if it's connected to the database
+ * Checks if the source is connected to the database.
  *
  * @return boolean True if the database is connected, else false
+ * @access public
  */
 	function isConnected() {
 		return $this->connected;
 	}
+
 /**
  * Checks if the result is valid
  *
  * @return boolean True if the result is valid else false
+ * @access public
  */
 	function hasResult() {
 		return is_resource($this->_result);
 	}
+
 /**
- * Outputs the contents of the queries log.
+ * Get the query log as an array.
  *
- * @param boolean $sorted
+ * @param boolean $sorted Get the queries sorted by time taken, defaults to false.
+ * @return array Array of queries run as an array
+ * @access public
  */
-	function showLog($sorted = false) {
+	function getLog($sorted = false, $clear = true) {
 		if ($sorted) {
 			$log = sortByKey($this->_queriesLog, 'took', 'desc', SORT_NUMERIC);
 		} else {
 			$log = $this->_queriesLog;
 		}
-
-		if ($this->_queriesCnt > 1) {
-			$text = 'queries';
-		} else {
-			$text = 'query';
+		if ($clear) {
+			$this->_queriesLog = array();
 		}
+		return array('log' => $log, 'count' => $this->_queriesCnt, 'time' => $this->_queriesTime);
+	}
 
+/**
+ * Outputs the contents of the queries log. If in a non-CLI environment the sql_log element
+ * will be rendered and output.  If in a CLI environment, a plain text log is generated.
+ *
+ * @param boolean $sorted Get the queries sorted by time taken, defaults to false.
+ * @return void
+ */
+	function showLog($sorted = false) {
+		$log = $this->getLog($sorted, false);
+		if (empty($log['log'])) {
+			return;
+		}
 		if (PHP_SAPI != 'cli') {
-			print ("<table class=\"cake-sql-log\" id=\"cakeSqlLog_" . preg_replace('/[^A-Za-z0-9_]/', '_', uniqid(time(), true)) . "\" summary=\"Cake SQL Log\" cellspacing=\"0\" border = \"0\">\n<caption>({$this->configKeyName}) {$this->_queriesCnt} {$text} took {$this->_queriesTime} ms</caption>\n");
-			print ("<thead>\n<tr><th>Nr</th><th>Query</th><th>Error</th><th>Affected</th><th>Num. rows</th><th>Took (ms)</th></tr>\n</thead>\n<tbody>\n");
-
-			foreach ($log as $k => $i) {
-				print ("<tr><td>" . ($k + 1) . "</td><td>" . h($i['query']) . "</td><td>{$i['error']}</td><td style = \"text-align: right\">{$i['affected']}</td><td style = \"text-align: right\">{$i['numRows']}</td><td style = \"text-align: right\">{$i['took']}</td></tr>\n");
-			}
-			print ("</tbody></table>\n");
+			App::import('Core', 'View');
+			$controller = null;
+			$View =& new View($controller, false);
+			$View->set('logs', array($this->configKeyName => $log));
+			echo $View->element('sql_dump');
 		} else {
-			foreach ($log as $k => $i) {
+			foreach ($log['log'] as $k => $i) {
 				print (($k + 1) . ". {$i['query']} {$i['error']}\n");
 			}
 		}
 	}
+
 /**
  * Log given SQL query.
  *
  * @param string $sql SQL statement
  * @todo: Add hook to log errors instead of returning false
+ * @access public
  */
 	function logQuery($sql) {
 		$this->_queriesCnt++;
@@ -510,11 +616,13 @@ class DboSource extends DataSource {
 			return false;
 		}
 	}
+
 /**
  * Output information about an SQL query. The SQL statement, number of rows in resultset,
  * and execution time in microseconds. If the query fails, an error is output instead.
  *
  * @param string $sql Query to show information on.
+ * @access public
  */
 	function showQuery($sql) {
 		$error = $this->error;
@@ -531,12 +639,14 @@ class DboSource extends DataSource {
 			pr(sprintf("<p style = \"text-align:left\"><b>Query:</b> %s %s</p>", $sql, $out));
 		}
 	}
+
 /**
  * Gets full table name including prefix
  *
- * @param mixed $model
- * @param boolean $quote
+ * @param mixed $model Either a Model object or a string table name.
+ * @param boolean $quote Whether you want the table name quoted.
  * @return string Full quoted table name
+ * @access public
  */
 	function fullTableName($model, $quote = true) {
 		if (is_object($model)) {
@@ -551,13 +661,19 @@ class DboSource extends DataSource {
 		}
 		return $table;
 	}
+
 /**
  * The "C" in CRUD
  *
- * @param Model $model
- * @param array $fields
- * @param array $values
+ * Creates new records in the database.
+ *
+ * @param Model $model Model object that the record is for.
+ * @param array $fields An array of field names to insert. If null, $model->data will be 
+ *   used to generate field names.
+ * @param array $values An array of values with keys matching the fields. If null, $model->data will
+ *   be used to generate values.
  * @return boolean Success
+ * @access public
  */
 	function create(&$model, $fields = null, $values = null) {
 		$id = null;
@@ -596,13 +712,16 @@ class DboSource extends DataSource {
 			return false;
 		}
 	}
+
 /**
  * The "R" in CRUD
  *
- * @param Model $model
- * @param array $queryData
+ * Reads record(s) from the database.
+ *
+ * @param Model $model A Model object that the query is for.
+ * @param array $queryData An array of queryData information containing keys similar to Model::find()
  * @param integer $recursive Number of levels of association
- * @return unknown
+ * @return mixed boolean false on error/failure.  An array of results on success.
  */
 	function read(&$model, $queryData = array(), $recursive = null) {
 		$queryData = $this->__scrubQueryData($queryData);
@@ -691,13 +810,15 @@ class DboSource extends DataSource {
 		}
 		return $resultSet;
 	}
+
 /**
- * Private method.	Passes association results thru afterFind filters of corresponding model
+ * Passes association results thru afterFind filters of corresponding model
  *
  * @param array $results Reference of resultset to be filtered
  * @param object $model Instance of model to operate against
  * @param array $filtered List of classes already filtered, to be skipped
- * @return return
+ * @return array Array of results that have been filtered through $model->afterFind
+ * @access private
  */
 	function __filterResults(&$results, &$model, $filtered = array()) {
 		$filtering = array();
@@ -727,17 +848,18 @@ class DboSource extends DataSource {
 		}
 		return $filtering;
 	}
+
 /**
- * Enter description here...
+ * Queries associations.  Used to fetch results on recursive models.
  *
- * @param Model $model
- * @param unknown_type $linkModel
- * @param string $type Association type
+ * @param Model $model Primary Model object
+ * @param Model $linkModel Linked model that 
+ * @param string $type Association type, one of the model association types ie. hasMany
  * @param unknown_type $association
  * @param unknown_type $assocData
- * @param unknown_type $queryData
- * @param unknown_type $external
- * @param unknown_type $resultSet
+ * @param array $queryData
+ * @param boolean $external Whether or not the association query is on an external datasource.
+ * @param array $resultSet Existing results
  * @param integer $recursive Number of levels of association
  * @param array $stack
  */
@@ -886,13 +1008,15 @@ class DboSource extends DataSource {
 			}
 		}
 	}
+
 /**
  * A more efficient way to fetch associations.	Woohoo!
  *
- * @param model $model		Primary model object
- * @param string $query		Association query
- * @param array $ids		Array of IDs of associated records
+ * @param model $model Primary model object
+ * @param string $query Association query
+ * @param array $ids Array of IDs of associated records
  * @return array Association results
+ * @access public
  */
 	function fetchAssociated($model, $query, $ids) {
 		$query = str_replace('{$__cakeID__$}', implode(', ', $ids), $query);
@@ -902,6 +1026,7 @@ class DboSource extends DataSource {
 		}
 		return $this->fetchAll($query, $model->cacheQueries, $model->alias);
 	}
+
 /**
  * mergeHasMany - Merge the results of hasMany relations.
  *
@@ -912,7 +1037,7 @@ class DboSource extends DataSource {
  * @param object $model Model being merged onto
  * @param object $linkModel Model being merged
  * @return void
- **/
+ */
 	function __mergeHasMany(&$resultSet, $merge, $association, &$model, &$linkModel) {
 		foreach ($resultSet as $i => $value) {
 			$count = 0;
@@ -941,6 +1066,7 @@ class DboSource extends DataSource {
 			}
 		}
 	}
+
 /**
  * Enter description here...
  *
@@ -949,6 +1075,7 @@ class DboSource extends DataSource {
  * @param unknown_type $association
  * @param unknown_type $type
  * @param boolean $selfJoin
+ * @access private
  */
 	function __mergeAssociation(&$data, $merge, $association, $type, $selfJoin = false) {
 		if (isset($merge[0]) && !isset($merge[0][$association])) {
@@ -1019,6 +1146,7 @@ class DboSource extends DataSource {
 			}
 		}
 	}
+
 /**
  * Generates an array representing a query or part of a query from a single model or two associated models
  *
@@ -1031,6 +1159,7 @@ class DboSource extends DataSource {
  * @param boolean $external
  * @param array $resultSet
  * @return mixed
+ * @access public
  */
 	function generateAssociationQuery(&$model, &$linkModel, $type, $association = null, $assocData = array(), &$queryData, $external = false, &$resultSet) {
 		$queryData = $this->__scrubQueryData($queryData);
@@ -1188,6 +1317,7 @@ class DboSource extends DataSource {
 		}
 		return null;
 	}
+
 /**
  * Returns a conditions array for the constraint between two models
  *
@@ -1195,6 +1325,7 @@ class DboSource extends DataSource {
  * @param object $model Model object
  * @param array $association Association array
  * @return array Conditions array defining the constraint between $model and $association
+ * @access public
  */
 	function getConstraint($type, $model, $linkModel, $alias, $assoc, $alias2 = null) {
 		$assoc = array_merge(array('external' => false, 'self' => false), $assoc);
@@ -1228,11 +1359,13 @@ class DboSource extends DataSource {
 		}
 		return array();
 	}
+
 /**
  * Builds and generates a JOIN statement from an array.	 Handles final clean-up before conversion.
  *
  * @param array $join An array defining a JOIN statement in a query
  * @return string An SQL JOIN statement to be used in a query
+ * @access public
  * @see DboSource::renderJoinStatement()
  * @see DboSource::buildStatement()
  */
@@ -1252,15 +1385,17 @@ class DboSource extends DataSource {
 		}
 		return $this->renderJoinStatement($data);
 	}
+
 /**
  * Builds and generates an SQL statement from an array.	 Handles final clean-up before conversion.
  *
  * @param array $query An array defining an SQL query
  * @param object $model The model object which initiated the query
  * @return string An executable SQL statement
+ * @access public
  * @see DboSource::renderStatement()
  */
-	function buildStatement($query, $model) {
+	function buildStatement($query, &$model) {
 		$query = array_merge(array('offset' => null, 'joins' => array()), $query);
 		if (!empty($query['joins'])) {
 			$count = count($query['joins']);
@@ -1275,28 +1410,32 @@ class DboSource extends DataSource {
 			'fields' => implode(', ', $query['fields']),
 			'table' => $query['table'],
 			'alias' => $this->alias . $this->name($query['alias']),
-			'order' => $this->order($query['order']),
+			'order' => $this->order($query['order'], 'ASC', $model),
 			'limit' => $this->limit($query['limit'], $query['offset']),
 			'joins' => implode(' ', $query['joins']),
-			'group' => $this->group($query['group'])
+			'group' => $this->group($query['group'], $model)
 		));
 	}
+
 /**
  * Renders a final SQL JOIN statement
  *
  * @param array $data
  * @return string
+ * @access public
  */
 	function renderJoinStatement($data) {
 		extract($data);
 		return trim("{$type} JOIN {$table} {$alias} ON ({$conditions})");
 	}
+
 /**
  * Renders a final SQL statement by putting together the component parts in the correct order
  *
- * @param string $type
- * @param array $data
- * @return string
+ * @param string $type type of query being run.  e.g select, create, update, delete, schema, alter.
+ * @param array $data Array of data to insert into the query.
+ * @return string Rendered SQL expression to be run.
+ * @access public
  */
 	function renderStatement($type, $data) {
 		extract($data);
@@ -1322,24 +1461,28 @@ class DboSource extends DataSource {
 				return "DELETE {$alias} FROM {$table} {$aliases}{$conditions}";
 			break;
 			case 'schema':
-				foreach (array('columns', 'indexes') as $var) {
+				foreach (array('columns', 'indexes', 'tableParameters') as $var) {
 					if (is_array(${$var})) {
-						${$var} = "\t" . implode(",\n\t", array_filter(${$var}));
+						${$var} = "\t" . join(",\n\t", array_filter(${$var}));
+					} else {
+						${$var} = '';
 					}
 				}
 				if (trim($indexes) != '') {
 					$columns .= ',';
 				}
-				return "CREATE TABLE {$table} (\n{$columns}{$indexes});";
+				return "CREATE TABLE {$table} (\n{$columns}{$indexes}){$tableParameters};";
 			break;
 			case 'alter':
 			break;
 		}
 	}
+
 /**
  * Merges a mixed set of string/array conditions
  *
  * @return array
+ * @access private
  */
 	function __mergeConditions($query, $assoc) {
 		if (empty($assoc)) {
@@ -1362,6 +1505,7 @@ class DboSource extends DataSource {
 
 		return $assoc;
 	}
+
 /**
  * Generates and executes an SQL UPDATE statement for given model, fields, and values.
  * For databases that do not support aliases in UPDATE queries.
@@ -1371,6 +1515,7 @@ class DboSource extends DataSource {
  * @param array $values
  * @param mixed $conditions
  * @return boolean Success
+ * @access public
  */
 	function update(&$model, $fields = array(), $values = null, $conditions = null) {
 		if ($values == null) {
@@ -1395,6 +1540,7 @@ class DboSource extends DataSource {
 		}
 		return true;
 	}
+
 /**
  * Quotes and prepares fields and values for an SQL UPDATE statement
  *
@@ -1439,6 +1585,7 @@ class DboSource extends DataSource {
 		}
 		return $updates;
 	}
+
 /**
  * Generates and executes an SQL DELETE statement.
  * For databases that do not support aliases in UPDATE queries.
@@ -1446,6 +1593,7 @@ class DboSource extends DataSource {
  * @param Model $model
  * @param mixed $conditions
  * @return boolean Success
+ * @access public
  */
 	function delete(&$model, $conditions = null) {
 		$alias = $joins = null;
@@ -1462,6 +1610,7 @@ class DboSource extends DataSource {
 		}
 		return true;
 	}
+
 /**
  * Gets a list of record IDs for the given conditions.	Used for multi-record updates and deletes
  * in databases that do not support aliases in UPDATE/DELETE queries.
@@ -1491,11 +1640,13 @@ class DboSource extends DataSource {
 		}
 		return $conditions;
 	}
+
 /**
  * Returns an array of SQL JOIN fragments from a model's associations
  *
  * @param object $model
  * @return array
+ * @access protected
  */
 	function _getJoins($model) {
 		$join = array();
@@ -1517,6 +1668,7 @@ class DboSource extends DataSource {
 		}
 		return $join;
 	}
+
 /**
  * Returns an SQL calculation, i.e. COUNT() or MAX()
  *
@@ -1537,16 +1689,27 @@ class DboSource extends DataSource {
 				if (!isset($params[1])) {
 					$params[1] = 'count';
 				}
-				return 'COUNT(' . $this->name($params[0]) . ') AS ' . $this->name($params[1]);
+				if (is_object($model) && $model->isVirtualField($params[0])){
+					$arg = $this->__quoteFields($model->getVirtualField($params[0]));
+				} else {
+					$arg = $this->name($params[0]);
+				}
+				return 'COUNT(' . $arg . ') AS ' . $this->name($params[1]);
 			case 'max':
 			case 'min':
 				if (!isset($params[1])) {
 					$params[1] = $params[0];
 				}
-				return strtoupper($func) . '(' . $this->name($params[0]) . ') AS ' . $this->name($params[1]);
+				if (is_object($model) && $model->isVirtualField($params[0])) {
+					$arg = $this->__quoteFields($model->getVirtualField($params[0]));
+				} else {
+					$arg = $this->name($params[0]);
+				}
+				return strtoupper($func) . '(' . $arg . ') AS ' . $this->name($params[1]);
 			break;
 		}
 	}
+
 /**
  * Deletes all the records in a table and resets the count of the auto-incrementing
  * primary key, where applicable.
@@ -1558,6 +1721,7 @@ class DboSource extends DataSource {
 	function truncate($table) {
 		return $this->execute('TRUNCATE TABLE ' . $this->fullTableName($table));
 	}
+
 /**
  * Begin a transaction
  *
@@ -1565,6 +1729,7 @@ class DboSource extends DataSource {
  * @return boolean True on success, false on fail
  * (i.e. if the database/model does not support transactions,
  * or a transaction has not started).
+ * @access public
  */
 	function begin(&$model) {
 		if (parent::begin($model) && $this->execute($this->_commands['begin'])) {
@@ -1573,6 +1738,7 @@ class DboSource extends DataSource {
 		}
 		return false;
 	}
+
 /**
  * Commit a transaction
  *
@@ -1580,6 +1746,7 @@ class DboSource extends DataSource {
  * @return boolean True on success, false on fail
  * (i.e. if the database/model does not support transactions,
  * or a transaction has not started).
+ * @access public
  */
 	function commit(&$model) {
 		if (parent::commit($model) && $this->execute($this->_commands['commit'])) {
@@ -1588,6 +1755,7 @@ class DboSource extends DataSource {
 		}
 		return false;
 	}
+
 /**
  * Rollback a transaction
  *
@@ -1595,6 +1763,7 @@ class DboSource extends DataSource {
  * @return boolean True on success, false on fail
  * (i.e. if the database/model does not support transactions,
  * or a transaction has not started).
+ * @access public
  */
 	function rollback(&$model) {
 		if (parent::rollback($model) && $this->execute($this->_commands['rollback'])) {
@@ -1603,6 +1772,7 @@ class DboSource extends DataSource {
 		}
 		return false;
 	}
+
 /**
  * Creates a default set of conditions from the model if $conditions is null/empty.
  *
@@ -1610,6 +1780,7 @@ class DboSource extends DataSource {
  * @param mixed	 $conditions
  * @param boolean $useAlias Use model aliases rather than table names when generating conditions
  * @return mixed
+ * @access public
  */
 	function defaultConditions(&$model, $conditions, $useAlias = true) {
 		if (!empty($conditions)) {
@@ -1625,6 +1796,7 @@ class DboSource extends DataSource {
 		}
 		return array("{$alias}.{$model->primaryKey}" => $model->getID());
 	}
+
 /**
  * Returns a key formatted like a string Model.fieldname(i.e. Post.title, or Country.name)
  *
@@ -1632,6 +1804,7 @@ class DboSource extends DataSource {
  * @param unknown_type $key
  * @param unknown_type $assoc
  * @return string
+ * @access public
  */
 	function resolveKey($model, $key, $assoc = null) {
 		if (empty($assoc)) {
@@ -1642,11 +1815,13 @@ class DboSource extends DataSource {
 		}
 		return $key;
 	}
+
 /**
  * Private helper method to remove query metadata in given data array.
  *
  * @param array $data
  * @return array
+ * @access public
  */
 	function __scrubQueryData($data) {
 		foreach (array('conditions', 'fields', 'joins', 'order', 'limit', 'offset', 'group') as $key) {
@@ -1656,6 +1831,25 @@ class DboSource extends DataSource {
 		}
 		return $data;
 	}
+
+/**
+ * Converts model virtual fields into sql expressions to be fetched later
+ *
+ * @param Model $model
+ * @param string $alias Alias tablename
+ * @param mixed $fields virtual fields to be used on query
+ * @return array
+ */
+	function _constructVirtualFields(&$model,$alias,$fields) {
+		$virtual = array();
+		foreach ($fields as $field) {
+			$virtualField = $this->name("{$alias}__{$field}");
+			$expression = $this->__quoteFields($model->getVirtualField($field));
+			$virtual[] = '(' .$expression . ") {$this->alias} {$virtualField}";
+		}
+		return $virtual;
+	}
+
 /**
  * Generates the fields list of an SQL query.
  *
@@ -1664,12 +1858,14 @@ class DboSource extends DataSource {
  * @param mixed $fields
  * @param boolean $quote If false, returns fields array unquoted
  * @return array
+ * @access public
  */
 	function fields(&$model, $alias = null, $fields = array(), $quote = true) {
 		if (empty($alias)) {
 			$alias = $model->alias;
 		}
-		if (empty($fields)) {
+		$allFields = empty($fields);
+		if ($allFields) {
 			$fields = array_keys($model->schema());
 		} elseif (!is_array($fields)) {
 			$fields = String::tokenize($fields);
@@ -1679,10 +1875,19 @@ class DboSource extends DataSource {
 		if (!$quote) {
 			return $fields;
 		}
+		$virtual = array();
+		if ($model->getVirtualField()) {
+			$keys =  array_keys($model->getVirtualField());
+			$virtual = ($allFields) ? $keys :  array_intersect($keys, $fields);
+		}
 		$count = count($fields);
 
 		if ($count >= 1 && !in_array($fields[0], array('*', 'COUNT(*)'))) {
 			for ($i = 0; $i < $count; $i++) {
+				if (is_string($fields[$i]) && in_array($fields[$i], $virtual)) {
+					unset($fields[$i]);
+					continue;
+				}
 				if (is_object($fields[$i]) && isset($fields[$i]->type) && $fields[$i]->type === 'expression') {
 					$fields[$i] = $fields[$i]->value;
 				} elseif (preg_match('/^\(.*\)\s' . $this->alias . '.*/i', $fields[$i])){
@@ -1738,8 +1943,12 @@ class DboSource extends DataSource {
 				}
 			}
 		}
+		if (!empty($virtual)) {
+			$fields = array_merge($fields,$this->_constructVirtualFields($model, $alias, $virtual));
+		}
 		return array_unique($fields);
 	}
+
 /**
  * Creates a WHERE clause by parsing given conditions data.
  *
@@ -1748,6 +1957,7 @@ class DboSource extends DataSource {
  * @param boolean $where If true, "WHERE " will be prepended to the return value
  * @param Model $model A reference to the Model instance making the query
  * @return string SQL fragment
+ * @access public
  */
 	function conditions($conditions, $quoteValues = true, $where = true, $model = null) {
 		$clause = $out = '';
@@ -1780,6 +1990,7 @@ class DboSource extends DataSource {
 		}
 		return $clause . $conditions;
 	}
+
 /**
  * Creates a WHERE clause by parsing given conditions array.  Used by DboSource::conditions().
  *
@@ -1787,6 +1998,7 @@ class DboSource extends DataSource {
  * @param boolean $quoteValues If true, values should be quoted
  * @param Model $model A reference to the Model instance making the query
  * @return string SQL fragment
+ * @access public
  */
 	function conditionKeysToString($conditions, $quoteValues = true, $model = null) {
 		$c = 0;
@@ -1854,7 +2066,7 @@ class DboSource extends DataSource {
 						} else {
 							$data = $this->__quoteFields($key) . ' IN (';
 						}
-						if ($quoteValues || strpos($value[0], '-!') !== 0) {
+						if ($quoteValues) {
 							if (is_object($model)) {
 								$columnType = $model->getColumnType($key);
 							}
@@ -1887,6 +2099,7 @@ class DboSource extends DataSource {
 		}
 		return $out;
 	}
+
 /**
  * Extracts a Model.field identifier and an SQL condition operator from a string, formats
  * and inserts values, and composes them into an SQL snippet.
@@ -1915,6 +2128,11 @@ class DboSource extends DataSource {
 			}
 		}
 
+		$virtual = false;
+		if (is_object($model) && $model->isVirtualField($key)) {
+			$key = $this->__quoteFields($model->getVirtualField($key));
+			$virtual = true;
+		}
 
 		$type = (is_object($model) ? $model->getColumnType($key) : null);
 
@@ -1929,7 +2147,7 @@ class DboSource extends DataSource {
 
 		$value = $this->value($value, $type);
 
-		if ($key !== '?') {
+		if (!$virtual && $key !== '?') {
 			$isKey = (strpos($key, '(') !== false || strpos($key, ')') !== false);
 			$key = $isKey ? $this->__quoteFields($key) : $this->name($key);
 		}
@@ -1967,9 +2185,12 @@ class DboSource extends DataSource {
 				break;
 			}
 		}
-
+		if ($virtual) {
+			return "({$key}) {$operator} {$value}";
+		}
 		return "{$key} {$operator} {$value}";
 	}
+
 /**
  * Quotes Model.fields
  *
@@ -2002,12 +2223,14 @@ class DboSource extends DataSource {
 		}
 		return $original;
 	}
+
 /**
  * Returns a limit statement in the correct format for the particular database.
  *
  * @param integer $limit Limit of results returned
  * @param integer $offset Offset from which to start results
  * @return string SQL limit/offset statement
+ * @access public
  */
 	function limit($limit, $offset = null) {
 		if ($limit) {
@@ -2025,106 +2248,119 @@ class DboSource extends DataSource {
 		}
 		return null;
 	}
+
 /**
  * Returns an ORDER BY clause as a string.
  *
  * @param string $key Field reference, as a key (i.e. Post.title)
  * @param string $direction Direction (ASC or DESC)
+ * @param object $model model reference (used to look for virtual field)
  * @return string ORDER BY clause
+ * @access public
  */
-	function order($keys, $direction = 'ASC') {
-		if (is_string($keys) && strpos($keys, ',') && !preg_match('/\(.+\,.+\)/', $keys)) {
-			$keys = array_map('trim', explode(',', $keys));
+	function order($keys, $direction = 'ASC', $model = null) {
+		if (!is_array($keys)) {
+			$keys = array($keys);
 		}
+		$keys = array_filter($keys);
+		$result = array();
+		while (!empty($keys)) {
+			list($key, $dir) = each($keys);
+			array_shift($keys);
 
-		if (is_array($keys)) {
-			$keys = array_filter($keys);
-		}
+			if (is_numeric($key)) {
+				$key = $dir;
+				$dir = $direction;
+			}
 
-		if (empty($keys) || (is_array($keys) && isset($keys[0]) && empty($keys[0]))) {
-			return '';
-		}
-
-		if (is_array($keys)) {
-			$keys = (Set::countDim($keys) > 1) ? array_map(array(&$this, 'order'), $keys) : $keys;
-
-			foreach ($keys as $key => $value) {
-				if (is_numeric($key)) {
-					$key = $value = ltrim(str_replace('ORDER BY ', '', $this->order($value)));
-					$value = (!preg_match('/\\x20ASC|\\x20DESC/i', $key) ? ' ' . $direction : '');
-				} else {
-					$value = ' ' . $value;
-				}
-
-				if (!preg_match('/^.+\\(.*\\)/', $key) && !strpos($key, ',')) {
-					if (preg_match('/\\x20ASC|\\x20DESC/i', $key, $dir)) {
-						$dir = $dir[0];
-						$key = preg_replace('/\\x20ASC|\\x20DESC/i', '', $key);
+			if (is_string($key) && strpos($key, ',') && !preg_match('/\(.+\,.+\)/', $key)) {
+				$key = array_map('trim', explode(',', $key));
+			}
+			if (is_array($key)) {
+				//Flatten the array
+				$key = array_reverse($key, true);
+				foreach ($key as $k => $v) {
+					if (is_numeric($k)) {
+						array_unshift($keys, $v);
 					} else {
-						$dir = '';
+						$keys = array($k => $v) + $keys;
 					}
-					$key = trim($key);
-					if (!preg_match('/\s/', $key)) {
-						$key = $this->name($key);
-					}
-					$key .= ' ' . trim($dir);
 				}
-				$order[] = $this->order($key . $value);
+				continue;
 			}
-			return ' ORDER BY ' . trim(str_replace('ORDER BY', '', implode(',', $order)));
-		}
-		$keys = preg_replace('/ORDER\\x20BY/i', '', $keys);
 
-		if (strpos($keys, '.')) {
-			preg_match_all('/([a-zA-Z0-9_]{1,})\\.([a-zA-Z0-9_]{1,})/', $keys, $result, PREG_PATTERN_ORDER);
-			$pregCount = count($result[0]);
+			if (preg_match('/\\x20ASC|\\x20DESC/i', $key, $_dir)) {
+				$dir = $_dir[0];
+				$key = preg_replace('/\\x20ASC|\\x20DESC/i', '', $key);
+			}
 
-			for ($i = 0; $i < $pregCount; $i++) {
-				if (!is_numeric($result[0][$i])) {
-					$keys = preg_replace('/' . $result[0][$i] . '/', $this->name($result[0][$i]), $keys);
+			if (strpos($key, '.')) {
+				preg_match_all('/([a-zA-Z0-9_]{1,})\\.([a-zA-Z0-9_]{1,})/', $key, $matches, PREG_PATTERN_ORDER);
+				$pregCount = count($matches[0]);
+				for ($i = 0; $i < $pregCount; $i++) {
+					if (!is_numeric($matches[0][$i])) {
+						$key = preg_replace('/' . $matches[0][$i] . '/', $this->name($matches[0][$i]), $key);
+					}
 				}
 			}
-			$result = ' ORDER BY ' . $keys;
-			return $result . (!preg_match('/\\x20ASC|\\x20DESC/i', $keys) ? ' ' . $direction : '');
 
-		} elseif (preg_match('/(\\x20ASC|\\x20DESC)/i', $keys, $match)) {
-			$direction = $match[1];
-			return ' ORDER BY ' . preg_replace('/' . $match[1] . '/', '', $keys) . $direction;
+			$key = trim($key);
+			if (!preg_match('/\s/', $key) && !strpos($key,'.')) {
+				if (is_object($model) && $model->isVirtualField($key)) {
+					$key =  '('.$this->__quoteFields($model->getVirtualField($key)).')';
+				} else {
+					$key = $this->name($key);
+				}
+			}
+			$key .= ' ' . trim($dir);
+			$result[] = $key;
 		}
-		return ' ORDER BY ' . $keys . ' ' . $direction;
+		if (!empty($result)) {
+			return ' ORDER BY ' . implode(', ', $result);
+		}
+		return '';
 	}
+
 /**
  * Create a GROUP BY SQL clause
  *
  * @param string $group Group By Condition
  * @return mixed string condition or null
+ * @access public
  */
-	function group($group) {
+	function group($group, $model = null) {
 		if ($group) {
-			if (is_array($group)) {
-				$group = implode(', ', $group);
+			if (!is_array($group)) {
+				$group = array($group);
 			}
+			foreach($group as $index => $key) {
+				if ($model->isVirtualField($key)) {
+					$group[$index] = '(' . $model->getVirtualField($key) . ')';
+				}
+			}
+			$group = implode(', ', $group);
 			return ' GROUP BY ' . $this->__quoteFields($group);
 		}
 		return null;
 	}
+
 /**
- * Disconnects database, kills the connection and says the connection is closed,
- * and if DEBUG is turned on, the log for this object is shown.
+ * Disconnects database, kills the connection and says the connection is closed.
  *
+ * @return void
+ * @access public
  */
 	function close() {
-		if (Configure::read() > 1) {
-			$this->showLog();
-		}
 		$this->disconnect();
 	}
+
 /**
  * Checks if the specified table contains any record matching specified SQL
  *
  * @param Model $model Model to search
  * @param string $sql SQL WHERE clause (condition only, not the "WHERE" part)
  * @return boolean True if the table has a matching record, else false
+ * @access public
  */
 	function hasAny(&$Model, $sql) {
 		$sql = $this->conditions($sql);
@@ -2140,11 +2376,13 @@ class DboSource extends DataSource {
 		}
 		return false;
 	}
+
 /**
  * Gets the length of a database-native column description, or null if no length
  *
  * @param string $real Real database-layer column type (i.e. "varchar(255)")
  * @return mixed An integer or string representing the length of the column
+ * @access public
  */
 	function length($real) {
 		if (!preg_match_all('/([\w\s]+)(?:\((\d+)(?:,(\d+))?\))?(\sunsigned)?(\szerofill)?/', $real, $result)) {
@@ -2199,11 +2437,13 @@ class DboSource extends DataSource {
 		}
 		return intval($length);
 	}
+
 /**
  * Translates between PHP boolean values and Database (faked) boolean values
  *
  * @param mixed $data Value to be translated
  * @return mixed Converted boolean value
+ * @access public
  */
 	function boolean($data) {
 		if ($data === true || $data === false) {
@@ -2215,6 +2455,7 @@ class DboSource extends DataSource {
 			return !empty($data);
 		}
 	}
+
 /**
  * Inserts multiple values into a table
  *
@@ -2233,15 +2474,18 @@ class DboSource extends DataSource {
 			$this->query("INSERT INTO {$table} ({$fields}) VALUES {$values[$x]}");
 		}
 	}
+
 /**
  * Returns an array of the indexes in given datasource name.
  *
  * @param string $model Name of model to inspect
  * @return array Fields in table. Keys are column and unique
+ * @access public
  */
 	function index($model) {
 		return false;
 	}
+
 /**
  * Generate a database-native schema for the given Schema object
  *
@@ -2249,6 +2493,7 @@ class DboSource extends DataSource {
  * @param string $tableName Optional.  If specified only the table name given will be generated.
  *   Otherwise, all tables defined in the schema are generated.
  * @return string
+ * @access public
  */
 	function createSchema($schema, $tableName = null) {
 		if (!is_a($schema, 'CakeSchema')) {
@@ -2259,7 +2504,7 @@ class DboSource extends DataSource {
 
 		foreach ($schema->tables as $curTable => $columns) {
 			if (!$tableName || $tableName == $curTable) {
-				$cols = $colList = $indexes = array();
+				$cols = $colList = $indexes = $tableParameters = array();
 				$primary = null;
 				$table = $this->fullTableName($curTable);
 
@@ -2270,14 +2515,16 @@ class DboSource extends DataSource {
 					if (isset($col['key']) && $col['key'] == 'primary') {
 						$primary = $name;
 					}
-					if ($name !== 'indexes') {
+					if ($name !== 'indexes' && $name !== 'tableParameters') {
 						$col['name'] = $name;
 						if (!isset($col['type'])) {
 							$col['type'] = 'string';
 						}
 						$cols[] = $this->buildColumn($col);
-					} else {
+					} elseif ($name == 'indexes') {
 						$indexes = array_merge($indexes, $this->buildIndex($col, $table));
+					} elseif ($name == 'tableParameters') {
+						$tableParameters = array_merge($tableParameters, $this->buildTableParameters($col, $table));
 					}
 				}
 				if (empty($indexes) && !empty($primary)) {
@@ -2285,20 +2532,22 @@ class DboSource extends DataSource {
 					$indexes = array_merge($indexes, $this->buildIndex($col, $table));
 				}
 				$columns = $cols;
-				$out .= $this->renderStatement('schema', compact('table', 'columns', 'indexes')) . "\n\n";
+				$out .= $this->renderStatement('schema', compact('table', 'columns', 'indexes', 'tableParameters')) . "\n\n";
 			}
 		}
 		return $out;
 	}
+
 /**
  * Generate a alter syntax from	 CakeSchema::compare()
  *
  * @param unknown_type $schema
- * @return unknown
+ * @return boolean
  */
 	function alterSchema($compare, $table = null) {
 		return false;
 	}
+
 /**
  * Generate a "drop table" statement for the given Schema object
  *
@@ -2306,6 +2555,7 @@ class DboSource extends DataSource {
  * @param string $table Optional.  If specified only the table name given will be generated.
  *   Otherwise, all tables defined in the schema are generated.
  * @return string
+ * @access public
  */
 	function dropSchema($schema, $table = null) {
 		if (!is_a($schema, 'CakeSchema')) {
@@ -2321,12 +2571,14 @@ class DboSource extends DataSource {
 		}
 		return $out;
 	}
+
 /**
  * Generate a database-native column schema string
  *
  * @param array $column An array structured like the following: array('name'=>'value', 'type'=>'value'[, options]),
  *   where options can be 'default', 'length', or 'key'.
  * @return string
+ * @access public
  */
 	function buildColumn($column) {
 		$name = $type = null;
@@ -2361,6 +2613,7 @@ class DboSource extends DataSource {
 		if (($column['type'] == 'integer' || $column['type'] == 'float' ) && isset($column['default']) && $column['default'] === '') {
 			$column['default'] = null;
 		}
+		$out = $this->_buildFieldParameters($out, $column, 'beforeDefault');
 
 		if (isset($column['key']) && $column['key'] == 'primary' && $type == 'integer') {
 			$out .= ' ' . $this->columns['primary_key']['name'];
@@ -2375,14 +2628,42 @@ class DboSource extends DataSource {
 		} elseif (isset($column['null']) && $column['null'] == false) {
 			$out .= ' NOT NULL';
 		}
+		$out = $this->_buildFieldParameters($out, $column, 'afterDefault');
 		return $out;
 	}
+
+/**
+ * Build the field parameters, in a position
+ *
+ * @param string $columnString The partially built column string
+ * @param array $columnData The array of column data.
+ * @param string $position The position type to use. 'beforeDefault' or 'afterDefault' are common
+ * @return string a built column with the field parameters added.
+ * @access public
+ */
+	function _buildFieldParameters($columnString, $columnData, $position) {
+		foreach ($this->fieldParameters as $paramName => $value) {
+			if (isset($columnData[$paramName]) && $value['position'] == $position) {
+				if (isset($value['options']) && !in_array($columnData[$paramName], $value['options'])) {
+					continue;
+				}
+				$val = $columnData[$paramName];
+				if ($value['quote']) {
+					$val = $this->value($val);
+				}
+				$columnString .= ' ' . $value['value'] . $value['join'] . $val;
+			}
+		}
+		return $columnString;
+	}
+
 /**
  * Format indexes for create table
  *
  * @param array $indexes
  * @param string $table
  * @return array
+ * @access public
  */
 	function buildIndex($indexes, $table = null) {
 		$join = array();
@@ -2406,6 +2687,49 @@ class DboSource extends DataSource {
 		}
 		return $join;
 	}
+
+/**
+ * Read additional table parameters
+ *
+ * @param array $parameters
+ * @param string $table
+ * @return array
+ * @access public
+ */
+	function readTableParameters($name) {
+		$parameters = array();
+		if ($this->isInterfaceSupported('listDetailedSources')) {
+			$currentTableDetails = $this->listDetailedSources($name);
+			foreach ($this->tableParameters as $paramName => $parameter) {
+				if (!empty($parameter['column']) && !empty($currentTableDetails[$parameter['column']])) {
+					$parameters[$paramName] = $currentTableDetails[$parameter['column']];
+				}
+			}
+		}
+		return $parameters;
+	}
+
+/**
+ * Format parameters for create table
+ *
+ * @param array $parameters
+ * @param string $table
+ * @return array
+ * @access public
+ */
+	function buildTableParameters($parameters, $table = null) {
+		$result = array();
+		foreach ($parameters as $name => $value) {
+			if (isset($this->tableParameters[$name])) {
+				if ($this->tableParameters[$name]['quote']) {
+					$value = $this->value($value);
+				}
+				$result[] = $this->tableParameters[$name]['value'] . $this->tableParameters[$name]['join'] . $value;
+			}
+		}
+		return $result;
+	}
+
 /**
  * Guesses the data type of an array
  *

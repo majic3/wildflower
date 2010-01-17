@@ -1,26 +1,21 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * XML Helper class file.
  *
  * Simplifies the output of XML documents.
  *
- * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @package       cake
  * @subpackage    cake.cake.libs.view.helpers
  * @since         CakePHP(tm) v 1.2
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
- * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::import('Core', array('Xml', 'Set'));
 
@@ -33,6 +28,7 @@ App::import('Core', array('Xml', 'Set'));
  * @subpackage    cake.cake.libs.view.helpers
  */
 class XmlHelper extends AppHelper {
+
 /**
  * Default document encoding
  *
@@ -40,6 +36,7 @@ class XmlHelper extends AppHelper {
  * @var string
  */
 	var $encoding = 'UTF-8';
+
 /**
  * Constructor
  * @return void
@@ -49,6 +46,7 @@ class XmlHelper extends AppHelper {
 		$this->Xml =& new Xml();
 		$this->Xml->options(array('verifyNs' => false));
 	}
+
 /**
  * Returns an XML document header
  *
@@ -67,8 +65,9 @@ class XmlHelper extends AppHelper {
 			$attrib = 'xml ' . $attrib;
 		}
 
-		return $this->output($this->Xml->header($attrib));
+		return $this->Xml->header($attrib);
 	}
+
 /**
  * Adds a namespace to any documents generated
  *
@@ -82,6 +81,7 @@ class XmlHelper extends AppHelper {
 	function addNs($name, $url = null) {
 		return $this->Xml->addNamespace($name, $url);
 	}
+
 /**
  * Removes a namespace added in addNs()
  *
@@ -92,6 +92,7 @@ class XmlHelper extends AppHelper {
 	function removeNs($name) {
 		return $this->Xml->removeGlobalNamespace($name);
 	}
+
 /**
  * Generates an XML element
  *
@@ -130,8 +131,9 @@ class XmlHelper extends AppHelper {
 		if (!$endTag) {
 			$this->Xml =& $elem;
 		}
-		return $this->output($out);
+		return $out;
 	}
+
 /**
  * Create closing tag for current element
  *
@@ -142,8 +144,9 @@ class XmlHelper extends AppHelper {
 		if ($parent =& $this->Xml->parent()) {
 			$this->Xml =& $parent;
 		}
-		return $this->output('</' . $name . '>');
+		return '</' . $name . '>';
 	}
+
 /**
  * Serializes a model resultset into XML
  *
@@ -159,5 +162,4 @@ class XmlHelper extends AppHelper {
 		return $data->toString($options + array('header' => false));
 	}
 }
-
 ?>

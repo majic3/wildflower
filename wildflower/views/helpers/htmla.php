@@ -33,8 +33,12 @@ class HtmlaHelper extends HtmlHelper {
         $currentUrl = rtrim($this->here, '/');
         $currentUrl = rtrim($currentUrl, '/index');
         $linksToCurrentPage = (bool)($parsedUrl === $currentUrl);
-        $isPartOfUrl = (bool)(strpos($currentUrl, $parsedUrl) === 0);
-        if ($linksToCurrentPage or (!isset($htmlAttributes['strict']) and $isPartOfUrl)) {
+
+		if(!empty($parsedUrl))	{
+			$isPartOfUrl = (bool)(strpos($currentUrl, $parsedUrl) === 0);
+		}
+
+		if ($linksToCurrentPage or (!isset($htmlAttributes['strict']) and $isPartOfUrl)) {
             if (isset($htmlAttributes['class'])) {
                 $htmlAttributes['class'] .= ' current';
             } else {
@@ -48,7 +52,11 @@ class HtmlaHelper extends HtmlHelper {
 			$htmlAttributes['strict'] = false;
 		}
 
-        return parent::link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
+		if(isset($escapeTitle))	{
+			$htmlAttributes['escape'] = $escapeTitle;
+		}
+
+        return parent::link($title, $url, $htmlAttributes, $confirmMessage);
     }
     
     function dateTimePicker($field, &$form) {

@@ -14,7 +14,7 @@ App::import('Core', 'l10n');
 class AppController extends Controller {
 
 	// I use Cakephp debug_kit & Matt Curry's interactive plugins - but these are submodules; Its not obligatory but they are helpful :)
-	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo', 'DebugKit.Toolbar' => array('panels' => array('Interactive.interactive')));
+	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo', 'Session', 'DebugKit.Toolbar' => array('panels' => array('Interactive.interactive')));
 	public $currentUserId;
 	public $helpers = array(
 	    'Html', 
@@ -24,6 +24,7 @@ class AppController extends Controller {
 	    'Wild', 
 	    'Navigation', 
 	    'PartialLayout', 
+	    'Session', 
 	    'Textile', 
 	    'Tree', 
 	    'Text',
@@ -322,7 +323,7 @@ class AppController extends Controller {
 	 * @return bool
 	 */
 	function isAdminAction() {
-		if (isset($this->params[Configure::read('Routing.admin')]) and $this->params[Configure::read('Routing.admin')]) {
+		if (isset($this->params[Configure::read('Routing.prefixes.0')]) and $this->params[Configure::read('Routing.prefixes.0')]) {
 			return true;
 		}
 		return false;

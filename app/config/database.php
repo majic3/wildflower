@@ -88,7 +88,7 @@ class DATABASE_CONFIG {
 		'login' => 'root',
 		'password' => '',
 		'database' => 'wildflower',
-	    'port' => 3306
+		'port' => 3306
 	);
 	
 	/**

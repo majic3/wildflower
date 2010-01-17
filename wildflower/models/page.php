@@ -202,7 +202,11 @@ class Page extends AppModel {
      * @param int $skipId id to skip
      */
     function getListThreaded($skipId = null, $alias = 'title') {
-        $parentPages = $this->findAll(null, null, "{$this->name}.lft ASC", null, 1, 0);
+		// findAll($conditions = null, $fields = null, $order = null, $limit = null, $page = 1, $recursive = null) {
+			// findAll(null, null, "{$this->name}.lft ASC", null, 1, 0);
+        $parentPages = $this->find('all', array(
+						'order' => "{$this->name}.lft ASC"
+					));
         
         // Array for form::select
         $selectBoxData = array();

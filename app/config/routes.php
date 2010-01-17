@@ -36,8 +36,8 @@ Router::connect('/' . Configure::read('Wildflower.postsParent') . '/:slug', arra
 Router::connect('/c/:slug', array('controller' => 'posts', 'action' => 'category'));
 
 // Wildflower admin routes
-$prefix = Configure::read('Routing.admin');
-Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'index', 'admin' => true));
+$prefix = Configure::read('Routing.prefixes.0');
+Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'index', 'admin' => true, 'prefix' => 'admin'));
 
 // Image thumbnails
 // @TODO shorten to '/i/*'
