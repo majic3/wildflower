@@ -50,7 +50,7 @@ app/plugins/*
 # themes
 app/views/themed/*
 !app/views/themed/kruger
-!app/viewsthemed/simplenotes
+!app/views/themed/simplenotes
 
 
 # ingnore majic3 database cfg
