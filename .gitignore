@@ -47,6 +47,11 @@ app/plugins/*
 !app/plugins/acl_plugin
 !app/plugins/tagging
 
+# themes
+app/views/themed/*
+!app/views/themed/kruger
+!app/viewsthemed/simplenotes
+
 
 # ingnore majic3 database cfg
 app/config/database.*.php
