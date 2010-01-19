@@ -81,7 +81,7 @@
 <script src="/js/LAB.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$LAB
-		.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js").wait(function ()	{
+		.script("http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js").wait(function ()	{
 			$('#umsg').removeClass('alert').addClass('notice').html('preparing page');
 		})
 		.script("/js/common.js").wait(function ()	{
