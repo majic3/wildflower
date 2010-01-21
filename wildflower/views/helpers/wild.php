@@ -3,7 +3,7 @@ App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
 class WildHelper extends AppHelper {
 	
-	public $helpers = array('Html', 'Textile', 'Htmla');
+	public $helpers = array('Html', 'Textile', 'Htmla', 'Text');
 	private $_isFirstChild = true;
 	private $itemCssClassPrefix;
 	
@@ -267,6 +267,33 @@ class WildHelper extends AppHelper {
         $posts = $category['Post'];
         return $posts;
     }
+    
+	/**
+	 * Truncates a post for display on index of posts
+	 * 
+	 * or just appends the link to the post if its a shorty
+	 */
+	function trunPostsForIndex($url, $content, $processWidgets = false) {
+		$link = $this->Html->link('read more >>', $url, array('class' => 'more'));
+
+		$postContent = $this->Text->truncate ($content, 375, '... ' . $link, true, true);
+
+		/* $postContent = str_replace(
+			array('h6', 'h5', 'h4', 'h3', 'h2', 'h1'), 
+			array('strong'), 
+			$postContent
+		); */
+
+		$postContent = preg_replace("/(<\/?)(h([1-6]+))([^>]*>)/e", 
+			 "'\\1strong class=\"\\2\"\\4'", 
+			 $postContent);
+
+		if($postContent == $content)	{
+			$postContent.= $link;
+		}
+
+		return ($processWidgets) ? $this->processWidgets($postContent) : $postContent;
+	}
 
 	function dateWithTime($time) {
         if (!is_integer($time)) {
