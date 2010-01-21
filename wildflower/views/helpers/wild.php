@@ -276,7 +276,7 @@ class WildHelper extends AppHelper {
 	function trunPostsForIndex($url, $content, $processWidgets = false) {
 		$link = $this->Html->link('read more >>', $url, array('class' => 'more'));
 
-		$postContent = $this->Text->truncate ($content, 375, '... ' . $link, true, true);
+		$postContent = $this->Text->truncate ($content, 375, array('ending' => '... ' . $link, 'exact' => true, 'html' => true));
 
 		/* $postContent = str_replace(
 			array('h6', 'h5', 'h4', 'h3', 'h2', 'h1'), 
@@ -292,7 +292,7 @@ class WildHelper extends AppHelper {
 			$postContent.= $link;
 		}
 
-		return ($processWidgets) ? $this->processWidgets($postContent) : $postContent;
+		return $this->purify(($processWidgets) ? $this->processWidgets($postContent) : $postContent);
 	}
 
 	function dateWithTime($time) {
@@ -316,4 +316,25 @@ class WildHelper extends AppHelper {
         return date('l', $time) . ', ' . date('F j, Y', $time);
     }
 
+	function purify($html, $config = false) {
+		if(!$config)	{
+			$config = array(
+				'Core.Encoding' => 'utf-8',
+				'HTML.DefinitionID' => 'CakePHP',
+				'HTML.DefinitionRev' => 1,
+				'HTML.TidyLevel' => 'medium',
+				'HTML.Doctype' => 'XHTML 1.0 Transitional'
+			);
+		}
+
+		App::import('Vendor', 'HtmlPurifier.HTMLPurifier', array('file' => 'htmlpurifier/HTMLPurifier.standalone.php'));
+		$dconfig = HTMLPurifier_Config::createDefault();
+
+		foreach ($config as $k => $v) {
+			$dconfig->set($k, $v);
+		}
+		
+		$HTMLPurifier = & new HTMLPurifier($dconfig);
+		return $HTMLPurifier->purify($html);
+	}
 }

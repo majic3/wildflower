@@ -7,3 +7,6 @@
 [submodule "app/plugins/acl_plugin"]
 	path = app/plugins/acl_plugin
 	url = git://github.com/Jaciss/acl_plugin.git
+[submodule "app/plugins/html_purifier"]
+	path = app/plugins/html_purifier
+	url = git://github.com/petteyg/html_purifier.git

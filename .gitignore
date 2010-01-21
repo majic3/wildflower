@@ -46,6 +46,7 @@ app/plugins/*
 !app/plugins/interactive
 !app/plugins/acl_plugin
 !app/plugins/tagging
+!app/plugins/HtmlPurifier
 
 # themes
 app/views/themed/*
