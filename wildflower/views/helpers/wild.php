@@ -276,7 +276,7 @@ class WildHelper extends AppHelper {
 	function trunPostsForIndex($url, $content, $processWidgets = false) {
 		$link = $this->Html->link('read more >>', $url, array('class' => 'more'));
 
-		$postContent = $this->Text->truncate ($content, 375, array('ending' => '... ' . $link, 'exact' => true, 'html' => true));
+		$postContent = $this->Text->truncate ($content, 375, '... ' . $link, true, true);
 
 		/* $postContent = str_replace(
 			array('h6', 'h5', 'h4', 'h3', 'h2', 'h1'), 
