@@ -1,1 +1,2 @@
 # ignore the vendors folder - it should contain this http://htmlpurifier.org/releases/htmlpurifier-4.0.0-standalone.tar.gz
+vendors/
