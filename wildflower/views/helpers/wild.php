@@ -284,9 +284,20 @@ class WildHelper extends AppHelper {
 			$postContent
 		); */
 
-		$postContent = preg_replace("/(<\/?)(h([1-6]+))([^>]*>)/e", 
-			 "'\\1strong class=\"\\2\"\\4'", 
-			 $postContent);
+		// (<\/?)([\\]*)(h([1-6]+))(( class\=\"([a-zA-Z ]*)\")?)([^>]*>)
+		$pregArr = array(
+			"/<(h([1-6]+))(( class\=\"([a-zA-Z ]*)\")?)([^>]*>)/e",
+			"/(<\/(h([1-6]+))>)/e"
+		);
+		$replArr = array(
+			"'<strong class=\"\\1 \\4\">'",
+			"'</strong>'"
+		);
+		$postContent = preg_replace(
+			$pregArr,
+			$replArr, 
+			$postContent
+		);
 
 		if($postContent == $content)	{
 			$postContent.= $link;
@@ -296,25 +307,25 @@ class WildHelper extends AppHelper {
 	}
 
 	function dateWithTime($time) {
-        if (!is_integer($time)) {
-            $time = strtotime($time);
-        }
-        return date('M j, Y, g:ia', $time);
-    }
-        
-    function date($time) {
-        if (!is_integer($time)) {
-            $time = strtotime($time);
-        }
-        return date('M j, Y', $time);
-    }    
-    
-    function epicTime($time) {
-        if (!is_integer($time)) {
-            $time = strtotime($time);
-        }
-        return date('l', $time) . ', ' . date('F j, Y', $time);
-    }
+		if (!is_integer($time)) {
+			$time = strtotime($time);
+		}
+		return date('M j, Y, g:ia', $time);
+	}
+		
+	function date($time) {
+		if (!is_integer($time)) {
+			$time = strtotime($time);
+		}
+		return date('M j, Y', $time);
+	}    
+
+	function epicTime($time) {
+		if (!is_integer($time)) {
+			$time = strtotime($time);
+		}
+		return date('l', $time) . ', ' . date('F j, Y', $time);
+	}
 
 	function purify($html, $config = false) {
 		if(!$config)	{
