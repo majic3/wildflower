@@ -106,6 +106,14 @@ class WildHelper extends AppHelper {
 			return '<p>' . __('Wildflower: There are no menu items for this menu.', true) . '</p>';
 		}
 
+		if(strpos($items[0]['url'], '@') !== false)	{
+			$url = $items[0]['url'];
+			$label = $items[0]['label'];
+			$mid = $items[0]['menu_id'];
+			$i = explode('.', substr($url, 1, strlen($url)-1));
+			$items = ClassRegistry::init($i[0])->$i[1]($mid, $label);
+		}
+
 		$links = array();
 		$view = ClassRegistry::getObject('view');
 

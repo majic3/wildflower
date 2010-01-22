@@ -425,13 +425,4 @@ class PostsController extends AppController {
             $this->redirect($this->data['Post']['permalink'] . '#comment-' . $this->Post->Comment->id);
         }
     }
-
-    /*
-     * Get all latest posts
-     * 
-     * @return array
-     */
-   public function latest(){
-	return $this->Post->find('all', array('order' => 'Post.created DESC', 'limit' => 10));
-   }
 }

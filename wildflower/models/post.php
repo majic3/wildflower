@@ -211,4 +211,52 @@ class Post extends AppModel {
         return $posts;
     }
 
+    /**
+     * called by dynamic menu creation (testing)
+     * 
+	 * @param array $options
+     * @return array of items for menu maker
+     */
+	function getCats($mid, $label, $options = array()) {
+
+		$return = array();
+		$cats = $this->Category->find('all');
+		if($cats)	{
+			$i = 0;
+			foreach($cats as $cat)	{
+				//	debug($cat);
+				$return[$i]['id'] = null;
+				$return[$i]['menu_id'] = $mid;
+				$return[$i]['label'] = $cat['Category'][$label];
+				$return[$i]['url'] = '/c/' . $cat['Category']['slug'];
+				$return[$i]['order'] = null;
+				$i++;
+			}
+		}
+		return $return;
+	}
+
+    /*
+     * Get all latest posts
+     * 
+     * @return array
+     */
+   public function latest($mid, $label){
+		$return = array();
+		$lposts = $this->find('all', array('order' => 'Post.created DESC', 'limit' => 10));
+		if($lposts)	{
+			$i = 0;
+			foreach($lposts as $lpost)	{
+				//	debug($cat);
+				$return[$i]['id'] = null;
+				$return[$i]['menu_id'] = $mid;
+				$return[$i]['label'] = $lpost['Post'][$label];
+				$return[$i]['url'] = '/c/' . $lpost['Post']['slug'];
+				$return[$i]['order'] = null;
+				$i++;
+			}
+		}
+		return $return;
+	}
+
 }

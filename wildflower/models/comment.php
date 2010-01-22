@@ -112,4 +112,30 @@ class Comment extends AppModel {
         return $this->saveField('spam', 0);
     }
 
+	function latest($mid, $label)	{
+		$return = array();
+
+		$lcomments = $this->find('all', 
+			array(
+				'conditions' => array('Comment.approved = 1', 'Comment.spam = 0'),
+				'recursive' => 1,
+				'limit' => 10
+			)
+		);
+
+		if($lcomments)	{
+			$i = 0;
+			foreach($lcomments as $lcomment)	{
+				//	debug($cat);
+				$return[$i]['id'] = null;
+				$return[$i]['menu_id'] = $mid;
+				$return[$i]['label'] = $lcomment['Comment'][$label];
+				$return[$i]['url'] = '/' . Configure::read('Wildflower.postsParent') . '/' . $lcomment['Post']['slug'];
+				$return[$i]['order'] = null;
+				$i++;
+			}
+		}
+		return $return;
+	}
+
 }

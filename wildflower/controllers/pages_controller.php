@@ -365,14 +365,14 @@ class PagesController extends AppController {
 		//	debug($page['Page']['custom_fields']);
 		
 		// Decode custom fields
-		$page['Page']['custom_fields'] = $this->_prepVars($page['Page']['custom_fields']);
+		if(!is_null($page['Page']['custom_fields']))	{
+			$page['Page']['custom_fields'] = $this->_prepVars($page['Page']['custom_fields']);
+			// group reigons
+			$this->Regions->buildGroups($page['Sidebar'], (array_key_exists('regions', $page['Page']['custom_fields'])) ? $page['Page']['custom_fields']['regions'] : false);
+		}
 
 		//debug($page['Page']['custom_fields']); die();
 
-		// group reigons
-		$this->Regions->buildGroups($page['Sidebar'], (array_key_exists('regions', $page['Page']['custom_fields'])) ? $page['Page']['custom_fields']['regions'] : false);
-		$regions = $this->Regions->getNames();
-		$this->Regions->setGroups();
 
 		// build auto page menus
 

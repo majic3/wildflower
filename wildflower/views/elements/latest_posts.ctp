@@ -9,18 +9,12 @@
 
 		//	$posts = $this->requestAction('/posts/latest/'.$categorySlug.'/'.$categoryLimit);
 
-		$posts = $this->requestAction('/posts/latest');
+		$posts = $wild->menu('latestPosts', array());
 
 
 		//pr($posts);
 		if(!empty($posts)):
-		foreach ($posts as $post) :
-		?>
-				<h3><?php echo $html->link($post['Post']['title'], Post::getUrl($post['Post']['slug'])); ?></h3>
-				<?php echo $html->link(' >>', Post::getUrl($post['Post']['slug']), array('class' => 'post_link'));      ?>
-				<small class="post-date">Posted <?php echo $time->niceShort($post['Post']['created']) ?></small>
-		<?php
-		endforeach;
+		echo $posts;
 		else:
 		?>
 		<p>No posts have been found</p>

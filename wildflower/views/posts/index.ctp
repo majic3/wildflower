@@ -31,6 +31,17 @@
 </div>
 
 <div class="main">
-	<?php	echo $wild->processWidgets($wfPostsSidebar['Sidebar']['content']);	?>
-	<?php	foreach($sidebarCategories as $cat) echo $html->link($cat['Category']['title'], '/c/' . $cat['Category']['slug']);	?>
+	<div class="line">
+		<div class="unit size1of1">
+			<?php	echo $wild->processWidgets($wfPostsSidebar['Sidebar']['content']);	?>
+		</div>
+		<div class="unit size1of2">
+			<h3>Categories</h3>
+			<?php echo $wild->menu('dynamicCats', array());  ?>
+		</div>
+		<div class="lastUnit size1of2">
+			<h3>Latest Comments</h3>
+			<?php echo $wild->menu('latestComments', array());  ?>
+		</div>
+	</div>
 </div>

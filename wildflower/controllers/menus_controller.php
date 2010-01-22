@@ -13,7 +13,7 @@ class MenusController extends AppController {
             }
         }
     }
-    
+
     function admin_edit($id) {
             debug($id);
             debug($this->data);
@@ -29,8 +29,8 @@ class MenusController extends AppController {
             $this->data = $this->Menu->findById($id);
         }
     }
-    
-    private function _addOrderToItems() {
+
+	private function _addOrderToItems() {
         $pos = 0;
         foreach ($this->data['MenuItem'] as &$item) {
             $item['order'] = $pos;
