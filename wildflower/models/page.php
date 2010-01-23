@@ -175,7 +175,14 @@ class Page extends AppModel {
      * @return array
      */
     function findAllForSidebar($fields = array('id', 'title')) {
-    	return $this->findAll(null, $fields, "{$this->name}.title ASC", null, 1);
+		return $this->find(
+			'all',
+			array(
+				'fields' => $fields,
+				'order' => "{$this->name}.title ASC",
+				'page' => 1
+			)
+		);
     }
     
     /**
@@ -198,11 +205,19 @@ class Page extends AppModel {
     /**
      * Find possible parents of a page for select box
      * 
-     * @deprecated: Use Cake's TreeBehavior::genera...
+     * @being deprecated: Use Cake's TreeBehavior::genera...
      * @param int $skipId id to skip
      */
     function getListThreaded($skipId = null, $alias = 'title') {
-        $parentPages = $this->findAll(null, null, "{$this->name}.lft ASC", null, 1, 0);
+		// find(all)
+        $parentPages = $this->find(
+			'all',
+			array(
+				'order' => "{$this->name}.lft ASC", 
+				'page' => 1, 
+				'recursive' => 0
+			)
+		);
         
         // Array for form::select
         $selectBoxData = array();
@@ -271,10 +286,12 @@ class Page extends AppModel {
     function search($query) {
         $query = Sanitize::escape($query);
     	$fields = null;
+		// find(all)
     	$titleResults = $this->findAll("{$this->name}.title LIKE '%$query%'", $fields, null, null, 1);
     	$contentResults = array();
     	if (empty($titleResults)) {
     		$titleResults = array();
+			// find(all)
 			$contentResults = $this->findAll("MATCH ({$this->name}.content) AGAINST ('$query')", $fields, null, null, 1);
     	} else {
     		$alredyFoundIds = join(', ', Set::extract($titleResults, '{n}.' . $this->name . '.id'));
@@ -282,6 +299,7 @@ class Page extends AppModel {
     		if (!empty($alredyFoundIds)) {
     			$notInQueryPart = " AND {$this->name}.id NOT IN ($alredyFoundIds)";
     		}
+			// find(all)
     		$contentResults = $this->findAll("MATCH ({$this->name}.content) AGAINST ('$query')$notInQueryPart", $fields, null, null, 1);
     	}
     	
