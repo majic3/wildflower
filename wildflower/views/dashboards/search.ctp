@@ -5,7 +5,7 @@
 	<?php 
 	    echo $form->create('Dashboard', array('action' => 'search', 'type' => 'get'));
 	    echo "<fieldset>\n";
-	    echo $form->input('query');
+	    echo $form->input('q', array('label' => 'search'));
 	    echo $form->submit('Search');
 		echo $form->input('unit', array(
 			'type' => 'select',
