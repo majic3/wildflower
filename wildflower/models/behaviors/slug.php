@@ -68,8 +68,28 @@ class SlugBehavior extends ModelBehavior {
             if (!empty($model->{$model->primaryKey})) {
                 $conditions[$model->name . '.' . $model->primaryKey] = '!= ' . $model->{$model->primaryKey};
             }
-            
-            $result = $model->findAll($conditions, array($model->primaryKey, $this->settings[$model->name]['slug']), null, null, 1, 0);
+
+			// 1) find(all)
+			/*
+			$result = $model->findAll(
+				$conditions, 
+				array($model->primaryKey, $this->settings[$model->name]['slug']), 
+				null, 
+				null, 
+				1, 
+				0
+			);//*/
+			//*
+			$result = $model->find(
+				'all',
+				array(
+					'conditions' => $conditions, 
+					'fields' => array($model->primaryKey, $this->settings[$model->name]['slug']), 
+					'page' => 1, 
+					'recursive' => 0
+				)
+			); //*/
+
             $sameUrls = null;
             
             if ($result !== false && !empty($result)) {
