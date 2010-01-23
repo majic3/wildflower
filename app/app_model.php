@@ -12,7 +12,15 @@ class AppModel extends Model {
             // Ignore the page for which we're looking for parents
             $condition = "{$this->name}.{$this->primaryKey} != $skipId";
         }
-        $parentPages = $this->findAll($condition, null, "$alias ASC", null, 1, 0); // @TODO findAll depracated
+        $parentPages = $this->find(
+			'all',
+			array(
+				'condition' => $condition, 
+				'order' => "$alias ASC", 
+				'page' => 1,
+				'recursive' => 0
+			)
+		);
         // Array for form::select
         if (!empty($parentPages)) {
             $parentPages = array_combine(
