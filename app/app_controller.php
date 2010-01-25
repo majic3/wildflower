@@ -13,8 +13,17 @@ App::import('Core', 'l10n');
 
 class AppController extends Controller {
 
-	// I use Cakephp debug_kit & Matt Curry's interactive plugins - but these are submodules; Its not obligatory but they are helpful :)
-	public $components = array('Auth', 'Cookie', 'RequestHandler', 'Seo', 'DebugKit.Toolbar' => array('panels' => array('Interactive.interactive')));
+	public $components = array(
+		'Auth', 
+		'Cookie', 
+		'RequestHandler', 
+		'Seo', 
+	//*
+		'DebugKit.Toolbar' => array(
+			'panels' => array('Interactive.interactive')
+		)
+	//*/
+	);
 	public $currentUserId;
 	public $helpers = array(
 	    'Html', 
