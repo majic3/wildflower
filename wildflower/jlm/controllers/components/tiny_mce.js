@@ -251,52 +251,42 @@ $.jlm.addComponent('tinyMce', {
 			});
 		});
 	},
-	
-	resizeImage: function(editor) {
-		// like to be able to update the width/height settings in the image path /wildflower/image-name/width/height/crop
-		// so when you drag the handles of images the path is updated wf creates the new resized copy of image and the markup has correct width & height in html.  Image attributes are also loaded in sidebar for editing that way too
-		$.jlm.components.tinyMce.editor = editor;
-		
-		// Close if open
-		if ($('.insert_image_sidebar').size() > 0) {
-			$('.insert_image_sidebar').remove();
-			$('.main_sidebar').show();
-			return false;
-		}
-		
-		var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
-		var attribs = {};
-		$.jlm.components.tinyMce.reloadInsertImageContent(url, attribs);	    
-		return false;
+	insertAsset: function(editor) {
+	    $.jlm.components.tinyMce.editor = editor;
+	    
+	    // Close if open
+	    if ($('.insert_asset_sidebar').size() > 0) {
+	        $('.insert_asset_sidebar').remove();
+	        $('.main_sidebar').show();
+	        return false;
+	    }
+	    
+	    var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_asset';
+	    return false;
 	},
 	
-	reloadInsertImageContent: function(url, attribs) {
+	resizeToFillScreen: function(textareaEl) {
+	    var otherContentHeight = $('body').height() - textareaEl.height();
+	    var bumper = 20;
+	    var result = $(window).height() - otherContentHeight - bumper; 
+	    
+		textareaEl.height(result);
+		return result;
 	},
 	
-	insertImage: function() {
-
-		$.jlm.components.tinyMce.editor = tinyMCE.get($.jlm.components.tinyMce.editorId);
-		
-		// Close if open
-		if ($('.insert_image_sidebar').size() > 0) {
-			$('.insert_image_sidebar').remove();
-			$('.main_sidebar').show();
-			return false;
-		}
-		
-		var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
-		$.jlm.components.tinyMce.loadInsertImageContent(url);	    
-		return false;
-	},
-	
-	/* grid controls - insert grids based on the OOCSS Framework*/
-	loadInsertGridContent: function(url) {
-	},
-	
-	adjustGridCell: function(editor) {
-	},
-	
-	insertGrid: function(editor) {
+	insertImage: function(editor) {
+	    $.jlm.components.tinyMce.editor = editor;
+	    
+	    // Close if open
+	    if ($('.insert_image_sidebar').size() > 0) {
+	        $('.insert_image_sidebar').remove();
+	        $('.main_sidebar').show();
+	        return false;
+	    }
+	    
+	    var url = $.jlm.base + '/' + $.jlm.params.prefix + '/assets/insert_image';
+	    $.jlm.components.tinyMce.loadInsertImageContent(url);	    
+	    return false;
 	},
 	
 	resizeToFillScreen: function(textareaEl) {
@@ -422,9 +412,16 @@ $.jlm.addComponent('tinyMce', {
 		console.log('swf ' + swf);
 		console.log('Params ' + Params);
 	},
-
-	hoax: function() {
-		console.log('hoax');
-		tinyMCE.get($.jlm.components.tinyMce.editorId).execCommand('Bold');
-	}
+    
+    insertLink: function() {
+        log('INSERT LINK');
+    },
+    
+    hoverLink: function() {
+        log('hover LINK');
+    },
+    
+    hoverImage: function() {
+        log('hover IMAGE');
+    }
 });

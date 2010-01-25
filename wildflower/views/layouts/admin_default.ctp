@@ -28,19 +28,12 @@
 <body class="<?php echo	$this->params['controller'], ' ', $this->params['action']; ?>">
  
 <div id="header">
-	<div id="header-wrap">
-		<h1 id="site_title"><?php echo hsc($siteName); ?></h1>
-		<?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
-		
-		<div id="login_info">
-			<?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
-		</div>
-		
-		<div id="extras">
-			<?php echo $htmla->link(__('Full', true), '#fulleditor', array('id' => 'fullToggle', 'class' => 'fulleditor')); ?>
-			<?php echo $htmla->link(__('Help', true), '/admin/dashboards/help', array('id' => 'help')); ?>
-			<?php echo $htmla->link(__('Options', true), '/admin/dashboards/options', array('id' => 'options')); ?>
-		</div>
+    <h1 id="site_title"><?php echo hsc($siteName); ?></h1>
+    <?php echo $html->link('Site index', '/', array('title' => __('Visit ', true)  . FULL_BASE_URL, 'id' => 'site_index')); ?>
+    
+    <div id="login_info">
+        <a href="#" class="areaToggle" title="Click here to enable full view of content area (no sidebar)">Full</a> &#124; <?php echo $htmla->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'), array('id' => 'logout')); ?>
+    </div>
 
 		<ul id="nav">
 			<li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
