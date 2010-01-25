@@ -1290,13 +1290,6 @@ text-decoration:none;
 
     .file-list li,
     .list li {
-<<<<<<< HEAD:app/webroot/wildflower/css/wf.main.css
-        margin: 0;
-        padding: 4px 0;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-=======
         margin: 0 2% 0 0;
         padding: 15px 0;
         border-bottom: 1px solid #e0e0e0;
@@ -1307,8 +1300,6 @@ text-decoration:none;
 	.file-list li { float: left; width: 43%;  height: 35px;}
 
 	.full .file-list li {height: 65px; min-width: 31%;}
-
->>>>>>> 12a9b54... when #content is displaying fully arrange assets in thress cols:app/webroot/wildflower/css/wf.main.css
     .file-list .thumbnail,
     .list .thumbnail {
         float: left;
