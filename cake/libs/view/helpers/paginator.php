@@ -344,7 +344,8 @@ class PaginatorHelper extends AppHelper {
 		$url = array_merge(array('page' => $paging['page'] + ($which == 'Prev' ? $step * -1 : $step)), $url);
 
 		if ($this->{$check}($model)) {
-			return $this->link($title, $url, array_merge($options, array('escape' => $escape)));
+			return $this->Html->tag($tag, $this->link($title, $url, array_merge($options, array('escape' => $escape))), $title);
+			//return $this->link($title, $url, array_merge($options, array('escape' => $escape)));
 		} else {
 			return $this->Html->tag($tag, $title, $options, $escape);
 		}
