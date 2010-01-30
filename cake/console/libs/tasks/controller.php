@@ -8,13 +8,13 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008,	Cake Software Foundation, Inc.
+ * Copyright 2005-2010,	Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @package       cake
  * @subpackage    cake.cake.console.libs.tasks
@@ -386,6 +386,12 @@ class ControllerTask extends Shell {
 			$actions .= "\t\t\t\$this->flash(__('{$singularHumanName} deleted', true), array('action' => 'index'));\n";
 		}
 		$actions .= "\t\t}\n";
+		if ($wannaUseSession) {
+			$actions .= "\t\t\$this->Session->setFlash(__('The {$singularHumanName} could not be deleted. Please, try again.', true));\n";
+			$actions .= "\t\t\$this->redirect(array('action' => 'index'));\n";
+		} else {
+			$actions .= "\t\t\$this->flash(__('The {$singularHumanName} could not be deleted. Please, try again.', true), array('action' => 'index'));\n";
+		}
 		$actions .= "\t}\n";
 		$actions .= "\n";
 		return $actions;

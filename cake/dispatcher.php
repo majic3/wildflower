@@ -9,13 +9,13 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * Copyright 2005-2010, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @package       cake
  * @subpackage    cake.cake
@@ -367,21 +367,24 @@ class Dispatcher extends Object {
 			$this->webroot = $base .'/';
 			return $base;
 		}
-			$file = '/' . basename($baseUrl);
-			$base = dirname($baseUrl);
 
-			if ($base === DS || $base === '.') {
-				$base = '';
-			}
-			$this->webroot = $base .'/';
+		$file = '/' . basename($baseUrl);
+		$base = dirname($baseUrl);
 
+		if ($base === DS || $base === '.') {
+			$base = '';
+		}
+		$this->webroot = $base .'/';
+
+		if (!empty($base)) {
 			if (strpos($this->webroot, $dir) === false) {
 				$this->webroot .= $dir . '/' ;
 			}
 			if (strpos($this->webroot, $webroot) === false) {
 				$this->webroot .= $webroot . '/';
 			}
-			return $base . $file;
+		}
+		return $base . $file;
 	}
 /**
  * Restructure params in case we're serving a plugin.
