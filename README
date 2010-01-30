@@ -8,6 +8,7 @@ Requirements
     * No problem to run under some other web server like lighttpd or IIS, you just need to emulate the mod_rewrite rules 
     * PHP 5.2 or higher (reported to work with 5.1)
     * MySQL 4.1 or higher
+    * The Administration of this Fork requires a better browser than IE (ie 8 may work)
 
 Installation
 ============
