@@ -1,8 +1,10 @@
-# PHP version - on _some_ web hosts you enable PHP5 like this:
-# AddType x-mapp-php5 .php
+# PHP version - on _some_ web hosts you enable PHP5 with one of the following lines (or two in some cases):
+#1AND1#		AddType x-mapp-php5 .php
+#MTGS#		AddHandler php5-script .php
 
 <IfModule mod_rewrite.c>
    RewriteEngine on
+   #RewriteBae /
 
    ##rewrites
 
