@@ -13,17 +13,19 @@ Requirements
 Installation
 ============
 
-   1. Extract the archive. Place the 'wildflower' directory inside your apache document root or some folder under it. Of course you can rename the 'wildflower' directory at will.
+   1. Extract the archive. Place the 'wildflower' directory inside your apache document root or some folder under it. Of course you can rename the 'wildflower' directory at will*
    2. Create a new MySQL database. Use 'utf8_unicode_ci' collation. Into this new database import the SQL dump file 'app/config/sql/wildflower.sql'.
-   3. Edit the app/config/database.php file with your database connection details.  Edit .htaccess as required (see HTACCESS for more info)
-   4. You've got a fresh install of Wildflower. You can start working on your project by modifying the application inside the app directory. When a new release of Wildflower comes, you simply update the cake, vendors and wildflower directories.
-   5. The admin area is located under 'http://your-site/admin'. This can be changed by changing the 'Routing.admin' configure key in 'app/config/core.php'.
-   6. Default login/password combination for admin area is admin/admin321 --Don`t forget to change this when in production.
+   3. Edit the app/config/database.php file with your database connection details.
+   4. You can start working on your project by modifying the application inside the app directory. Upgrading requires little effort and time (see Upgrading).
+   5. The admin area is located under 'http://your-site/admin'.
+   6. Default login/password combination for admin area is admin/admin321 -- change this by clicking users (main admin menu far right) click admin user, then click change password.
+   7. Review settings in vendors/wf_core.php (more is set in db login goto settings)
    
-Wildflower is not and won't be a CakePHP plugin
-===============================================
+The Wildflower Way - or why its not a CakePHP plugin
+====================================================
 
-WF uses the additional MVC paths CakePHP feature. All the Wildflower MVC (model, view, controller) files are located inside the /wildflower directory. Except the app_controller.php, app_model.php and app_helper.php. These are of course essential for proper WF functioning and are found standardly at the /app folder. This architecture enables you to copy any WF MVC file into your /app folder, modify it and Cake will automatically use it.
+WF uses the additional MVC paths CakePHP feature. All the Wildflower MVC (models, views, controllers) are located inside the /wildflower directory. Except the app_controller.php, app_model.php and app_helper.php. These are of course essential for proper WF functioning and are found standardly in the /app folder. This architecture enables you to copy any WF MVC file into your /app folder, modify it and Cake will automatically use it. With the core features of Wildflower and some settings can ease the customisation of the site it powers.  Adding custom controllers/models/etc, for your custom functionality is simple.  Since your app specific code isolated upgrading is simple.
+
     
 Htaccess
 ========
@@ -33,6 +35,19 @@ Servers vary in setup.  The rules required in the .htaccess file(s) may also var
 1and1 Business & Business Pro need RewriteBase (the Business package requires RewriteBase to be set at every level /, /app/ & /app/webroot/) - also you need to AddType x-mapp for php5
 
 Media Temple Grid Server add AddHandler php5-script .php to the root .htaccess only
+
+Adaptions to this in this Fork
+==============================
+
+   * Admin is not meant for IE Users
+   * My fork of Stubbornella's OOCSS (more planned for this)
+   * Admin Interface - JLM jumpMenu - Asset Management Tweaks
+   * Vladimir Carrer's Readablity for the Web slightly adapted for WYSIWYG Editor
+   * Tiny MCE 3.2.7, jquery 1.4.1, Getify's labJS to load javascript in admin - also use it in the public theme
+   * Christian Deluxe's sitemap helper for cake making this a plugin - styling it with Slickmap CSS
+   * Gravatar Helper by Graham Weldon
+   * Tiny MCE has Wildflower plugin - parts still to be done
+   * Bram.us CSS Extras for Tiny MCE
 
     
 Upgrading
@@ -50,6 +65,18 @@ Use the UtilityShell to generate an AuthComponent compatible password hash:
 
 Insert the result into your database in the 'password' field of the 'users' table.
 
+or run this sql (get the salt value from - app/config/core.php)
+UPDATE users SET password = sha1(concat('salt', 'admin123')) WHERE login = 'admin';
+
+Support & more information
+===========================
+
+http://forums.wf.klevo.sk
+http://twitter.com/wildflowerCMS
+http://github.com/klevo/wildflower
+http://github.com/klevo/wildflower/issues
+
+The wf.klevo.sk is out of date, content refers to an old version of WF - updaing soon :)
 
 Wildflower Logo designed by Oliver Treend
 http://www.olivertreend.com/

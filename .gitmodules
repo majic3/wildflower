@@ -10,3 +10,9 @@
 [submodule "app/plugins/html_purifier"]
 	path = app/plugins/html_purifier
 	url = git://github.com/petteyg/html_purifier.git
+[submodule "tagging"]
+	path = tagging
+	url = git://github.com/mariano/tagging.git
+[submodule "app/plugins/tagging"]
+	path = app/plugins/tagging
+	url = git://github.com/mariano/tagging.git
