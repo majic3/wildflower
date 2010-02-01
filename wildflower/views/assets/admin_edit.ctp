@@ -29,10 +29,20 @@ echo $navigation->create(array(
         $form->create('Asset', array('type' => 'file', 'url' => $html->url(array('action' => 'admin_update', 'base' => false)))),
         $form->input('title', array('between' => '<br />', 'label' => 'Title <small>(optional)</small>')),
         '<div>',
+		$tagging->input('tags'),
         $form->hidden('id'),
         '</div>',
         $wild->submit('Save'),
         $form->end();
     ?>
 </div>
-  
+
+
+<?php /*make this upload new replacement of current image */ $partialLayout->blockStart('sidebar'); ?>
+    <li class="sidebar-box">
+        <?php echo $this->element('../assets/_upload_file_box'); ?>
+    </li>
+    <li class="sidebar-box">
+		<?php echo $tagging->generateCloud($tag_cloud); ?>
+    </li>
+<?php $partialLayout->blockEnd(); ?>

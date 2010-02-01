@@ -1,4 +1,22 @@
 <h2 class="section">Files</h2>
+<p class="section info"><?php echo $displayNumImgs . '/' . $totalImages; ?></p>
+<?php
+
+echo 
+	$form->create('Asset', array('action' => 'index', 'action' => 'get', 'class' => 'section options')),
+	$form->select(
+		'displayNumImgs', 
+		$displayNumImgsArr, 
+		50, 
+		array(
+			'class' => 'displayNumImgs'
+		), 
+		'-- please select --'
+	);
+    echo $form->end();
+
+
+?>
 
 <?php if (empty($files)): ?>
     <p>No files uploaded yet.</p>
@@ -27,15 +45,14 @@
                 }
             ?>
 
+            <h3><?php echo $html->link($text->truncate($label, 35, '...'), array('action' => 'edit', $file['Asset']['id']),array('class' => 'editTitle')); ?></h3>
+
 			<?php
 				$iconOrThumbnail = $thumbUrl = '';
 				if($mimeClass[0] == 'image') {
-					$thumbUrl = "/$mprefix/thumbnail/{$file['Asset']['name']}/";
+					//$thumbUrl = "/$mprefix/thumbnail/{$file['Asset']['name']}/";
 					$iconOrThumbnail = $html->link(
-						$html->image(
-							$thumbUrl . '50/50/1', 
-							array('class' => 'thumbnail', 'width' => '24', 'height' => '24')
-						),
+						'some text',
 						array('action' => 'edit', $file['Asset']['id']),
 						array(
 							'class' => 'icon',
@@ -48,8 +65,6 @@
 				}
 				echo $iconOrThumbnail;
 				?>
-
-            <h3><?php echo $html->link($text->truncate($label, 35, '...'), array('action' => 'edit', $file['Asset']['id'])); ?></h3>
             
             <span class="row-actions"><?php echo $html->link(__('View', true), Asset::getUploadUrl($file['Asset']['name']), array('class' => '', 'rel' => 'permalink', 'title' => __('View or download this file.', true))); ?></span>
             
@@ -76,6 +91,9 @@
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li class="sidebar-box">
         <?php echo $this->element('../assets/_upload_file_box'); ?>
+    </li>
+    <li class="sidebar-box">
+		<?php echo $tagging->generateCloud($tag_cloud); ?>
     </li>
 <?php $partialLayout->blockEnd(); ?>
 

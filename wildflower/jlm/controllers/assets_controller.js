@@ -15,13 +15,11 @@ $.jlm.bind('assets.admin_index', function() {
 		event.preventDefault();
 	}); */
 
+		console.info('all sorts6');
 	// edit in place for asset titles
-	$('#assetList h3').find('a').live('click', function (event)	{
+	$('#assetList').find('li').live('dblclick', function (event)	{
 		console.info('edit title');
-		event.preventDefault();
 	});
-
-
 });
 
 $.jlm.bind('posts.admin_edit, pages.admin_edit, sidebars.admin_edit', function() {

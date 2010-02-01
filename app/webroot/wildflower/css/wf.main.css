@@ -1464,7 +1464,7 @@ text-decoration:none;
 
 	.file-list li { float: left; width: 43%;  height: 35px;}
 
-	.full .file-list li {height: 65px; min-width: 31%;}
+	.full .file-list li {height: 65px; max-width: 31%;}
 
     .file-list .thumbnail,
     .list .thumbnail {
