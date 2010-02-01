@@ -160,6 +160,9 @@
 				// click handler for letters: shows/hides relevant LI's
 				//
 				$('a', $letters).click(function() {
+					// nothing happens when the link is disabled
+					if($(this).hasClass('ln-disabled')) return false;
+
 					$('a.ln-selected', $letters).removeClass('ln-selected');
 
 					var letter = $(this).attr('class').split(' ')[0];

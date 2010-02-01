@@ -9,13 +9,18 @@ $.jlm.bind('assets.admin_index', function() {
 		includeNums: false 
 	});
 
+	// #content_pad select onchange
+	console.info("allsorts 2");
+	$('#content_pad select').live('change', function() { 
+		$(this).parent('form').trigger('submit');
+	});
+
 	/* / edit for more than title
 	$('#assetList li').find('.edit').live('click', function (event)	{
 		console.info('edit');
 		event.preventDefault();
 	}); */
 
-		console.info('all sorts6');
 	// edit in place for asset titles
 	$('#assetList').find('li').live('dblclick', function (event)	{
 		console.info('edit title');

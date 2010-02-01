@@ -4,7 +4,7 @@ class AssetsController extends AppController {
 	public $helpers = array('Cache', 'Tagging.Tagging');
 	public $components = array('RequestHandler', 'Wildflower.JlmPackager');
 	public $paginate = array(
-        'limit' => 12,
+        'limit' => 20,
         'order' => array('created' => 'desc')
     );
 	
@@ -262,13 +262,10 @@ class AssetsController extends AppController {
 	
 	private function feedFileManager() {
 	    $this->pageTitle = 'Files';
-		$this->paginate['limit'] = (isset($fileLimit)) ? $fileLimit : 25;
+		if(isset($_GET['displayNumImgs'])) $this->paginate['limit'] = Sanitize::escape($_GET['displayNumImgs']);
 	    $files = $this->paginate($this->modelClass);
-		
-		if(isset($_GET['displayNumImgs'])) $fileLimit = Sanitize::escape($_GET['displayNumImgs']);
 
-		$displayNumImgs = $this->paginate['limit'];
-		$displayNumImgsArr = array(0 => 20, 1 => 50, 2 => 75);
+		$displayNumImgsArr = array(10 => '10 files', 20 => '20 files', 50 => "50 files", 80 => "80 files");
 		$totalImages = $this->Asset->find('count');
 
 		$tag_cloud = $this->Asset->tagCloud();

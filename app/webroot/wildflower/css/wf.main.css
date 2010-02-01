@@ -404,6 +404,8 @@ h2 {
             color: #000;
             text-decoration: none;
         }
+	.options { margin: -45px 20px 0px 0px; display: inline; float: right; padding-right: 0px; width: auto; }
+	.info { margin: -45px 160px 0px 0px; display: inline; float: right; padding-right: 0px; width: auto; }
 
 #full-edit-back-link {
     margin: 2px 0;
@@ -945,7 +947,7 @@ select {
     font-size: 11px !important;
     position: absolute;
     padding: 2px 5px 2px 11px;
-    top: -1px;
+    top: 25px;
     left: -40px;
     display: none;
     font-size: 12px;
@@ -1052,7 +1054,8 @@ select {
  /* pagination */
 
 .paginator {
-    margin: 50px 2em 0 1em;
+    margin: 0 2em 2em 1em;
+	padding-right: 5.5em;
 }
 
 .paginator li	{
@@ -1064,20 +1067,20 @@ select {
 border:solid 1px #DEDEDE
 margin-right:2px;
 }
-.paginator .paginate-prev.disabled,
-.paginator .paginate-next.disabled {
+.paginator .previous.disabled,
+.paginator .next.disabled {
 color:#888888
 display:block;
 float:left;
 font-weight:bold;
 padding:3px 4px;
 }
-.paginator .paginate-prev a,
-.paginator .paginate-next a {
+.paginator .prev a,
+.paginator .next a {
 font-weight:bold;
 border:solid 1px #FFFFFF;
 }
-.paginator .current{
+.paginator .current	{
 color:#00000
 font-weight:bold;
 display:block;
@@ -1099,8 +1102,8 @@ text-decoration:none;
 .paginate-counter {	float: right; margin-right: 70px;	}
 	.paginate-counter p.quiet	{	margin-top: 5px;	}
 
-    .paginate-prev,
-    .paginate-next {
+    .prev,
+    .next {
         float: left;
         margin-right: 1.2em;
     }
