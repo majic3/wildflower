@@ -44,4 +44,13 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 		$('body').toggleClass('full');
 		$(this).html('Full').attr('title', 'Click to maximise display area');
 	});
+
+	// want to make a way to load some extra js eg date.js but only when required -- labJS but how best to fit it in.
+	// make a jlm comp -- so that devs can easily set the views/actions that call these additional scripts are called on
+	// like the select actions comp use addComp
+});
+
+
+$.jlm.bind('pages.admin_edit, posts.admin_edit, pages.admin_options, pages.admin_sidebar, posts.admin_options, posts.admin_categorize, posts.admin_comments, posts.admin_sidebar, sidebars.admin_edit', function() {
+	$.jlm.components.jumpMenu.startup();
 });

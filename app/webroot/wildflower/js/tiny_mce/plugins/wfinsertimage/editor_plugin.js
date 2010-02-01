@@ -13,7 +13,7 @@
 	            'class' : 'mceIcon mce_image'
 	        });
 			
-			// Insert image button
+			// Insert asset button
             ed.addButton('wfinsertasset', {
 	            title : 'Insert an Asset',
 	            onclick : function() {

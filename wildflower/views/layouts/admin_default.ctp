@@ -14,7 +14,8 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
-        )), $javascript->link('/wildflower/js/tiny_mce/tiny_mce');
+        )),
+		$javascript->link('/wildflower/js/tiny_mce/tiny_mce');
     ?>
      
     <!--[if lte IE 7]>
@@ -83,7 +84,7 @@
     <script type="text/javascript" src="/js/LAB.js"></script>
     <script type="text/javascript">
     //<![CDATA[
-		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js")
+		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js")
 		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
 		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm").wait(function () {
 			$.jlm.config({

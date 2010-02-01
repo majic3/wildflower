@@ -127,6 +127,7 @@ class PagesController extends AppController {
 		$order = 'lft ASC';
 		$fields = array('id', 'lft', 'rght', 'parent_id', 'title');
 		$pages = $this->Page->find('all', compact('order', 'fields'));
+		$jumpMenu = $this->Page->getListThreaded();
 		$this->set(compact('pages', 'jumpMenu'));
 	}
 

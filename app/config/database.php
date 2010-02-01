@@ -86,8 +86,8 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
-		'database' => 'wildflower',
+		'password' => 'majic',
+		'database' => 'wildflower_majic_assets',
 	    'port' => 3306
 	);
 	
