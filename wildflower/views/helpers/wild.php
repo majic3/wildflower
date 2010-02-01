@@ -346,7 +346,7 @@ class WildHelper extends AppHelper {
 			);
 		}
 
-		App::import('Vendor', 'HtmlPurifier.HTMLPurifier', array('file' => 'htmlpurifier/HTMLPurifier.standalone.php'));
+		App::import('Vendor', 'HTMLPurifier', array('file' => 'htmlpurifier/HTMLPurifier.standalone.php'));
 		$dconfig = HTMLPurifier_Config::createDefault();
 
 		foreach ($config as $k => $v) {
