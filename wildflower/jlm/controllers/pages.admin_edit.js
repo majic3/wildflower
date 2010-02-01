@@ -20,11 +20,6 @@ $.jlm.bind('pages.admin_edit', function() {
    });
 });
 
-$.jlm.bind('pages.admin_edit, pages.admin_options, pages.admin_sidebar, posts.admin_edit, posts.admin_options, posts.admin_categorize, posts.admin_comments, posts.admin_sidebar, sidebars.admin_edit', function() {
-    $.jlm.components.jumpMenu.startup();
-});
-
-
 
 $.jlm.bind('pages.admin_settings', function() {
     
@@ -35,28 +30,33 @@ $.jlm.bind('pages.admin_settings', function() {
 		$.jlm.components.customFields.addCustom();
 		e.preventDefault();
 	});
-    $('.add', '#availableSettings').click(function(e)	{
+    
+	$('.add', '#availableSettings').click(function(e)	{
 		var token = $(this).attr('id');
 		var name = $(this).text();
 		var type = 'text';
 		$.jlm.components.customFields.add();
 		e.preventDefault();
 	});
-    $('.edit', '#currentSettings').click(function(e)	{
+    
+	$('.edit', '#currentSettings').click(function(e)	{
 		var token = $(this).attr('id');
 		$.jlm.components.customFields.edit();
 		e.preventDefault();
 	});
-    $('.save', '#currentSettings').click(function(e)	{
+    
+	$('.save', '#currentSettings').click(function(e)	{
 		var token = $(this).attr('id');
 		$.jlm.components.customFields.save();
 		e.preventDefault();
 	});
+
     $('.cancel', '#currentSettings').click(function(e)	{
 		var token = $(this).attr('id');
 		$.jlm.components.customFields.cancel();
 		e.preventDefault();
 	});
+
     $('.delete', '#currentSettings').click(function(e)	{
 		var token = $(this).attr('id');
 		$.jlm.components.customFields.delete();

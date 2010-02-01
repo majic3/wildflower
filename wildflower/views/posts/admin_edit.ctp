@@ -38,7 +38,20 @@
             <li class="allPosts">
 			<strong><?php echo $htmla->link('All Posts', array('action' => 'index'), array('strict' => true)); ?></strong>
 			<?php if(isset($jumpMenu)):
-				echo str_replace(array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), '', $form->select('jumpMenu', $jumpMenu, null, array('class' => 'jumpMenu')));
+				echo 
+					str_replace(
+						array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), 
+						'', 
+						$form->select(
+							'jumpMenu', 
+							$jumpMenu, 
+							$this->data['Page']['id'], 
+							array(
+								'class' => 'jumpMenu'
+							), 
+							'-- please select --'
+						)
+					);
 			endif; ?></li>
     <li class="main_sidebar category_sidebar">
 		<h4 class="sidebar_heading"><?php __('Categories'); ?></h4>

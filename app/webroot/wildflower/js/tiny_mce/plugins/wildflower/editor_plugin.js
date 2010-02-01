@@ -192,7 +192,6 @@
 				  return c;
 				break;
 			}
-
 			return null;
 		},
 	

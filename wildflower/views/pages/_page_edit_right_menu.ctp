@@ -3,7 +3,20 @@
         <li class="allPages">
 			<strong><?php echo $htmla->link('All Pages', array('action' => 'index'), array('strict' => true)); ?></strong>
 			<?php if(isset($jumpMenu)):
-				echo str_replace(array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), '', $form->select('jumpMenu', $jumpMenu, null, array('class' => 'jumpMenu')));
+				echo 
+					str_replace(
+						array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), 
+						'', 
+						$form->select(
+							'jumpMenu', 
+							$jumpMenu, 
+							$this->data['Page']['id'], 
+							array(
+								'class' => 'jumpMenu'
+							), 
+							'-- please select --'
+						)
+					);
 			endif; ?>
 		</li>
         <?php if (isset($this->params['pass'][0])): ?>
