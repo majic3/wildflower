@@ -1,0 +1,9 @@
+<form class="edit-inplace" method="post" action="${BASE}/${PREFIX}/${CONTROLLER}/update">
+    <div class="input">
+        <textarea name="data[Comment][content]" rows="12" cols="25"></textarea>
+    </div>
+    <div class="submit">
+    	<input type="hidden" name="data[${MODEL}][id]" value="${itemId}" />
+        <input type="submit" value="Save" /> <a class="cancel-edit" href="#Cancel">Cancel</a>
+    </div>
+</form>

@@ -197,6 +197,9 @@ jQuery.jlm = {
         // BASE param for all templates
         viewVars.BASE = this.base;
         viewVars.PREFIX = this.params.prefix;
+        viewVars.CONTROLLER = this.params.controller;
+        viewVars.MODEL = this.params.model;
+        viewVars.ACTION = this.params.action;
 
         return template.process(viewVars);
     },

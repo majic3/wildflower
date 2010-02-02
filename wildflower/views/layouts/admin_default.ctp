@@ -86,11 +86,12 @@
     //<![CDATA[
 		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js")
 		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
-		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm").wait(function () {
+		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm/57457").wait(function () {
 			$.jlm.config({
 				base: '<?php echo $this->base ?>',
 				controller: '<?php echo $this->params['controller'] ?>',
 				action: '<?php echo $this->params['action'] ?>', 
+				model: '<?php echo ucfirst(Inflector::singularize($this->params['controller'])) ?>', 
 				prefix: '<?php echo Configure::read('Routing.admin') ?>',
 				custom: {
 					wildflowerUploads: '<?php echo Configure::read('Wildflower.uploadsDirectoryName'); ?>',
