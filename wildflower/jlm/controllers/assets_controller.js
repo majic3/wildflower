@@ -9,8 +9,7 @@ $.jlm.bind('assets.admin_index', function() {
 		includeNums: false 
 	});
 
-	// #content_pad select onchange
-	console.info("allsorts 2");
+	// #content_pad select change - to control the number of files displayed
 	$('#content_pad select').live('change', function() { 
 		$(this).parent('form').trigger('submit');
 	});

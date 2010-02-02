@@ -51,7 +51,7 @@ echo
 					$thumbUrl = "/$mprefix/thumbnail/{$file['Asset']['name']}/";
 					$iconOrThumbnail = ($displayNumImgsArr < 20) ? $thumbUrl . '50/50/1' : '/wildflower/img/1x1.png';
 					$iconOrThumbnail = $html->link(
-						$html->image($iconOrThumbnail, array('class' => 'download')),
+						$html->image($iconOrThumbnail, array('class' => 'thumbnail')),
 						array('action' => 'edit', $file['Asset']['id']),
 						array(
 							'class' => 'icon',
