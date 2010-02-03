@@ -22,6 +22,8 @@ $.jlm.bind('pages.admin_edit', function() {
 
 
 $.jlm.bind('pages.admin_settings', function() {
+	/*
+	
     
 	$.jlm.components.customFields.startup();
 
@@ -63,7 +65,7 @@ $.jlm.bind('pages.admin_settings', function() {
 		
 		e.preventDefault();
 	});
-
+	*/
 });
 
 

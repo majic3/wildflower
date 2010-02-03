@@ -33,35 +33,20 @@ $.jlm.component('SelectActions', '*', function() {
 
      $('input[type=checkbox]', handledFormEl).click(selectionChanged);
 
-	function showRequest(formData, jqForm, options) { 
-		// formData is an array; here we use $.param to convert it to a string to display it 
-		// but the form plugin does this for you automatically when it submits the data 
-		var queryString = $.param(formData); 
-	 
-		// jqForm is a jQuery object encapsulating the form element.  To access the 
-		// DOM element for the form do this: 
-		// var formElement = jqForm[0]; 
-	 
-		console.info('About to submit: \n\n' + queryString); 
-		return true; 
-	}
-
-	function showRespond(responseText, statusText)  {
-	 
-		console.info('status: ' + statusText + '\n\nresponseText: \n' + responseText + 
-			'\n\nThe output div should have already been updated with the responseText.'); 
+	function showResponse(responseXML)  {
+		//	var message = $('message', responseXML).text(); 
+		console.info(message);
 	}
 
     var formOptions = { 
         target:        '#sysMsg',
-        beforeSubmit:  showRequest,
         success:       showResponse,
         type:      'post',
-        dataType:  'json',
+        dataType:  'xml',
         //timeout:   3000 
     }; 
 
-	handledFormEl.ajaxForm(formOptions);
+	//handledFormEl.ajaxForm(formOptions);
      
      function deleteChecked() {
          var checkboxEl = $('input:checked');
@@ -90,16 +75,27 @@ $.jlm.component('SelectActions', '*', function() {
      }
      
      // Bind main actions
-     $('.select-actions > a', handledFormEl).click(function() {
+     $('.select-actions > a', handledFormEl).live('click', function() {
          var rel = $(this).attr('rel');
+		 console.info(rel);
          var msg = 'Do you really want to ' + str_replace('!', '', rel) + ' selected items?';
          var doContinue = confirm(msg);
          if (doContinue) {
              var url = handledFormEl.attr('action');
+			console.info(url);
+
+			if(rel == 'edit')	{
+				// edit inplace and return
+				return false;
+			}
              
-             var formAppend = '<input type="hidden" name="data[__action]" value="' + rel + '" />';
-             // @TODO add AJAX submit and UI refresh
-             handledFormEl.append(formAppend).submit();
+            var formAppend = '<input type="hidden" name="data[__action]" value="' + rel + '" />';
+            // @trying
+            handledFormEl.append(formAppend).submit(function () {
+				$(this).ajaxSubmit(formOptions);
+			console.info(formOptions);
+				return false;
+			});
 
              if ('delete' == rel) {
                  deleteChecked();
@@ -111,12 +107,12 @@ $.jlm.component('SelectActions', '*', function() {
      });
      
      // Bind select All/None
-     $('a[href=#SelectAll]', handledFormEl).click(function() {
+     $('a[href=#SelectAll]', handledFormEl).live('click', function() {
          $('input:checkbox', handledFormEl).attr('checked', 'true').parent().parent('li').addClass('selected');
          return false;
      });
      
-     $('a[href=#SelectNone]', handledFormEl).click(function() {
+     $('a[href=#SelectNone]', handledFormEl).live('click', function() {
          selectActionsEl.slideUp(100);
          $('input:checkbox', handledFormEl).removeAttr('checked').parent().parent('li').removeClass('selected');
          return false;
