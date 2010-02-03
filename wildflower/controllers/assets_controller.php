@@ -270,8 +270,15 @@ class AssetsController extends AppController {
 
 		$tag_cloud = $this->Asset->tagCloud();
 		
-		$this->set(compact('displayNumImgs', 'displayNumImgsArr', 'totalImages', 'tag_cloud'));
-        $this->set(compact('files'));
+		$this->set(
+			compact(
+				'files', 
+				'displayNumImgs', 
+				'displayNumImgsArr', 
+				'totalImages', 
+				'tag_cloud'
+			)
+		);
 	}
     
 }

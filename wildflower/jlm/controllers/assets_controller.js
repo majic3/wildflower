@@ -10,8 +10,13 @@ $.jlm.bind('assets.admin_index', function() {
 	});
 
 	// #content_pad select change - to control the number of files displayed
-	$('#content_pad select').live('change', function() { 
-		$(this).parent('form').trigger('submit');
+	$('#content_pad select').live('change', function() {
+		var sel = $(this);
+		if(sel.val() != '')	{
+			sel.parent('form').trigger('submit');	
+		}
+
+		return false;
 	});
 
 	/* / edit for more than title
