@@ -4,8 +4,10 @@
  * Used on lists with checkboxes. On checking some, action menus pop up.
  */
 $.jlm.component('SelectActions', '*', function() {
-     var selectActionsEl = $('.select-actions');
-     var handledFormEl = $('form:first');
+
+	var selectActionsEl = $('.select-actions');
+	//var handledFormEl = $('form:first');
+	var handledFormEl = $("form[action$='mass_update']");
      
      // Mark all selectedEls items
      var selectedEls = $('input:checked', handledFormEl);
@@ -30,6 +32,36 @@ $.jlm.component('SelectActions', '*', function() {
      }
 
      $('input[type=checkbox]', handledFormEl).click(selectionChanged);
+
+	function showRequest(formData, jqForm, options) { 
+		// formData is an array; here we use $.param to convert it to a string to display it 
+		// but the form plugin does this for you automatically when it submits the data 
+		var queryString = $.param(formData); 
+	 
+		// jqForm is a jQuery object encapsulating the form element.  To access the 
+		// DOM element for the form do this: 
+		// var formElement = jqForm[0]; 
+	 
+		console.info('About to submit: \n\n' + queryString); 
+		return true; 
+	}
+
+	function showRespond(responseText, statusText)  {
+	 
+		console.info('status: ' + statusText + '\n\nresponseText: \n' + responseText + 
+			'\n\nThe output div should have already been updated with the responseText.'); 
+	}
+
+    var formOptions = { 
+        target:        '#sysMsg',
+        beforeSubmit:  showRequest,
+        success:       showResponse,
+        type:      'post',
+        dataType:  'json',
+        //timeout:   3000 
+    }; 
+
+	handledFormEl.ajaxForm(formOptions);
      
      function deleteChecked() {
          var checkboxEl = $('input:checked');
