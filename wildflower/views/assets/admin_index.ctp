@@ -6,7 +6,7 @@ echo
 	$form->select(
 		'displayNumImgs', 
 		$displayNumImgsArr, 
-		50, 
+		2, 
 		array(
 			'class' => 'displayNumImgs'
 		), 
