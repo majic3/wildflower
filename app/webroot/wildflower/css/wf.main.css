@@ -17,6 +17,9 @@ added styling for full area display & begining of icons (using sprites)
 added listNav styles
 	- alphabetical listing of files is auto filtered with jquery
 
+added #sysMsg .display
+	- display or hide system message
+
 
 
 
@@ -136,6 +139,44 @@ hr {
 .full #content {
     width: 100%;
 }
+
+/* sysMsg - same styling as sidebar; but different in full mode*/
+
+#sysMsg {
+	display: none;
+}
+
+	#sysMsg.display {
+		display: block;
+	}
+
+	#sysMsg .dismiss	{
+		background: green;
+		margin-bottom: 0;
+		width: 18px;
+		height: 18px;
+		float: right;
+		display: block;
+		overflow: hidden;
+		text-indent: -1000px;
+	}
+
+	#sysMsg .dismiss:hover	{
+		background: red;
+	}
+
+	.full #sysMsg {
+		display:block;
+		height:55px;
+		overflow:hidden;
+		position:absolute;
+		right:18em;
+		top:3.5em;
+	}
+
+		.full #sysMsg p {
+			margin-bottom: 0;
+		}
 
 #site_title {
     font-size: 20px;
@@ -698,7 +739,7 @@ select {
 
 /* Sidebar */
 
-#sidebar {
+#sidebar, #sysMsg {
     float: right;
     width: 30%;
     margin: 5px 0 0 0;
@@ -1900,6 +1941,8 @@ body	#content_pad	.list	{
 	height:auto;
 }
 
+#comments_index img{ margin-right: 5px;}
+
 .view_comment_post {
     float: right;
     line-height: 12px;
@@ -2151,7 +2194,7 @@ body #wrap #content_pad	.draft	a:hover	{
 
 .paginator	p	{	margin: 0	}
 
-.error, .notice, .success {
+.error, .notice, .success, .alert {
   border: 2px solid #DDDDDD;
   margin-bottom: 1em;
   padding: 0.8em;
@@ -2161,6 +2204,12 @@ body #wrap #content_pad	.draft	a:hover	{
   background: #FBE3E4 none repeat scroll 0 0;
   border-color: #FBC2C4;
   color: #8A1F11;
+}
+
+.alert {
+  background: #FBE3FA none repeat scroll 0 0;
+  border-color: #FBC2D8;
+  color: #8A1F77;
 }
 
 .notice {
@@ -2177,6 +2226,10 @@ body #wrap #content_pad	.draft	a:hover	{
 
 .error a {
   color: #8A1F11;
+}
+
+.alert a {
+  color: #8A1F77;
 }
 
 .notice a {
