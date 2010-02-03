@@ -45,8 +45,6 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 		$(this).html('Full').attr('title', 'Click to maximise display area');
 	});
 
-	console.info('updater 20');
-
 	$('#sysMsg .dismiss').live('click', function(e) {
 
 		var sysMsgs = $(this).parent('p').fadeOut('fast').remove().parent('div');
@@ -60,6 +58,8 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 		e.preventDefault();
 
 	});
+
+	$('#sysMsg').html('<p class="notice">updater 50 using live more now is this better</p> ');
 
 	// fade out messages (notice & success) after 8 seconds  
 	$('.notice, .success').animate({opacity: 1.0}, 8000).fadeOut(); 
