@@ -45,7 +45,7 @@
 						$form->select(
 							'jumpMenu', 
 							$jumpMenu, 
-							$this->data['Page']['id'], 
+							$this->data['Post']['id'], 
 							array(
 								'class' => 'jumpMenu'
 							), 

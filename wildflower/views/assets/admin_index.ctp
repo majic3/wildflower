@@ -6,7 +6,7 @@ echo
 	$form->select(
 		'displayNumImgs', 
 		$displayNumImgsArr, 
-		2, 
+		$displayNumImgs, 
 		array(
 			'class' => 'displayNumImgs'
 		), 
@@ -22,7 +22,7 @@ echo
 
 	<?php echo $form->create('Asset', array('action' => 'mass_update')); ?>
 	
-	<?php echo $this->element('admin_select_actions', array('options' => array('Edit', 'Delete'))); ?>
+	<?php echo $this->element('admin_select_actions', array('actions' => array('Edit', 'Delete'))); ?>
 	<div id="assetList-nav"></div>
 	<ul id="assetList" class="file-list">
 	<?php

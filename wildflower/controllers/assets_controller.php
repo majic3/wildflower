@@ -269,7 +269,9 @@ class AssetsController extends AppController {
 		$totalImages = $this->Asset->find('count');
 
 		$tag_cloud = $this->Asset->tagCloud();
-		
+
+		$displayNumImgs = $this->paginate['limit'];
+
 		$this->set(
 			compact(
 				'files', 
