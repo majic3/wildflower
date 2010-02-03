@@ -1097,6 +1097,7 @@ select {
 .paginator {
     margin: 0 2em 2em 1em;
 	padding-right: 5.5em;
+	height: auto
 }
 
 .paginator li	{
@@ -1105,8 +1106,10 @@ select {
 	list-style:none;
 }
 .paginator li, .paginator a {
-	border: solid 1px #DEDEDE;
 	margin-right: 2px;
+}
+.paginator li {
+	xborder: solid 1px #DEDEDE;
 }
 .paginator .previous.disabled,
 .paginator .next.disabled {
@@ -1114,26 +1117,26 @@ color:#888888;
 display:block;
 float:left;
 font-weight:bold;
-padding:3px 4px;
+padding: 3px 4px;
 }
 .paginator .prev a,
 .paginator .next a {
 font-weight:bold;
-border:solid 1px #FFFFFF;
+xborder:solid 1px #FFFFFF;
 }
 .paginator .current	{
 color: #000000;
 font-weight: bold;
 display: block;
 float: left;
-padding: 4px 6px;
+padding: 3px 4px;
 }
 .paginator a:link,
 .paginator a:visited {
 color:#0033CC;
 display:block;
 float:left;
-padding:3px 6px;
+padding: 3px 4px;
 text-decoration:none;
 }
 .paginator a:hover{
