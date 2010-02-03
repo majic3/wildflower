@@ -95,7 +95,7 @@
     //<![CDATA[
 		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js")
 		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
-		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm/47587648764").wait(function () {
+		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm").wait(function () {
 			$.jlm.config({
 				base: '<?php echo $this->base ?>',
 				controller: '<?php echo $this->params['controller'] ?>',
