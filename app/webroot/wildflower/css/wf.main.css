@@ -1104,13 +1104,13 @@ select {
 	font-size:11px;
 	list-style:none;
 }
-.paginator li, .paginator a{
-border:solid 1px #DEDEDE
-margin-right:2px;
+.paginator li, .paginator a {
+	border: solid 1px #DEDEDE;
+	margin-right: 2px;
 }
 .paginator .previous.disabled,
 .paginator .next.disabled {
-color:#888888
+color:#888888;
 display:block;
 float:left;
 font-weight:bold;
@@ -1122,15 +1122,15 @@ font-weight:bold;
 border:solid 1px #FFFFFF;
 }
 .paginator .current	{
-color:#00000
-font-weight:bold;
-display:block;
-float:left;
-padding:4px 6px;
+color: #000000;
+font-weight: bold;
+display: block;
+float: left;
+padding: 4px 6px;
 }
 .paginator a:link,
 .paginator a:visited {
-color:#0033CC
+color:#0033CC;
 display:block;
 float:left;
 padding:3px 6px;
@@ -1523,7 +1523,7 @@ text-decoration:none;
 
 	#sidebar .file-list li {height: auto}
 
-		#sidebar .file-list li h3	{display: block; left: left; margin-right: 0;margin-top: 0; padding-right: 0px; width: 80px;}
+		#sidebar .file-list li h3	{display: block; float: left; margin-right: 0;margin-top: 0; padding-right: 0px; width: 80px;}
 
 		#sidebar .file-list li img {float: right; width: 50px; height: 50px; }
 
