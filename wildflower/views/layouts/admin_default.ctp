@@ -66,6 +66,15 @@
         </div>
         </div>
     </div>
+
+	<div id="sysMsg" class="display">
+		<?php
+		// flash message
+		if ($session->check('Message.flash')) {  
+			$session->flash();
+		}
+		?>
+	</div>
     
     <?php if (isset($sidebar_for_layout)): ?>
     <div id="sidebar">
@@ -86,7 +95,7 @@
     //<![CDATA[
 		$LAB.script("http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js")
 		.script("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js")
-		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm/57457").wait(function () {
+		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm/47587648764").wait(function () {
 			$.jlm.config({
 				base: '<?php echo $this->base ?>',
 				controller: '<?php echo $this->params['controller'] ?>',
