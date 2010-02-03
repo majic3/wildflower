@@ -134,7 +134,7 @@ class AppController extends Controller {
                 $this->Session->setFlash("{$model} #$id was deleted.");
                 $this->redirect(array('action' => 'index'));
             } else {
-            	$this->Session->setFlash("Error while deleting {$model} #$id.");
+            	$this->Session->setFlash("Error while deleting {$model} #$id.", 'flash_error');
             }
         }
     }
@@ -166,9 +166,16 @@ class AppController extends Controller {
             	$result = $this->{$this->modelClass}->{$this->data['__action']}($id);
 			}
         }
-
-    	$redirect = am($this->params['named'], array('action' => 'wf_index'));
-        $this->redirect($this->referer($redirect));
+		$action = $this->data['__action'];
+		if ($this->RequestHandler->isAjax())	{
+			$named = $this->params['named'];
+			echo json_encode(compact('result', 'named', 'ids', 'action'));
+			die();
+		} else {
+			$this->set(compact('result', 'named', 'ids', 'action'));
+			$redirect = am($this->params['named'], array('action' => 'admin_index'));
+			$this->redirect($this->referer($redirect));
+		}
     }
     
     /**

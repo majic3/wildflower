@@ -35,9 +35,25 @@ class CommentsController extends AppController {
         $this->render('/elements/json');
     }
 
-    function admin_index() {
-        $comments = $this->paginate('Comment', 'Comment.spam = 0 AND Comment.approved = 0');
-        $this->set('comments', $comments);
+    function admin_index($status = 'awaiting') {
+		switch($status)	{
+			case 'spam':
+				$this->Comment->contain('Post.title', 'Post.id');
+				$comments = $this->paginate('Comment', 'Comment.spam = 1');
+				$selectActions = array('Not Spam!', 'Delete');
+			break;
+			case 'published':
+				$this->Comment->contain('Post.title', 'Post.id');
+				$comments = $this->paginate('Comment', 'Comment.approved = 1');
+				$selectActions = array('Unapprove', 'Spam!', 'Delete');
+			break;
+			case 'awaiting':
+			default:
+				$comments = $this->paginate('Comment', 'Comment.spam = 0 AND Comment.approved = 0');
+				$selectActions = array('Approve', 'Spam!', 'Delete');
+			break;
+		}
+        $this->set(compact('comments', 'selectActions'));
     }
     
     function admin_spam() {
@@ -86,13 +102,18 @@ class CommentsController extends AppController {
      *
      */
     function admin_update() {
-        $this->Comment->create($this->data);
-        if (!$this->Comment->exists()) {
-            return;
-        }
         
-        $comment = $this->Comment->save();
-        $this->set(compact('comment'));
+        /* if (!$this->data[]) {
+            return;
+        } */
+		$response = array();
+		$action = $this->data['__action'];
+		foreach($this->data['Comment']['id'] as $id => $comment)	{
+			$this->Comment->id = $id;
+			$response[] = $this->Comment->$action();
+		}
+        
+        $this->set(compact('response'));
     }
 
     /**
@@ -102,7 +123,7 @@ class CommentsController extends AppController {
     function create() {
         $this->Comment->spamCheck = true;
         if ($this->Comment->save($this->data)) {
-            $this->Session->setFlash('Comment succesfuly added.');
+            $this->Session->setFlash('Comment succesfuly added.', 'flash_success');
             $postId = intval($this->data['Comment']['post_id']);
             $postSlug = $this->Comment->Post->field('slug', "Post.id = $postId");
             $postLink = '/' . Configure::read('Wildflower.blogIndex') . "/$postSlug";
