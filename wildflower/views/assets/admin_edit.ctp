@@ -1,10 +1,10 @@
+<h2 class="section">Editing Asset: <?php echo $this->data['Asset']['title'] ? $this->data['Asset']['title'] : $this->data['Asset']['name']; ?></h2>
 <?php
 echo $navigation->create(array(
         'All files' => array('action' => 'index')
     ), array('id' => 'sub-nav', 'class' => 'always-current'));
 ?>
 
-<h2 class="top">File: <?php echo $this->data['Asset']['title'] ? $this->data['Asset']['title'] : $this->data['Asset']['name']; ?></h2>
 
 <?php 
     // If file is image display it fitting the wrap

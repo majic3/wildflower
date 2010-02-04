@@ -1,4 +1,4 @@
-<h2 class="section">Files</h2>
+<h2 class="section">Assets</h2>
 <?php
 
 echo 
@@ -92,7 +92,7 @@ echo
 		<?php echo $this->element('../assets/_upload_file_box'); ?>
 	</li>
 	<li class="sidebar-box">
-		<?php echo $tagging->generateCloud($tag_cloud); ?>
+		<?php echo $tagging->generateCloud($tagCloud); ?>
 	</li>
 <?php $partialLayout->blockEnd(); ?>
 

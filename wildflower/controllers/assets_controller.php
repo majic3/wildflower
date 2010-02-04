@@ -1,7 +1,7 @@
 <?php
 class AssetsController extends AppController {
 	
-	public $helpers = array('Cache', 'Tagging.Tagging');
+	public $helpers = array('Cache');
 	public $components = array('RequestHandler', 'Wildflower.JlmPackager');
 	public $paginate = array(
         'limit' => 20,
