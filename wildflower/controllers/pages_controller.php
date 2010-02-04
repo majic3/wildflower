@@ -87,7 +87,7 @@ class PagesController extends AppController {
 		$this->data = $page;
 		$this->pageTitle = $page[$this->modelClass]['title'];
 
-		$newParentPageOptions = $this->Page->getListThreaded();
+		$newParentPageOptions = $this->Page->generatetreelist(null, null, null, ' - ');
 		$revisions = $this->Page->getRevisions($id, 10);
 		$isDraft = ($page['Page']['draft']);
 		$jumpMenu = $this->Page->getListThreaded();
@@ -116,7 +116,16 @@ class PagesController extends AppController {
 		if (empty($this->data)) return $this->cakeError('object_not_found');
 		
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
-		$parentPageOptions = $this->Page->getListThreaded($this->data['Page']['id']);
+
+		$parentPageOptions = $this->Page->generatetreelist(
+			array(
+				'Page.lft NOT BETWEEN ? AND ?' => array($this->data['Page']['lft'], $this->data['Page']['rght']),
+			), 
+			null, 
+			null, 
+			'-'
+		);
+
 		$jumpMenu = $this->Page->getListThreaded();
 		$this->set(compact('parentPageOptions', 'jumpMenu'));
 	}
@@ -167,6 +176,7 @@ class PagesController extends AppController {
 		$this->Page->contain('User');
 		$page = $this->Page->findById($this->Page->id);
 		
+
 		// @TODO first check if the page has any children
 		if (Configure::read('Wildflower.settings.home_page_id') != $this->Page->id) { 
 			$this->Page->updateChildPageUrls($this->Page->id, $oldUrl, $page['Page']['url']);
@@ -526,7 +536,7 @@ class PagesController extends AppController {
 	 * @param int $id Page ID
 	 */
 	private function _setParentSelectBox($id = null) {
-		$list = $this->Page->getListThreaded($id, 'title');
+		$list = $this->Page->generatetreelist(null, null, null, ' - ');
 		$this->set('parentPages', $list);
 	}
 
