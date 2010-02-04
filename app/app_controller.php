@@ -40,6 +40,7 @@ class AppController extends Controller {
 		'AutoJavascript',
 		'Tagging.Tagging'
 	);
+	public $view = 'Theme';
 	public $homePageId;
 	public $isAuthorized = false;
 	public $isHome = false;
@@ -287,10 +288,13 @@ class AppController extends Controller {
 		
 		// User ID for views
 		$this->set('loggedUserId', $this->Auth->user('id'));
+
 		// canonical
 		$this->set('canonical', ($this->canonical == '') ? $this->here : $this->canonical);
 
 		$this->_setErrorLayout();
+
+		$this->theme = Configure::read('Wildflower.settings.theme');
 	}
 
 	function do404() {
