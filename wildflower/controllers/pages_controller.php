@@ -118,7 +118,9 @@ class PagesController extends AppController {
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
 		$parentPageOptions = $this->Page->generatetreelist(
 			array(
-				'Page.lft NOT BETWEEN ? AND ?' => array($this->data['Page']['lft'], $this->data['Page']['rght']),
+				'Page.lft NOT BETWEEN ? AND ?' => array(
+					$this->data['Page']['lft'], $this->data['Page']['rght']
+				),
 			), 
 			null, 
 			null, 
@@ -175,7 +177,6 @@ class PagesController extends AppController {
 		$this->Page->contain('User');
 		$page = $this->Page->findById($this->Page->id);
 		
-
 		// @TODO first check if the page has any children
 		if (Configure::read('Wildflower.settings.home_page_id') != $this->Page->id) { 
 			$this->Page->updateChildPageUrls($this->Page->id, $oldUrl, $page['Page']['url']);
