@@ -128,8 +128,8 @@ class SlugBehavior extends ModelBehavior {
 		  App::import('Core', 'AppHelper', false); 
 		} 
 		*/
-		require_once APP . 'app_helper.php';
-    	return AppHelper::slug($string, $settings['separator']);
+		//require_once APP . 'app_helper.php';
+    	return AppController::slug($string, $settings['separator']);
     }
 
 }
