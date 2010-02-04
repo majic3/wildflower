@@ -14,6 +14,7 @@
         // Load your CSS files here
         $html->css(array(
             '/wildflower/css/wf.main',
+            '/tagging/css/tagging',
         )),
 		$javascript->link('/wildflower/js/tiny_mce/tiny_mce');
     ?>
@@ -38,14 +39,15 @@
 
 	<ul id="nav">
 		<li><?php echo $htmla->link(__('Dashboard', true), '/' . Configure::read('Routing.admin'), array('strict' => true)); ?></li>
-		<li><?php echo $htmla->link(__('Pages', true), array('controller' => 'pages', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Modules', true), array('controller' => 'sidebars', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Posts', true), array('controller' => 'posts', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Categories', true), array('controller' => 'categories', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Comments', true), array('controller' => 'comments', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Messages', true), array('controller' => 'messages', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Files', true), array('controller' => 'assets', 'action' => 'index')); ?></li>
-		<li><?php echo $htmla->link(__('Utilities', true), array('controller' => 'utilities', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Pages', true), array('plugin' => null, 'controller' => 'pages', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Modules', true), array('plugin' => null, 'controller' => 'sidebars', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Posts', true), array('plugin' => null, 'controller' => 'posts', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Categories', true), array('plugin' => null, 'controller' => 'categories', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Comments', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Messages', true), array('plugin' => null, 'controller' => 'messages', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Files', true), array('plugin' => null, 'controller' => 'assets', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Utilities', true), array('plugin' => null, 'controller' => 'utilities', 'action' => 'index')); ?></li>
+		<li><?php echo $htmla->link(__('Tagging', true), array('plugin' => 'tagging', 'admin' => true, 'prefix' => 'admin', 'controller' => 'tags', 'action' => 'index')); ?></li>
 		<li class="nav_item_on_right"><?php echo $htmla->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
 		<li class="nav_item_on_right"><?php echo $htmla->link(__('Site Settings', true), array('controller' => 'settings', 'action' => 'index')); ?></li>
 	</ul>
@@ -111,6 +113,9 @@
 			tinyMCE.init($.jlm.components.tinyMce.getConfig());
 
 			$.jlm.dispatch(); 
+		}).script('<?php	echo $tagging->getScript(true);	?>').wait(function () {
+			setGlobalTags(['javascript', 'jquery', 'java', 'json']);
+			<?php	echo $tagging->getScript();	?>
 		});
     //]]>
     </script>
