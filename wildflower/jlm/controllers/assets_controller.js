@@ -9,6 +9,16 @@ $.jlm.bind('assets.admin_index', function() {
 		includeNums: false 
 	});
 
+	// #content_pad select change - to control the number of files displayed
+	$('#content_pad select').live('change', function() {
+		var sel = $(this);
+		if(sel.val() != '')	{
+			sel.parent('form').trigger('submit');	
+		}
+
+		return false;
+	});
+
 	/* / edit for more than title
 	$('#assetList li').find('.edit').live('click', function (event)	{
 		console.info('edit');
@@ -16,12 +26,9 @@ $.jlm.bind('assets.admin_index', function() {
 	}); */
 
 	// edit in place for asset titles
-	$('#assetList h3').find('a').live('click', function (event)	{
+	$('#assetList').find('li').live('dblclick', function (event)	{
 		console.info('edit title');
-		event.preventDefault();
 	});
-
-
 });
 
 $.jlm.bind('posts.admin_edit, pages.admin_edit, sidebars.admin_edit', function() {

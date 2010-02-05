@@ -17,6 +17,9 @@ added styling for full area display & begining of icons (using sprites)
 added listNav styles
 	- alphabetical listing of files is auto filtered with jquery
 
+added #sysMsg .display
+	- display or hide system message
+
 
 
 
@@ -136,6 +139,44 @@ hr {
 .full #content {
     width: 100%;
 }
+
+/* sysMsg - same styling as sidebar; but different in full mode*/
+
+#sysMsg {
+	display: none;
+}
+
+	#sysMsg.display {
+		display: block;
+	}
+
+	#sysMsg .dismiss	{
+		background: green;
+		margin-bottom: 0;
+		width: 18px;
+		height: 18px;
+		float: right;
+		display: block;
+		overflow: hidden;
+		text-indent: -1000px;
+	}
+
+	#sysMsg .dismiss:hover	{
+		background: red;
+	}
+
+	.full #sysMsg {
+		display:block;
+		height:55px;
+		overflow:hidden;
+		position:absolute;
+		right:18em;
+		top:3.5em;
+	}
+
+		.full #sysMsg p {
+			margin-bottom: 0;
+		}
 
 #site_title {
     font-size: 20px;
@@ -404,6 +445,8 @@ h2 {
             color: #000;
             text-decoration: none;
         }
+	.options { margin: -45px 20px 0px 0px; display: inline; float: right; padding-right: 0px; width: auto; }
+	.info { margin: -45px 160px 0px 0px; display: inline; float: right; padding-right: 0px; width: auto; }
 
 #full-edit-back-link {
     margin: 2px 0;
@@ -696,7 +739,7 @@ select {
 
 /* Sidebar */
 
-#sidebar {
+#sidebar, #sysMsg {
     float: right;
     width: 30%;
     margin: 5px 0 0 0;
@@ -945,7 +988,7 @@ select {
     font-size: 11px !important;
     position: absolute;
     padding: 2px 5px 2px 11px;
-    top: -1px;
+    top: 25px;
     left: -40px;
     display: none;
     font-size: 12px;
@@ -1052,7 +1095,9 @@ select {
  /* pagination */
 
 .paginator {
-    margin: 50px 2em 0 1em;
+    margin: 0 2em 2em 1em;
+	padding-right: 5.5em;
+	height: auto
 }
 
 .paginator li	{
@@ -1060,36 +1105,38 @@ select {
 	font-size:11px;
 	list-style:none;
 }
-.paginator li, .paginator a{
-border:solid 1px #DEDEDE
-margin-right:2px;
+.paginator li, .paginator a {
+	margin-right: 2px;
 }
-.paginator .paginate-prev.disabled,
-.paginator .paginate-next.disabled {
-color:#888888
+.paginator li {
+	xborder: solid 1px #DEDEDE;
+}
+.paginator .previous.disabled,
+.paginator .next.disabled {
+color:#888888;
 display:block;
 float:left;
 font-weight:bold;
-padding:3px 4px;
+padding: 3px 4px;
 }
-.paginator .paginate-prev a,
-.paginator .paginate-next a {
+.paginator .prev a,
+.paginator .next a {
 font-weight:bold;
-border:solid 1px #FFFFFF;
+xborder:solid 1px #FFFFFF;
 }
-.paginator .current{
-color:#00000
-font-weight:bold;
-display:block;
-float:left;
-padding:4px 6px;
+.paginator .current	{
+color: #000000;
+font-weight: bold;
+display: block;
+float: left;
+padding: 3px 4px;
 }
 .paginator a:link,
 .paginator a:visited {
-color:#0033CC
+color:#0033CC;
 display:block;
 float:left;
-padding:3px 6px;
+padding: 3px 4px;
 text-decoration:none;
 }
 .paginator a:hover{
@@ -1099,8 +1146,8 @@ text-decoration:none;
 .paginate-counter {	float: right; margin-right: 70px;	}
 	.paginate-counter p.quiet	{	margin-top: 5px;	}
 
-    .paginate-prev,
-    .paginate-next {
+    .prev,
+    .next {
         float: left;
         margin-right: 1.2em;
     }
@@ -1479,7 +1526,7 @@ text-decoration:none;
 
 	#sidebar .file-list li {height: auto}
 
-		#sidebar .file-list li h3	{display: block; left: left; margin-right: 0;margin-top: 0; padding-right: 0px; width: 80px;}
+		#sidebar .file-list li h3	{display: block; float: left; margin-right: 0;margin-top: 0; padding-right: 0px; width: 80px;}
 
 		#sidebar .file-list li img {float: right; width: 50px; height: 50px; }
 
@@ -1897,6 +1944,8 @@ body	#content_pad	.list	{
 	height:auto;
 }
 
+#comments_index img{ margin-right: 5px;}
+
 .view_comment_post {
     float: right;
     line-height: 12px;
@@ -2148,7 +2197,7 @@ body #wrap #content_pad	.draft	a:hover	{
 
 .paginator	p	{	margin: 0	}
 
-.error, .notice, .success {
+.error, .notice, .success, .alert {
   border: 2px solid #DDDDDD;
   margin-bottom: 1em;
   padding: 0.8em;
@@ -2158,6 +2207,12 @@ body #wrap #content_pad	.draft	a:hover	{
   background: #FBE3E4 none repeat scroll 0 0;
   border-color: #FBC2C4;
   color: #8A1F11;
+}
+
+.alert {
+  background: #FBE3FA none repeat scroll 0 0;
+  border-color: #FBC2D8;
+  color: #8A1F77;
 }
 
 .notice {
@@ -2174,6 +2229,10 @@ body #wrap #content_pad	.draft	a:hover	{
 
 .error a {
   color: #8A1F11;
+}
+
+.alert a {
+  color: #8A1F77;
 }
 
 .notice a {

@@ -4,7 +4,7 @@ class AssetsController extends AppController {
 	public $helpers = array('Cache');
 	public $components = array('RequestHandler', 'Wildflower.JlmPackager');
 	public $paginate = array(
-        'limit' => 12,
+        'limit' => 20,
         'order' => array('created' => 'desc')
     );
 	
@@ -68,9 +68,7 @@ class AssetsController extends AppController {
 	 *
 	 */
 	function admin_index() {
-		if(isset($_GET['l'])) $fileLimit = Sanitize::escape($_GET['l']);
-		$this->paginate['limit'] = (isset($fileLimit)) ? $fileLimit : 250;
-        $this->feedFileManager();
+		$this->feedFileManager();
 	}
 	
 	/**
@@ -91,7 +89,12 @@ class AssetsController extends AppController {
 	 */
 	function admin_edit($id) {
 		$this->data = $this->Asset->findById($id);
+		$AssetTags = $this->Asset->findTags();
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
+		$tag_cloud = $this->Asset->tagCloud();
+		
+		$this->set(compact('tag_cloud'));
+
 	}
 	
 	/**
@@ -102,9 +105,9 @@ class AssetsController extends AppController {
 	function admin_insert_asset() {
 		$this->autoLayout = false;
 		$this->paginate['limit'] = 10;
-		// $this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
-		$images = $this->paginate($this->modelClass);
-		$this->set('images', $images);
+		$assets = $this->paginate($this->modelClass);
+		$tag_cloud = $this->Asset->tagCloud();
+		$this->set(compact('assets', 'tag_cloud'));
 	}
 	
 	/**
@@ -117,7 +120,8 @@ class AssetsController extends AppController {
 		$this->paginate['limit'] = 10;
 		$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
 		$images = $this->paginate($this->modelClass);
-		$this->set('images', $images);
+		$tag_cloud = $this->Asset->tagCloud();
+		$this->set(compact('images', 'tag_cloud'));
 	}
 	
 	function admin_browse_images() {
@@ -258,8 +262,25 @@ class AssetsController extends AppController {
 	
 	private function feedFileManager() {
 	    $this->pageTitle = 'Files';
+		if(isset($_GET['displayNumImgs'])) $this->paginate['limit'] = Sanitize::escape($_GET['displayNumImgs']);
 	    $files = $this->paginate($this->modelClass);
-        $this->set(compact('files'));
+
+		$displayNumImgsArr = array(10 => '10 files', 20 => '20 files', 50 => "50 files", 80 => "80 files");
+		$totalImages = $this->Asset->find('count');
+
+		$tag_cloud = $this->Asset->tagCloud();
+
+		$displayNumImgs = $this->paginate['limit'];
+
+		$this->set(
+			compact(
+				'files', 
+				'displayNumImgs', 
+				'displayNumImgsArr', 
+				'totalImages', 
+				'tag_cloud'
+			)
+		);
 	}
     
 }

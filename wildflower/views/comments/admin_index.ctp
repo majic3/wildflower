@@ -9,7 +9,7 @@
     if (empty($comments)) {
         echo '<p>', __('No comments yet.', true), '</p>';
     } else {
-        $actions = $this->element('admin_select_actions', array('actions' => array('Unapprove', 'Spam!', 'Delete')));
+        $actions = $this->element('admin_select_actions', array('actions' => $selectActions));
 
         echo 
         $actions,
@@ -24,9 +24,9 @@
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li>
         <ul class="right_menu">
-            <li><?php echo $htmla->link('Published', array('action' => 'index')); ?></li>
-            <li><?php echo $htmla->link('Awaiting approval', array('action' => 'index', 'awaiting')); ?></li>
-            <li><?php echo $htmla->link('Spam', array('action' => 'index', 'spam')); ?></li>
+            <li><?php echo $htmla->link('Awaiting approval', array('action' => 'index'), array('strict' => false)); ?></li>
+            <li><?php echo $htmla->link('Published', array('action' => 'index', 'published'), array('strict' => false)); ?></li>
+            <li><?php echo $htmla->link('Spam', array('action' => 'index', 'spam'), array('strict' => false)); ?></li>
         </ul>
     </li>
 <?php $partialLayout->blockEnd(); ?>

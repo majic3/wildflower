@@ -111,3 +111,59 @@ $.jlm.addComponent('inplaceEdit', {
 
 });
 
+
+$.jlm.addComponent('inplaceEdit2', {
+
+    startup: function(trgt) {
+        this.targetEl = $(trgt);
+        var t = this;
+        var edit = function() {
+            var entryEl = $(this);
+            // If link triggers the action
+            if (entryEl.attr('href')) {
+                entryEl = entryEl.parent().parent().parent().children('.entry');
+            }
+            var elHeight = entryEl.height();
+            var elWidth = entryEl.width();
+            var commentId = entryEl.parent().parent('li').attr('id').split('-');
+            commentId = commentId[1];
+
+            var respond = function(json) {
+                // Hide comment action
+                var commentActionsEl = $('.comment-actions', entryEl.parent());
+                commentActionsEl.hide();
+
+                var content = json.content;
+                var formEl = $($.jlm.template('elements/edit', { commentId: commentId }));
+                entryEl.hide().before(formEl);
+                var textareaEl = $('textarea', formEl);
+                textareaEl.css({ width: elWidth, height: elHeight }).val(content);
+
+                // Cancel button
+                var cancel = function() {
+                    formEl.remove();
+                    entryEl.show();
+                    commentActionsEl.show();
+                    return false;
+                };
+                $('.cancel-edit-comment', formEl).click(cancel);
+
+                // AJAX form
+                var afterSave = function(contentHtml) {
+                    cancel();
+                    entryEl.html(contentHtml);
+                };
+
+                formEl.ajaxForm(afterSave);
+            }
+
+            var url = $.jlm.base + '/' + $.jlm.params.prefix + '/comments/get_content/' + commentId;
+            var content = $.post(url, respond, {}, 'json');
+            return false;
+        };
+        this.targetEl.dblclick(edit);
+        $('.edit-comment').click(edit);
+    }
+
+});
+

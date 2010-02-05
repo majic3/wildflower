@@ -26,23 +26,15 @@ class SettingsController extends AppController {
 	 * 
 	 */
 	function admin_index() {
-	    $this->pageTitle = 'Site settings';
-	    
-	    $homePageIdOptions = $this->Page->getListThreaded();
-	    
-	    $settings = $this->Setting->find('all', array('order' => 'order ASC'));
-	    
-	    $availThemes = scandir(APP . 'views' . DS . 'themed');
-	    foreach ($availThemes as $i => $theme) {
-	        if (strpos($theme, '.') === 0) {
-	            continue;
-	        }
-	        $theme_ = Inflector::underscore($theme);
-	        $availThemes_[$theme_] = Inflector::humanize($theme); 
-	    }
-	    $availThemes = $availThemes_;
-	    
-	    $this->set(compact('settings', 'homePageIdOptions', 'availThemes'));
+		$this->pageTitle = 'Site settings';
+
+		$homePageIdOptions = $this->Page->generatetreelist(null, null, null, ' - ');
+
+		$themeOptions = $this->Setting->getThemes();
+
+		$settings = $this->Setting->find('all', array('order' => 'order ASC'));
+
+		$this->set(compact('settings', 'homePageIdOptions', 'themeOptions'));
 	}
 
 	/**

@@ -160,6 +160,9 @@
 				// click handler for letters: shows/hides relevant LI's
 				//
 				$('a', $letters).click(function() {
+					// nothing happens when the link is disabled
+					if($(this).hasClass('ln-disabled')) return false;
+
 					$('a.ln-selected', $letters).removeClass('ln-selected');
 
 					var letter = $(this).attr('class').split(' ')[0];
@@ -203,7 +206,7 @@
 					if (html.length == 0) html.push('<a class="all" href="#">ALL</a><a class="_" href="#">0-9</a>');
 					html.push('<a class="' + letters[i] + '" href="#">' + ((letters[i] == '-') ? '...' : letters[i].toUpperCase()) + '</a>');
 				}
-				return '<div class="ln-letters">' + html.join('') + '</div>' + ((opts.showCounts) ? '<div class="ln-letter-count" style="display:none; position:absolute; top:0; left:0; width:20px;">0</div>' : ''); // the styling for ln-letter-count is to give us a starting point for the element, which will be repositioned when made visible (ie, should not need to be styled by the user)
+				return '<div class="ln-letters">' + html.join('') + '</div>' + ((opts.showCounts) ? '<div class="ln-letter-count" style="display:none; position:absolute; top:45px; left:0; width:20px;">0</div>' : ''); // the styling for ln-letter-count is to give us a starting point for the element, which will be repositioned when made visible (ie, should not need to be styled by the user)
 			}
 
 			init();

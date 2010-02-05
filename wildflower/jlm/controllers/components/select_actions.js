@@ -4,8 +4,10 @@
  * Used on lists with checkboxes. On checking some, action menus pop up.
  */
 $.jlm.component('SelectActions', '*', function() {
-     var selectActionsEl = $('.select-actions');
-     var handledFormEl = $('form:first');
+
+	var selectActionsEl = $('.select-actions');
+	//var handledFormEl = $('form:first');
+	var handledFormEl = $("form[action$='mass_update']");
      
      // Mark all selectedEls items
      var selectedEls = $('input:checked', handledFormEl);
@@ -30,6 +32,21 @@ $.jlm.component('SelectActions', '*', function() {
      }
 
      $('input[type=checkbox]', handledFormEl).click(selectionChanged);
+
+	function showResponse(responseXML)  {
+		//	var message = $('message', responseXML).text(); 
+		console.info(message);
+	}
+
+    var formOptions = { 
+        target:        '#sysMsg',
+        success:       showResponse,
+        type:      'post',
+        dataType:  'xml',
+        //timeout:   3000 
+    }; 
+
+	//handledFormEl.ajaxForm(formOptions);
      
      function deleteChecked() {
          var checkboxEl = $('input:checked');
@@ -58,16 +75,27 @@ $.jlm.component('SelectActions', '*', function() {
      }
      
      // Bind main actions
-     $('.select-actions > a', handledFormEl).click(function() {
+     $('.select-actions > a', handledFormEl).live('click', function() {
          var rel = $(this).attr('rel');
+		 console.info(rel);
          var msg = 'Do you really want to ' + str_replace('!', '', rel) + ' selected items?';
          var doContinue = confirm(msg);
          if (doContinue) {
              var url = handledFormEl.attr('action');
+			console.info(url);
+
+			if(rel == 'edit')	{
+				// edit inplace and return
+				return false;
+			}
              
-             var formAppend = '<input type="hidden" name="data[__action]" value="' + rel + '" />';
-             // @TODO add AJAX submit and UI refresh
-             handledFormEl.append(formAppend).submit();
+            var formAppend = '<input type="hidden" name="data[__action]" value="' + rel + '" />';
+            // @trying
+            handledFormEl.append(formAppend).submit(function () {
+				$(this).ajaxSubmit(formOptions);
+			console.info(formOptions);
+				return false;
+			});
 
              if ('delete' == rel) {
                  deleteChecked();
@@ -79,12 +107,12 @@ $.jlm.component('SelectActions', '*', function() {
      });
      
      // Bind select All/None
-     $('a[href=#SelectAll]', handledFormEl).click(function() {
+     $('a[href=#SelectAll]', handledFormEl).live('click', function() {
          $('input:checkbox', handledFormEl).attr('checked', 'true').parent().parent('li').addClass('selected');
          return false;
      });
      
-     $('a[href=#SelectNone]', handledFormEl).click(function() {
+     $('a[href=#SelectNone]', handledFormEl).live('click', function() {
          selectActionsEl.slideUp(100);
          $('input:checkbox', handledFormEl).removeAttr('checked').parent().parent('li').removeClass('selected');
          return false;

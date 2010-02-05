@@ -1,1 +1,1 @@
-<?php echo $textile->format($comment['Comment']['content']) ?>
+<?php echo count($response), ' Comments updated'; ?>

@@ -42,7 +42,8 @@
         } else if ($setting['Setting']['name'] == 'cache') {
             $options['options'] = array('on' => 'On', 'off' => 'Off');
         } else if ($setting['Setting']['name'] == 'theme') {
-            $options['options'] = $availThemes;
+            $options['options'] = $themeOptions;
+            $options['empty'] = 'Default Theme';
         }
         
         if (empty($setting['Setting']['label'])) {

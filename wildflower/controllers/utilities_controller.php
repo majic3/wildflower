@@ -7,10 +7,10 @@ class UtilitiesController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		
-		// This stuff is only avaible in debug modes
-		if (Configure::read('debug') < 1) {
+		// This stuff is only avaible in debug modes - its completely wrong anyway
+		//if (Configure::read('debug') < 1) {
 			return $this->do404();
-		}
+		//}
 		
 		$this->Security->requireAuth('admin_index');
 		$this->pageTitle = 'Developer Utilities';

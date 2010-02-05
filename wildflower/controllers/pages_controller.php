@@ -87,10 +87,10 @@ class PagesController extends AppController {
 		$this->data = $page;
 		$this->pageTitle = $page[$this->modelClass]['title'];
 
-		$newParentPageOptions = $this->Page->getListThreaded();
+		$newParentPageOptions = $this->Page->generatetreelist(null, null, null, ' - ');
 		$revisions = $this->Page->getRevisions($id, 10);
 		$isDraft = ($page['Page']['draft']);
-		$jumpMenu = $this->Page->getListThreaded();
+		$jumpMenu = $this->Page->generatetreelist(null, null, null, ' - ');
 		$this->set(compact('newParentPageOptions', 'revisions', 'isDraft', 'jumpMenu'));
 	}
 
@@ -116,8 +116,18 @@ class PagesController extends AppController {
 		if (empty($this->data)) return $this->cakeError('object_not_found');
 		
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
-		$parentPageOptions = $this->Page->getListThreaded($this->data['Page']['id']);
-		$jumpMenu = $this->Page->getListThreaded();
+		$parentPageOptions = $this->Page->generatetreelist(
+			array(
+				'Page.lft NOT BETWEEN ? AND ?' => array(
+					$this->data['Page']['lft'], $this->data['Page']['rght']
+				),
+			), 
+			null, 
+			null, 
+			'-'
+		);
+		$jumpMenu = $this->Page->generatetreelist(null, null, null, ' - ');
+
 		$this->set(compact('parentPageOptions', 'jumpMenu'));
 	}
 
@@ -127,7 +137,7 @@ class PagesController extends AppController {
 		$order = 'lft ASC';
 		$fields = array('id', 'lft', 'rght', 'parent_id', 'title');
 		$pages = $this->Page->find('all', compact('order', 'fields'));
-		$jumpMenu = $this->Page->getListThreaded();
+		$jumpMenu = $this->Page->generatetreelist(null, null, null, ' - ');
 		$this->set(compact('pages', 'jumpMenu'));
 	}
 
@@ -142,7 +152,7 @@ class PagesController extends AppController {
 		$sidebars = ClassRegistry::init('Sidebar')->find('all');
 		$menus = ClassRegistry::init('Menu')->find('all', array('recursive' => -1));
 
-		$jumpMenu = $this->Page->getListThreaded();
+		$jumpMenu = $this->Page->generatetreelist(null, null, null, ' - ');
 		$this->set(compact('sidebars', 'menus', 'jumpMenu'));
 
 	}
@@ -192,7 +202,7 @@ class PagesController extends AppController {
 		$this->pageTitle = 'Pages';
 		$this->Page->recursive = -1;
 		$pages = $this->Page->find('all', array('order' => 'lft ASC'));
-		$newParentPageOptions = $this->Page->getListThreaded();
+		$newParentPageOptions = $this->Page->generatetreelist(null, null, null, ' - ');
 		$this->set(compact('pages', 'newParentPageOptions'));
 	}
 
@@ -526,7 +536,7 @@ class PagesController extends AppController {
 	 * @param int $id Page ID
 	 */
 	private function _setParentSelectBox($id = null) {
-		$list = $this->Page->getListThreaded($id, 'title');
+		$list = $this->Page->generatetreelist(null, null, null, ' - ');
 		$this->set('parentPages', $list);
 	}
 
