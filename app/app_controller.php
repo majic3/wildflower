@@ -508,44 +508,19 @@ class AppController extends Controller {
 		}
 	}
 
-        $output = '';
-        foreach ($this->{$this->modelClass}->schema() as $name => $column) {
-            $output .= "'$name' => array(";
-            
-            // Fields
-            foreach ($column as $field => $value) {
-                if (is_null($value) or $value === '') {
-                    continue;
-                }
-                $output .= "'$field' => ";
-                $value = str_replace("'", "\'", $value);
-                if (!is_numeric($value)) {
-                    $value = "'$value'";
-                }
-                $output .= $value . ', ';
-            }
-            
-            $output .= "),\n";
-        }
-        
-        pr($output);
-        die();
-    }
-    
-/**
- * Abstracts cakephp's Email component Send function and sets default values
- *@access public
- *
- *@param string $templateName 	The name of the template to use in sending the message
- *@param string $emailSubject
- *@param array $recipients 	An associative array with keys 'to', 'cc', and 'bcc'. 'cc' and 'bcc' are arrays
- *@param string $from
- *@param string $replyToEmail
- *@param string $sendAs
- *
- *@return boolean 	true if mail is successfully sent
- */	
-
+	/**
+	 * Abstracts cakephp's Email component Send function and sets default values
+	 *@access public
+	 *
+	 *@param string $templateName 	The name of the template to use in sending the message
+	 *@param string $emailSubject
+	 *@param array $recipients 	An associative array with keys 'to', 'cc', and 'bcc'. 'cc' and 'bcc' are arrays
+	 *@param string $from
+	 *@param string $replyToEmail
+	 *@param string $sendAs
+	 *
+	 *@return boolean 	true if mail is successfully sent
+	 */
 	function _sendEmail($templateName,
 			    $emailSubject,
 			    $recipients = array(),

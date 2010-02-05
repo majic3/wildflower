@@ -121,7 +121,7 @@ class PagesController extends AppController {
 				'Page.lft NOT BETWEEN ? AND ?' => array(
 					$this->data['Page']['lft'], $this->data['Page']['rght']
 				),
-			)
+			), 
 			null, 
 			null, 
 			'-'
