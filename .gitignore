@@ -45,6 +45,7 @@ app/plugins/*
 !app/plugins/debug_kit
 !app/plugins/interactive
 !app/plugins/acl_plugin
+!app/plugins/tagging
 !app/plugins/HtmlPurifier
 
 # themes
