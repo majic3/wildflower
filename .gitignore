@@ -12,7 +12,7 @@ app/tmp/logs/*.log
 # Wildflower caches
 app/tmp/cache/wf_previews/*.json
 app/tmp/cache/wf_root_pages
-app/tmp/cache/wf_thumbnails/*.jpg
+app/tmp/cache/wf_thumbnails/*
 
 app/webroot/img/cms/*
 app/webroot/img/screenshots/*

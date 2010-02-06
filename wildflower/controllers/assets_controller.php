@@ -190,6 +190,12 @@ class AssetsController extends AppController {
      * @param $imageName File name from webroot/uploads/
      */
     function thumbnail($imageName, $width = 120, $height = 120, $crop = 0) {
+		//debug($imageName, $width, $height, $crop);
+
+		$imgType = explode('.', $imageName);
+		$imageType = $imgType[1];
+
+		$imageMime = ($imageType == 'jpg') ? 'image/jpeg' : ('image/' . $imageType);
         $this->autoRender = false;
         
         $imageName = str_replace(array('..', '/'), '', $imageName); // Don't allow escaping to upper directories
@@ -204,7 +210,7 @@ class AssetsController extends AppController {
         	$height = 1600;
         }
 
-        $cachedFileName = join('_', array($imageName, $width, $height, $crop)) . '.jpg';
+        $cachedFileName = join('_', array($imageName, $width, $height, $crop)) . '.' . $imageType;
         $cacheDir = Configure::read('Wildflower.thumbnailsCache');
         $cachedFilePath = $cacheDir . DS . $cachedFileName;
 
@@ -221,7 +227,7 @@ class AssetsController extends AppController {
         }
 
         if ($cacheFileExists && !$refreshCache) {
-        	return $this->_renderJpeg($cachedFilePath);
+        	return $this->_renderImage($cachedFilePath, $imageMime);
         } else {
         	// Create cache and render it
         	$sourceFile = Configure::read('Wildflower.uploadDirectory') . DS . $imageName;
@@ -234,7 +240,7 @@ class AssetsController extends AppController {
         	$phpThumb = new phpThumb();
 
         	$phpThumb->setSourceFilename($sourceFile);
-        	$phpThumb->setParameter('config_output_format', 'jpeg');
+        	$phpThumb->setParameter('config_output_format', $imageType);
 
         	$phpThumb->setParameter('w', intval($width));
         	$phpThumb->setParameter('h', intval($height));
@@ -242,7 +248,7 @@ class AssetsController extends AppController {
 
         	if ($phpThumb->GenerateThumbnail()) {
         		$phpThumb->RenderToFile($cachedFilePath);
-        		return $this->_renderJpeg($cachedFilePath);
+        		return $this->_renderImage($cachedFilePath, $imageMime);
         	} else {
         		return trigger_error("Thumbnail generator: Can't GenerateThumbnail.");
         	}
@@ -259,7 +265,35 @@ class AssetsController extends AppController {
         fpassthru($cache);
         fclose($cache);
     }
-	
+    
+    function _renderImage($cachedFilePath, $mime = 'image/jpeg') {
+        $this->JlmPackager->browserCacheHeaders(filemtime($cachedFilePath), $mime);
+        
+        $fileSize = filesize($cachedFilePath);
+        header("Content-Length: $fileSize");
+        
+        $cache = fopen($cachedFilePath, 'r');
+        fpassthru($cache);
+        fclose($cache);
+    }
+
+	/**
+	 * Make a croped thumb square and also make a standard size preview of full image.
+	 * The cached preview images are only used by admin
+	 *
+	 * @todo code the function
+	 *
+	 */
+	private function makeAdminPreviewImages() {
+    }
+
+	/**
+	 * Feed images to various views
+	 *
+	 * @todo code functionality to allow single file pagination and retain 
+	 * the pagination set across paged clicks
+	 *
+	 */
 	private function feedFileManager() {
 	    $this->pageTitle = 'Files';
 		if(isset($_GET['displayNumImgs'])) $this->paginate['limit'] = Sanitize::escape($_GET['displayNumImgs']);
