@@ -5,8 +5,8 @@
 
 	<title><?php echo $title_for_layout; if(Configure::read('debug'))	{ echo " cake: " . Configure::version() . ";";  if(isset($this->theme)) { echo " theme: " . $this->theme; }	echo " Wildflower: " . Configure::read('Wildflower.version') . ";"; }	?></title>
 
-	<meta name="description" content="<?php echo isset($descriptionMetaTag) ? $descriptionMetaTag : '' ?>" />
-	<meta name="keywords" content="<?php echo isset($keywordsMetaTag) ? $keywordsMetaTag : '' ?>" />
+	<meta name="description" content="<?php echo isset($pageMeta['descriptionMetaTag']) ? $pageMeta['descriptionMetaTag'] : Configure::read('Wildflower.settings.description'); ?>" />
+	<meta name="keywords" content="<?php echo isset($pageMeta['keywordsMetaTag']) ? $pageMeta['keywordsMetaTag'] : Configure::read('Wildflower.settings.keywords'); ?>" />
 	<!-- app/views default/layout -->
 
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
