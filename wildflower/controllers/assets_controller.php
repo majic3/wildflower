@@ -181,7 +181,7 @@ class AssetsController extends AppController {
     
     function thumbnail_by_id($id, $width = 120, $height = 120, $crop = 0) {
         $asset = $this->Asset->read(null, $id);
-        $this->thumbnail($asset['Asset']['name'], $width, $height, $crop);
+        $this->wfthumbnail($asset['Asset']['name'], $width, $height, $crop);
     }
     
     /**
@@ -190,10 +190,30 @@ class AssetsController extends AppController {
      * @param $imageName File name from webroot/uploads/
      */
     function thumbnail($imageName, $width = 120, $height = 120, $crop = 0) {
-		//debug($imageName, $width, $height, $crop);
+		$this->wfthumbnail($imageName, $width, $height, $crop);
+    }
+    
+    /**
+     * Create a thumbnail from an image, cache it and output it
+     *
+     * @param $imageName File name from webroot/uploads/
+     */
+    private function wfthumbnail($imageName, $width = 120, $height = 120, $crop = 0, $newName = false) {
+
+		$tail = '';
+		
+		//debug($this); die();
 
 		$imgType = explode('.', $imageName);
 		$imageType = $imgType[1];
+		$enlarge = false;
+
+		if(is_array($newName))	{
+			// we are going to cache a file $newName of the $imageName to a dir location
+			$cacheDir = $newName['dir'];
+			$cachedFileName = str_replace('.' . $imageType, $newName['tail'], $imageName) . '.' . $imageType;
+			$enlarge = (isset($newName['enlarge'])) ? $newName['enlarge'] : 'false';
+		}
 
 		$imageMime = ($imageType == 'jpg') ? 'image/jpeg' : ('image/' . $imageType);
         $this->autoRender = false;
@@ -205,13 +225,18 @@ class AssetsController extends AppController {
         	$width = 2560;
         }
 
-        $height = intval($height);
-        if ($height > 1600) {
-        	$height = 1600;
-        }
+		$height = intval($height);
+		if ($height > 1600) {
+			$height = 1600;
+		}
 
-        $cachedFileName = join('_', array($imageName, $width, $height, $crop)) . '.' . $imageType;
-        $cacheDir = Configure::read('Wildflower.thumbnailsCache');
+		if(!$cachedFileName)	{
+			$cachedFileName = join('_', array($imageName, $width, $height, $crop)) . '.' . $imageType;
+		}
+
+		if(!$cacheDir)	{
+	        $cacheDir = Configure::read('Wildflower.thumbnailsCache');
+		}
         $cachedFilePath = $cacheDir . DS . $cachedFileName;
 
         $refreshCache = false;
@@ -246,6 +271,10 @@ class AssetsController extends AppController {
         	$phpThumb->setParameter('h', intval($height));
         	$phpThumb->setParameter('zc', intval($crop));
 
+			if($enlarge)	{
+				$phpThumb->setParameter('aoe', ($enlarge == 'true') ? true : false);
+			}
+
         	if ($phpThumb->GenerateThumbnail()) {
         		$phpThumb->RenderToFile($cachedFilePath);
         		return $this->_renderImage($cachedFilePath, $imageMime);
@@ -253,17 +282,6 @@ class AssetsController extends AppController {
         		return trigger_error("Thumbnail generator: Can't GenerateThumbnail.");
         	}
         }
-    }
-    
-    function _renderJpeg($cachedFilePath) {
-        $this->JlmPackager->browserCacheHeaders(filemtime($cachedFilePath), 'image/jpeg');
-        
-        $fileSize = filesize($cachedFilePath);
-        header("Content-Length: $fileSize");
-        
-        $cache = fopen($cachedFilePath, 'r');
-        fpassthru($cache);
-        fclose($cache);
     }
     
     function _renderImage($cachedFilePath, $mime = 'image/jpeg') {
@@ -284,7 +302,35 @@ class AssetsController extends AppController {
 	 * @todo code the function
 	 *
 	 */
-	private function makeAdminPreviewImages() {
+	function admin_preview_image($id) {
+		$previewImageSettings = array(
+			'dir' => WWW_ROOT . 'wildflower' . DS . 'img' . DS . 'assets' . DS
+		);
+
+		$id = basename($this->params['url']['url']);
+
+		//$asset = $this->Asset->read(null, $id);
+
+		$this->wfthumbnail(
+			$id, 95, 95, 1, 
+			am(
+				$previewImageSettings,
+				array(
+					'tail' => '_cropped',
+					'enlarge' => false
+				)
+			)
+		);
+		$this->wfthumbnail(
+			$id, 325, 275, 0, 
+			am(
+				$previewImageSettings,
+				array(
+					'tail' => '_preview',
+					'enlarge' => false
+				)
+			)
+		);
     }
 
 	/**
