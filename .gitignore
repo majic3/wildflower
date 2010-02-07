@@ -39,6 +39,7 @@ app/webroot/css/*_src.css
 app/webroot/css/*.css.gz
 app/webroot/js/*_src.js
 app/webroot/js/*.js.gz
+app/webroot/wildflower/img/assets/*
 
 # pluigins
 app/plugins/*

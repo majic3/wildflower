@@ -48,14 +48,55 @@ echo
 			<?php
 				$iconOrThumbnail = $thumbUrl = '';
 				if($mimeClass[0] == 'image') {
-					$thumbUrl = "/$mprefix/thumbnail/{$file['Asset']['name']}/";
-					$iconOrThumbnail = ($displayNumImgsArr < 20) ? $thumbUrl . '50/50/1' : '/wildflower/img/1x1.png';
+					$iconOrThumbnail = $hasThumb = $hasPreview = false;
+					$thumbUrl = preg_replace(
+							'/([^.]*)\.(gif|png|jpg)/', 
+							'\1_cropped.\2', 
+							$file['Asset']['name']
+						);
+
+					if(file_exists(WWW_ROOT . 'wildflower' . DS . 'img' . DS . 'assets' . DS . $thumbUrl))
+					{
+						$thumbUrl = "/wildflower/img/assets/$thumbUrl";
+						$hasThumb = true;
+					} else {
+						$thumbUrl = '/wildflower/img/1x1.png';
+					}
+
+					$previewUrl = preg_replace(
+							'/([^.]*)\.(gif|png|jpg)/', 
+							'\1_preview.\2', 
+							$file['Asset']['name']
+						);
+
+					if(file_exists(WWW_ROOT . 'wildflower' . DS . 'img' . DS . 'assets' . DS . $previewUrl))
+					{
+						$previewUrl = "/wildflower/img/assets/$previewUrl";
+						$hasPreview = true;
+					} else {
+						$previewUrl = "/admin/assets/preview_image/{$file['Asset']['name']}";
+					}
+
+					// $iconOrThumbnail = ($displayNumImgsArr < 20) ? $thumbUrl : '/wildflower/img/1x1.png';
+
+					$iconOrThumbnail = ($thumbUrl) ? $thumbUrl : '/wildflower/img/1x1.png';
+
 					$iconOrThumbnail = $html->link(
-						$html->image($iconOrThumbnail, array('class' => 'thumbnail')),
-						array('action' => 'edit', $file['Asset']['id']),
+						$html->image(
+							$iconOrThumbnail, 
+							array(
+								'width' => 95, 
+								'height' => 95, 
+								'class' => ($hasThumb ? 'thumbnail exists' : 'thumbnail')
+							)
+						),
 						array(
-							'class' => 'icon',
-							'rel' => $thumbUrl . '200/',
+							'action' => 'edit', 
+							$file['Asset']['id']
+						),
+						array(
+							'class' => ($hasPreview ? 'icon preview' : 'icon'),
+							'rel' => $previewUrl,
 							'title' => 'Preivew of asset ' . $file['Asset']['id']
 						), false, false
 					);

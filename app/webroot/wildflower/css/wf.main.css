@@ -463,14 +463,33 @@ h2 {
 /*	spirite icons for files	*/
 .icon	{
 	display: block;
-	width: 24px;
-	height: 24px;
-	background: green url('img/icon-spites.gif') top left;
+	width: 45px;
+	height: 45px;
+	background: green xurl('img/icon-spites.gif') top left;
+	border-width: 2px;
 }
+
+	.full .icon	{
+		border-width: 8px;
+	}
+
+	.preview	{
+		border-color: green;
+	}
+
+	.icon .img img	{
+		width: 45px;
+		height: 45px;
+	}
+
 	.full .icon,
 	.full .img img {
-		width: 50px;
-		height: 50px;
+		width: 105px;
+		height: 105px;
+	}
+
+	.full h3 {
+		font-size: 145%;
 	}
 
 	.doc .icon	{	background-position: top left;	}
@@ -485,7 +504,7 @@ h2 {
 
 	.full .doc .icon		{	background-position: top left;	}
 	.full .pdf .icon		{	background-position: top left;	}
-	.full .swf .icon	{	background-position: top left;	}
+	.full .swf .icon		{	background-position: top left;	}
 	.full .img .thumbnail	{	background-position: top left;	}
 	.full .psd .icon		{	background-position: top left;	}
 	.full .mp3 .icon		{	background-position: top left;	}
@@ -1509,13 +1528,17 @@ text-decoration:none;
 
 	.list li {width: 100%;}
 
-	.file-list li { float: left; width: 43%;  height: 35px;}
+	.file-list li { float: left; width: 43%;  height: 45px;}
 
-	.full .file-list li {height: 65px; max-width: 31%;}
+	.full .file-list li {height: 95px; max-width: 31%;}
+
+	.file-list li img {  width: 45px; height: 45px;}
+
+	.full .file-list li img {height: 95px; width: 95px;}
 
     .file-list .thumbnail,
     .list .thumbnail {
-		width: 24px;
+		width: 45px;
 	}
 
 	.file-list .icon {
