@@ -15,7 +15,15 @@ define('SITE_DOMAINN', 'majic.wildflower.ss29');
 define('SITE_DOMAIN', 'www.' . SITE_DOMAINN);
 define('CDN_DOMAIN', 'http://' . SITE_DOMAINN); // later 
 
-/** Wildflower config. Access like Configure::read('Wildflower.setting'); */
+/**
+ * 
+ * Wildflower config. Access presets such as those set here Configure::read('Wildflower.setingName'); and db settings
+ * can be accessed Configure::read('Wildflower.settings.settName'); after they have been set by WF App Ctrlr 
+ * configuresite
+ * 
+ * @todo make this file clean & pure (eg less settings)
+ * 
+ */
 Configure::write(array('Wildflower' => array(
     'cookie' => array(
         'name' => 'WildflowerUser',
