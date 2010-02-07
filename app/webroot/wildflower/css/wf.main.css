@@ -402,7 +402,7 @@ h2 {
 
 .section {
     margin: -20px -20px 14px;
-    padding: 13px 260px 13px 20px;
+    padding: 13px 260px 13px 60px;
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
@@ -467,14 +467,23 @@ h2 {
 	height: 45px;
 	background: green xurl('img/icon-spites.gif') top left;
 	border-width: 2px;
+	border-style: solid;
+	border-color: #BBB;
+	position: absolute;
+	top: 25px;
+	right: 10px;
 }
 
 	.full .icon	{
 		border-width: 8px;
+		top: 10px;
+		right: 10px;
 	}
 
 	.preview	{
-		border-color: green;
+		border-color: #DDD;
+		margin: 0;
+		padding: 0;
 	}
 
 	.icon .img img	{
@@ -484,12 +493,23 @@ h2 {
 
 	.full .icon,
 	.full .img img {
-		width: 105px;
-		height: 105px;
+		width: 95px;
+		height: 95px;
 	}
 
-	.full h3 {
+	.full .icon {
+		margin: 0;
+		padding: 0;
+	}
+
+	.full .img img {
+		margin: 0;
+		padding: 0;
+	}
+
+	.full li h3 {
 		font-size: 145%;
+		line-height: 1.8em;
 	}
 
 	.doc .icon	{	background-position: top left;	}
@@ -1007,7 +1027,7 @@ select {
     font-size: 11px !important;
     position: absolute;
     padding: 2px 5px 2px 11px;
-    top: 25px;
+    top: -2px;
     left: -40px;
     display: none;
     font-size: 12px;
@@ -1016,6 +1036,9 @@ select {
     -webkit-border-top-left-radius: 10px;
     -webkit-border-bottom-left-radius: 10px;
 }
+	.file-list .row-actions	{
+		top: 25px;
+	}
 
 .post-date {
     font-size: 10px;
@@ -1526,11 +1549,15 @@ text-decoration:none;
         border-bottom: 1px solid #e0e0e0;
     }
 
-	.list li {width: 100%;}
+	.file-list li {width: 100%;}
+
+	.file-list {margin-top: 15px; }
 
 	.file-list li { float: left; width: 43%;  height: 45px;}
 
 	.full .file-list li {height: 95px; max-width: 31%;}
+
+	.full .file-list li input { margin-top: 32px; }
 
 	.file-list li img {  width: 45px; height: 45px;}
 
@@ -2314,3 +2341,21 @@ body #wrap #content_pad	.draft	a:hover	{
 .panels {	width: 100%;	}
 .ui-tabs .ui-tabs-panel { display: block; border: 0; padding: 1em 1.4em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
+
+
+
+#sub-nav	{
+	margin: -45px 0pt 0pt -10px;
+	padding-left: 0px; 
+	list-style-type: none; 
+	list-style-image: none; 
+	list-style-position: outside; 
+	position: relative;
+	width: 45px;
+}
+
+
+.display {
+	width: auto;
+	margin-top: 30px;
+}

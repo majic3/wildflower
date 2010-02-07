@@ -5,7 +5,7 @@ echo $navigation->create(array(
     ), array('id' => 'sub-nav', 'class' => 'always-current'));
 ?>
 
-
+<div class="display">
 <?php 
 	$mprefix = Configure::read('Wildflower.mediaRoute');
     // If file is image display it fitting the wrap
@@ -24,26 +24,27 @@ echo $navigation->create(array(
     }
 ?>
 
-<div id="file-upload">
+<!-- div id="file-upload">
     <?php
-        echo 
+        /*echo 
         $form->create('Asset', array('type' => 'file', 'url' => $html->url(array('action' => 'admin_update', 'base' => false)))),
         $form->input('title', array('between' => '<br />', 'label' => 'Title <small>(optional)</small>')),
+		$form->input('file', array('type' => 'file', 'between' => '<br />', 'label' => false)),
         '<div>',
 		$tagging->input('tags'),
         $form->hidden('id'),
         '</div>',
         $wild->submit('Save'),
-        $form->end();
+        $form->end();*/
     ?>
+</div -->
 </div>
-
 
 <?php /*make this upload new replacement of current image */ $partialLayout->blockStart('sidebar'); ?>
     <li class="sidebar-box">
-        <?php echo $this->element('../assets/_upload_file_box'); ?>
+        <?php echo $this->element('../assets/_upload_file_box', array('data' => $this->data)); ?>
     </li>
     <li class="sidebar-box">
-		<?php echo $tagging->generateCloud($tag_cloud); ?>
+		<?php echo $tagging->generateCloud($tagCloud); ?>
     </li>
 <?php $partialLayout->blockEnd(); ?>
