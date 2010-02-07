@@ -18,7 +18,7 @@ class AppController extends Controller {
 		'Cookie', 
 		'RequestHandler', 
 		'Seo', 
-	//*
+	/*
 		'DebugKit.Toolbar' => array(
 			'panels' => array('Interactive.interactive')
 		)
@@ -38,7 +38,8 @@ class AppController extends Controller {
 	    'Text',
 	    'Time',
 		'AutoJavascript',
-		'Tagging.Tagging'
+		'Tagging.Tagging',
+		'Labjs'
 	);
 	public $view = 'Theme';
 	public $homePageId;

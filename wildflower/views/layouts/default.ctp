@@ -19,7 +19,6 @@
 		
 	echo $html->css(array('screen'), 'stylesheet', Array('media' => 'screen'));
 	?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 </head>
 <?php echo ($wild) ? $wild->bodyTagWithClass() : '<body>'; ?>
 <p id="umsg" class="alert">setting up page</p>
@@ -77,19 +76,45 @@
 		</div>
 	</div>
 </div>
-<?php echo $this->element('google_analytics'); ?>
-<script src="/js/LAB.js" type="text/javascript"></script>
-<script type="text/javascript">
-	$LAB
-		.script("http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js").wait(function ()	{
-			$('#umsg').removeClass('alert').addClass('notice').html('preparing page');
-		})
-		.script("/js/common.js").wait(function ()	{
-			init();
-		}).wait(function()	{
-			var $umsg = $('#umsg');
-			if($umsg.hasClass('success')) $umsg.fadeOut('slow').remove();
-		});
-</script>
+<?php
+	$tagScript = $tagging->getScript(true);
+	$javascript->link(array('common', $tagScript), false);
+	
+	$labjs->addWait(
+		'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js',
+		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
+	);
+	
+	$labjs->addWait(
+		'common',
+		'init();'
+	);
+	
+	$tagOptions = array(
+		'url' => '/tagging/tags/suggest',
+		'delay' => 500,
+		'separator' => ', ',
+		'matchClass' => 'tagMatches',
+		'sort' => false,
+		'tagContainer' => 'span',
+		'tagWrap' => 'span',
+		'tags' => null,
+	);
+	
+	$labjs->addWait(
+		$tagScript,
+		'$(".tagSuggest").tagSuggest(' . $javascript->object($tagOptions) . ');'
+	);
+	
+	// debug($labjs);
+
+	$endWait = '
+		var $umsg = $(\'#umsg\');
+		if($umsg.hasClass(\'success\')) $umsg.fadeOut(\'slow\').remove();';
+
+	echo 
+		$this->element('google_analytics'), 
+		$labjs->output($endWait);
+?>
 </body>
 </html>
