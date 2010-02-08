@@ -119,6 +119,7 @@ class AssetsController extends AppController {
      */
     function admin_jlm() {
         $javascripts = Cache::read('admin_jlm'); 
+        $this->RequestHandler->respondAs('application/javascript');
         if (empty($javascripts) or Configure::read('debug') > 0) {
             $javascripts = $this->JlmPackager->concate();
             Cache::write('admin_jlm', $javascripts);
