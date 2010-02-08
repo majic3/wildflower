@@ -12,10 +12,10 @@ echo $navigation->create(array(
     $isImage = (strpos($this->data['Asset']['mime'], 'image') === 0);
     if ($isImage) {
         echo
-			'<div class="fullAsset">',
-				$html->image("/$mprefix/thumbnail/{$this->data['Asset']['name']}/600/1000", array('id' => 'imageAsset')),
-			'</div><div class="fullPreview">',
+			'<div class="fullPreview">',
 				$html->image("/$mprefix/thumbnail/{$this->data['Asset']['name']}/600/1000", array('id' => 'imagePreview')),
+			'</div><div class="fullAsset">',
+				$html->image("/$mprefix/thumbnail/{$this->data['Asset']['name']}/600/1000", array('id' => 'imageAsset')),
 			'</div>',
 			'<p class="notice"><strong>Notice</strong> This image is resized. ',
 				$html->link("View the original image.", '/uploads/' . $this->data['Asset']['name']),

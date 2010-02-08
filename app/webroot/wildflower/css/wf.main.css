@@ -2361,9 +2361,9 @@ body #wrap #content_pad	.draft	a:hover	{
 }
 
 
-/*	jCrop	*/
-.fullAsset	{}
-.fullPreview { width:100px;height:100px;overflow:hidden; }
+/*	imageEditing & jCrop	*/
+.fullAsset	{width:100%;height:auto;}
+.fullPreview {float:right;width:100px;height:100px;overflow:hidden;right:0;top:0;}
 
 	/* Fixes issue here http://code.google.com/p/jcrop/issues/detail?id=1 */
 	.jcrop-holder { text-align: left; }
@@ -2388,15 +2388,18 @@ body #wrap #content_pad	.draft	a:hover	{
 
 	.jcrop-tracker { width: 100%; height: 100%; }
 
-	.custom .jcrop-vline,
-	.custom .jcrop-hline
-	{
-		background: yellow;
+#edImCtrls	{
+	position: absolute;
+	top: 15px;
+	right: 0;
+}
+	#edImCtrls .tabs	{
+		display: inline;
+		float: left;
+		margin-right: .4em
 	}
-	.custom .jcrop-handle
-	{
-		border-color: black;
-		background-color: #C7BB00;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
+
+	#edImCtrls a	{
+		margin: .1em;
+		padding: 3px 4px;
 	}
