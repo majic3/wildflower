@@ -39,10 +39,10 @@ $.jlm.bind('app_controller.beforeFilter', function () {
 	*/
 	$('#header').find('.areaToggle').live('click', function () {
 		$('body').toggleClass('full');
-		$(this).html('Exit').attr('title', 'Click to return to full display', '');
+		$(this).text('Exit').attr('title', 'Click to return to full display', '');
 	}, function (event)	{
 		$('body').toggleClass('full');
-		$(this).html('Full').attr('title', 'Click to maximise display area');
+		$(this).text('Full').attr('title', 'Click to maximise display area');
 	});
 
 	$('#sysMsg .dismiss').live('click', function(e) {
