@@ -31,6 +31,10 @@ $.jlm.bind('assets.admin_index', function() {
 	});
 });
 
+$.jlm.bind('assets.admin_edit', function() {
+	$.jlm.components.editImage.startup();
+});
+
 $.jlm.bind('posts.admin_edit, pages.admin_edit, sidebars.admin_edit', function() {
 	
     // seems fixed to comments but would like to titel in place - $.jlm.components.inplaceEdit.startup();
