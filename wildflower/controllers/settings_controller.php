@@ -15,7 +15,7 @@ class SettingsController extends AppController {
 				// Regenerate settings cache
 				$this->Setting->createCache();
 				
-				$this->Session->setFlash('Setting added.');
+				$this->Session->setFlash('Setting added.', 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			}
 		}
@@ -54,7 +54,7 @@ class SettingsController extends AppController {
 	        $this->Setting->save();
 	    }
 	    
-        $this->Session->setFlash('Setings updated.');
+        $this->Session->setFlash('Settings updated.', 'flash_success');
         $this->redirect(array('action' => 'index'));
 	}
 	
