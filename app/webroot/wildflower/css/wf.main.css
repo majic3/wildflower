@@ -20,6 +20,9 @@ added listNav styles
 added #sysMsg .display
 	- display or hide system message
 
+added body.messages
+	- table stuff
+
 
 
 
@@ -187,7 +190,7 @@ hr {
     display: block;
     float: left;
     color: #eade51;
-	background: transparent url(/wildflower/img/logo-orb-ns.png) no-repeat scroll left top;
+	background: transparent url(img/logo-orb-ns.png) no-repeat scroll left top;
 	padding-left: 65px;
 	-moz-background-clip: border;
 	-moz-background-origin: padding;
@@ -283,26 +286,26 @@ hr {
 }
 
 #co_right_shadow {
-    background: url(img/wrap_shadow_right.png) right top repeat-y;
+    background: url(img/f/wrap_shadow_right.png) right top repeat-y;
 }
 
 #co_bottom_shadow {
-    background: url(img/wrap_bottom_shadow.png) left bottom repeat-x;
+    background: url(img/f/wrap_bottom_shadow.png) left bottom repeat-x;
 }
 
 #co_top_shadow {
-    background: url(img/wrap_top_shadow.png) left top repeat-x;
+    background: url(img/f/wrap_top_shadow.png) left top repeat-x;
 }
 
 #co_top_right_corner {
-    background: url(img/wrap_top_right_corner.png) right top no-repeat;
+    background: url(img/f/wrap_top_right_corner.png) right top no-repeat;
     padding-top: 13px;
 }
 
 #co_right_bottom_corner {
     padding-bottom: 10px;
     padding-right: 16px;
-    background: url(img/wrap_shadow_right_bottom_corner.png) right bottom no-repeat;
+    background: url(img/f/wrap_shadow_right_bottom_corner.png) right bottom no-repeat;
 }
 
 #content_pad {
@@ -335,7 +338,7 @@ body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
         
     #wrap a.add,
     .button {
-        background: url(img/sidebar-button.png) 0 0 no-repeat;
+        background: url(img/f/sidebar-button.png) 0 0 no-repeat;
         height: 33px;
         padding: 0 0 0 14px;
         display: inline-block;
@@ -351,7 +354,7 @@ body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
             padding: 8px 20px 12px 0;
             margin: 0 0 0 20px;
             display: block;
-            background: url(img/sidebar-button.png) top right no-repeat;
+            background: url(img/f/sidebar-button.png) top right no-repeat;
         }
         
         #wrap a.add:hover,
@@ -360,7 +363,7 @@ body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
         }
         
     #sidebar h4.add {
-        background: url(img/add.png) center left no-repeat;
+        background: url(img/silk/add.png) center left no-repeat;
         padding: 0 0 0 21px;
         font-size: 13px;
     }
@@ -383,13 +386,13 @@ body.utilities	#content_pad {	background-image: url(img/bright/utilities.png);	}
 
 .button {
     color: red !important;
-    background-image: url(img/button_on_white.png);
+    background-image: url(img/f/button_on_white.png);
     padding: 0;
     height: 35px;
 }
 
     .button span {
-        background-image: url(img/button_on_white.png);
+        background-image: url(img/f/button_on_white.png);
     }
         
 /* Headings */
@@ -406,7 +409,7 @@ h2 {
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
-    background: #d2eafc url(img/page_top.png) left bottom repeat-x;
+    background: #d2eafc url(img/f/page_top.png) left bottom repeat-x;
 }
 
     .section h2 {
@@ -465,7 +468,7 @@ h2 {
 	display: block;
 	width: 45px;
 	height: 45px;
-	background: green xurl('img/icon-spites.gif') top left;
+	background: url(img/csg-4b7161e49cca4.png) no-repeat top left;
 	border-width: 2px;
 	border-style: solid;
 	border-color: #BBB;
@@ -512,26 +515,54 @@ h2 {
 		line-height: 1.8em;
 	}
 
-	.doc .icon	{	background-position: top left;	}
-	.pdf .icon		{	background-position: top left;	}
-	.swf .icon		{	background-position: top left;	}
-	.img .thumbnail		{		}
-	.mp3 .icon		{	background-position: top left;	}
-	.flv .icon		{	background-position: top left;	}
-	.mov .icon		{	background-position: top left;	}
-	.mpg .icon		{	background-position: top left;	}
-	.avi .icon		{	background-position: top left;	}
+	.doc .icon			{	background-position: -145px -480px; width: 45px; height: 45px;	}
+	.pdf .icon			{	background-position: -145px -1145px; width: 45px; height: 45px;	}
+	.swf .icon			{	background-position: top left;	}
+	.tiff .icon,
+	.img .thumbnail,
+	.img .icon			{	background-position: -145px -765px; width: 45px; height: 45px;	}
+	.jpg .icon			{	background-position: -145px -860px; width: 45px; height: 45px;	}
+	.png .icon			{	background-position: -145px -1240px; width: 45px; height: 45px;	}
+	.gif .icon			{	background-position: -145px -575px; width: 45px; height: 45px;	}
+	.psd .icon			{	background-position: -145px -1335px; width: 45px; height: 45px;	}
+	.bmp .icon			{	background-position: -145px -385px; width: 45px; height: 45px;	}
+	.mp3 .icon			{	background-position: -145px -1050px; width: 45px; height: 45px;	}
+	.avi .icon,
+	.mpg .icon,
+	.x-flv .icon,
+	.flv .icon			{	background-position: -145px -1525px; width: 45px; height: 45px; }
+	.mov .icon			{	background-position: -145px -955px; width: 45px; height: 45px;	}
+	.doc .icon,
+	.docx .icon			{	background-position: -145px -480px; width: 45px; height: 45px;	}
+	.zip .icon			{	background-position: -145px -1715px; width: 45px; height: 45px;	}
+	.gz .icon			{	background-position: -145px -670px; width: 45px; height: 45px;	}
+	.audio .icon		{	background-position: -145px -290px; width: 45px; height: 45px;	}
+	.wav .icon			{	background-position: -145px -1620px; width: 45px; height: 45px;	}
 
-	.full .doc .icon		{	background-position: top left;	}
-	.full .pdf .icon		{	background-position: top left;	}
-	.full .swf .icon		{	background-position: top left;	}
-	.full .img .thumbnail	{	background-position: top left;	}
-	.full .psd .icon		{	background-position: top left;	}
-	.full .mp3 .icon		{	background-position: top left;	}
-	.full .flv .icon		{	background-position: top left;	}
-	.full .mov .icon		{	background-position: top left;	}
-	.full .mpg .icon		{	background-position: top left;	}
-	.full .avi .icon		{	background-position: top left;	}
+	.full .doc .icon		{	background-position: 0 -290px; width: 95px; height: 95px;	}
+	.full .pdf .icon		{	background-position: 0 -1305px; width: 95px; height: 95px;	}
+	.full .swf .icon		{	background-position: 0 -1740px; width: 95px; height: 95px;	}
+	.full .tiff .icon,
+	.full .img .thumbnail,
+	.full .img .icon		{	background-position: 0 -725px; width: 95px; height: 95px;	}
+	.full .psd .icon		{	background-position: 0 -1595px; width: 95px; height: 95px;	}
+	.full .jpg .icon		{	background-position: 0 -870px; width: 95px; height: 95px;	}
+	.full .png .icon		{	background-position: 0 -1450px; width: 95px; height: 95px;	}
+	.full .gif .icon		{	background-position: 0 -435px; width: 95px; height: 95px;	}
+	.full .psd .icon		{	background-position: 0 -1595px; width: 95px; height: 95px;	}
+	.full .bmp .icon		{	background-position: 0 -145px; width: 95px; height: 95px;	}
+	.full .mp3 .icon		{	background-position: 0 -1160px; width: 95px; height: 95px;	}
+	.full .avi .icon,
+	.full .mpg .icon,
+	.full .flv .icon,
+	.full .x-flv .icon		{	background-position: 0 -1885px; width: 95px; height: 95px;	}
+	.full .mov .icon		{	background-position: 0 -1015px; width: 95px; height: 95px;	}
+	.full .doc .icon,
+	.full .docx .icon		{	background-position: 0 -290px; width: 95px; height: 95px;	}
+	.full .zip .icon		{	background-position: -145px -145px; width: 95px; height: 95px;	}
+	.full .gz .icon			{	background-position: 0 -580px; width: 95px; height: 95px;	}
+	.full .audio .icon		{	background-position: 0 0; width: 95px; height: 95px;	}
+	.full .wav .icon		{	background-position: -145px 0; width: 95px; height: 95px;	}
 
 
 /*	collapse menu */
@@ -1114,18 +1145,18 @@ select {
     }
     
 .post-comments {
-    background-image: url(img/comment.png);
+    background-image: url(img/silk/comment.png);
 }
 /* might not need archives as such */
 .post-archive {
-    background-image: url(img/archived.png);
+    background-image: url(img/silk/archived.png);
     width: 30px;
 }
 
    
 .permalink,
 .edit-sections .permalink {
-    background: transparent url(img/link.png) 0 0 no-repeat;
+    background: transparent url(img/silk/link.png) 0 0 no-repeat;
     padding-left: 18px;
 } 
 
@@ -1155,34 +1186,34 @@ select {
 }
 .paginator .previous.disabled,
 .paginator .next.disabled {
-color:#888888;
-display:block;
-float:left;
-font-weight:bold;
-padding: 3px 4px;
+	color:#888888;
+	display:block;
+	float:left;
+	font-weight:bold;
+	padding: 3px 4px;
 }
 .paginator .prev a,
 .paginator .next a {
-font-weight:bold;
-xborder:solid 1px #FFFFFF;
+	font-weight:bold;
+	xborder:solid 1px #FFFFFF;
 }
 .paginator .current	{
-color: #000000;
-font-weight: bold;
-display: block;
-float: left;
-padding: 3px 4px;
+	color: #000000;
+	font-weight: bold;
+	display: block;
+	float: left;
+	padding: 3px 4px;
 }
 .paginator a:link,
 .paginator a:visited {
-color:#0033CC;
-display:block;
-float:left;
-padding: 3px 4px;
-text-decoration:none;
+	color:#0033CC;
+	display:block;
+	float:left;
+	padding: 3px 4px;
+	text-decoration:none;
 }
 .paginator a:hover{
-text-decoration:none;
+	text-decoration:none;
 }
 
 .paginate-counter {	float: right; margin-right: 70px;	}
@@ -1199,7 +1230,7 @@ text-decoration:none;
 }
 
 #posts-feed {
-    background-image: url(img/rss-coffee.png);
+    background-image: url(img/silk/rss.png);
     background-position: 9px 5px;
     background-repeat: no-repeat;
     padding-left: 32px;
@@ -1611,7 +1642,7 @@ text-decoration:none;
 	right: 2em;
 }
 
-/**	users password strength meter made by Tane Piper	**/
+/**	users password strength meter made by Benjamin Sterling	**/
 .is0{background:url(img/passwordstrength/progressImg1.png) no-repeat 0 0;width:138px;height:7px;}
 .is10{background-position:0 -7px;}
 .is20{background-position:0 -14px;}
@@ -1684,7 +1715,7 @@ text-decoration:none;
     padding: 0 20px; 
     list-style: none;
     overflow: hidden;
-    background: #eef5fb url(img/page_top.png) left bottom repeat-x;
+    background: #eef5fb url(img/f/page_top.png) left bottom repeat-x;
 }
 
 #page_inserts li {
@@ -1746,8 +1777,8 @@ text-decoration:none;
 	background: transparent !important;	margin-bottom: 30px;
 }
 
-body.dashboards	#content_pad	.tabs,
-body	#content_pad	.list	{
+body.dashboards	#content	.tabs,
+body	#content	.list	{
 	margin-right: 155px;
 }
 
@@ -1833,7 +1864,7 @@ body	#content_pad	.list	{
     
 .action_delete {
     display: block;
-    background: transparent url(img/cross.png) 0 0 no-repeat;
+    background: transparent url(img/silk/cross.png) 0 0 no-repeat;
     width: 16px;
     height: 16px;
     position: relative;
@@ -2114,7 +2145,7 @@ body	#content_pad	.list	{
     }
     
 .move {
-    background: url(img/move_cursor.png) 0 0 no-repeat;
+    background: url(img/silk/move_cursor.png) 0 0 no-repeat;
     width: 15px;
     height: 15px;
     display: block;
@@ -2136,8 +2167,17 @@ body	#content_pad	.list	{
     background: #fff74c !important;
 }
 
+/*	.messages	*/
 
-/*	.scoialWeb	*/
+.message-view {
+	width: 100%
+}
+	.message-view tr	{ margin: 0; padding: .2em .8em; border: 0; border-bottom: 1px solid #7a7a7a;  }
+	.message-view th	{	border: 0; border-right: 1px solid #ddd; background: #eaeaea; width: 8em; text-align: right; padding-right: 1.2em	}
+	.message-view td	{	padding-left: 1.2em; width: auto	}
+
+
+/*	.socialWeb	*/
 
 #socialWeb	{
 	width: 355px; position: absolute; display: block; top: 0; right: 10px;
@@ -2248,50 +2288,76 @@ body #wrap #content_pad	.draft	a:hover	{
 .paginator	p	{	margin: 0	}
 
 .error, .notice, .success, .alert {
-  border: 2px solid #DDDDDD;
-  margin-bottom: 1em;
-  padding: 0.8em;
+	border: 2px solid #DDDDDD;
+	margin-bottom: 1em;
+	padding: 0.8em;
 }
 
-.error {
-  background: #FBE3E4 none repeat scroll 0 0;
-  border-color: #FBC2C4;
-  color: #8A1F11;
-}
+	.error {
+		background: #FBE3E4 none repeat scroll 0 0;
+		border-color: #FBC2C4;
+		color: #8A1F11;
+	}
 
-.alert {
-  background: #FBE3FA none repeat scroll 0 0;
-  border-color: #FBC2D8;
-  color: #8A1F77;
-}
+	.alert {
+		background: #FBE3FA none repeat scroll 0 0;
+		border-color: #FBC2D8;
+		color: #8A1F77;
+	}
 
-.notice {
-  background: #FFF6BF none repeat scroll 0 0;
-  border-color: #FFD324;
-  color: #514721;
-}
+	.notice {
+		background: #FFF6BF none repeat scroll 0 0;
+		border-color: #FFD324;
+		color: #514721;
+	}
 
-.success {
-  background: #E6EFC2 none repeat scroll 0 0;
-  border-color: #C6D880;
-  color: #264409;
-}
+	.success {
+		background: #E6EFC2 none repeat scroll 0 0;
+		border-color: #C6D880;
+		color: #264409;
+	}
 
-.error a {
-  color: #8A1F11;
-}
+	.error strong, .notice strong, .success strong, .alert strong	{
+		float: left; 
+		width: 20px; height: 20px;
+		display: block;
+		background: blue;
+		overflow: hidden;
+		text-indent: -1000px;
+		background: green xurl('img/wf-sprites.png') top left;
+	}
 
-.alert a {
-  color: #8A1F77;
-}
+	.error a {
+		background-position: top left;
+	}
 
-.notice a {
-  color: #514721;
-}
+	.alert a {
+		background-position: top left;
+	}
 
-.success a {
-  color: #264409;
-}
+	.notice a {
+		background-position: top left;
+	}
+
+	.success strong {
+		background-position: top left;
+	}
+
+	.error a {
+		color: #8A1F11;
+	}
+
+	.alert a {
+		color: #8A1F77;
+	}
+
+	.notice a {
+		color: #514721;
+	}
+
+	.success a {
+		color: #264409;
+	}
 
 
 
@@ -2362,8 +2428,8 @@ body #wrap #content_pad	.draft	a:hover	{
 
 
 /*	imageEditing & jCrop	*/
-.fullAsset	{width:100%;height:auto;}
-.fullPreview {float:right;width:100px;height:100px;overflow:hidden;right:0;top:0;}
+.fullAsset	{ width:100%; height:auto; }
+.fullPreview {float:right; width:100px; height:100px; overflow:hidden; right:0; top:0;}
 
 	/* Fixes issue here http://code.google.com/p/jcrop/issues/detail?id=1 */
 	.jcrop-holder { text-align: left; }
@@ -2372,7 +2438,7 @@ body #wrap #content_pad	.draft	a:hover	{
 	{
 		font-size: 0;
 		position: absolute;
-		background: white url('Jcrop.gif') top left repeat;
+		background: white url('jcrop/Jcrop.gif') top left repeat;
 	}
 	.jcrop-vline { height: 100%; width: 1px !important; }
 	.jcrop-hline { width: 100%; height: 1px !important; }
