@@ -86,7 +86,7 @@ class MessagesController extends AppController {
             }
         }
         $messagesWord = ($movedToSpam == 1) ? 'message' : 'messages';
-        $this->Session->setFlash("Moved $movedToSpam $messagesWord to spam.");
+        $this->Session->setFlash("Moved $movedToSpam $messagesWord to spam.", "flash");
         $this->redirect(array('action' => 'index'));
     }
     

@@ -9,8 +9,8 @@
         ?>
         <tr><th>From</th><td><?php echo hsc($message['Message']['name']), ' ', $mailto; ?></td></tr>
         <tr><th>Received</th><td><?php echo $time->niceShort($message['Message']['created']) ?></td></tr>
-        <tr><th>Phone</th><td><?php echo hsc($message['Message']['phone']) ?></td></tr>
         <tr><th>Subject</th><td><?php echo hsc($message['Message']['subject']) ?></td></tr>
+        <tr><th>Phone</th><td><?php echo hsc($message['Message']['phone']) ?></td></tr>
         <tr><th>Message</th><td><?php echo hsc($message['Message']['content']) ?></td></tr>
     </tbody>
 </table>
