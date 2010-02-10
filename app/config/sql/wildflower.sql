@@ -441,6 +441,7 @@ CREATE TABLE `sidebars` (
   `content` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
+  `region` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `on_posts` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
