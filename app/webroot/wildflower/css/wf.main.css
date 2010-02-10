@@ -1230,7 +1230,7 @@ select {
 }
 
 #posts-feed {
-    background-image: url(img/silk/rss.png);
+    background-image: url(img/silk/feed.png);
     background-position: 9px 5px;
     background-repeat: no-repeat;
     padding-left: 32px;
