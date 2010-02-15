@@ -29,8 +29,15 @@ class AssetsController extends AppController {
 	 * Files overview
 	 *
 	 */
-	function admin_index() {
-		$this->feedFileManager();
+	function admin_index($filter=null) {
+        if($filter){
+			$this->paginate = array(
+			'conditions' => array('Asset.category_id' => $filter),
+			'limit' => 12,
+			'order' => array('created' => 'desc')
+			);
+		}
+		$this->feedFileManager($filter);
 	}
 	
 	/**
@@ -351,27 +358,27 @@ class AssetsController extends AppController {
 				$fileName = $newFileName;
 			}
 		}
-   
-        // Upload file
-        $isUploaded = @move_uploaded_file($this->data[$this->modelClass]['file']['tmp_name'], $uploadPath);
-        
-        if (!$isUploaded) {
-            $this->Asset->invalidate('file', 'File can`t be moved to the uploads directory. Check permissions.');
-            //$this->feedFileManager();
-            //return $this->render('admin_index');
+
+		// Upload file
+		$isUploaded = @move_uploaded_file($this->data[$this->modelClass]['file']['tmp_name'], $uploadPath);
+
+		if (!$isUploaded) {
+			$this->Asset->invalidate('file', 'File can`t be moved to the uploads directory. Check permissions.');
+			//$this->feedFileManager();
+			//return $this->render('admin_index');
 			$this->Session->setFlash('File can`t be moved to the uploads directory. Check permissions.', 'flash_error');
 			return false;
-        }
-        
-        // Make this file writable and readable
-        chmod($uploadPath, 0777);
-        
-        $this->Asset->data[$this->modelClass]['name'] = $fileName;
-        if (empty($this->Asset->data[$this->modelClass]['title'])) {
-            $this->Asset->data[$this->modelClass]['title'] = str_replace(array('.jpg', '.jpeg', '.gif', '.png'), array('', '', '', ''), $fileName);
-        }
-        $this->Asset->data[$this->modelClass]['mime'] = $this->Asset->data[$this->modelClass]['file']['type'];
-        
+		}
+
+		// Make this file writable and readable
+		chmod($uploadPath, 0777);
+
+		$this->Asset->data[$this->modelClass]['name'] = $fileName;
+		if (empty($this->Asset->data[$this->modelClass]['title'])) {
+			$this->Asset->data[$this->modelClass]['title'] = str_replace(array('.jpg', '.jpeg', '.gif', '.png'), array('', '', '', ''), $fileName);
+		}
+		$this->Asset->data[$this->modelClass]['mime'] = $this->Asset->data[$this->modelClass]['file']['type'];
+
 		return $this->Asset->save();
 		//*/
 	}
@@ -383,10 +390,12 @@ class AssetsController extends AppController {
 	 * the pagination set across paged clicks
 	 *
 	 */
-	private function feedFileManager() {
-	    $this->pageTitle = 'Files';
+	private function feedFileManager($filter) {
+		// Categories for select box
+		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => 61)));
+		$this->pageTitle = 'Files';
 		if(isset($_GET['displayNumImgs'])) $this->paginate['limit'] = Sanitize::escape($_GET['displayNumImgs']);
-	    $files = $this->paginate($this->modelClass);
+		$files = $this->paginate($this->modelClass);
 
 		$displayNumImgsArr = array(10 => '10 files', 20 => '20 files', 50 => "50 files", 80 => "80 files");
 		$totalImages = $this->Asset->find('count');
@@ -397,11 +406,13 @@ class AssetsController extends AppController {
 
 		$this->set(
 			compact(
-				'files', 
-				'displayNumImgs', 
-				'displayNumImgsArr', 
-				'totalImages', 
-				'tag_cloud'
+				'files',
+				'displayNumImgs',
+				'displayNumImgsArr',
+				'totalImages',
+				'tag_cloud',
+				'filter',
+				'categories'
 			)
 		);
 	}

@@ -27,5 +27,11 @@
 	if($action == 'admin_update')	echo $form->hidden('id');
 
 	echo 
+	$form->create('Asset', array('type' => 'file', 'action' => 'admin_create')),
+    $form->input('file', array('type' => 'file', 'between' => '<br />', 'label' => false)),
+	$form->input('category', array('label'=>'Category:', 'type'=>'select','options'=>$categories,'default'=>$filter)),
+    //$form->input('title', array('between' => '<br />', 'label' => 'Title <small>(optional)</small>')),
+    "<p><small>$uploadLimits.</small></p>",
+    $form->submit('Upload file'),
     $form->end();
 ?>
