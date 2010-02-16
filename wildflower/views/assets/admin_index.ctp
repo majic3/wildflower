@@ -45,6 +45,8 @@ echo
 
 			<h3><?php echo $html->link($text->truncate($label, 35, '...'), array('action' => 'edit', $file['Asset']['id']),array('class' => 'editTitle')); ?></h3>
 
+			<span style="AssetCategory">Category: <?php echo $file['Category']['title']; ?></span>
+
 			<?php
 				$iconOrThumbnail = $thumbUrl = '';
 				if($mimeClass[0] == 'image') {

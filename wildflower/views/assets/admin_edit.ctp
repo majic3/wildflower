@@ -31,17 +31,18 @@ echo $navigation->create(array(
 
 <!-- div id="file-upload">
     <?php
-        /*echo 
+        //*
+		echo 
         $form->create('Asset', array('type' => 'file', 'url' => $html->url(array('action' => 'admin_update', 'base' => false)))),
         $form->input('title', array('between' => '<br />', 'label' => 'Title <small>(optional)</small>')),
 		$form->input('file', array('type' => 'file', 'between' => '<br />', 'label' => false)),
-		$form->input('category', array('label'=>'Category:', 'type'=>'select','options'=>$categories)),
+		$form->input('category_id', array('label'=>'Category:', 'type'=>'select','options'=>$categories)),
         '<div>',
 		$tagging->input('tags'),
         $form->hidden('id'),
         '</div>',
         $wild->submit('Save'),
-        $form->end();*/
+        $form->end();/*/
     ?>
 </div -->
 </div>

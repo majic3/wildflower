@@ -75,8 +75,9 @@ class AssetsController extends AppController {
 		$this->autoLayout = false;
 		$this->paginate['limit'] = 10;
 		$assets = $this->paginate($this->modelClass);
-		$tag_cloud = $this->Asset->tagCloud();
-		$this->set(compact('assets', 'tag_cloud'));
+		$tagCloud = $this->Asset->tagCloud();
+		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => $this->Asset->catParent)));
+		$this->set(compact('assets', 'tagCloud', 'categories'));
 	}
 	
 	/**
@@ -101,8 +102,8 @@ class AssetsController extends AppController {
 	}
 	
 	function admin_update() {
-	    //$this->Asset->create($this->data);
-	    //if (!$this->Asset->exists()) return $this->cakeError('object_not_found');
+		//$this->Asset->create($this->data);
+		//if (!$this->Asset->exists()) return $this->cakeError('object_not_found');
 
 		if(isset($this->data['Asset']['file']))	{
 			//	$isUploaded = Asset::upload($this->data['Asset']['file']);
@@ -120,10 +121,9 @@ class AssetsController extends AppController {
 			$this->Session->setFlash('title NOT updated', 'flash');
 		}
 
-
-		//$this->redirect(array('action' => 'index'));
 		$this->redirect(array('action' => 'edit', 'id' => $this->data['Asset']['id']));
-		//$this->render('admin_edit');
+		$this->Asset->save();
+		$this->redirect(array('action' => 'edit', $this->Asset->id));
 	}
 	
 	function beforeFilter() {
@@ -390,19 +390,21 @@ class AssetsController extends AppController {
 	 * the pagination set across paged clicks
 	 *
 	 */
-	private function feedFileManager($filter) {
+	private function feedFileManager($filter = null) {
 		// Categories for select box
 		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => 61)));
 		$this->pageTitle = 'Files';
+
 		if(isset($_GET['displayNumImgs'])) $this->paginate['limit'] = Sanitize::escape($_GET['displayNumImgs']);
+
+		$displayNumImgs = $this->paginate['limit'];
+		
 		$files = $this->paginate($this->modelClass);
 
 		$displayNumImgsArr = array(10 => '10 files', 20 => '20 files', 50 => "50 files", 80 => "80 files");
 		$totalImages = $this->Asset->find('count');
 
-		$tag_cloud = $this->Asset->tagCloud();
-
-		$displayNumImgs = $this->paginate['limit'];
+		$tagCloud = $this->Asset->tagCloud();
 
 		$this->set(
 			compact(
@@ -410,7 +412,7 @@ class AssetsController extends AppController {
 				'displayNumImgs',
 				'displayNumImgsArr',
 				'totalImages',
-				'tag_cloud',
+				'tagCloud',
 				'filter',
 				'categories'
 			)
