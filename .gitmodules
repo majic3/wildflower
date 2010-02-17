@@ -13,3 +13,6 @@
 [submodule "app/plugins/tagging"]
 	path = app/plugins/tagging
 	url = git://github.com/mariano/tagging.git
+[submodule "app/plugins/register_callbacks"]
+	path = app/plugins/register_callbacks
+	url = git://github.com/jamienay/register_callbacks_component.git

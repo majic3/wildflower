@@ -17,7 +17,7 @@
 	if(isset($canonical['rel']['url']))	echo '<link rel="canonical" href="' . $canonical['rel']['url'] . "\" />\n";
 	if(isset($canonical['rev']['id']))	echo '<link rev="canonical" href="' . $canonical['rev']['slug'] . "\" />\n";
 		
-	echo $html->css(array('screen'), 'stylesheet', Array('media' => 'screen'));
+	echo $html->css(array('wildflower'), 'stylesheet', Array('media' => 'screen'));
 	?>
 </head>
 <?php echo ($wild) ? $wild->bodyTagWithClass() : '<body>'; ?>

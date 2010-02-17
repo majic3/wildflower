@@ -11,18 +11,10 @@
 	
 	<?php 
         echo
-        // Load your CSS files here
         $html->css(array(
-            'screen',
+            'wildflower',
         ));
     ?>
-     
-    <!--[if lte IE 7]>
-    <?php
-        // CSS file for Microsoft Internet Explorer 7 and lower
-        echo $html->css('/wildflower/css/wf.ie7');
-    ?>
-    <![endif]-->
     
 </head>
 <?php echo ($wild) ? $wild->bodyTagWithClass() : '<body>'; ?>
