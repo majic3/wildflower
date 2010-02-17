@@ -39,6 +39,7 @@ app/webroot/css/*_src.css
 app/webroot/css/*.css.gz
 app/webroot/js/*_src.js
 app/webroot/js/*.js.gz
+app/webroot//swf/*
 app/webroot/wildflower/img/assets/*
 
 # pluigins
@@ -52,6 +53,7 @@ app/plugins/*
 !app/plugins/lab_js
 !app/plugins/sitemap
 !app/plugins/swfobject
+!app/plugins/auto_javascript
 
 # themes
 app/views/themed/*
