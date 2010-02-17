@@ -48,6 +48,10 @@ app/plugins/*
 !app/plugins/acl_plugin
 !app/plugins/tagging
 !app/plugins/HtmlPurifier
+!app/plugins/register_callbacks
+!app/plugins/lab_js
+!app/plugins/sitemap
+!app/plugins/swfobject
 
 # themes
 app/views/themed/*
