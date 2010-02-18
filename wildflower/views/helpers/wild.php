@@ -1,6 +1,13 @@
 <?php
 App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
+/*	idea is to add some support automajic processing of content	*/
+
+/*
+	imgs/links
+	((?:src|href)[\s]*?)(?:\=[\s]*?[\"\'])[\/*\\*]?(?!..+[s]?\:[\/]*)(.*?)(?:[\s\"\'])
+*/
+
 class WildHelper extends AppHelper {
 	
 	public $helpers = array('Html', 'Textile', 'Htmla', 'Text');
