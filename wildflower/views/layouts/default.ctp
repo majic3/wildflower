@@ -12,12 +12,22 @@
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>" />
 
+	<style type="text/css">
+		#myContent, #myContent2, #myContent3 {display: block; width: 300px;height: 150px}
+		
+		#myContent	{background-color: red}
+		#myContent2	{background-color: green}
+		#myContent3 {background-color: blue}
+	</style>
+
 	<?php
 	
 	if(isset($canonical['rel']['url']))	echo '<link rel="canonical" href="' . $canonical['rel']['url'] . "\" />\n";
 	if(isset($canonical['rev']['id']))	echo '<link rev="canonical" href="' . $canonical['rev']['slug'] . "\" />\n";
-		
-	echo $html->css(array('wildflower'), 'stylesheet', Array('media' => 'screen'));
+
+	if(!isset($styles)) $styles = false;
+
+	echo $html->css(am(array('wildflower'), $styles), 'stylesheet', Array('media' => 'screen'), true);
 	?>
 </head>
 <?php echo ($wild) ? $wild->bodyTagWithClass() : '<body>'; ?>
@@ -77,13 +87,16 @@
 	</div>
 </div>
 <?php
-	$tagScript = $tagging->getScript(true);
+	if($tagging)
+		$tagScript = $tagging->getScript(true);
+
 	$javascript->link(array('common', $tagScript), false);
 	
-	$labjs->addWait(
-		'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js',
-		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
+	if($labjs)	{
+	$labjs->addWait('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js',		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
 	);
+	
+//	$labjs->addWait($swfobject->script, $swfobject->getInitScript());
 	
 	$labjs->addWait(
 		'common',
@@ -115,6 +128,7 @@
 	echo 
 		$this->element('google_analytics'), 
 		$labjs->output($endWait);
+	}
 ?>
 </body>
 </html>
