@@ -48,8 +48,9 @@ Router::connect('/' . $mprefix. '/thumbnail_by_id/*', array('controller' => 'ass
 // Utilities - add for cache and other general bits and things
 
 // sitemaps
-Router::connect('/sitemap', array('controller' => 'sitemaps', 'action' => 'index'));
-Router::connect('/sitemap/:action/*', array('controller' => 'sitemaps'));
+Router::connect('/admin/sitemaps/*', array('admin' => true, 'prefix' => 'admin', 'plugin' => 'sitemap', 'controller' => 'sitemaps', 'action' => 'index'));
+Router::connect('/sitemap/*', array('plugin' => 'sitemap', 'controller' => 'sitemaps', 'action' => 'index'));
+//Router::connect('/sitemap/:action/*', array('plugin' => 'sitemap', 'controller' => 'sitemaps'));
 
 // sitemaps - robots optional
 Router::connect('/robots/:action/*', array('controller' => 'sitemaps', 'action' => 'robots'));
