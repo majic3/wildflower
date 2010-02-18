@@ -18,7 +18,15 @@ class AppController extends Controller {
 		'Cookie', 
 		'RequestHandler', 
 		'Seo', 
-	/*
+		'RegisterCallbacks.RegisterCallbacks' => array(
+			'priority' => array(
+				'Tagging',
+				'Swfobject',
+				'AutoJavascript',
+				'LabJs'
+			)
+		),
+	//*
 		'DebugKit.Toolbar' => array(
 			'panels' => array('Interactive.interactive')
 		)
@@ -37,9 +45,10 @@ class AppController extends Controller {
 	    'Tree', 
 	    'Text',
 	    'Time',
-		'AutoJavascript',
+		'AutoJavascript.AutoJavascript',
 		'Tagging.Tagging',
-		'Labjs'
+		'LabJs.Labjs',
+		'Swfobject.Swfobject'
 	);
 	public $view = 'Theme';
 	public $homePageId;
@@ -49,17 +58,19 @@ class AppController extends Controller {
 	private $_isDatabaseConnected = true;
 
 	public $canonical = Array();
+
+	public $swfobjects = false;
 	
 	/**
 	 * Configure and initialize everything Wildflower needs
 	 *
-     * Should be called before all controller actions in AppController::beforeFilter().
-     * 
-     * Does 3 things:
-     *   1. protect admin area
-     *   2. check for user sessions
-     *   3. set site settings, parameters and global view vars
-     */
+	 * Should be called before all controller actions in AppController::beforeFilter().
+	 * 
+	 * Does 3 things:
+	 *   1. protect admin area
+	 *   2. check for user sessions
+	 *   3. set site settings, parameters and global view vars
+	 */
 	private function _configureWildflower() {
 	    // AuthComponent config
         $this->Auth->userModel = 'User';
@@ -106,6 +117,8 @@ class AppController extends Controller {
     function beforeFilter() {
         parent::beforeFilter();
 		$this->_configureWildflower();
+
+		if($this->here == '/sitemap')	$this->helpers[] = 'Sitemap.Sitemap';
     }
 
     /**
@@ -296,6 +309,25 @@ class AppController extends Controller {
 		$this->_setErrorLayout();
 
 		$this->theme = Configure::read('Wildflower.settings.theme');
+
+		
+		$this->helpers['Swfobject']->googleScript = true;
+		switch($this->here)	{
+			case '/':
+			case '/home':
+				// later set this with params of page
+				$this->swfobjects[] = json_decode('{"file":"test.swf","type":"static","width":300,"height":150,"divDomId":"myContent","options":{"fvars":{"testingvar":"'.urlencode('some new value').'", "file":"playlist.xml"},"params":{"menu":false,"wmode":"window","base":".\/"},"attribs":{"id":"myFlashContent","name":"myFlashContent","class":"newClass"}}}');
+				$this->swfobjects[] = json_decode('{"file":"pipwerksExInter3.swf","type":"dynamic","width":300,"height":150,"version":"8.0.22","divDomId":"myContent2","FlashId":"myFlashContent2"}');
+			break;
+		}
+		if($this->swfobjects)	{
+			$this->set('swfobjects', $this->swfobjects);
+		}
+
+		//debug($this); die();
+
+		//$this->helpers['Javascript']->codeBlock('// test comment' ."\n\n".'alert(\'common\');', array('inline' => false));
+
 	}
 
 	function do404() {
@@ -540,15 +572,15 @@ class AppController extends Controller {
 			$this->Email->bcc = $recipients['bcc'];
 		
 		$this->Email->delivery = Configure::read('Wildflower.settings.email_delivery');
-		
-    		if ($this->Email->delivery == 'smtp') {
-        		$this->Email->smtpOptions = array(
-                    'username' => Configure::read('Wildflower.settings.smtp_username'),
-                    'password' => Configure::read('Wildflower.settings.smtp_password'),
-                    'host' => Configure::read('Wildflower.settings.smtp_server'),
-        		    'port' => 25, // @TODO add port to settings
-        		    'timeout' => 30
-        		);
+	
+		if ($this->Email->delivery == 'smtp') {
+			$this->Email->smtpOptions = array(
+				'username' => Configure::read('Wildflower.settings.smtp_username'),
+				'password' => Configure::read('Wildflower.settings.smtp_password'),
+				'host' => Configure::read('Wildflower.settings.smtp_server'),
+				'port' => 25, // @TODO add port to settings
+				'timeout' => 30
+			);
 		}
 		
 		$this->Email->subject = $emailSubject;
