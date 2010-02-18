@@ -1,8 +1,8 @@
 <?php
 class SitemapsController extends AppController {
-	var $helpers = array('Time', 'Xml', 'Javascript', 'Navigation');
+	var $helpers = array('Time', 'Xml', 'Javascript', 'Navigation', 'Sitemap.Sitemap');
 	var $components = array('RequestHandler');
-	var $uses = array();
+	var $scaffold = true;
 	var $array_dynamic = array();
 	var $array_static = array();
 	var $sitemap_url = '/sitemap.xml';
@@ -24,7 +24,10 @@ class SitemapsController extends AppController {
 	/* 
 	 * Our sitemap 
 	 */
-	function index(){
+	function index($slug = 'root') {
+
+		$wfSitemap = $this->Sitemap->findBySlug($slug);
+		$this->set(compact('wfSitemap'));
 		$this->bdyClass = 'sitemap';
 		   //Configure::write('debug', 0);
 		$this->__get_data();
@@ -40,8 +43,38 @@ class SitemapsController extends AppController {
 	/* 
 	 * Action for send sitemaps to search engines
 	 */
-	function admin_index() {
+	function admin_index($slug = 'root') {
 		// This action must be only for admins
+
+		$sitemaps = $this->Sitemap->find('all');
+		$this->set(compact('sitemaps'));
+	}
+
+	/* 
+	 * Action for send sitemaps to search engines
+	 */
+	function admin_manage($id) {
+		// This action must be only for admins
+
+		$sitemap = $this->Sitemap->findById($id);
+		$this->set(compact('sitemap'));
+	}
+
+	/* 
+	 * Action for send sitemaps to search engines
+	 */
+	function admin_add() {
+		// This action must be only for admins
+		debug($this->data);
+		if($this->data)	{
+			if($this->Sitemap->save())	{
+				$this->Session->setFlash('sitemap saved');
+			} else {
+				$this->Session->setFlash('sitemap NOT saved');
+			}
+		}
+
+		$this->Session->setFlash('add new sitemap');
 	}
 
 	/* 
