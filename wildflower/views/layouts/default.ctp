@@ -65,8 +65,7 @@
 		<div class="leftCol">
 			<?php echo $credits ? $this->element('credits', compact('credits')):'' ?>
 			
-			<?php echo $this->element('admin_link'); ?>
-			<?php echo $this->element('debug_notice'); ?>
+			<?php echo $this->element('admin_footer'); ?>
 		</div>
 		<div class="main">
 			<div class="nv">

@@ -525,6 +525,8 @@ class PagesController extends AppController {
 				$render = $possibleThemeFile;
 			}
 		}
+
+		$this->set(compact('possibleThemeFile'));
 		
 		return $this->render($render);
 	}
