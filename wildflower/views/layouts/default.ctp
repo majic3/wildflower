@@ -93,7 +93,7 @@
 	$javascript->link(array('common', $tagScript), false);
 	
 	if($labjs)	{
-	$labjs->addWait('http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js',		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
+	$labjs->addWait('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
 	);
 	
 //	$labjs->addWait($swfobject->script, $swfobject->getInitScript());
