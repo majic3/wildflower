@@ -7,7 +7,11 @@ class SitemapCallback extends object	{
 	public function beforeFilter(&$controller)	{}
 
 	public function beforeRender(&$controller)	{
-		$controller->set('styles', array('/sitemap/css/sitemap'));
+		// debug($controller->name == 'Sitemaps');
+		if($controller->name == 'Sitemaps')	{
+			$controller->prepareSitemap();
+			$controller->set('styles', array('/sitemap/css/sitemap'));
+		}
 	}
 
 	public function shutdown(&$controller)	{}

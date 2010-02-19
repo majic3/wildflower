@@ -53,7 +53,7 @@ Router::connect('/sitemap/*', array('plugin' => 'sitemap', 'controller' => 'site
 //Router::connect('/sitemap/:action/*', array('plugin' => 'sitemap', 'controller' => 'sitemaps'));
 
 // sitemaps - robots optional
-Router::connect('/robots/:action/*', array('controller' => 'sitemaps', 'action' => 'robots'));
+Router::connect('/robots/:action/*', array('plugin' => 'sitemap', 'controller' => 'sitemaps', 'action' => 'robots'));
 
 // Connect root pages slugs
 App::import('Vendor', 'WfRootPagesCache', array('file' => 'WfRootPagesCache.php'));

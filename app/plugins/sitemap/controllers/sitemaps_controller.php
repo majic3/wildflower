@@ -8,14 +8,14 @@ class SitemapsController extends AppController {
 	var $sitemap_url = '/sitemap.xml';
 	var $yahoo_key = 'insert your yahoo api key here';
 
-	function beforeFilter() {
+	public function beforeFilter() {
 		parent::beforeFilter();
 		if (Configure::read('Wildflower.htmlCache') and $this->params['action'] == 'view') {
 			$this->helpers[] = 'HtmlCache';
 		}
 	}
 
-	function beforeRender() {
+	public function beforeRender() {
 		parent::beforeRender();
 		$this->set('isPage', true);
 		$this->params['Wildflower']['view']['isPage'] = true;
@@ -24,7 +24,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Our sitemap 
 	 */
-	function index($slug = 'root') {
+	public function index($slug = 'root') {
 
 		$wfSitemap = $this->Sitemap->findBySlug($slug);
 		$this->set(compact('wfSitemap'));
@@ -40,10 +40,13 @@ class SitemapsController extends AppController {
 		}
 	}
 
+	public function prepareSitemap()	{
+	}
+
 	/* 
 	 * Action for send sitemaps to search engines
 	 */
-	function admin_index($slug = 'root') {
+	public function admin_index($slug = 'root') {
 		// This action must be only for admins
 
 		$sitemaps = $this->Sitemap->find('all');
@@ -53,7 +56,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Action for send sitemaps to search engines
 	 */
-	function admin_manage($id) {
+	public function admin_manage($id) {
 		// This action must be only for admins
 
 		$sitemap = $this->Sitemap->findById($id);
@@ -63,7 +66,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Action for send sitemaps to search engines
 	 */
-	function admin_add() {
+	public function admin_add() {
 		// This action must be only for admins
 		debug($this->data);
 		if($this->data)	{
@@ -80,14 +83,14 @@ class SitemapsController extends AppController {
 	/* 
 	 * Action for send sitemaps to search engines
 	 */
-	function admin_send() {
+	public function admin_send() {
 		// This action must be only for admins
 	}
 
 	/* 
 	 * This make a simple robot.txt file use it if you don't have your own
 	 */
-	function robots() {
+	public function robots() {
 		Configure::write('debug', 0);
 		$expire = 25920000;
 		$this->RequestHandler->respondAs('txt');
@@ -115,7 +118,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Here must be all our public controllers and actions
 	 */
-	function __get_data() {
+	private function __get_data() {
 
 		// get all gen units from Wildflower Core
 		$genUnits = Configure::read('Wildflower.sitemapData.units');
@@ -219,7 +222,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Add a "static" section
 	 */
-	function __add_static_section($title = null, $url = null, $options = null) {
+	private function __add_static_section($title = null, $url = null, $options = null) {
 		if(is_null($title) || empty($title) || is_null($url) || empty($url) ) {
 			return false;
 		}
@@ -239,7 +242,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Add a section based on data from our database
 	 */
-	function __add_dynamic_section($model = null, $data = null, $options = null){
+	private function __add_dynamic_section($model = null, $data = null, $options = null){
 		if(is_null($model) || empty($model) || is_null($data) || empty($data) ) {
 			return false;
 		}        
@@ -274,7 +277,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * This make a GET petition to search engine url
 	 */    
-	function __ping_site($url = null, $params = null) {
+	private function __ping_site($url = null, $params = null) {
 		if(is_null($url) || empty($url) || is_null($params) || empty($params) ) {
 			return false;    
 		}
@@ -287,7 +290,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Show response for ajax based on a boolean result
 	 */    
-	function __ajaxresponse($result = false){
+	private function __ajaxresponse($result = false){
 		if(!$result) {
 			return 'fail';
 		}
@@ -297,7 +300,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for ping Google
 	 */    
-	function admin_ping_google() {
+	public function admin_ping_google() {
 		   Configure::write('debug', 0);
 		$url = 'http://www.google.com/webmasters/tools/ping';
 		$params = 'sitemap=' . urlencode(FULL_BASE_URL . $this->sitemap_url);
@@ -308,7 +311,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for check Google's response
 	 */    
-	function admin_check_ok_google($response = null){
+	public function admin_check_ok_google($response = null){
 		if( is_null($response) || !is_array($response) || empty($response) ) {
 			return false;
 		}
@@ -325,7 +328,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for ping Ask.com
 	 */    
-	function admin_ping_ask() { // fail if we are in local environment
+	public function admin_ping_ask() { // fail if we are in local environment
 		   Configure::write('debug', 0);
 		$url = 'http://submissions.ask.com/ping';
 		$params = 'sitemap=' .  urlencode(FULL_BASE_URL . $this->sitemap_url);
@@ -336,7 +339,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for check Ask's response
 	 */    
-	function admin_check_ok_ask($response = null){
+	public function admin_check_ok_ask($response = null){
 		if( is_null($response) || !is_array($response) || empty($response) ) {
 			return false;
 		}
@@ -353,7 +356,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for ping Yahoo
 	 */    
-	function admin_ping_yahoo() {
+	public function admin_ping_yahoo() {
 		   Configure::write('debug', 0);
 		$url = 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification';
 		$params = 'appid='.$this->yahoo_key.'&url=' . urlencode(FULL_BASE_URL . $this->sitemap_url);
@@ -364,7 +367,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for check Yahoo's response
 	 */    
-	function admin_check_ok_yahoo($response = null){
+	public function admin_check_ok_yahoo($response = null){
 		if( is_null($response) || !is_array($response) || empty($response) ) {
 			return false;
 		}
@@ -381,7 +384,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for ping Bing
 	 */    
-	function admin_ping_bing() {
+	public function admin_ping_bing() {
 		   Configure::write('debug', 0);
 		$url = 'http://www.bing.com/webmaster/ping.aspx';
 		$params = '&siteMap=' . urlencode(FULL_BASE_URL . $this->sitemap_url);
@@ -392,7 +395,7 @@ class SitemapsController extends AppController {
 	/* 
 	 * Function for check Bing's response
 	 */    
-	function admin_check_ok_bing($response = null){
+	public function admin_check_ok_bing($response = null){
 		if( is_null($response) || !is_array($response) || empty($response) ) {
 			return false;
 		}
