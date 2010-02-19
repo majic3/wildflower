@@ -7,10 +7,18 @@
 					</div>
 					<div class="bd">
 						<?php if ($isLogged): ?>
-						<p>You are already logged in. There's no need to do it again. <?php echo $html->link('Go to admin area', '/' . Configure::read('Wildflower.prefix')); ?>.</p>
-						<?php endif; ?>
+						<p class="notice">You are already logged in. There's no need to do it again. <?php echo $html->link('Go to admin area', '/' . Configure::read('Wildflower.prefix')); ?>.</p>
+						<?php endif; 
 
-						<?php
+						// Auth error message
+						if ($session->check('Message.auth')) {
+							$session->flash('auth');
+						}
+
+						if ($session->check('Message.flash')) {  
+							$session->flash();
+						}
+
 						echo $form->create('User', array('url' => $here, 'class' => 'vform'));
 						echo $form->input('login', array());
 						echo $form->input('password',  array());
@@ -20,11 +28,6 @@
 							'title' => 'Keep me logged in on this computer for 2 weeks.',
 							'label' => __('Remember Me?', true))); ?></div>
 						<?php
-
-						// Auth error message
-						if ($session->check('Message.auth')) {
-							$session->flash('auth');
-						}
 
 						echo $form->submit('Log in');
 						echo $form->end();

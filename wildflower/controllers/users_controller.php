@@ -11,7 +11,7 @@ class UsersController extends AppController {
      *
      * @param int $id
      */
-    function admin_delete($id) {
+    public function admin_delete($id) {
         $id = intval($id);
         if ($this->RequestHandler->isAjax()) {
             return $this->User->del($id);
@@ -32,7 +32,7 @@ class UsersController extends AppController {
      * Login screen
      *
      */
-    function login() {
+    public function login() {
         $this->layout = 'login';   
         $this->pageTitle = 'Login';
         $User = ClassRegistry::init('User');
@@ -96,14 +96,14 @@ class UsersController extends AppController {
      * 
      * Delete User info from Session, Cookie and reset cookie token.
      */
-    function admin_logout() {
+    public function admin_logout() {
         $this->User->create($this->Auth->user());
         $this->User->saveField('cookie_token', '');
         $this->Cookie->del('Auth.User');
         $this->redirect($this->Auth->logout());
     }
 
-    function admin_view($id) {
+    public function admin_view($id) {
         $this->User->recursive = -1;
         $this->set('user', $this->User->findById($id));
     }
@@ -112,12 +112,12 @@ class UsersController extends AppController {
      * Users overview
      * 
      */
-    function admin_index() {
+    public function admin_index() {
         $users = $this->User->find('all');
         $this->set(compact('users'));
     }
     
-    function admin_change_password($id = null) {
+    public function admin_change_password($id = null) {
         $this->data = $this->User->findById($id);
     }
 
@@ -125,8 +125,9 @@ class UsersController extends AppController {
      * Create new user
      *
      */
-    function admin_create() {
+    public function admin_create() {
         if ($this->User->save($this->data)) {
+			// $this->__activation();
             return $this->redirect(array('action' => 'index'));
         }
 
@@ -140,12 +141,12 @@ class UsersController extends AppController {
      *
      * @param int $id
      */
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->data = $this->User->findById($id);
         if (empty($this->data)) $this->cakeError('object_not_found');
     }
     
-    function admin_update() {
+    public function admin_update() {
         unset($this->User->validate['password']);
         $this->User->create($this->data);
         if ($this->User->save()) {
@@ -154,7 +155,7 @@ class UsersController extends AppController {
         $this->render('admin_edit');
     }
     
-    function admin_update_password() {
+    public function admin_update_password() {
         unset($this->User->validate['name'], $this->User->validate['email'], $this->User->validate['login']);
         App::import('Security');
         $this->data['User']['password'] = Security::hash($this->data['User']['password'], null, true);
@@ -164,6 +165,62 @@ class UsersController extends AppController {
             return $this->redirect(array('action' => 'edit', $this->data[$this->modelClass]['id']));
         }
         $this->render('admin_change_password');
+    }
+
+    /**
+     * Register
+     * 
+     * add a user and send template activation email.
+     */
+    public function register() {
+		
+		$class = 'notice';
+		$message = 'Sign up and be sent an activation email.';
+		if($this->data)	{
+			$class.= ' error';
+			$message = 'Some explained error occured whoopsie, you entered data but we botched it up.';
+			if ($this->User->save($this->data)) {
+				// $this->__activation();
+				$class = 'notice success';
+				$message = 'You\'ve got mail!';
+			}
+		}
+		$this->set(compact('message', 'class'));
+	}
+
+    /**
+     * Reset a user id by user name
+     * 
+     * find user by username
+     * resend activation email - disbale user util reset
+     * display part of the email where the mail has been sent
+     */
+    public function reset() {
+		$u = isset($this->data['User']['login']) ? $this->data['User']['login'] : false;
+		$user = false;
+		$class = 'notice';
+		$message = 'Please enter your login, if successful a email will be sent with instructions to change and reactivate your account.';
+		if($u)	{
+			$user = $this->User->findByLogin($u);
+			if($user['User']['login'] == $u)	{
+				$this->set('email', $user['User']['login']);
+				$message = 'An email will be sent to '.$user['User']['email'].'.';
+				$class.= ' success';
+				$this->__activation();
+			} else {
+				$class.= ' error';
+				$message = 'Contact admin to and plead with them to resolve this issue on your behalf.';
+			}
+		}
+		$this->set(compact('message', 'class'));
+    }
+
+    /**
+     * Activation and reactivation email template sendout
+     * 
+     * add a user and send template activation email.
+     */
+    private function __activation() {
     }
 
 }
