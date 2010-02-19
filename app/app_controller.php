@@ -47,8 +47,8 @@ class AppController extends Controller {
 	    'Time',
 		'AutoJavascript.AutoJavascript',
 		'Tagging.Tagging',
-		'LabJs.Labjs',
-		'Swfobject.Swfobject'
+		'Swfobject.Swfobject',
+		'LabJs.Labjs'
 	);
 	public $view = 'Theme';
 	public $homePageId;
@@ -86,6 +86,8 @@ class AppController extends Controller {
 		$settings = ClassRegistry::init('Setting')->getKeyValuePairs();
         Configure::write('AppSettings', $settings); // @TODO add under Wildlfower. configure namespace
         Configure::write('Wildflower.settings', $settings); // The new namespace for WF settings
+
+		$this->theme = Configure::read('Wildflower.settings.theme');
         
         // Admin area requires authentification
 		if ($this->isAdminAction()) {
@@ -307,8 +309,6 @@ class AppController extends Controller {
 		$this->set('canonical', ($this->canonical == '') ? $this->here : $this->canonical);
 
 		$this->_setErrorLayout();
-
-		$this->theme = Configure::read('Wildflower.settings.theme');
 
 	}
 
