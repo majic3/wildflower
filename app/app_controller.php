@@ -310,24 +310,6 @@ class AppController extends Controller {
 
 		$this->theme = Configure::read('Wildflower.settings.theme');
 
-		
-		$this->helpers['Swfobject']->googleScript = true;
-		switch($this->here)	{
-			case '/':
-			case '/home':
-				// later set this with params of page
-				$this->swfobjects[] = json_decode('{"file":"test.swf","type":"static","width":300,"height":150,"divDomId":"myContent","options":{"fvars":{"testingvar":"'.urlencode('some new value').'", "file":"playlist.xml"},"params":{"menu":false,"wmode":"window","base":".\/"},"attribs":{"id":"myFlashContent","name":"myFlashContent","class":"newClass"}}}');
-				$this->swfobjects[] = json_decode('{"file":"pipwerksExInter3.swf","type":"dynamic","width":300,"height":150,"version":"8.0.22","divDomId":"myContent2","FlashId":"myFlashContent2"}');
-			break;
-		}
-		if($this->swfobjects)	{
-			$this->set('swfobjects', $this->swfobjects);
-		}
-
-		//debug($this); die();
-
-		//$this->helpers['Javascript']->codeBlock('// test comment' ."\n\n".'alert(\'common\');', array('inline' => false));
-
 	}
 
 	function do404() {
