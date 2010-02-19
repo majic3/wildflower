@@ -58,7 +58,17 @@
 
 
 	<div id="bd" class="body">
-		<?php echo $content_for_layout; ?>
+		<?php 
+			// Auth error message
+			if ($session->check('Message.auth')) {
+				$session->flash('auth');
+			}
+
+			if ($session->check('Message.flash')) {  
+				$session->flash();
+			}
+
+			echo $content_for_layout; ?>
 	</div>
 
 	<div id="ft" class="foot">
@@ -70,6 +80,16 @@
 		<div class="main">
 			<div class="nv">
 				<?php echo $menu; ?>
+				
+				<ul class="utils">
+					<?php
+						$explodedUtils = Configure::read('Wildflower.settings');
+						$explodedUtils = explode(',', $explodedUtils['Sitemap.utils']);
+						foreach($explodedUtils as $util)	{
+							echo '<li>', $html->link(basename($util), $util), '</li>';
+						}
+					?>
+				</ul>
 			</div>
 			<div class="logos">
 				<div class="cake">

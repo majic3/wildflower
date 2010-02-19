@@ -1,7 +1,7 @@
 <?php
 
 if($session->read('Auth.User'))	{
-	echo $this->element('admin_link'), '$possibleThemeFile: ', $possibleThemeFile;
+	echo $this->element('admin_link'), '$possibleThemeFile: ', (isset($possibleThemeFile)) ? $possibleThemeFile : '';
 }
 
 $debugLevel = Configure::read('debug');
