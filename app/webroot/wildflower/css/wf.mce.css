@@ -1,8 +1,10 @@
-body { font:1em/1.625em "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif; background-color:#FAF9F9 !important;  
-font-size-adjust:none;
-font-style:normal;
-font-variant:normal;
-font-weight:normal;
+body {
+	font:1em/1.625em "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	background-color:#FAF9F9 !important;  
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
 }
 
 p { padding:0; color:#111 !important; font-weight:300;}
@@ -32,20 +34,20 @@ a { color:  #1B3B53 !important; text-decoration: underline }
 a:hover { color:  #1B3B53 !important; text-decoration: none }
 p { padding:0 0  0.8125em 0; color:#111; font-weight:300;}
 
-table { margin-bottom:1.625em; border-collapse: collapse; }
+table { margin-bottom: 1.625em; border-collapse: collapse; }
 th { font-weight:bold; }
-tr,th,td { margin:0; padding:0 1.625em 0 1em; height:26px; }
+tr,th,td { margin: 0; padding: 0 1.625em 0 1em; height:26px; }
 tfoot { font-style: italic; }
-caption { text-align:center; font-family:Georgia, serif; }
+caption { text-align: center; font-family: Georgia, serif; }
 
 
-abbr, acronym { border-bottom:1px dotted #000; }
-address { margin-top:1.625em; font-style: italic; }
-del {color:#000 !important;}
+abbr, acronym { border-bottom: 1px dotted #000; }
+address { margin-top: 1.625em; font-style: italic; }
+del {color: #000 !important;}
 
 
-blockquote { padding:1em 1em 1.625em 1em; font-family:georgia,serif;font-style: italic;  }
-blockquote:before { content:"\201C";font-size:3em;margin-left:-.625em; font-family:georgia,serif;color:#aaa !important;line-height:0;}/* From Tripoli  */
+blockquote { padding:1em 1em 1.625em 1em; font-family: georgia,serif;font-style: italic;  }
+blockquote:before { content:"\201C"; font-size:3em; margin-left:-.625em; font-family:georgia,serif;color:#aaa !important;line-height:0;}/* From Tripoli  */
 blockquote > p {padding:0; margin:0; }
 
 strong { font-weight: bold; }

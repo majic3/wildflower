@@ -17,48 +17,7 @@ class AssetsController extends AppController {
 	    }
 	    
 	    // @TODO replace upload logic with Asset::upload()
-	    
-	    // Check if file with the same name does not already exist
-	    $fileName = trim($this->data[$this->modelClass]['file']['name']);
-        $uploadPath = Configure::read('Wildflower.uploadDirectory') . DS . $fileName;
-        
-        // Rename file if already exists
-        $i = 1;
-        while (file_exists($uploadPath)) {
-            // Append a number to the end of the file,
-            // if it alredy has one increase it
-            $newFileName = explode('.', $fileName);
-            $lastChar = mb_strlen($newFileName[0], Configure::read('App.encoding')) - 1;
-            if (is_numeric($newFileName[0][$lastChar]) and $newFileName[0][$lastChar - 1] == '-') {
-                $i = intval($newFileName[0][$lastChar]) + 1;
-                $newFileName[0][$lastChar] = $i;
-            } else {
-                $newFileName[0] = $newFileName[0] . "-$i";
-            }
-            $newFileName = implode('.', $newFileName);
-            $uploadPath = Configure::read('Wildflower.uploadDirectory') . DS . $newFileName;
-            $fileName = $newFileName;
-        }
-   
-        // Upload file
-        $isUploaded = @move_uploaded_file($this->data[$this->modelClass]['file']['tmp_name'], $uploadPath);
-        
-        if (!$isUploaded) {
-            $this->Asset->invalidate('file', 'File can`t be moved to the uploads directory. Check permissions.');
-            $this->feedFileManager();
-            return $this->render('admin_index');
-        }
-        
-        // Make this file writable and readable
-        chmod($uploadPath, 0777);
-        
-        $this->Asset->data[$this->modelClass]['name'] = $fileName;
-        if (empty($this->Asset->data[$this->modelClass]['title'])) {
-            $this->Asset->data[$this->modelClass]['title'] = str_replace(array('.jpg', '.jpeg', '.gif', '.png'), array('', '', '', ''), $fileName);
-        }
-        $this->Asset->data[$this->modelClass]['mime'] = $this->Asset->data[$this->modelClass]['file']['type'];
-        
-        $this->Asset->save();
+		$isUploaded = $this->upload();
         
         $this->redirect($this->referer(Configure::read('Wildflower.prefix') . '/assets'));
 	}
@@ -93,7 +52,7 @@ class AssetsController extends AppController {
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
 		$tag_cloud = $this->Asset->tagCloud();
 		
-		$this->set(compact('tag_cloud'));
+		$this->set(compact('tagCloud'));
 
 	}
 	
@@ -134,7 +93,7 @@ class AssetsController extends AppController {
 	function admin_update() {
 	    $this->Asset->create($this->data);
 	    if (!$this->Asset->exists()) return $this->cakeError('object_not_found');
-	    $this->Asset->saveField('title', $this->data[$this->modelClass]['title']);
+	    $isUploaded = $this->upload();
 	    $this->redirect(array('action' => 'index'));
 	}
 	
@@ -160,6 +119,7 @@ class AssetsController extends AppController {
      */
     function admin_jlm() {
         $javascripts = Cache::read('admin_jlm'); 
+        $this->RequestHandler->respondAs('application/javascript');
         if (empty($javascripts) or Configure::read('debug') > 0) {
             $javascripts = $this->JlmPackager->concate();
             Cache::write('admin_jlm', $javascripts);
@@ -332,6 +292,62 @@ class AssetsController extends AppController {
 			)
 		);
     }
+
+	/**
+	 * Uploads either a new/ replacement image
+	 *
+	 */
+	private function upload() {
+		///*
+		
+	    
+	    // Check if file with the same name does not already exist
+	    $fileName = trim($this->data[$this->modelClass]['file']['name']);
+        $uploadPath = Configure::read('Wildflower.uploadDirectory') . DS . $fileName;
+        
+        // Rename file if already exists
+        $i = 1;
+        while (file_exists($uploadPath)) {
+            // Append a number to the end of the file,
+            // if it alredy has one increase it
+            $newFileName = explode('.', $fileName);
+            $lastChar = mb_strlen($newFileName[0], Configure::read('App.encoding')) - 1;
+            if (is_numeric($newFileName[0][$lastChar]) and $newFileName[0][$lastChar - 1] == '-') {
+                $i = intval($newFileName[0][$lastChar]) + 1;
+                $newFileName[0][$lastChar] = $i;
+            } else {
+                $newFileName[0] = $newFileName[0] . "-$i";
+            }
+            $newFileName = implode('.', $newFileName);
+            $uploadPath = Configure::read('Wildflower.uploadDirectory') . DS . $newFileName;
+            $fileName = $newFileName;
+        }
+   
+        // Upload file
+        $isUploaded = @move_uploaded_file($this->data[$this->modelClass]['file']['tmp_name'], $uploadPath);
+        
+        if (!$isUploaded) {
+            $this->Asset->invalidate('file', 'File can`t be moved to the uploads directory. Check permissions.');
+            //$this->feedFileManager();
+            //return $this->render('admin_index');
+			$this->Session->setFlash('File can`t be moved to the uploads directory. Check permissions.', 'flash_error');
+			return false;
+        }
+        
+        // Make this file writable and readable
+        chmod($uploadPath, 0777);
+        
+        $this->Asset->data[$this->modelClass]['name'] = $fileName;
+        if (empty($this->Asset->data[$this->modelClass]['title'])) {
+            $this->Asset->data[$this->modelClass]['title'] = str_replace(array('.jpg', '.jpeg', '.gif', '.png'), array('', '', '', ''), $fileName);
+        }
+        $this->Asset->data[$this->modelClass]['mime'] = $this->Asset->data[$this->modelClass]['file']['type'];
+        
+        $this->Asset->save();
+			$this->Session->setFlash('File uploaded.', 'flash_success');
+		return true;
+		//*/
+	}
 
 	/**
 	 * Feed images to various views

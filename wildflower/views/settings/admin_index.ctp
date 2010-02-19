@@ -1,7 +1,6 @@
 <h2 class="section">Site Settings</h2>
 
 <?php
-    $session->flash();
     echo $form->create('Setting', array('action' => 'update', 'class' => 'settings_form'));
     
     // echo '<pre>';

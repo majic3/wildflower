@@ -96,8 +96,8 @@
 	$labjs->addWait('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
 	);
 	
-//	$labjs->addWait($swfobject->script, $swfobject->getInitScript());
-	
+	//	$labjs->addWait($swfobject->script, $swfobject->getInitScript());
+
 	$labjs->addWait(
 		'common',
 		'init();'

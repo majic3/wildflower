@@ -1,8 +1,6 @@
 
 <h2 class="section"><?php __('Contact form messages'); ?></h2>
 <?php
-    $session->flash();
-
     echo 
     $form->create('Message', array('action' => 'mass_update')),
     $this->element('admin_select_actions', array('actions' => array('Delete'))),
