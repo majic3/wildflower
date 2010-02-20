@@ -3,7 +3,14 @@ class DashboardsController extends AppController {
 	
 	public $helpers = array('List', 'Time', 'Text');
 	public $pageTitle = 'Dashboard';
-	public $uses = array('Dashboard','Post', 'Page', 'Utility');
+	public $uses = array('Dashboard','Post', 'Page', 'Utility', 'Tagging.Tag');
+
+	public function beforeRender()	{
+		parent::beforeRender();
+		$tagCloud = $this->Tag->tagCloud();
+		
+		$this->set(compact('tagCloud'));
+	}
 	
 	function admin_index() {
         $items = $this->Dashboard->findRecentHappening();

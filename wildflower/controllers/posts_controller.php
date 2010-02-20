@@ -12,6 +12,7 @@ class PostsController extends AppController {
 		'Gravatar'
 	);
 	public $components = array('Email');
+	public $uses = array('Post', 'Tagging.Tag');
 	
 	/** Pagination options for the admin_index action **/
     public $paginate = array(
@@ -75,7 +76,8 @@ class PostsController extends AppController {
      */
     function admin_index() {
     	$posts = $this->paginate($this->modelClass);
-        $this->set('posts', $posts);
+		$tagCloud = $this->Post->tagCloud();
+        $this->set(compact('posts', 'tagCloud'));
     }
 
     /**
@@ -99,6 +101,8 @@ class PostsController extends AppController {
         $hasUser = $this->data['User']['id'] ? true : false;
         $isDraft = ($this->data[$this->modelClass]['draft'] == 1) ? true : false;
         $isRevision = !is_null($revisionNumber);
+
+		$this->data['tags'] = $this->Post->findTags($this->Post->alias, $id);
         
         // Categories for select box
         $categories = $this->Post->Category->find('list', array('fields' => array('id', 'title')));
@@ -134,6 +138,8 @@ class PostsController extends AppController {
    
         $isDraft = ($this->data[$this->modelClass]['draft'] == 1) ? true : false;
         $this->set(compact('isDraft'));
+
+		$this->data['tags'] = $this->Post->findTags($this->Post->alias, $id);
         
         $this->pageTitle = $this->data[$this->modelClass]['title'];
     }
@@ -344,6 +350,8 @@ class PostsController extends AppController {
 		if (empty($post)) {
 			return $this->do404();
 		}
+
+		$post['related'] = $this->Post->findRelated(true, 5);
         
         // Post title
         $this->pageTitle = $post[$this->modelClass]['title'];

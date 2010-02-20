@@ -6,7 +6,17 @@
 	
 	<?php if (!empty($post['Category'])) { ?>
 	   <p class="postmeta">Posted in <?php echo $category->getList($post['Category']); ?>.</p>
-	<?php } ?> 
+	<?php } ?>
+
+	<?php
+		if (!empty($post['Post']['tags'])) {
+			$tagSettings = array(
+        'class' => 'tags',
+        'itemTemplate' => '<li%attr%><a href="/tag%url%"><span>%name%</span></a></li>',
+        'activeItemTemplate' => '<li%attr%><a href="/tag%url%"><span>%name%</span></a></li>');
+	?>
+	   <ul class="postmeta tags"><?php echo $navigation->create(explode(',', str_replace(' ', '', $post['Post']['tags'])), am($tagSettings, array('url' => '/tagging/'))); ?></ul>
+	<?php } ?>
 	
 	<?php echo $this->element('edit_this', array('id' => $post['Post']['id'])) ?>
 	<p><?php echo $html->link('Back to all posts', '/' . Configure::read('Wildflower.blogIndex')) ?></p>

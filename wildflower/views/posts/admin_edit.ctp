@@ -9,6 +9,7 @@
     $form->input('title', array(
         'label' => __('Post title', true)
     )),
+    $tagging->input('tags'),
     $form->input('content', array(
         'type' => 'textarea',
         'class' => 'tinymce fill_screen',

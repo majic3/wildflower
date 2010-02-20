@@ -133,23 +133,7 @@ echo
 		<?php echo $this->element('../assets/_upload_file_box'); ?>
 	</li>
 	<li class="sidebar-box">
-		<?php echo $tagging->generateCloud($tagCloud, array(
-      'max_scale' => 10,            // CSS class max scale
-      'linkClass' => 'size-class-', // CSS class name prefix
-      'element' => false,           // Element, see above
-      'type' => 'div',              // Type of output 
-      'id' => 'tag-cloud',          // DOM id for top level 'type'
-      'class' => 'cloud',           // CSS class for top level 'type'
-      'itemType' => 'span',         // type of item output
-      'itemClass' => 'cloud-item',  // CSS class for items of type 'itemType'
-      'url' => array(               // URL params
-        'plugin' => 'tagging',
-        'controller' => 'assets',
-        'action' => 'read',
-        'pass' => array('id', 'slug'),
-        'admin' => true
-      )
-    )); ?>
+		<?php echo $this->element('admin_tag_cloud'); ?>
 	</li>
 <?php $partialLayout->blockEnd(); ?>
 

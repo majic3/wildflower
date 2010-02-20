@@ -10,7 +10,7 @@
 <?php
     echo 
     $form->input('draft', array('type' => 'select', 'label' => 'Status', 'options' => Post::getStatusOptions())),
-    //$form->input('archive', array('type' => 'checkbox', 'label' => 'Archived')),
+    $tagging->input('tags'),
     $form->input('description_meta_tag', array('type' => 'textarea', 'rows' => 4, 'cols' => 60, 'tabindex' => '4')),
     $form->input('slug', array('label' => 'URL slug', 'size' => 61)),
     $form->input('created', array());
@@ -26,13 +26,13 @@
 <?php echo $form->end(); ?>
 
 <?php $partialLayout->blockStart('sidebar'); ?>
-    <li class="sidebar-box">
-        <h4>Editing options for post...</h4>
-        <?php echo $html->link($this->data['Post']['title'], array('action' => 'edit', $this->data['Post']['id']), array('class' => 'edited-item-link')); ?>
-    </li>
-            <li class="allPosts">
-			<strong><?php echo $htmla->link('All Posts', array('action' => 'index'), array('strict' => true)); ?></strong>
-			<?php if(isset($jumpMenu)):
-				echo str_replace(array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), '', $form->select('jumpMenu', $jumpMenu, null, array('class' => 'jumpMenu')));
-			endif; ?></li>
+	<li class="sidebar-box">
+		<h4>Editing options for post...</h4>
+		<?php echo $html->link($this->data['Post']['title'], array('action' => 'edit', $this->data['Post']['id']), array('class' => 'edited-item-link')); ?>
+	</li>
+	<li class="allPosts">
+	<strong><?php echo $htmla->link('All Posts', array('action' => 'index'), array('strict' => true)); ?></strong>
+	<?php if(isset($jumpMenu)):
+		echo str_replace(array('&amp;nbsp;', '&nbsp;', '&amp;amp;', '&amp;'), '', $form->select('jumpMenu', $jumpMenu, null, array('class' => 'jumpMenu')));
+	endif; ?></li>
 <?php $partialLayout->blockEnd(); ?>

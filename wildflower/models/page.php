@@ -5,7 +5,8 @@ class Page extends AppModel {
 	   'Containable',
 	   'Slug' => array('separator' => '-', 'overwrite' => false, 'label' => 'title'), 
 	   'Tree',
-	   'Versionable' => array('title', 'content', 'description_meta_tag', 'keywords_meta_tag')
+	   'Versionable' => array('title', 'content', 'description_meta_tag', 'keywords_meta_tag'),
+		'Tagging.Taggable'
     );
     public $belongsTo = array('User');
     public $hasAndBelongsToMany = array('Sidebar');
@@ -310,5 +311,4 @@ class Page extends AppModel {
     	$results = array_merge($titleResults, $contentResults);
     	return $results;
     }
-    
 }

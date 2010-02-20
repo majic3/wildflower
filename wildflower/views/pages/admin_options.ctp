@@ -11,6 +11,7 @@
 <?php
     echo 
     $form->input('parent_id', array('type' => 'select', 'label' => 'Parent page', 'options' => $parentPageOptions, 'empty' => '(none)', 'escape' => false)),
+	$tagging->input('tags'),
     $form->input('draft', array('type' => 'select', 'label' => 'Status', 'options' => Page::getStatusOptions())),
     $form->input('description_meta_tag', array('type' => 'textarea', 'rows' => 4, 'cols' => 60, 'tabindex' => '4')),
     $form->input('slug', array('label' => 'URL slug', 'size' => 61)),

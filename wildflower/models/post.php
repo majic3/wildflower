@@ -4,7 +4,8 @@ class Post extends AppModel {
 	public $actsAs = array(
 	   'Containable',
 	   'Slug' => array('separator' => '-', 'overwrite' => false, 'label' => 'title'),
-	   'Versionable' => array('title', 'content', 'description_meta_tag', 'keywords_meta_tag')
+	   'Versionable' => array('title', 'content', 'description_meta_tag', 'keywords_meta_tag'),
+		'Tagging.Taggable'
 	);
 	public $belongsTo = array('User');
 	public $hasAndBelongsToMany = array(

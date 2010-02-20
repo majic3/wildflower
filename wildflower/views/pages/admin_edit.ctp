@@ -7,6 +7,7 @@
     echo 
     $form->create('Page', array('action' => 'admin_update', 'class' => 'editor_form')),
     $form->input('title', array('between' => '', 'label' => 'Page title')), 
+	$tagging->input('tags'),
     $form->input('content', array(
         'type' => 'textarea',
         'class' => 'tinymce fill_screen',

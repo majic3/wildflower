@@ -8,6 +8,7 @@ class PagesController extends AppController {
 	
 	public $components = array('RequestHandler', 'Seo', 'Regions');
 	public $helpers = array('Form', 'Html', 'Text', 'Time', 'List', 'Tree');
+	public $uses = array('Page', 'Tagging.Tag');
 	public $paginate = array(
 		'limit' => 25,
 		'order' => array('Page.lft' => 'asc')
@@ -87,6 +88,8 @@ class PagesController extends AppController {
 		$this->data = $page;
 		$this->pageTitle = $page[$this->modelClass]['title'];
 
+		$this->data['tags'] = $this->Page->findTags($this->Page->alias, $id);
+
 		$newParentPageOptions = $this->Page->generatetreelist(null, null, null, ' - ');
 		$revisions = $this->Page->getRevisions($id, 10);
 		$isDraft = ($page['Page']['draft']);
@@ -126,6 +129,11 @@ class PagesController extends AppController {
 			null, 
 			'-'
 		);
+
+		$this->data['tags'] = $this->Page->findTags($this->Page->alias, $id);
+
+		//$this->data[$this->modelClass]['tags'] = $this->Page->findTags();
+
 		$jumpMenu = $this->Page->generatetreelist(null, null, null, ' - ');
 
 		$this->set(compact('parentPageOptions', 'jumpMenu'));
@@ -203,7 +211,8 @@ class PagesController extends AppController {
 		$this->Page->recursive = -1;
 		$pages = $this->Page->find('all', array('order' => 'lft ASC'));
 		$newParentPageOptions = $this->Page->generatetreelist(null, null, null, ' - ');
-		$this->set(compact('pages', 'newParentPageOptions'));
+		$tagCloud = $this->Page->tagCloud();
+		$this->set(compact('pages', 'newParentPageOptions', 'tagCloud'));
 	}
 
 	/**
@@ -212,7 +221,7 @@ class PagesController extends AppController {
 	 */
 	function admin_link() {
 		$this->autoLayout = false;
-		$pages = $this->Page->findAll();
+		$pages = $this->Page->find('all');
 		$pagesForSelectBox = $pageUrlMap = array();
 		foreach ($pages as $page) {
 			$pagesForSelectBox[$page[$this->modelClass]['id']] = $page[$this->modelClass]['title'];

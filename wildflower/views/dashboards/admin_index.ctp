@@ -84,4 +84,9 @@
         <?php endforeach; ?>
         </ul>
     </li>
+    <li class="main_sidebar tag_cloud">
+		<?php
+			echo $this->element('admin_tag_cloud');
+		?>
+    </li>
 <?php $partialLayout->blockEnd(); ?>

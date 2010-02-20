@@ -67,6 +67,9 @@
         array('action' => 'admin_create'),
         array('class' => 'add', 'escape' => false)) ?>
     </li>
+	<li>
+		<?php echo $this->element('admin_tag_cloud'); ?>
+	</li>
 <?php $partialLayout->blockEnd(); ?>
 
 
