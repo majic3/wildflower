@@ -33,6 +33,20 @@ $.jlm.bind('assets.admin_index', function() {
 
 $.jlm.bind('assets.admin_edit', function() {
 	$.jlm.components.editImage.startup();
+	$('#AssetFileEnable').live('click', function (e) {
+		console.info('clicked to toggle');
+		if($('#AssetFile').attr('disabled') == true)	{
+			console.info('enabling');
+			$('#AssetFile').attr('disabled', false);
+			$(this).text('disable');
+		} else {
+			console.info('disabling');
+			$('#AssetFile').attr('disabled', true);
+			$(this).text('enable');
+		}
+		e.preventDefault();
+		return false;
+	});
 });
 
 $.jlm.bind('posts.admin_edit, pages.admin_edit, sidebars.admin_edit', function() {

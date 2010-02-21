@@ -51,6 +51,7 @@ Configure::write(array('Wildflower' => array(
     // 60000% speed increase with pure HTML caching into the webroot
     // @TODO cache expire not implemented yet, so don't use if you can't get around it
 	'htmlCache' => false,
+	'cacheDir' => 'j:' . DS .'wildflower' . DS . 'majic' . DS . 'app' . DS . 'webroot' . DS . 'wildflower' . DS . 'img' . DS . 'assets',
 	
     'units' => array(  // idea is that general will be used within sites and other such things (where they may include relational data from addition general is prime stuff additional is supplementary)
         'general' => array('pages', 'posts', 'categories', 'profiles'),

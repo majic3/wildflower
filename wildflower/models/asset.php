@@ -1,7 +1,9 @@
 <?php
 class Asset extends AppModel {
 
-	public $actsAs = array('Tagging.Taggable');
+	public $actsAs = array(
+		'Tagging.Taggable'
+	);
 
     public $validate = array(
         // 'file' => array(
