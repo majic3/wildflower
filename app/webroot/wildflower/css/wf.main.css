@@ -2468,3 +2468,52 @@ body #wrap #content_pad	.draft	a:hover	{
 		margin: .1em;
 		padding: 3px 4px;
 	}
+
+
+/* tags */
+
+.tags {
+
+}
+
+	.tags .data	{
+		margin: 0;
+		padding: 0;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	.tags .data th {
+		text-align: left;
+		background: #3e557f;
+		color: #fff;
+		font-weight: normal;
+		font-size: 11px;
+	}
+	
+	.tags .data th,
+	.tags .data td {
+		padding: 3px 6px;
+		border-bottom: 1px solid #ddd;
+		vertical-align: top;
+	}
+	
+	.tags .data .post th {
+		background-color: #2e9329;
+	}
+			
+	.tags .data .asset th {
+		background-color: #515151;
+	}
+	
+	.tags .data .date {
+		color: #474747;
+	}
+	
+	.tags .data .td ul {
+		margin: 0;
+	}
+	
+	.tags .data th a {
+		color: #FFF;
+	}
