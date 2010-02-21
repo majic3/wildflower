@@ -2483,19 +2483,31 @@ body #wrap #content_pad	.draft	a:hover	{
 		width: 100%;
 	}
 
-	.tags .data th {
+	.tags .data thead th {
 		text-align: left;
+		background: #d2eafc;
+		color: #223223;
+		font-weight: normal;
+		font-size: 11px;
+	}
+
+	.tags .data tbody th {
+		text-align: right;
 		background: #3e557f;
 		color: #fff;
 		font-weight: normal;
 		font-size: 11px;
 	}
 	
-	.tags .data th,
+	.tags .data tbody th,
 	.tags .data td {
 		padding: 3px 6px;
 		border-bottom: 1px solid #ddd;
 		vertical-align: top;
+	}
+	
+	.tags .data .tag th {
+		background-color: #deedee;
 	}
 	
 	.tags .data .post th {
@@ -2515,5 +2527,5 @@ body #wrap #content_pad	.draft	a:hover	{
 	}
 	
 	.tags .data th a {
-		color: #FFF;
+		color: #222;
 	}
