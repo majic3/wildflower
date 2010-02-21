@@ -28,7 +28,7 @@
                     $draftStatus = '<abbr title="This post is not published, therefore not visible to the public." class="draft-status">(Draft)</abbr> ';
                 }
             ?>
-            <span class="title-row"><?php echo $draftStatus, $html->link($post['Post']['title'], array('action' => 'admin_edit', $post['Post']['id']), array('title' => __('Edit this post.', true))) ?></span>
+            <span class="title-row"><?php echo $draftStatus, $html->link($post['Post']['title'], array('action' => 'admin_edit', $post['Post']['id']), array('title' => __('Edit this post.', true))); ?></span>
             <span class="post-date"><?php echo $html->link($time->format('j M y', $post['Post']['created']), array('action' => 'options', $post['Post']['id']), array('title' => __('Change post options.', true))); ?></span>
             <div class="post-categories">
             <?php
@@ -44,7 +44,7 @@
             </div>
             <div class="post-comments"><?php echo $html->link($post['Post']['comment_count'], array('action' => 'comments', $post['Post']['id']), array('title' => __('Manage this post\'s comments.', true)))?></div>
 
-		    <span class="row-actions"><?php echo $html->link('View', Post::getUrl($post['Post']['slug']), array('class' => '', 'rel' => 'permalink', 'title' => __('View this post.', true))) ?></span>
+		    <span class="row-actions"><?php echo $html->link('View', Post::getUrl($post['Post']['slug']), array('class' => '', 'rel' => 'permalink', 'title' => __('View this post.', true))); ?></span>
             <span class="cleaner"></span>
         </li>
     <?php endforeach; ?>

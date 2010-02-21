@@ -11,6 +11,6 @@
     
         echo $html->link($data['Page']['title'], array('action' => 'edit', $data['Page']['id']), array('title' => 'Edit this page.')); 
     ?>
-    <span class="row-actions"><?php echo $html->link('View', $data['Page']['url'], array('class' => '', 'rel' => 'permalink', 'title' => 'View this page.')) ?></span>
+    <span class="row-actions"><?php echo $html->link('View', $data['Page']['url'], array('class' => '', 'rel' => 'permalink', 'title' => 'View this page.')); ?></span>
     <span class="cleaner"></span>
 </div>
