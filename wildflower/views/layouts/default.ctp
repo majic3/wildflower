@@ -12,20 +12,12 @@
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo $siteName; ?> RSS Feed" href="<?php echo $html->url('/rss'); ?>" />
 
-	<style type="text/css">
-		#myContent, #myContent2, #myContent3 {display: block; width: 300px;height: 150px}
-		
-		#myContent	{background-color: red}
-		#myContent2	{background-color: green}
-		#myContent3 {background-color: blue}
-	</style>
-
 	<?php
 	
 	if(isset($canonical['rel']['url']))	echo '<link rel="canonical" href="' . $canonical['rel']['url'] . "\" />\n";
 	if(isset($canonical['rev']['id']))	echo '<link rev="canonical" href="' . $canonical['rev']['slug'] . "\" />\n";
 
-	if(!isset($styles)) $styles = false;
+	if(!isset($styles)) $styles = array();
 
 	echo $html->css(am(array('wildflower'), $styles), 'stylesheet', Array('media' => 'screen'), true);
 	?>
@@ -106,6 +98,7 @@
 	</div>
 </div>
 <?php
+
 	if($tagging)
 		$tagScript = $tagging->getScript(true);
 
@@ -114,8 +107,12 @@
 	if($labjs)	{
 	$labjs->addWait('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',		'$(\'#umsg\').removeClass(\'alert\').addClass(\'notice\').html(\'preparing page\');'
 	);
-	
-	//	$labjs->addWait($swfobject->script, $swfobject->getInitScript());
+
+	$getInitScript = $swfobject->getInitScript();
+
+	if($getInitScript != '')	{
+		$labjs->addWait($swfobject->script, $getInitScript . '$(\'object\', \'#bd\').css(\'visibility\', \'visible\')');
+	}
 
 	$labjs->addWait(
 		'common',
@@ -137,8 +134,6 @@
 		$tagScript,
 		'$(".tagSuggest").tagSuggest(' . $javascript->object($tagOptions) . ');'
 	);
-	
-	// debug($labjs);
 
 	$endWait = '
 		var $umsg = $(\'#umsg\');
