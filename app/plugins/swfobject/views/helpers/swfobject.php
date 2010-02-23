@@ -35,7 +35,13 @@ class Swfobjecthelper extends AppHelper	{
 	private $settings = array(
 		'instance' => array(
 			'width' => 100,
-			'height' => 100
+			'height' => 100,
+			'version' => '9.0.115',
+			'id' => false,
+			'file' => false,
+			'params' => false,
+			'class' => false,
+			'attribs' => false
 		),
 		'head' => array()
 	);
@@ -60,7 +66,7 @@ class Swfobjecthelper extends AppHelper	{
 	 *
 	 * @var string
 	 */
-	private $defaultVersionRequirement = '9.0.0';
+	private $defaultVersionRequirement = '9.0.115';
 	
 	/**
 	 * Used by renderSwf to only call init if it hasnt been done, either
@@ -82,7 +88,7 @@ class Swfobjecthelper extends AppHelper	{
 	 *
 	 * @var boolean
 	 */
-	public $autoHead = true;
+	public $autoHead = false;
 
 	
 	/**
@@ -154,11 +160,14 @@ class Swfobjecthelper extends AppHelper	{
 			$attribs = $this->Javascript->object($options['attribs']);
 		}
 
-		if (isset($options['version'])) {
+		/* if (isset($options['version'])) {
 			$version = $options['version'];
 		} else {
 			$version = $this->defaultVersionRequirement;
-		}
+		} */
+
+		$version = $options['version'];
+
 		if (isset($options['install'])) {
 			$install = '"'.$options['install'].'"';
 		} else {
@@ -210,23 +219,40 @@ class Swfobjecthelper extends AppHelper	{
 	 * @return void
 	 * @access public
 	 */
-	public function staticObject($ObjectId, $altContent = false) {
-		// use the static element
+	public function staticObject($ObjectId, $altContent = false, $options = false) {
+
 		$View = &ClassRegistry::getObject('view'); 
-		
-		//$this->log('staticObject', 'swfobject-helper');
-		$staticArray = Set::extract($this->instances, 'Static.{n}.'. $ObjectId);
+
+		if(!$options)	{
+			// use the static element
+			
+			//$this->log('staticObject', 'swfobject-helper');
+			$staticArray = Set::extract($this->instances, '{s}.{n}.'. $ObjectId);
+			//debug($staticArray[0][0]);
+			$options = am($this->settings['instance'], $staticArray[0][0]);
+			//debug($options);die();
+		} else {
+			$options = am($this->settings['instance'], $options);
+		}
 		
 		// debug($staticArray);die();
 		$returnArray['plugin'] = 'Swfobject';
 		$returnArray['id'] = $ObjectId;
-		$returnArray['width'] = $staticArray[0]['width'];
-		$returnArray['height'] = $staticArray[0]['height'];
+		$returnArray['width'] = $options['width'];
+		$returnArray['height'] = $options['height'];
 		$returnArray['altContent'] = ($altContent) ? $altContent : '';
-		$returnArray['file'] = $this->webroot.'swf/' .$staticArray[0]['file'];
-		$returnArray['class'] = (array_key_exists('class', $staticArray[0])) ? $staticArray[0]['class'] : 'flash';
-		$returnArray['params'] = (array_key_exists('params', $staticArray[0])) ? $staticArray[0]['params'] : array();
-		$returnArray['attribs'] = (array_key_exists('attribs', $staticArray[0])) ? $staticArray[0]['attribs'] : array();
+		$returnArray['file'] = $this->webroot.'swf/' .$options['file'];
+		$returnArray['version'] = (isset($options['version'])) ? $options['version'] : 'flash';
+		$returnArray['class'] = (isset($options['class'])) ? $options['class'] : 'flash';
+		$returnArray['params'] = (isset($options['params'])) ? $options['params'] : array();
+		$returnArray['attribs'] = (isset($options['attribs'])) ? $options['attribs'] : array();
+
+		if(!isset($returnArray['params']->wmode))	$returnArray['params']->wmode = 'window';
+		if(!isset($returnArray['params']->menu))	$returnArray['params']->menu = 'true';
+		if(!isset($returnArray['params']->base))	$returnArray['params']->base = './';
+
+		//debug($returnArray);
+
 		return $View->element('static',$returnArray);
 	}
 
@@ -239,12 +265,19 @@ class Swfobjecthelper extends AppHelper	{
 	 * @access public
 	 */
 	private function registerObject($ObjectId, $options, $type = 'static') {
+		$_init_script = '';
+		$options = am($this->settings['instance'], $options);
 		if($type == 'static')	{
-			$this->_init_script.= "\n// register object number \nswfobject.registerObject(\"$ObjectId\", \"{$options['version']}\");";
+			$_init_script.= "\n// register object number \nswfobject.registerObject(\"$ObjectId\", \"{$options['version']}\");";
 		} else	{
-			$this->_init_script.= "\n// call embedding of object number \n" . $this->dynamicObject($options['file'], $options['width'], $options['height'],$ObjectId, $options);
+			$_init_script.= "\n// call embedding of object number \n" . $this->dynamicObject($options['file'], $options['width'], $options['height'],$ObjectId, $options);
 		}
 		$this->instances[ucfirst($type)][] = array($ObjectId => $options);
+		
+		if($this->_init_script)
+			$this->_init_script.= $_init_script;
+		else
+			$this->_init_script = $_init_script;
 	}
 
 	/**
@@ -276,7 +309,7 @@ class Swfobjecthelper extends AppHelper	{
 		$view =& ClassRegistry::getObject('view'); 
 		//debug($this); echo "<br />";
 		//debug($view);die();
-		$this->log('beforeRender', 'swfobject-helper');
+		//$this->log('beforeRender', 'swfobject-helper');
 		if($this->script) {
 			//$this->log('beforeRender -} googleScript is set ' . $this->googleScript, 'swfobject-helper');
 			$this->Javascript->link($this->script, false);
@@ -335,7 +368,28 @@ class Swfobjecthelper extends AppHelper	{
 	}
 	
 	/*
-	 * headscript
+	 * embed
+	 *
+	 *  embeds a default syntax swfobject direct into view adds script
+	 *
+	 * @param $options array
+	 * @return string swfobject syntax
+	 * @access public
+
+	*/
+	public function embed($ObjectId, $options) {
+		$type = 'static';
+		if(isset($options['altContent']))	{
+			$altContent = $options['altContent'];
+			unset($options['altContent']);
+		}
+		$this->registerObject($ObjectId, $options, $type);
+		$return = $this->staticObject($ObjectId, $altContent, $options);
+		return $return;
+	}
+	
+	/*
+	 * _autohead
 	 *
 	 *  returns the headscript as a block by defaut or just the script for you to insert in a block.
 	 *  allowing you to have cleaner output
