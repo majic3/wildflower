@@ -3,8 +3,8 @@ class Dashboard extends AppModel {
 
     public $useTable = false;
     static public $classNames = array(
-        'Page' => array('id', 'title', 'updated'), 
-        'Post' => array('id', 'title', 'updated'), 
+        'Page' => array('id', 'title', 'url', 'updated'), 
+        'Post' => array('id', 'title', 'slug', 'updated'), 
         'Comment' => array('id', 'name', 'updated'), 
         'Message' => array('id', 'name', 'updated'), 
         'Asset' => array('id', 'name', 'updated'),
@@ -13,14 +13,18 @@ class Dashboard extends AppModel {
     function findRecentHappening() {
         // Get changed or added pages, posts, comments, contact form messages, files
         $limit = 15;
-        $recursive = -1;
+        $recursive = 1;
         $conditions = null;
         $models = Dashboard::$classNames;
         $items = array();
         foreach ($models as $model => $fields) {
             $class = ClassRegistry::init($model);
+			$tags = array();
             if (in_array($model, array('Message', 'Comment'))) {
                 //$conditions = array($model . '.spam' => 0);
+            }
+            if (in_array($model, array('Asset', 'Page', 'Page'))) {
+                // find tags $class->alias findTags($this->Post->alias, $id)
             }
             $items = array_merge($items, $class->find('all', compact('limit', 'recursive', 'fields', 'conditions')));
         }
