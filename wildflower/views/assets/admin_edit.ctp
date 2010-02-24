@@ -28,23 +28,6 @@ echo $navigation->create(array(
              "</p>";
     }
 ?>
-
-<!-- div id="file-upload">
-    <?php
-        //*
-		echo 
-        $form->create('Asset', array('type' => 'file', 'url' => $html->url(array('action' => 'admin_update', 'base' => false)))),
-        $form->input('title', array('between' => '<br />', 'label' => 'Title <small>(optional)</small>')),
-		$form->input('file', array('type' => 'file', 'between' => '<br />', 'label' => false)),
-		$form->input('category_id', array('label'=>'Category:', 'type'=>'select','options'=>$categories)),
-        '<div>',
-		$tagging->input('tags'),
-        $form->hidden('id'),
-        '</div>',
-        $wild->submit('Save'),
-        $form->end();/*/
-    ?>
-</div -->
 </div>
 
 <?php /*make this upload new replacement of current image */ $partialLayout->blockStart('sidebar'); ?>
@@ -52,6 +35,10 @@ echo $navigation->create(array(
         <?php echo $this->element('../assets/_upload_file_box', array('data' => $this->data)); ?>
     </li>
     <li class="sidebar-box">
-		<?php echo $tagging->generateCloud($tagCloud); ?>
+		<?php echo $this->element('admin_tag_cloud', array(
+			'action' => 'index',
+			'wfcore' => true,
+			'pass' => array('id', 'slug')
+		)); ?>
     </li>
 <?php $partialLayout->blockEnd(); ?>

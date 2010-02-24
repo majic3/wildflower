@@ -13,6 +13,12 @@ class Asset extends AppModel {
         // )
 	);
 
+	function paginate($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
+		//print_r(func_get_args()); // for debugging
+		return $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group'));
+	}
+
+
 	public $belongsTo = array('Category');
 	
 	function delete($id) {
