@@ -104,7 +104,7 @@ class AppController extends Controller {
 
 		// Home page ID
 		$this->homePageId = intval(Configure::read('AppSettings.home_page_id'));
-		$this->categoryParentId = intval(Configure::read('AppSettings.category_parent_id'));
+		Configure::write('Wildflower.setting.AssetCategory', intval(Configure::read('AppSettings.category_parent_id')));
 
 		// Set cookie defaults
 		$this->cookieName = Configure::read('Wildflower.cookie.name');
@@ -297,9 +297,7 @@ class AppController extends Controller {
 			'bdyClass' => ($this->bdyClass) ? $this->bdyClass : false,
 			'homePageId' => $this->homePageId,
 			// Here without base
-			'here' => substr($this->here, strlen($this->base) - strlen($this->here)),
-			'credits' => $this->isHome ? Configure::read('AppSettings.credits') : false,
-            'categoryParentId' => $this->categoryParentId
+			'here' => substr($this->here, strlen($this->base) - strlen($this->here))
 		);
 		$this->params['Wildflower']['view'] = $params;
 		$this->set($params);
