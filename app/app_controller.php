@@ -523,6 +523,34 @@ class AppController extends Controller {
 		}
 	}
 
+	public function setLayout($layout = false) {  
+		$template = 'default';
+
+		if ($this->isHome) {
+			$layout = 'home';
+		}
+
+		$render = $template;
+		
+		if (isset($this->theme)) {
+			$possibleThemeLayout = APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'layouts' . DS . $layout . '.ctp';
+			if (file_exists($possibleThemeLayout)) {
+				$render = $possibleThemeLayout;
+			}
+		} else {
+			$WildflowerLayout = WILDFLOWER . 'views' . DS . 'layouts' . DS . $layout . '.ctp';
+			$possibleThemeLayout = APP . 'views' . DS . 'layouts' . DS . $layout . '.ctp';
+			if (file_exists($possibleThemeLayout)) {
+				$render = $possibleThemeLayout;
+			} elseif (file_exists($WildflowerLayout)) {
+				$render = $WildflowerLayout;			
+			}
+		}
+
+		$this->set(compact('possibleThemeLayout'));
+		$this->layout = $render;
+	}
+
 	/**
 	 * Abstracts cakephp's Email component Send function and sets default values
 	 *@access public
