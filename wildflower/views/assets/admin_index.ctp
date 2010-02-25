@@ -21,7 +21,7 @@ echo
 
 <?php if (empty($files)): ?>
 	<p>No files uploaded yet.</p>
-<?php elseif($this->passedArgs['limit'] == 1): ?>
+<?php elseif(isset($this->passedArgs['limit']) && ($this->passedArgs['limit'] == 1)): ?>
 	<?php 
 
 		// explode the mime - so we know if its image - use after the / as a className

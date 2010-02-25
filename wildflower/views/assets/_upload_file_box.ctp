@@ -17,6 +17,14 @@
 		);
 	}
 
+	$glink = $html->link(
+			'enable', 
+			'#enable', 
+			array(
+				'id' => 'AssetGalleryEnable'
+			)
+		);
+
 	echo 
 	"<p class=\"frmNotice\"><small>$uploadLimits.</small></p>",
 	$form->create('Asset', array('type' => 'file', 'action' => $action)),
@@ -30,6 +38,14 @@
 		false, 
 		'-- select --'
 	),
+	$form->select(
+		'gallery_category_id', 
+		$galleryCategories, 
+		$cat, 
+		array('disabled'=>'disabled'), 
+		'-- select --'
+	),
+	$glink,
 	($action == 'admin_update' ? $form->hidden('id') : ''),
 	$form->submit($bttnLabel), 
     $form->end();

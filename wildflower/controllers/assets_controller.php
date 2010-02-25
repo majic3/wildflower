@@ -7,6 +7,77 @@ class AssetsController extends AppController {
         'limit' => 20,
         'order' => array('created' => 'desc')
     );
+
+	// @todo publically exluded asset categories
+	public $publicExcludes = array(72);
+
+	// @todo an asset category that contains cats as albums
+	public $galleryCatId = 72;
+	
+	function index() {
+		$args = func_get_args();
+		$exlcudes = $this->publicExcludes;
+
+		if(isset($args[0]) && $args[0] > 0)	{
+			// find single image
+			$image = $this->Asset->findById($args[0]);
+			$images = $this->Asset->Category->findById($image['Asset']['category_id']);
+			$cat = false;
+			$categories = $this->Asset->Category->find(
+				'list', 
+				array(
+					'fields' => array('id', 'title'), 
+					'conditions' => array(
+						'Category.parent_id' => Configure::read('AppSettings.category_parent_id')
+					),
+					'order' => array(
+						'Category.lft' => 'asc'
+					)
+				)
+			);
+				
+			
+
+			$galleryCategories = $this->Asset->Category->find(
+				'list', 
+				array(
+					'fields' => array(
+						'id', 'title'
+					), 
+					'conditions' => array(
+						'Category.parent_id' => $this->galleryCatId
+					),
+					'order' => array(
+						'Category.lft' => 'asc'
+					)
+				)
+			);
+
+			$tagCloud = $this->Asset->tagCloud($this->Asset->alias);
+
+			$this->set(compact(
+				'args', 
+				'image', 
+				'images',
+				'tagCloud',
+				'cat',
+				'categories',
+				'galleryCategories'));
+			
+			$this->pageTitle = 'image';
+
+		} else {
+			$this->pageTitle = 'gallery';
+			//@todo have a set of excuded filter options
+			$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
+			$this->feedFileManager();
+			$this->set(compact('args', 'exlcudes'));
+		}
+		//@todo use better layout setter but it does not work currently
+		//$this->setLayout('gallery');
+		$this->layout = 'gallery';
+		$this->render('/pages/gallery');
+	}
 	
 	function admin_create() {
 	    $this->Asset->create($this->data);
@@ -58,7 +129,26 @@ class AssetsController extends AppController {
 		$filter = null;
 		$this->data = $this->Asset->findById($id);
 		
-		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => Configure::read('AppSettings.category_parent_id'))));
+		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => Configure::read('AppSettings.category_parent_id')),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)));
+
+		
+		$galleryCategories = $this->Asset->Category->find(
+			'list', 
+			array(
+				'fields' => array(
+					'id', 'title'
+				), 
+				'conditions' => array(
+					'Category.parent_id' => $this->galleryCatId
+				),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)
+			)
+		);
 
 		$AssetTags = $this->Asset->findTags();
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
@@ -70,6 +160,7 @@ class AssetsController extends AppController {
 				'tagCloud',
 				'Asset',
 				'categories',
+				'galleryCategories',
 				'cat'
 			)
 		);
@@ -433,14 +524,49 @@ class AssetsController extends AppController {
 			$cat = false;
 		}
 
+		if(isset($excludes))	{
+			//$this->paginate['conditions'][] = array('Asset.category_id' => $cat);
+		}
+
 		// Categories for select box
-		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => Configure::read('AppSettings.category_parent_id'))));
+		// @todo category_parent_id => AssetCategoryId
+		$categories = $this->Asset->Category->find(
+			'list', 
+			array(
+				'fields' => array('id', 'title'), 
+				'conditions' => array(
+					'Category.parent_id' => Configure::read('AppSettings.category_parent_id')
+				),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)
+			)
+		);
+			
+		
+
+		$galleryCategories = $this->Asset->Category->find(
+			'list', 
+			array(
+				'fields' => array(
+					'id', 'title'
+				), 
+				'conditions' => array(
+					'Category.parent_id' => $this->galleryCatId
+				),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)
+			)
+		);
+
 		$this->pageTitle = 'Files';
 
 		if(isset($this->params['named']['limit']))
 			$this->paginate['limit'] = $this->params['named']['limit'];
+		
 
-		$limit = $displayNumImgs = $this->paginate['limit'];
+		$limit = $displayNumImgs = ($this->paginate['limit']) ? $this->paginate['limit'] : 20;
 		
 		$files = $this->paginate($this->modelClass);
 
@@ -467,7 +593,8 @@ class AssetsController extends AppController {
 				'limit',
 				'tagCloud',
 				'cat',
-				'categories'
+				'categories',
+				'galleryCategories'
 			)
 		);
 	}
