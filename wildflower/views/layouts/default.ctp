@@ -80,6 +80,7 @@
 						foreach($explodedUtils as $util)	{
 							echo '<li>', $html->link(basename($util), $util), '</li>';
 						}
+							echo '<li>', $html->link('gallery', '/gallery'), '</li>';
 					?>
 				</ul>
 			</div>
