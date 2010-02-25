@@ -1,6 +1,13 @@
 Wildflower 1.3 Beta - A CakePHP CMS
 ***********************************
 
+	assets - with better pagination controls
+	tagging for admin posts, pages, and assets
+	preparing for sidebars becoming modules (widgets, menus also handled by modules)
+
+	posts public display and use of tags
+	gallery system using assets with tags and filters
+
 Requirements
 ============
 
