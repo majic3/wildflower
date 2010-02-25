@@ -170,13 +170,13 @@ class LabjsHelper extends AppHelper {
 			if($wait)	{
 				$LAB.= '.wait(function() {' . "\n\t\t".$wait."\n\t\t" . '})';
 				$endWait = str_replace($wait, "", $endWait);
-				$this->log(' == ', 'labJS');
-				$this->log(' wait ', 'labJS');
-				$this->log($wait, 'labJS');
-				$this->log(' -- ', 'labJS');
-				$this->log(' endWait ', 'labJS');
-				$this->log($endWait, 'labJS');// die();
-				$this->log(' -- ', 'labJS');
+				// $this->log(' == ', 'labJS');
+				// $this->log(' wait ', 'labJS');
+				// $this->log($wait, 'labJS');
+				// $this->log(' -- ', 'labJS');
+				// $this->log(' endWait ', 'labJS');
+				// $this->log($endWait, 'labJS');// die();
+				// $this->log(' -- ', 'labJS');
 			}
 		}
 

@@ -131,7 +131,7 @@ class Swfobjecthelper extends AppHelper	{
 	 * @return string
 	 */
 	private function dynamicObject($swfFile, $width = null, $height = null, $divDomId = false, $options = array()) {
-	$this->log('dynamicObject', 'swfobject-helper');
+	//	$this->log('dynamicObject', 'swfobject-helper');
 		$options = am ($this->options, $options);		
 		if (is_null($width)) {
 			$width = $options['width'];
