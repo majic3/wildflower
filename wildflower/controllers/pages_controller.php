@@ -166,6 +166,8 @@ class PagesController extends AppController {
 	}
 
 	function admin_update() {
+		Configure::write('debug', 2);
+		debug($this->data); die();
 		$this->data[$this->modelClass]['user_id'] = $this->getLoggedInUserId();
 		
 		$this->Page->create($this->data);
@@ -179,7 +181,13 @@ class PagesController extends AppController {
 		
 		$oldUrl = $this->Page->field('url');
 		
-		$page = $this->Page->save();
+		// save and get a message for user display -- save unless _saveAll is set in form
+		if(isset($this->data['Page']['_saveAll']) && $this->data['Page']['_saveAll'] === 1)	{
+			$page = $this->Page->saveAll($this->data);
+		} else {
+			$page = $this->Page->save();
+		}
+
 		if (empty($page)) return $this->cakeError('save_error');
 		
 		$this->Page->contain('User');
@@ -191,6 +199,13 @@ class PagesController extends AppController {
 		}
 
 		$hasUser = $page['User']['id'] ? true : false;
+
+		
+		if($page)	{
+			$this->Session->setFlash('Page Saved', 'flash_success');
+		} else {
+			$this->Session->setFlash('save failed', 'flash_error');
+		}
 		
 		// JSON response
 		if ($this->RequestHandler->isAjax()) {

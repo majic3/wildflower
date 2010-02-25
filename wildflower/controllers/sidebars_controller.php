@@ -10,6 +10,7 @@ class SidebarsController extends AppController {
     function admin_index() {
         $sidebars = $this->Sidebar->find('all');
         $menus = ClassRegistry::init('Menu')->find('all', array('recursive' => -1));
+        $widgets = ClassRegistry::init('Menu')->find('all', array('recursive' => -1));
         $this->set(compact('sidebars', 'menus'));
     }
     
