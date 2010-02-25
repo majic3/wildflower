@@ -101,7 +101,7 @@
 		.script("<?php echo $this->base ?>/<?php echo Configure::read('Routing.admin') ?>/assets/jlm").wait(function () {
 			$.jlm.config({
 				base: '<?php echo $this->base ?>',
-				controller: '<?php echo $this->params['controller'] ?>',
+				controller: '<?php echo $this->params['controller']; ?>',
 				action: '<?php echo $this->params['action'] ?>', 
 				model: '<?php echo ucfirst(Inflector::singularize($this->params['controller'])) ?>', 
 				prefix: '<?php echo Configure::read('Routing.admin') ?>',
