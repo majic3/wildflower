@@ -67,6 +67,8 @@ class WildHelper extends AppHelper {
 	 * @return string
 	 */
 	function bodyTagWithClass() {
+		// @todo body should have id unless options are set to not have id
+		// @todo make this clense the params for paginated views
 
 		if (!isset($this->params['Wildflower']['view'])) {
 			return '<body>';
@@ -91,7 +93,9 @@ class WildHelper extends AppHelper {
 			// check for index (posts) or view (post)
 	       $html .= ' class="post"'; 
 	    } else	{
-			$html .= ' class="' . str_replace(array('/', '-'), array('', ''), $here) . '"';
+			// here we need to ensure that class is set that is free from illegile chars
+			// devise best way to parse $here into classes or id (then code is need elsewhere in this function)
+			$html .= ' class="' . str_replace(array('/', '-', ':', 'page'), array(' ', ' ', '', ''), $here) . '"';
 	    }
 	    $html .= '>';
         return $html;
