@@ -33,7 +33,10 @@
         if ($setting['Setting']['name'] == 'home_page_id') {
             $options['options'] = $homePageIdOptions;
             $options['escape'] = false;
-        } else if ($setting['Setting']['name'] == 'category_parent_id') {
+        } else if ($setting['Setting']['name'] == 'category_parent_id' || $setting['Setting']['name'] == 'AssetCategoryId') {
+            $options['options'] = $categoryParentIdOptions;
+            $options['escape'] = false;
+		} else if ($setting['Setting']['name'] == 'GalleryCategoryId') {
             $options['options'] = $categoryParentIdOptions;
             $options['escape'] = false;
 		} else if ($setting['Setting']['name'] == 'email_delivery') {
