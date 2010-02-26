@@ -22,6 +22,9 @@ Router::connect('/app/webroot/', array('controller' => 'pages', 'action' => 'vie
 // Contact form
 Router::connect('/contact', array('controller' => 'messages', 'action' => 'index'));
 Router::connect('/contact/create', array('controller' => 'messages', 'action' => 'create'));
+// gallery view
+Router::connect('/gallery/*', array('controller' => 'assets', 'action' => 'index'));
+Router::connect('/g/album/*', array('controller' => 'assets', 'action' => 'index'));
 
 // Search, help & options
 Router::connect('/search', array('controller' => 'dashboards', 'action' => 'search'));
@@ -37,6 +40,7 @@ Router::connect('/c/:slug', array('controller' => 'posts', 'action' => 'category
 
 // Wildflower admin routes
 $prefix = Configure::read('Routing.admin');
+
 Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'index', 'admin' => true));
 
 // Image thumbnails
@@ -44,6 +48,7 @@ Router::connect("/$prefix", array('controller' => 'dashboards', 'action' => 'ind
 $mprefix = Configure::read('Wildflower.mediaRoute');
 Router::connect('/' . $mprefix. '/thumbnail/*', array('controller' => 'assets', 'action' => 'thumbnail'));
 Router::connect('/' . $mprefix. '/thumbnail_by_id/*', array('controller' => 'assets', 'action' => 'thumbnail_by_id'));
+Router::connect('/' . $mprefix. '/thumb/id/*', array('controller' => 'assets', 'action' => 'thumbnail_by_id'));
 
 // Utilities - add for cache and other general bits and things
 

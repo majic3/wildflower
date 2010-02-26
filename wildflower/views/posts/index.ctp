@@ -43,5 +43,8 @@
 			<h3>Latest Comments</h3>
 			<?php echo $wild->menu('latestComments', array());  ?>
 		</div>
+		<div class="lastUnit size1of1">
+			<?php echo $this->element('tag_cloud', array('default' => true));  ?>
+		</div>
 	</div>
 </div>

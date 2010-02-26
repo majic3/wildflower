@@ -34,14 +34,29 @@ $.jlm.bind('assets.admin_index', function() {
 $.jlm.bind('assets.admin_edit', function() {
 	$.jlm.components.editImage.startup();
 	$('#AssetFileEnable').live('click', function (e) {
-		console.info('clicked to toggle');
+		//console.info('clicked to toggle');
 		if($('#AssetFile').attr('disabled') == true)	{
-			console.info('enabling');
+			//console.info('enabling');
 			$('#AssetFile').attr('disabled', false);
 			$(this).text('disable');
 		} else {
-			console.info('disabling');
+			//console.info('disabling');
 			$('#AssetFile').attr('disabled', true);
+			$(this).text('enable');
+		}
+		e.preventDefault();
+		return false;
+	});	
+	console.info('clicked to toggle ggejirio');
+	$('#AssetGalleryEnable').live('click', function (e) {
+		console.info('clicked to toggle');
+		if($('#AssetCategoryId').attr('disabled') == true)	{
+			$('#AssetGalleryCategoryId').attr('disabled', false);
+			$('#AssetCategoryId').attr('disabled', true);
+			$(this).text('disable');
+		} else {
+			$('#AssetGalleryCategoryId').attr('disabled', true);
+			$('#AssetCategoryId').attr('disabled', false);
 			$(this).text('enable');
 		}
 		e.preventDefault();

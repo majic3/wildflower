@@ -104,6 +104,7 @@ class AppController extends Controller {
 
 		// Home page ID
 		$this->homePageId = intval(Configure::read('AppSettings.home_page_id'));
+		Configure::write('Wildflower.setting.AssetCategory', intval(Configure::read('AppSettings.category_parent_id')));
 
 		// Set cookie defaults
 		$this->cookieName = Configure::read('Wildflower.cookie.name');
@@ -296,8 +297,7 @@ class AppController extends Controller {
 			'bdyClass' => ($this->bdyClass) ? $this->bdyClass : false,
 			'homePageId' => $this->homePageId,
 			// Here without base
-			'here' => substr($this->here, strlen($this->base) - strlen($this->here)),
-			'credits' => $this->isHome ? Configure::read('AppSettings.credits') : false
+			'here' => substr($this->here, strlen($this->base) - strlen($this->here))
 		);
 		$this->params['Wildflower']['view'] = $params;
 		$this->set($params);
@@ -521,6 +521,34 @@ class AppController extends Controller {
 		if($this->name == 'CakeError') {  
 			$this->layout = 'error';  
 		}
+	}
+
+	public function setLayout($layout = false) {  
+		$template = 'default';
+
+		if ($this->isHome) {
+			$layout = 'home';
+		}
+
+		$render = $template;
+		
+		if (isset($this->theme)) {
+			$possibleThemeLayout = APP . 'views' . DS . 'themed' . DS . $this->theme . DS . 'layouts' . DS . $layout . '.ctp';
+			if (file_exists($possibleThemeLayout)) {
+				$render = $possibleThemeLayout;
+			}
+		} else {
+			$WildflowerLayout = WILDFLOWER . 'views' . DS . 'layouts' . DS . $layout . '.ctp';
+			$possibleThemeLayout = APP . 'views' . DS . 'layouts' . DS . $layout . '.ctp';
+			if (file_exists($possibleThemeLayout)) {
+				$render = $possibleThemeLayout;
+			} elseif (file_exists($WildflowerLayout)) {
+				$render = $WildflowerLayout;			
+			}
+		}
+
+		$this->set(compact('possibleThemeLayout'));
+		$this->layout = $render;
 	}
 
 	/**

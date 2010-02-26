@@ -273,8 +273,10 @@ class PostsController extends AppController {
         
         // Sidebar for blog
         $wfPostsSidebar = ClassRegistry::init('Sidebar')->findBlogSidebar();
+		
+		$tagCloud = $this->Post->tagCloud();
         
-        $this->set(compact('posts', 'sidebarCategories', 'wfPostsSidebar'));
+        $this->set(compact('posts', 'sidebarCategories', 'wfPostsSidebar', 'tagCloud'));
     }
     
     /**

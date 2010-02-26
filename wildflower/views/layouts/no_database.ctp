@@ -39,9 +39,7 @@
 	</div>
 
 	<div id="ft" class="foot">
-		<div class="leftCol">
-			<?php echo $credits ? $this->element('credits', compact('credits')):'' ?>
-			
+		<div class="leftCol">			
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>
 		</div>

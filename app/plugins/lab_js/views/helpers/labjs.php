@@ -79,8 +79,9 @@ class LabjsHelper extends AppHelper {
 	 */
 	public function __construct($options = array()) {
 		$this->__options = am($this->__options, $options);
-		//$this->log($View, 'labJS');// die();
+		//// $this->log($View, 'labJS');// die();
 		$this->__viewScripts = &ClassRegistry::getObject('view')->__scripts;
+		ClassRegistry::getObject('view')->__scripts = array();
 		//$this->__viewVars = $View->viewVars;
 	}
 
@@ -138,38 +139,17 @@ class LabjsHelper extends AppHelper {
 
 		$scripts = $this->__options['baseLib'];
 
-		//debug($this->View);
-		// /(src)="\/?(.*\/)?(js)\/(.*).(js)"/
-		// /(src)="(\/?(.*\/)?(js)\/(.*).(js)|((http://)[-a-zA-Z0-9@:%_\+.~#?&//=]+))"/
-		// /src="((http:\/\/|\/)[-a-zA-Z0-9:@;?&=\/%\+\.\*!'\(\),\$_\{\}\^~\[\]`#|]+)"/
-		// /src="((http:\/\/|\/)[-a-zA-Z0-9:@;?&=\/%\+\._[\]]+)"/
-
-		//if (isset($this->__viewVars)) {
-			//$this->log($this->__viewVars, 'labJS');
-		//}
-
 		foreach ($this->__viewScripts as $i => $script) {
-			$this->log("\n\n---\n\nchecking: " . $script, 'labJS');
+			// $this->log("\n\n---\n\nchecking: " . $script, 'labJS');
 			$script = str_replace(array('//<![CDATA[', '//]]>'), '', $script);
 			if (preg_match('/src="((http:\/\/|\/)[-a-zA-Z0-9:@;?&=\/%\+\._[\]]+)"/', $script, $match)) {
-				$this->log("\n\n" . $match, 'labJS');
+				// $this->log("\n\n" . $match, 'labJS');
 				$scripts[] = $match[1];
 			} elseif(preg_match('/((<[\s\/]*script\b[^>]*>)([^>]*)(<\/script>))/m', $script, $match)) {
-				$this->log("\n\n" . $script . " scriptblock!", 'labJS');
+				// $this->log("\n\n" . $script . " scriptblock!", 'labJS');
 				$this->__options['endWait'].= $match[3];
 			} else {
-				$this->log("\n\n" . $script . " does not match!", 'labJS');
-			}
-		}
-
-		foreach($scripts as $libs)	{
-			//$this->log($libs, 'labJS');
-			$wait = $this->hasWait($libs);
-
-			$LAB.= "\n\t" . '.script("'.$libs.'")';
-
-			if($wait)	{
-				$LAB.= '.wait(function() {' . "\n\t\t".$wait."\n\t\t" . '})';
+				// $this->log("\n\n" . $script . " does not match!", 'labJS');
 			}
 		}
 
@@ -177,6 +157,27 @@ class LabjsHelper extends AppHelper {
 			$endWait = $this->__options['endWait'];
 		} else if($this->__options['endWait'] && $endWait) {
 			$endWait.= $this->__options['endWait'];
+		}
+
+		$endWait = str_replace("\\t", "", $endWait);
+
+		foreach($scripts as $libs)	{
+			//// $this->log($libs, 'labJS');
+			$wait = trim($this->hasWait($libs));
+
+			$LAB.= "\n\t" . '.script("'.$libs.'")';
+
+			if($wait)	{
+				$LAB.= '.wait(function() {' . "\n\t\t".$wait."\n\t\t" . '})';
+				$endWait = str_replace($wait, "", $endWait);
+				// $this->log(' == ', 'labJS');
+				// $this->log(' wait ', 'labJS');
+				// $this->log($wait, 'labJS');
+				// $this->log(' -- ', 'labJS');
+				// $this->log(' endWait ', 'labJS');
+				// $this->log($endWait, 'labJS');// die();
+				// $this->log(' -- ', 'labJS');
+			}
 		}
 
 		if($endWait)	{

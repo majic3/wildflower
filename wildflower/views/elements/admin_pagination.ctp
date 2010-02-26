@@ -1,8 +1,24 @@
 <div class="paginator">
 	<?php
+
+		
+
+		if(isset($wfPaging) && 
+		   is_array($wfPaging))	{
+			extract($wfPaging);
+		}
+
 		$options = array(
 			'tag' => 'li'
 		);
+
+		if(isset($url))	{
+			$options['url'] = $url;
+		}
+
+		$nOpt = $pOpts = $numOpts = $cOpts = $options;
+
+		unset($options['page']);
 
 		echo
 		'<div class="paginate-counter"><p class="quiet">', 
@@ -12,18 +28,18 @@
 		'</p></div>', '<ul class="paging">',
 		$paginator->prev(
 			'« newer ', 
-			am($options, array('tag' => 'li','class' => 'previous')), 
+			am(array('class' => 'previous'), $options), 
 			null, 
-			am($options, array('tag' => 'li', 'class' => 'previous disabled'))
+			am(array('class' => 'previous disabled'), $options)
 		),
 		$paginator->numbers(
-			am($options, array('tag' => 'li', 'separator' => ' '))
+			am(array('separator' => ' '), $options)
 		),
 		$paginator->next(
 			'older »', 
-			am($options, array('tag' => 'li','class' => 'next')), 
+			am(array('class' => 'next'), $options), 
 			null, 
-			am($options, array('tag' => 'li','class' => 'next disabled'))
+			am(array('class' => 'next disabled'), $options)
 		), '</ul>';
 	?>
 </div>

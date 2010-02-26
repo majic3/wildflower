@@ -1,0 +1,1 @@
+<?php echo $this->element('tag_cloud', $data['Widget'])); ?>

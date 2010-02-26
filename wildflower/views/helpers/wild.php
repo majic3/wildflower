@@ -10,7 +10,7 @@ App::import('Vendor', 'SimpleHtmlDom', array('file' => 'simple_html_dom.php'));
 
 class WildHelper extends AppHelper {
 	
-	public $helpers = array('Html', 'Textile', 'Htmla', 'Text');
+	public $helpers = array('Html', 'Textile', 'Htmla', 'Text', 'Form');
 	private $_isFirstChild = true;
 	private $itemCssClassPrefix;
 	
@@ -67,6 +67,8 @@ class WildHelper extends AppHelper {
 	 * @return string
 	 */
 	function bodyTagWithClass() {
+		// @todo body should have id unless options are set to not have id
+		// @todo make this clense the params for paginated views
 
 		if (!isset($this->params['Wildflower']['view'])) {
 			return '<body>';
@@ -91,7 +93,9 @@ class WildHelper extends AppHelper {
 			// check for index (posts) or view (post)
 	       $html .= ' class="post"'; 
 	    } else	{
-			$html .= ' class="' . str_replace(array('/', '-'), array('', ''), $here) . '"';
+			// here we need to ensure that class is set that is free from illegile chars
+			// devise best way to parse $here into classes or id (then code is need elsewhere in this function)
+			$html .= ' class="' . str_replace(array('/', '-', ':', 'page'), array(' ', ' ', '', ''), $here) . '"';
 	    }
 	    $html .= '>';
         return $html;
@@ -362,5 +366,28 @@ class WildHelper extends AppHelper {
 		
 		$HTMLPurifier = & new HTMLPurifier($dconfig);
 		return $HTMLPurifier->purify($html);
+	}
+
+	function dataInputs($fieldName)	{
+		$model = $this->params['models'][0]; 
+		$dataArr = $this->data[$model][$fieldName];
+		$rhtml = '<div class="' . $model . 'Data">';
+		if(is_array($dataArr))	{
+			foreach($dataArr as $k => $v)	{
+				if(is_array($v))	{
+			$rhtml.= '<div class="' . $k . ' ' . $model . 'Data">';
+					foreach($v as $k2 => $v2)	{
+						$rhtml.= $this->Form->input($model.'.data.'.$k.'.'.$k2, array('value' => $v2));
+					}
+			$rhtml.= '</div>';
+				} else {
+					$rhtml.= $this->Form->input($model.'.data.'.$k, array('value' => $v));
+				}
+			}
+		} else {
+			$rhtml.= $this->Html->link('add', '#addData');
+		}
+		$rhtml.= '</div>';
+		return $rhtml;
 	}
 }

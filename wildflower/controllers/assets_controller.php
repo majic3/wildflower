@@ -7,6 +7,77 @@ class AssetsController extends AppController {
         'limit' => 20,
         'order' => array('created' => 'desc')
     );
+
+	// @todo publically exluded asset categories
+	public $publicExcludes = array(72);
+
+	// @todo an asset category that contains cats as albums
+	public $galleryCatId = 72;
+	
+	function index() {
+		$args = func_get_args();
+		$exlcudes = $this->publicExcludes;
+
+		if(isset($args[0]) && $args[0] > 0)	{
+			// find single image
+			$image = $this->Asset->findById($args[0]);
+			$images = $this->Asset->Category->findById($image['Asset']['category_id']);
+			$cat = false;
+			$categories = $this->Asset->Category->find(
+				'list', 
+				array(
+					'fields' => array('id', 'title'), 
+					'conditions' => array(
+						'Category.parent_id' => Configure::read('AppSettings.category_parent_id')
+					),
+					'order' => array(
+						'Category.lft' => 'asc'
+					)
+				)
+			);
+				
+			
+
+			$galleryCategories = $this->Asset->Category->find(
+				'list', 
+				array(
+					'fields' => array(
+						'id', 'title'
+					), 
+					'conditions' => array(
+						'Category.parent_id' => $this->galleryCatId
+					),
+					'order' => array(
+						'Category.lft' => 'asc'
+					)
+				)
+			);
+
+			$tagCloud = $this->Asset->tagCloud($this->Asset->alias);
+
+			$this->set(compact(
+				'args', 
+				'image', 
+				'images',
+				'tagCloud',
+				'cat',
+				'categories',
+				'galleryCategories'));
+			
+			$this->pageTitle = 'image';
+
+		} else {
+			$this->pageTitle = 'gallery';
+			//@todo have a set of excuded filter options
+			$this->paginate['conditions'] = "{$this->modelClass}.mime LIKE 'image%'";
+			$this->feedFileManager();
+			$this->set(compact('args', 'exlcudes'));
+		}
+		//@todo use better layout setter but it does not work currently
+		//$this->setLayout('gallery');
+		$this->layout = 'gallery';
+		$this->render('/pages/gallery');
+	}
 	
 	function admin_create() {
 	    $this->Asset->create($this->data);
@@ -30,7 +101,12 @@ class AssetsController extends AppController {
 	 *
 	 */
 	function admin_index() {
-		$this->feedFileManager();
+		$args = func_get_args();
+
+		$options['tag'] = isset($args[0]) ? $args[0] : false;
+		$options['tagId'] = isset($args[1]) ? $args[1] : false;
+
+		$this->feedFileManager($options);
 	}
 	
 	/**
@@ -50,12 +126,47 @@ class AssetsController extends AppController {
 	 * @param int $id
 	 */
 	function admin_edit($id) {
+		$filter = null;
 		$this->data = $this->Asset->findById($id);
-		$AssetTags = false; // $this->Asset->findTags();
+		
+		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => Configure::read('AppSettings.category_parent_id')),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)));
+
+		
+		$galleryCategories = $this->Asset->Category->find(
+			'list', 
+			array(
+				'fields' => array(
+					'id', 'title'
+				), 
+				'conditions' => array(
+					'Category.parent_id' => $this->galleryCatId
+				),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)
+			)
+		);
+
+		$AssetTags = $this->Asset->findTags();
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
+		$cat = $this->data[$this->modelClass]['category_id'];
+		if(!is_null($this->data[$this->modelClass]['data']))	{
+			$this->data[$this->modelClass]['data'] = Asset::parseData($this->data[$this->modelClass]['data']);
+		}
 		$tagCloud = $this->Asset->tagCloud();
 		
-		$this->set(compact('tagCloud', 'Asset'));
+		$this->set(
+			compact(
+				'tagCloud',
+				'Asset',
+				'categories',
+				'galleryCategories',
+				'cat'
+			)
+		);
 
 	}
 	
@@ -68,8 +179,9 @@ class AssetsController extends AppController {
 		$this->autoLayout = false;
 		$this->paginate['limit'] = 10;
 		$assets = $this->paginate($this->modelClass);
-		$tag_cloud = $this->Asset->tagCloud();
-		$this->set(compact('assets', 'tag_cloud'));
+		$tagCloud = $this->Asset->tagCloud();
+		$categories = $this->Asset->Category->find('list', array('fields' => array('id', 'title'), 'conditions' => array('Category.parent_id' => Configure::read('AppSettings.category_parent_id'))));
+		$this->set(compact('assets', 'tagCloud', 'categories'));
 	}
 	
 	/**
@@ -94,11 +206,22 @@ class AssetsController extends AppController {
 	}
 	
 	function admin_update() {
-	    //$this->Asset->create($this->data);
-	    //if (!$this->Asset->exists()) return $this->cakeError('object_not_found');
+		debug($this->data);
+		if(empty($this->data)) {
+			$this->Session->setFlash('something very wrong', 'flash_error');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		// $this->data['Asset'] = array_merge(
+		//	$this->data['Asset'],
+		//	$this->Asset->read($this->data['Asset']['id'])
+		//);
+
+		//$this->Asset->create($this->data);
+		//if (!$this->Asset->exists()) return $this->cakeError('object_not_found');
 
 		if(isset($this->data['Asset']['file']))	{
-			//	$isUploaded = Asset::upload($this->data['Asset']['file']);
+			//$isUploaded = Asset::upload($this->data['Asset']['file'], false);
 			$isUploaded = $this->upload(false);
 			if($isUploaded)	{
 				$this->Session->setFlash('file updated', 'flash_success');
@@ -106,17 +229,25 @@ class AssetsController extends AppController {
 				$this->Session->setFlash('file NOT updated', 'flash_error');
 			}
 		}
+
+		if(is_array($this->data['Asset']['data']))	{
+			$this->data[$this->modelClass]['data'] = Asset::reformData($this->data[$this->modelClass]['data']);
+		}
 		
-		if($this->Asset->saveField('title', $this->data[$this->modelClass]['title'])) {
+		/* if($this->Asset->saveField('title', $this->data[$this->modelClass]['title'])) {
 			$this->Session->setFlash('title updated', 'flash_success');
 		} else {
 			$this->Session->setFlash('title NOT updated', 'flash');
+		} */
+		$result = $this->Asset->saveAll($this->data['Asset']);
+		//debug($result); die();
+		if($result) {
+			$this->Session->setFlash('Asset updated', 'flash_success');
+		} else {
+			$this->Session->setFlash('Asset NOT updated', 'flash');
 		}
-
-
-		//$this->redirect(array('action' => 'index'));
+		
 		$this->redirect(array('action' => 'edit', 'id' => $this->data['Asset']['id']));
-		//$this->render('admin_edit');
 	}
 	
 	function beforeFilter() {
@@ -164,6 +295,7 @@ class AssetsController extends AppController {
     
     function thumbnail_by_id($id, $width = 120, $height = 120, $crop = 0) {
         $asset = $this->Asset->read(null, $id);
+		Configure::write('debug', '0');
         $this->wfthumbnail($asset['Asset']['name'], $width, $height, $crop);
     }
     
@@ -173,6 +305,7 @@ class AssetsController extends AppController {
      * @param $imageName File name from webroot/uploads/
      */
     function thumbnail($imageName, $width = 120, $height = 120, $crop = 0) {
+		Configure::write('debug', '0');
 		$this->wfthumbnail($imageName, $width, $height, $crop);
     }
     
@@ -328,7 +461,7 @@ class AssetsController extends AppController {
 		$fileName = substr_replace($fileName, '.', strrpos($fileName, '-'), strlen('-'));
         $uploadPath = Configure::read('Wildflower.uploadDirectory') . DS . $fileName;
 
-		/*Configure::write('debug', 1);
+		/* Configure::write('debug', 1);
 		debug($this->data);
 		debug($fileName); die(); */
         
@@ -351,28 +484,28 @@ class AssetsController extends AppController {
 				$fileName = $newFileName;
 			}
 		}
-   
-        // Upload file
-        $isUploaded = @move_uploaded_file($this->data[$this->modelClass]['file']['tmp_name'], $uploadPath);
-        
-        if (!$isUploaded) {
-            $this->Asset->invalidate('file', 'File can`t be moved to the uploads directory. Check permissions.');
-            //$this->feedFileManager();
-            //return $this->render('admin_index');
+
+		// Upload file
+		$isUploaded = @move_uploaded_file($this->data[$this->modelClass]['file']['tmp_name'], $uploadPath);
+
+		if (!$isUploaded) {
+			$this->Asset->invalidate('file', 'File can`t be moved to the uploads directory. Check permissions.');
+			//$this->feedFileManager();
+			//return $this->render('admin_index');
 			$this->Session->setFlash('File can`t be moved to the uploads directory. Check permissions.', 'flash_error');
 			return false;
-        }
-        
-        // Make this file writable and readable
-        chmod($uploadPath, 0777);
-        
-        $this->Asset->data[$this->modelClass]['name'] = $fileName;
-        if (empty($this->Asset->data[$this->modelClass]['title'])) {
-            $this->Asset->data[$this->modelClass]['title'] = str_replace(array('.jpg', '.jpeg', '.gif', '.png'), array('', '', '', ''), $fileName);
-        }
-        $this->Asset->data[$this->modelClass]['mime'] = $this->Asset->data[$this->modelClass]['file']['type'];
-        
-		return $this->Asset->save();
+		}
+
+		// Make this file writable and readable
+		chmod($uploadPath, 0777);
+
+		$this->Asset->data[$this->modelClass]['name'] = $fileName;
+		if (empty($this->Asset->data[$this->modelClass]['title'])) {
+			$this->Asset->data[$this->modelClass]['title'] = str_replace(array('.jpg', '.jpeg', '.gif', '.png'), array('', '', '', ''), $fileName);
+		}
+		$this->Asset->data[$this->modelClass]['mime'] = $this->Asset->data[$this->modelClass]['file']['type'];
+
+		return $this->Asset->save($this->data[$this->modelClass]);
 		//*/
 	}
 
@@ -383,25 +516,93 @@ class AssetsController extends AppController {
 	 * the pagination set across paged clicks
 	 *
 	 */
-	private function feedFileManager() {
-	    $this->pageTitle = 'Files';
-		if(isset($_GET['displayNumImgs'])) $this->paginate['limit'] = Sanitize::escape($_GET['displayNumImgs']);
-	    $files = $this->paginate($this->modelClass);
+	private function feedFileManager($options = null) {
 
-		$displayNumImgsArr = array(10 => '10 files', 20 => '20 files', 50 => "50 files", 80 => "80 files");
+		if(is_array($options)) extract($options);
+
+		//print_r($options);
+
+		if(isset($this->params['named']['cat']))	{
+			$cat = $this->params['named']['cat'];
+
+			if($cat == 'all') $cat = Configure::read('AppSettings.category_parent_id');
+			
+			$this->paginate['conditions'] = array('Asset.category_id' => $cat);
+		} else {
+			$cat = false;
+		}
+
+		if(isset($excludes))	{
+			//$this->paginate['conditions'][] = array('Asset.category_id' => $cat);
+		}
+
+		// Categories for select box
+		// @todo category_parent_id => AssetCategoryId
+		$categories = $this->Asset->Category->find(
+			'list', 
+			array(
+				'fields' => array('id', 'title'), 
+				'conditions' => array(
+					'Category.parent_id' => Configure::read('AppSettings.category_parent_id')
+				),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)
+			)
+		);
+			
+		
+
+		$galleryCategories = $this->Asset->Category->find(
+			'list', 
+			array(
+				'fields' => array(
+					'id', 'title'
+				), 
+				'conditions' => array(
+					'Category.parent_id' => $this->galleryCatId
+				),
+				'order' => array(
+					'Category.lft' => 'asc'
+				)
+			)
+		);
+
+		$this->pageTitle = 'Files';
+
+		if(isset($this->params['named']['limit']))
+			$this->paginate['limit'] = $this->params['named']['limit'];
+		
+
+		$limit = $displayNumImgs = ($this->paginate['limit']) ? $this->paginate['limit'] : 20;
+		
+		$files = $this->paginate($this->modelClass);
+
+		$displayNumImgsArr = array(
+			1 => '1 file', 
+			10 => '10 files', 
+			20 => '20 files', 
+			50 => '50 files', 
+			80 => '80 files', 
+			100 => '100 files'
+		);
 		$totalImages = $this->Asset->find('count');
 
-		$tag_cloud = $this->Asset->tagCloud();
+		$tagCloud = $this->Asset->tagCloud($this->Asset->alias);
 
-		$displayNumImgs = $this->paginate['limit'];
+		//$pagingUrl = $this->paginate['Asset']['url'];
 
 		$this->set(
 			compact(
-				'files', 
-				'displayNumImgs', 
-				'displayNumImgsArr', 
-				'totalImages', 
-				'tag_cloud'
+				'files',
+				'displayNumImgs',
+				'displayNumImgsArr',
+				'totalImages',
+				'limit',
+				'tagCloud',
+				'cat',
+				'categories',
+				'galleryCategories'
 			)
 		);
 	}

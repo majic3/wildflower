@@ -12,6 +12,14 @@ class Asset extends AppModel {
         //     'message' => 'Select a file to upload'
         // )
 	);
+
+	function paginate($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
+		//print_r(func_get_args()); // for debugging
+		return $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group'));
+	}
+
+
+	public $belongsTo = array('Category');
 	
 	function delete($id) {
 	    $upload = $this->findById($id);
@@ -23,7 +31,7 @@ class Asset extends AppModel {
             $this->_deleteFiles($path);
             return true;
 	    }
-	    
+	  	
 	    return false;
 	}
 	

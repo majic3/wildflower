@@ -1,7 +1,7 @@
 <?php
 class SettingsController extends AppController {
 
-	public $uses = array('Page', 'Setting');
+	public $uses = array('Category','Page', 'Setting');
 	
 	function beforeFilter() {
 	    parent::beforeFilter();
@@ -30,11 +30,13 @@ class SettingsController extends AppController {
 
 		$homePageIdOptions = $this->Page->generatetreelist(null, null, null, ' - ');
 
+		$categoryParentIdOptions = $this->Category->generatetreelist(null, null, null, ' - ');
+
 		$themeOptions = $this->Setting->getThemes();
 
 		$settings = $this->Setting->find('all', array('order' => 'order ASC'));
 
-		$this->set(compact('settings', 'homePageIdOptions', 'themeOptions'));
+		$this->set(compact('settings', 'homePageIdOptions', 'themeOptions', 'categoryParentIdOptions'));
 	}
 
 	/**
@@ -42,20 +44,20 @@ class SettingsController extends AppController {
 	 *
 	 */
 	function admin_update() {
-	    // If cache has been turned off clear it
-	    $cacheSetting = $this->Setting->findByName('cache');
-	    if ($cacheSetting[$this->modelClass]['value'] == 'on' and $this->data[$this->modelClass][$cacheSetting[$this->modelClass]['id']] == 'off') {
-	        $this->clearViewCache();
-	    }
-	    
-	    // Save settings
-	    foreach ($this->data[$this->modelClass] as $id => $value) {
-	        $this->Setting->create(array('id' => $id, 'value' => $value));
-	        $this->Setting->save();
-	    }
-	    
-        $this->Session->setFlash('Settings updated.', 'flash_success');
-        $this->redirect(array('action' => 'index'));
+		// If cache has been turned off clear it
+		$cacheSetting = $this->Setting->findByName('cache');
+		if ($cacheSetting[$this->modelClass]['value'] == 'on' and $this->data[$this->modelClass][$cacheSetting[$this->modelClass]['id']] == 'off') {
+			$this->clearViewCache();
+		}
+		
+		// Save settings
+		foreach ($this->data[$this->modelClass] as $id => $value) {
+			$this->Setting->create(array('id' => $id, 'value' => $value));
+			$this->Setting->save();
+		}
+		
+		$this->Session->setFlash('Settings updated.', 'flash_success');
+		$this->redirect(array('action' => 'index'));
 	}
 	
 	function clearViewCache() {

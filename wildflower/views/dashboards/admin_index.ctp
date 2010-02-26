@@ -1,7 +1,5 @@
 <h2 class="section">Welcome to <?php echo $siteName ?> administration</h2>
 
-<p><?php __('Recently added or changed content:'); ?></p>
-
 <?php
     $labels = array(
         'Page' => array(
@@ -31,32 +29,62 @@
         ),
     );
 ?>
-
+<div class="recently_changed">
 <?php if (empty($items)): ?>
     <p><?php __('Nothing happened yet.'); ?></p>;
 <?php else: ?>
-    <table class="recently_changed" cellspacing="0">
+    <table class="data" cellspacing="0">
+		<caption>
+			<p><?php __('Recently added or changed content:'); ?> 2010-02-23 to 2010-02-23</p>
+		</caption>
         <tbody>
-            <?php foreach ($items as $item): ?>
-            <tr class="recent_<?php echo $labels[$item['class']]['class']; ?>">
-                <th><?php echo $labels[$item['class']]['name']; ?></th>
+			<?php
+			$i = 0;
+			foreach ($items as $item):
+				$class = null;
+				if ($i++ % 2 == 0) {
+					$class = ' altrow';
+				}
+			
+			?>
+            <tr class="<?php echo $labels[$item['class']]['class'], $class; ?>">
+                <th><span><?php echo $labels[$item['class']]['name']; ?></span></th>
                 <td>
                 <?php 
                     $label = empty($item['item']['title']) ? '<em>untitled</em>' : hsc($item['item']['title']);
                     $url = '/' . Configure::read('Routing.admin') . '/' . r(':id', $item['item']['id'], $labels[$item['class']]['link']);
-                    if ($item['class'] == 'Comment') {
-                        $url = array('controller' => 'comments', 'action' => 'index', '#comment-' . $item['item']['id']);
+					$viewUrl = '';
+
+                    switch ($item['class'])	{
+						case 'Comment':
+							$url = array('controller' => 'comments', 'action' => 'index', '#comment-' . $item['item']['id']);
+						break;
+						case 'Post':
+							$viewUrl = '/' . Configure::read('Wildflower.postsParent') . '/' . $item['item']['slug'];
+							$viewUrl = '&nbsp;' . $html->link('view', $viewUrl, array('escape' => false));
+						break;
+						case 'Asset':
+							$viewUrl = '/' . Configure::read('Wildflower.mediaRoute') . '/' . $item['item']['name'];
+							$viewUrl = '&nbsp;' . $html->link('view', $viewUrl, array('escape' => false));
+						break;
+						case 'Page':
+							$viewUrl = '/' . $item['item']['url'];
+							$viewUrl = '&nbsp;' . $html->link('view', $viewUrl, array('escape' => false));
+						break;
                     }
-                    echo $html->link($label, $url, array('escape' => false)); 
+
+                    echo
+						$html->link($label, $url, array('escape' => false)), 
+						$viewUrl;
                 ?>
                 </td>
-                <td class="recent_date"><?php echo $time->niceShort($item['item']['updated']); ?></td>
-            </tr>
+                <td class="date"><?php echo $time->niceShort($item['item']['updated']); ?></td>
+			</tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 <?php endif; ?>
-
+</div>
 
 <?php $partialLayout->blockStart('sidebar'); ?>
     <li>

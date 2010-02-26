@@ -50,7 +50,7 @@
 
 	<div id="ft" class="foot">
 		<div class="leftCol">
-			<?php echo $credits ? $this->element('credits', compact('credits')):'' ?>
+			<?php echo isset($credits) ? $this->element('credits', compact('credits')):'' ?>
 			
 			<?php echo $this->element('admin_link'); ?>
 			<?php echo $this->element('debug_notice'); ?>

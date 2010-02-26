@@ -90,5 +90,27 @@ class AppModel extends Model {
     function timeToDatetime($time) {
         return date("Y-m-d H:i:s", $time);
     }
+    
+    /**
+     * decode a json string to array
+     *
+     * @param string $dataStr
+     * @return array
+     */
+    function parseData($dataStr) {
+		App::import('Vendor', 'jsonMajic', array('file' => 'jsonMajic.php'));
+        return jsonMajic::decode($dataStr);
+    }
+    
+    /**
+     * encode array to a json data object
+     *
+     * @param array $dataArr
+     * @return string
+     */
+    function reformData($dataArr) {
+		App::import('Vendor', 'jsonMajic', array('file' => 'jsonMajic.php'));
+        return jsonMajic::encode($dataArr);
+    }
 
 }
