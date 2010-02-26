@@ -14,6 +14,7 @@
 	$tagging->input('tags'),
     $form->input('draft', array('type' => 'select', 'label' => 'Status', 'options' => Page::getStatusOptions())),
     $form->input('description_meta_tag', array('type' => 'textarea', 'rows' => 4, 'cols' => 60, 'tabindex' => '4')),
+    $wild->dataInputs('custom_fields'),
     $form->input('slug', array('label' => 'URL slug', 'size' => 61)),
     $form->input('created', array());
 ?>

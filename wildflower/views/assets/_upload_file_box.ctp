@@ -2,7 +2,7 @@
 <?php
 	$action = 'admin_create';
 	$fileParams = array('type' => 'file', 'between' => '<br />');
-	$link = false;
+	$customData = $link = false;
 	$bttnLabel = 'save asset';
 	
 	if(isset($this->data))	{
@@ -15,6 +15,8 @@
 				'id' => 'AssetFileEnable'
 			)
 		);
+
+		$customData = $wild->dataInputs('data');
 	}
 
 	$glink = $html->link(
@@ -31,6 +33,8 @@
 	$form->input('file', $fileParams), $link,
 	$form->input('title', array('between' => '<br />', 'label' => 'Title <small>(optional)</small>')),
 	$tagging->input('tags'),
+	$customData,
+	'<div class="assetCats">',
 	$form->select(
 		'category_id', 
 		$categories, 
@@ -46,6 +50,7 @@
 		'-- select --'
 	),
 	$glink,
+	'</div>',
 	($action == 'admin_update' ? $form->hidden('id') : ''),
 	$form->submit($bttnLabel), 
     $form->end();

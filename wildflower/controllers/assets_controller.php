@@ -153,6 +153,9 @@ class AssetsController extends AppController {
 		$AssetTags = $this->Asset->findTags();
 		$this->pageTitle = $this->data[$this->modelClass]['title'];
 		$cat = $this->data[$this->modelClass]['category_id'];
+		if(!is_null($this->data[$this->modelClass]['data']))	{
+			$this->data[$this->modelClass]['data'] = Asset::parseData($this->data[$this->modelClass]['data']);
+		}
 		$tagCloud = $this->Asset->tagCloud();
 		
 		$this->set(
@@ -203,7 +206,7 @@ class AssetsController extends AppController {
 	}
 	
 	function admin_update() {
-
+		debug($this->data);
 		if(empty($this->data)) {
 			$this->Session->setFlash('something very wrong', 'flash_error');
 			$this->redirect(array('action' => 'index'));
@@ -226,14 +229,19 @@ class AssetsController extends AppController {
 				$this->Session->setFlash('file NOT updated', 'flash_error');
 			}
 		}
+
+		if(is_array($this->data['Asset']['data']))	{
+			$this->data[$this->modelClass]['data'] = Asset::reformData($this->data[$this->modelClass]['data']);
+		}
 		
 		/* if($this->Asset->saveField('title', $this->data[$this->modelClass]['title'])) {
 			$this->Session->setFlash('title updated', 'flash_success');
 		} else {
 			$this->Session->setFlash('title NOT updated', 'flash');
 		} */
-		
-		if($this->Asset->saveAll($this->data['Asset'])) {
+		$result = $this->Asset->saveAll($this->data['Asset']);
+		//debug($result); die();
+		if($result) {
 			$this->Session->setFlash('Asset updated', 'flash_success');
 		} else {
 			$this->Session->setFlash('Asset NOT updated', 'flash');

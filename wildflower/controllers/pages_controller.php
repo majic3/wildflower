@@ -89,6 +89,11 @@ class PagesController extends AppController {
 		$this->pageTitle = $page[$this->modelClass]['title'];
 
 		$this->data['tags'] = $this->Page->findTags($this->Page->alias, $id);
+		
+		
+		if(isset($this->data['Page']['custom_fields']))	{
+			$this->data['Page']['custom_fields'] = Page::parseData($this->data['Page']['custom_fields']);
+		}
 
 		$newParentPageOptions = $this->Page->generatetreelist(null, null, null, ' - ');
 		$revisions = $this->Page->getRevisions($id, 10);
@@ -134,6 +139,10 @@ class PagesController extends AppController {
 
 		//$this->data[$this->modelClass]['tags'] = $this->Page->findTags();
 
+		if(isset($this->data['Page']['custom_fields']))	{
+			$this->data['Page']['custom_fields'] = Page::parseData($this->data['Page']['custom_fields']);
+		}
+
 		$jumpMenu = $this->Page->generatetreelist(null, null, null, ' - ');
 
 		$this->set(compact('parentPageOptions', 'jumpMenu'));
@@ -166,8 +175,8 @@ class PagesController extends AppController {
 	}
 
 	function admin_update() {
-		Configure::write('debug', 2);
-		debug($this->data); die();
+		//Configure::write('debug', 2);
+		//debug($this->data); die();
 		$this->data[$this->modelClass]['user_id'] = $this->getLoggedInUserId();
 		
 		$this->Page->create($this->data);
@@ -177,6 +186,11 @@ class PagesController extends AppController {
 		if (isset($this->data['__save']['publish'])) {
 			$this->data[$this->modelClass]['draft'] = 0;
 		}
+
+		if(isset($this->data['Page']['custom_fields']))	{
+			$this->data['Page']['custom_fields'] = Page::reformData($this->data['Page']['custom_fields']);
+		}
+
 		unset($this->data['__save']);
 		
 		$oldUrl = $this->Page->field('url');
@@ -399,11 +413,8 @@ class PagesController extends AppController {
 
 		//	debug($page['Page']['custom_fields']);
 		
-		// Decode custom fields
 		if(!is_null($page['Page']['custom_fields']))	{
-			$page['Page']['custom_fields'] = $this->_prepVars($page['Page']['custom_fields']);
-			// group reigons
-			$this->Regions->buildGroups($page['Sidebar'], (array_key_exists('regions', $page['Page']['custom_fields'])) ? $page['Page']['custom_fields']['regions'] : false);
+			$page['Page']['custom_fields'] = Page::parseData($page['Page']['custom_fields']);
 		}
 
 		//debug($page['Page']['custom_fields']); die();
@@ -463,7 +474,7 @@ class PagesController extends AppController {
 	function admin_settings($id) {
 		$page = $this->Page->findById($id);
 		$customFields = $page[$this->modelClass]['custom_fields'];
-		$customFields = json_decode($customFields, true);
+		$customFields = Page::parseData($customFields);
 		
 		if (!empty($this->data)) {
 			foreach ($customFields as &$field) {
@@ -481,7 +492,7 @@ class PagesController extends AppController {
 					}
 				}
 			}
-			$customFields = json_encode($customFields);
+			$customFields = Page::reformData($customFields);
 			$this->Page->id = intval($id);
 			$this->Page->saveField('custom_fields', $customFields);
 			return $this->redirect(array('action' => 'custom_fields', $id));
@@ -509,6 +520,7 @@ class PagesController extends AppController {
 	}
 	
 	/**
+	 * Depreciated
 	 * Prepares page vars for use (puts them in a better structure)
 	 *
 	 * @param string $vars
